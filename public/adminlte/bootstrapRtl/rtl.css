@@ -1,0 +1,135 @@
+*{
+    direction: rtl;
+}
+.layout-fixed .main-sidebar{
+    left: inherit;
+    right: 0;
+}
+.user-panel .image {
+    padding-right: .8rem;
+    padding-left: 0.2em;
+}
+.layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link {
+    display: flex;
+}
+.brand-image {
+    margin-left: .5rem;
+    margin-right: .8rem;
+}
+.breadcrumb-item+.breadcrumb-item {
+    padding-right: 0;
+}
+.card-title {
+    float: right;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+}
+.card-header>.card-tools {
+    float: left;
+    margin-left: -.625rem;
+}
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left;
+}
+.main-sidebar, .main-sidebar::before {
+    transition: margin-right .3s ease-in-out,width .3s ease-in-out;
+    width: 250px;
+}
+@media (min-width: 768px){
+    body:not(.sidebar-mini-md) .content-wrapper, body:not(.sidebar-mini-md) .main-footer, body:not(.sidebar-mini-md) .main-header {
+        transition: margin-right .3s ease-in-out;
+        margin-left: 0;
+        margin-right: 250px;
+    }
+}
+@media (max-width: 767.98px){
+    .main-sidebar, .main-sidebar::before {
+        box-shadow: none!important;
+        margin-right: -250px;
+    }
+}
+.small-box .icon>i {
+    font-size: 90px;
+    position: absolute;
+    left: 15px;
+    right: inherit;
+    top: 15px;
+    transition: all .3s linear;
+}
+div.dt-buttons {
+    position: relative;
+    float: right;
+}
+.dataTables_wrapper .dataTables_filter {
+    float: left;
+}
+@media screen and (max-width: 767px){
+    div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
+        text-align: center!important;
+    }
+}
+@media screen and (max-width: 767px){
+    .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {
+        float: none!important;
+        text-align: center;
+    }
+}
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-right: 0.5em;
+    margin-left: 0;
+    display: inline-block;
+    width: auto;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: left;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_info {
+    clear: both;
+    float: right;
+    padding-top: 0.55em;
+}
+.nav-sidebar .nav-link>.right, .nav-sidebar .nav-link>p>.right {
+    position: absolute;
+    left: 1rem!important;
+    right: initial;
+    top: .7rem;
+}
+/*here update*/
+@media screen and (min-width: 768px){
+    body:not(.sidebar-mini-md) .content-wrapper, body:not(.sidebar-mini-md) .main-footer, body:not(.sidebar-mini-md) .main-header {
+        transition: margin-right .3s ease-in-out;
+        margin-right: 250px;
+        margin-left: unset!important;
+    }
+}
+[class*=icheck-]>label {
+    padding-right: 29px!important;
+    padding-left: unset!important;
+}
+[class*=icheck-]>input:first-child+input[type=hidden]+label::before, [class*=icheck-]>input:first-child+label::before {
+    margin-left: unset;
+    margin-right: -44px;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+}
+[class*=icheck-]>input:first-child:checked+input[type=hidden]+label::after, [class*=icheck-]>input:first-child:checked+label::after {
+    left: unset;
+    right: 0;
+}
+table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable td:last-child, table.table-bordered.dataTable td:last-child {
+    border-right-width: 1px;
+    border-left-width: 0;
+}
+
+
+
+
+
+
+
