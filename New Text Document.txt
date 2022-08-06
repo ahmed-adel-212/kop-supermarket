@@ -1,0 +1,3 @@
+DB_USERNAME=kopy_user
+DB_PASSWORD=pc)393ZMrhrl
+$2y$10$w6hKdxAdiNdiarH6IUNvyOqloEhF8KLbuwfBXrZCwWrgdygwqILpe
