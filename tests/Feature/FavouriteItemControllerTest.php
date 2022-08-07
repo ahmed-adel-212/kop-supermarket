@@ -15,7 +15,7 @@ class FavouriteItemControllerTest extends TestCase
 
     public function test_un_authorized_user_can_not_add_item_to_favourites()
     {
-        $this->postJson(route('favoutites.add', [factory(Item::class)->create()]))->assertUnauthorized();
+        $this->postJson(route('favourites.add', [factory(Item::class)->create()]))->assertUnauthorized();
     }
 
     public function test_user_can_add_item_to_favourites()
