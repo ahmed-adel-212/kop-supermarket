@@ -100,4 +100,22 @@ class FavouriteItemControllerTest extends TestCase
 
         $this->assertEquals($res->decodeResponseJson()['message'], 3);
     }
+
+    public function test_user_can_get_paginated_favourtes()
+    {
+        $user = factory(User::class)->create([
+            'activation_token' => 254613
+        ]);
+
+        $res = $this->actingAs($user)->postJson(route('favourites.add', [factory(Item::class)->create()]))->assertOk();
+        $res = $this->actingAs($user)->postJson(route('favourites.add', [factory(Item::class)->create()]))->assertOk();
+        $res = $this->actingAs($user)->postJson(route('favourites.add', [factory(Item::class)->create()]))->assertOk();
+        $res = $this->actingAs($user)->postJson(route('favourites.add', [factory(Item::class)->create()]))->assertOk();
+
+        $this->assertEquals(4, $user->favourites()->count());
+
+        $res = $this->actingAs($user)->get(route('favourites.get'))->assertOk();
+
+        $this->assertArrayHasKey('items', $res->decodeResponseJson());
+    }
 }

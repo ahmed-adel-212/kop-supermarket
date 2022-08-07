@@ -50,4 +50,11 @@ class FavouriteItemController extends Controller
             'message' => $item->favouritesCount(),
         ]);
     }
+
+    public function getFavourites()
+    {
+        return response()->json([
+            'items' => Auth::user()->favourites()->paginate(),
+        ]);
+    }
 }

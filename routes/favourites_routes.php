@@ -7,3 +7,5 @@ Route::post('/clear', 'FavouriteItemController@clearFavourites')->name('clear');
 
 
 Route::get('/count/{item}', 'FavouriteItemController@count')->name('count');
+
+Route::get('/', 'FavouriteItemController@getFavourites')->name('get');
