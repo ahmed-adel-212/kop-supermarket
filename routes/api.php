@@ -172,3 +172,7 @@ Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymen
 Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paymentMobile');
 
 
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'favourites', 'as' => 'api.favourites.'], function () {
+    require __DIR__ . '/favourites_routes.php';
+});
+

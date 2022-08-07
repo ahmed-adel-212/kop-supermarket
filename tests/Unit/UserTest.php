@@ -56,7 +56,7 @@ class UserTest extends TestCase
         $user->refresh();
         $this->assertCount(1, $user->favourites);
 
-        $user->removeToFavourites($item);
+        $user->removeFromFavourites($item);
 
         $user->refresh();
         $this->assertEmpty($user->favourites);

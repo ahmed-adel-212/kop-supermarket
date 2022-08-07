@@ -155,7 +155,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param Item $item
      * @return void
      */
-    public function removeToFavourites (Item $item)
+    public function removeFromFavourites(Item $item)
     {
         $this->favourites()->detach($item);
     }
