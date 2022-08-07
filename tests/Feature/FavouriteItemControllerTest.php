@@ -77,6 +77,27 @@ class FavouriteItemControllerTest extends TestCase
 
         $res = $this->actingAs($user)->get(route('favourites.check', [$item->id]))->assertOk();
 
-        $this->assertTrue($res->decodeResponseJson()['result']);
+        $this->assertTrue($res->decodeResponseJson()['message']);
+    }
+
+    public function test_item_can_get_favourites_count()
+    {
+        $item = factory(Item::class)->create();
+
+        $item->favouredBy(factory(User::class)->create([
+            'activation_token' => 254613
+        ]));
+        $item->favouredBy(factory(User::class)->create([
+            'activation_token' => 254613
+        ]));
+        $item->favouredBy(factory(User::class)->create([
+            'activation_token' => 254613
+        ]));
+
+        $res = $this->actingAs(factory(User::class)->create([
+            'activation_token' => 254613
+        ]))->get(route('favourites.count', [$item->id]))->assertOk();
+
+        $this->assertEquals($res->decodeResponseJson()['message'], 3);
     }
 }

@@ -12,7 +12,9 @@ class FavouriteItemController extends Controller
     {
         $result = $item->isFavouredBy(Auth::user());
 
-        return response()->json(compact('result'));
+        return response()->json([
+            'message' => $result,
+        ]);
     }
 
     public function addItem(Item $item)
@@ -39,6 +41,13 @@ class FavouriteItemController extends Controller
 
         return response()->json([
             'message' => __('general.favourite.cleared'),
+        ]);
+    }
+
+    public function count(Item $item)
+    {
+        return response()->json([
+            'message' => $item->favouritesCount(),
         ]);
     }
 }
