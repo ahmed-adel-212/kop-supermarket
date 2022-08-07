@@ -66,4 +66,17 @@ class FavouriteItemControllerTest extends TestCase
         $user->refresh();
         $this->assertCount(0, $user->favourites);
     }
+
+    public function test_user_can_check_if_favoured_item_before()
+    {
+        $user = factory(User::class)->create([
+            'activation_token' => 254613
+        ]);
+        $item = factory(Item::class)->create();
+        $res = $this->actingAs($user)->postJson(route('favourites.add', [$item->id]))->assertOk();
+
+        $res = $this->actingAs($user)->get(route('favourites.check', [$item->id]))->assertOk();
+
+        $this->assertTrue($res->decodeResponseJson()['result']);
+    }
 }

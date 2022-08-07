@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class FavouriteItemController extends Controller
 {
+    public function checkItem(Item $item)
+    {
+        $result = $item->isFavouredBy(Auth::user());
+
+        return response()->json(compact('result'));
+    }
+
     public function addItem(Item $item)
     {
         Auth::user()->addToFavourites($item);
