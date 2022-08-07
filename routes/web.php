@@ -224,9 +224,8 @@ Route::group([
     Route::post('/reset-password', [\App\Http\Controllers\Website\PasswordResetController::class, 'reset'])->name('password.get-reset');
     Route::get('/reset-password-code', [\App\Http\Controllers\Website\PasswordResetController::class, 'get_code'])->name('get.code');
     Route::post('/enter-code', [\App\Http\Controllers\Website\PasswordResetController::class, 'find'])->name('email.find');
-});
 
-// todo move this under laravel localization
-Route::group(['middleware' => ['auth'], 'prefix' => 'favourites', 'as' => 'favourites.'], function () {
-    require __DIR__ . '/favourites_routes.php';
+    Route::group(['middleware' => ['auth'], 'prefix' => 'favourites', 'as' => 'favourites.'], function () {
+        require __DIR__ . '/favourites_routes.php';
+    });
 });
