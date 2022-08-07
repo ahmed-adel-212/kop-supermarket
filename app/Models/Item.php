@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Filters\QueryFilter;
 use App\Models\Category;
 use App\Models\DoughType;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Item extends Model
 {
@@ -102,5 +103,35 @@ class Item extends Model
     public function scopeFilter($query, QueryFilter $filters)
     {
         return $filters->apply($query);
+    }
+
+    /**
+     * define favourite items to users relationship
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favourites(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favourite_item');
+    }
+
+    public function favouritesCount(): int
+    {
+        return $this->favourites()->count();
+    }
+
+    public function favouredBy(User $user)
+    {
+        $this->favourites()->attach($user);
+    }
+
+    public function unFavouredBy(User $user)
+    {
+        $this->favourites()->detach($user);
+    }
+
+    public function isFavouredBy(User $user): bool
+    {
+        return $this->favourites()->where('user_id', $user->id)->exists();
     }
 }
