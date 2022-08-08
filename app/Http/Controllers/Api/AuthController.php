@@ -209,6 +209,7 @@ class AuthController extends BaseController
             return $this->sendError('token_mismatch');
         }
         
+        $user->active = true;
         $user->email_verified_at = now();
         $user->save();
 
@@ -361,7 +362,7 @@ class AuthController extends BaseController
         $user = User::where('activation_token', $token)->first();
 
         if (!$user) {
-            return $this->sendError('This activation token is invalid.');
+            return $this->sendError('token_mismatch');
         }
 
         $user->active = true;

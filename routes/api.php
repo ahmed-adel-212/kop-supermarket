@@ -19,7 +19,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'Api\AuthController@login');
     Route::post('login/cashier', 'Api\AuthController@loginCashier');
     Route::post('register', 'Api\AuthController@register');
-    Route::get('activate/{token}', 'Api\AuthController@signupActivate');
+    Route::post('activate/{token}', 'Api\AuthController@signupActivate');
     Route::post('login/google', 'Api\AuthController@loginWithGoogle');
     Route::post('login/facebook', 'Api\AuthController@loginWithFacebook');
 
