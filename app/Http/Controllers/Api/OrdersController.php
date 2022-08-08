@@ -17,11 +17,13 @@ use App\Models\Extra;
 use App\Models\Offer;
 use App\Models\Without;
 use App\Models\PointsTransaction;
+use App\Traits\GeneralTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrdersController extends BaseController
 {
+    use GeneralTrait;
 
     protected $validationRules = [
         'customer_id' => 'exists:users,id',
@@ -187,6 +189,8 @@ class OrdersController extends BaseController
             $branch_id = $branch->id;
         }
 
+        // apply 50% discount if this is first order
+        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
         $orderData = [
             "address_id" => $request->address_id,
@@ -618,7 +622,10 @@ class OrdersController extends BaseController
             $location['address'] = $order->address;
         }
         $delivery_fees = $order->service_type == 'delivery' ? 10 : 0;
-        $total = $requestt->total;
+
+        // remove 50% discount if user trying to reorder an order that has this offer
+        $total = $this->removeDiscountIfNotFirstOrder(request()->user(), $requestt->total);
+        
         $subtotal = $requestt->subtotal;
         $taxes = $requestt->taxes;
         $reorder = compact('location', 'offers', 'noOffers', 'total', 'subtotal', 'taxes', 'delivery_fees');

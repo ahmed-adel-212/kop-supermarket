@@ -169,4 +169,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return DB::table('favourite_item')->where('user_id', '=', $this->id)->delete();
     }
+
+    /**
+     * count all orders that has not been cancel or rejected
+     *
+     * @return boolean
+     */
+    public function hasNoOrders(): bool
+    {
+        return $this->orders()->where(function ($q) {
+            return $q->where('state', '!=', 'rejected')->where('state', '!=', 'canceld')->where('state', '!=', 'canceled');
+        })->count() === 0;
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\User;
+
 trait GeneralTrait
 {
 
@@ -20,13 +22,13 @@ trait GeneralTrait
     }
 
 
-    public function returnSuccessMessage($key= '', $msg = "", $errNum = "S000")
+    public function returnSuccessMessage($key = '', $msg = "", $errNum = "S000")
     {
         return [
             'status' => true,
             'errNum' => $errNum,
             'msg' => $msg,
-            'data'=>$key,
+            'data' => $key,
         ];
     }
 
@@ -229,5 +231,40 @@ trait GeneralTrait
             return "";
     }
 
+    /**
+     * apply 50% discount for user first order onll
+     * check if user has any orders and
+     * these orders were pending, in-progress, completed
+     *
+     * @param User $user
+     * @param float $total
+     * @return float
+     */
+    public function applyDiscountIfFirstOrder(User $user, float $total): float
+    {
+        if ($user->hasNoOrders()) {
+            $total *= .50;
+            $user->first_offer_available = false;
+            $user->save();
+            return round($total, 2);
+        }
 
+        return round($total, 2);
+    }
+
+    /**
+     * remove 50% discount if user was trying to reorder first order
+     *
+     * @param User $user
+     * @param float $total
+     * @return float
+     */
+    public function removeDiscountIfNotFirstOrder(User $user, float $total): float
+    {
+        if ($user->hasNoOrders()) {
+            return round($total, 2);
+        }
+
+        return round($total * 2, 2);
+    }
 }

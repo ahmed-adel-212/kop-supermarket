@@ -7,6 +7,7 @@ use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 
 class UserTest extends TestCase
 {
@@ -79,5 +80,14 @@ class UserTest extends TestCase
 
         $user->refresh();
         $this->assertEmpty($user->favourites);
+    }
+
+    public function test_user_can_check_if_no_orders()
+    {
+        $user = factory(User::class)->create([
+            'activation_token' => 254613
+        ]);
+
+        $this->assertTrue($user->hasNoOrders());
     }
 }
