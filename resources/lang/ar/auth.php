@@ -19,6 +19,6 @@ return [
     'Enter Your Verification Code' => 'ادخل الكود التأكيدي الخاص بك',
     'resend code' => 'اعاده ارسال الكود',
     'Sent SMS successfully.' => 'تم الارسال بنجاح.',
-    'Try again later.' => 'حاول فيما بعد.'
-
+    'Try again later.' => 'حاول فيما بعد.',
+    'phone_number_error' => 'رقم الهاتف غير صحيح'
 ];

@@ -19,6 +19,6 @@ return [
     'Enter Your Verification Code' => 'Enter Your Verification Code',
     'resend code' => 'resend code',
     'Sent SMS successfully.' => 'Sent SMS successfully.',
-    'Try again later.' => 'Try again later.'
-
+    'Try again later.' => 'Try again later.',
+    'phone_number_error' => 'The phone number is not a valid phone number.'
 ];
