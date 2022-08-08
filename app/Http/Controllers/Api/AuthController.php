@@ -11,16 +11,15 @@ use App\Models\PointsTransaction;
 
 use App\Notifications\SignupActivate;
 use App\Notifications\activateSMS;
-
-use AWS;
-use Twilio\Rest\Client;
-use Twilio\Jwt\ClientToken;
+use App\Traits\GeneralTrait;
 
 class AuthController extends BaseController
 {
     //website
     //
     //
+
+    use GeneralTrait;
 
     public function login(Request $request)
     {
@@ -106,9 +105,6 @@ class AuthController extends BaseController
             );
         }
 
-        $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
-        $authToken  = 'bc26eea7135c1a8f88abbd486c6fa935';
-
         DB::beginTransaction();
         try {
             $name = explode(" ", $request->name);
@@ -131,18 +127,11 @@ class AuthController extends BaseController
             $user = User::create($request->all());
             $user->attachRole(3); // customer
 
-            $client = new Client($accountSid, $authToken);
-            // Use the client to do fun stuff like send text messages!
-            $client->messages->create(
-                // the number you'd like to send the message to
-                '+966' . $user->first_phone,
-                array(
-                    // A Twilio phone number you purchased at twilio.com/console
-                    'from' => '+16196584381',
-                    // the body of the text message you'd like to send
-                    'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token,
-                )
+            $this->sendMessage(
+                $user->first_phone,
+                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
             );
+
             return $this->sendResponse($user, 'Successfully created user!');
 
             //            return $this->sendResponse($user, 'Successfully created user!');
@@ -220,22 +209,11 @@ class AuthController extends BaseController
     }
     public function resendVerificationCode(Request $request)
     {
-        $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
-        $authToken  = 'bc26eea7135c1a8f88abbd486c6fa935';
 
-
-        $client = new Client($accountSid, $authToken);
         try {
-            // Use the client to do fun stuff like send text messages!
-            $client->messages->create(
-                // the number you'd like to send the message to
-                $request->user->first_phone,
-                array(
-                    // A Twilio phone number you purchased at twilio.com/console
-                    'from' => '+16196584381',
-                    // the body of the text message you'd like to send
-                    'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user->activation_token,
-                )
+            $this->sendMessage(
+                $request->user->first_phone, 
+                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user->activation_token
             );
             return $this->sendResponse($request->user, 'Sent SMS successfully');
         } catch (\Exception $e) {

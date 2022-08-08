@@ -54,20 +54,10 @@ class AuthController extends Controller
             $user = User::create($request->all());
             $user->attachRole(3);
 
-            $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
-            $authToken = 'bc26eea7135c1a8f88abbd486c6fa935';
-            $client = new Client($accountSid, $authToken);
             try {
-                // Use the client to do fun stuff like send text messages!
-                $client->messages->create(
-                    // the number you'd like to send the message to
-                    '+966' . $user->first_phone,
-                    array(
-                        // A Twilio phone number you purchased at twilio.com/console
-                        'from' => '+16196584381',
-                        // the body of the text message you'd like to send
-                        'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token,
-                    )
+                $this->sendMessage(
+                    $user->first_phone,
+                    'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
                 );
                 // return redirect()->back()->with(['success'=>__('auth.Sent SMS successfully.')]);
             } catch (\Exception $e) {
@@ -137,22 +127,10 @@ class AuthController extends Controller
 
     public function resendVerificationCode()
     {
-        $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
-        $authToken = 'bc26eea7135c1a8f88abbd486c6fa935';
-
-        $client = new Client($accountSid, $authToken);
-
         try {
-            // Use the client to do fun stuff like send text messages!
-            $client->messages->create(
-                // the number you'd like to send the message to
-                '+2' . auth()->user()->first_phone,
-                array(
-                    // A Twilio phone number you purchased at twilio.com/console
-                    'from' => '+16196584381',
-                    // the body of the text message you'd like to send
-                    'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . auth()->user()->activation_token,
-                )
+            $this->sendMessage(
+                auth()->user()->first_phone,
+                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . auth()->user()->activation_token
             );
             return redirect()->back()->with(['success' => __('auth.Sent SMS successfully.')]);
         } catch (\Exception $e) {

@@ -3,6 +3,9 @@
 namespace App\Traits;
 
 use App\Models\User;
+use Twilio\Rest\Client;
+use AWS;
+use Twilio\Jwt\ClientToken;
 
 trait GeneralTrait
 {
@@ -266,5 +269,24 @@ trait GeneralTrait
         }
 
         return round($total * 2, 2);
+    }
+
+    public function sendMessage($phoneNumber, string $message): void
+    {
+        $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
+        $authToken  = 'bc26eea7135c1a8f88abbd486c6fa935';
+        $client = new Client($accountSid, $authToken);
+
+        // Use the client to do fun stuff like send text messages!
+        $client->messages->create(
+            // the number you'd like to send the message to
+            '+966' . $phoneNumber,
+            array(
+                // A Twilio phone number you purchased at twilio.com/console
+                'from' => '+16196584381',
+                // the body of the text message you'd like to send
+                'body' => $message
+            )
+        );
     }
 }
