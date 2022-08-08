@@ -117,9 +117,24 @@ class AuthController extends Controller
         return view('website.verification-code');
     }
 
-    public function setVerificationCode()
+    public function setVerificationCode(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'token' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            redirect()->back()->with([
+                'error' => $validator->errors()
+            ]);
+        }
+
         $user = auth()->user();
+
+        if (!isset($req['token']) || $user->activation_token !== $req['token']) {
+            return redirect()->back()->with(['error' => __('auth.token_mismatch')]);
+        }
+
         $user->email_verified_at = now();
         $user->save();
         return redirect()->route('home.page');

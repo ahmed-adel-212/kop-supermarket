@@ -32,8 +32,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('resend-code', 'Api\AuthController@resendCode');
     /* for verification */
     Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
-    Route::post('verify-account', 'Api\AuthController@setVerificationCode');
-
+    Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');
 
     Route::group(['middleware' => ['auth:api', 'verifyTwilio']], function () {
         Route::get('user', 'Api\AuthController@getUser');

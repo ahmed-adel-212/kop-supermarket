@@ -201,10 +201,17 @@ class AuthController extends BaseController
 
     }
     /* for verification */
-    public function setVerificationCode(Request $request)
+    public function setVerificationCode(Request $request, string $token)
     {
         $user = $request->user();
-        $user = $user->update(['email_verified_at' => now()]);
+
+        if ($user->activation_token !== $token) {
+            return $this->sendError('token_mismatch');
+        }
+        
+        $user->email_verified_at = now();
+        $user->save();
+
         return $this->sendResponse($user, 'Successfully customer verified.');
     }
     public function resendVerificationCode(Request $request)

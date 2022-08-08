@@ -20,5 +20,6 @@ return [
     'resend code' => 'اعاده ارسال الكود',
     'Sent SMS successfully.' => 'تم الارسال بنجاح.',
     'Try again later.' => 'حاول فيما بعد.',
-    'phone_number_error' => 'رقم الهاتف غير صحيح'
+    'phone_number_error' => 'رقم الهاتف غير صحيح',
+    'token_mismatch' => 'رقم التفعيل غير صحيح',
 ];
