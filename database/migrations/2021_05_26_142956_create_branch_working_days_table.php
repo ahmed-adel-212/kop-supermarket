@@ -19,6 +19,7 @@ class CreateBranchWorkingDaysTable extends Migration {
 			$table->string('time_from');
 			$table->string('time_to');
 			$table->bigInteger('branch_id')->unsigned()->index();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('RESTRICT')->onDelete('CASCADE');
         });

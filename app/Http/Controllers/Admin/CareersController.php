@@ -6,7 +6,9 @@ use App\Models\Careers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Auth;
+use App\Traits\LogfileTrait;
+use Auth; 
+
 class CareersController extends Controller
 {
     /**
@@ -15,14 +17,12 @@ class CareersController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    use LogfileTrait;
 
         public function index()
     {
-
             $jobs = Careers::orderBy('id', 'DESC')->get();
-
-
-
+            $this->Make_Log('App\Models\Careers','view',0);
         return view('admin.careers.index',compact('jobs'));
     }
 
@@ -77,6 +77,7 @@ class CareersController extends Controller
             'responsibilities_en' => $request->responsibilities_en,
             'created_at'=>Carbon::now(),
           ]);
+          $this->Make_Log('App\Models\Careers','create',$job->id);
 
 
         return redirect()->route('admin.careers.index')->with([
@@ -139,6 +140,8 @@ class CareersController extends Controller
                 'responsibilities_ar' => $request->responsibilities_ar,
                 'responsibilities_en' => $request->responsibilities_en,
             ]);
+        
+        $this->Make_Log('App\Models\Careers','update',$id);
 
         return redirect()->route('admin.careers.index')->with([
             'type' => 'success',
@@ -156,6 +159,7 @@ class CareersController extends Controller
     public function delete($id)
     {
         Careers::find($id)->delete();
+        $this->Make_Log('App\Models\Careers','delete',$id);
         return redirect()->route('admin.careers.index')->with([
             'type' => 'success', 'message' => 'job deleted successfuly'
         ]);
@@ -168,7 +172,7 @@ class CareersController extends Controller
         $status =  $job -> status  == 0 ? 1 : 0;
 
         $job -> update(['status' =>$status ]);
-
+        $this->Make_Log('App\Models\Careers','change status',$id);
         return redirect()->route('admin.careers.index')->with([
             'type' => 'success',
             'message' => 'Status Update successfuly'

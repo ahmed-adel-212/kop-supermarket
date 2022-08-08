@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Filters\QueryFilter;
 use App\Models\Category;
 use App\Models\DoughType;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image'];
 
     protected $hidden = ["branches"];

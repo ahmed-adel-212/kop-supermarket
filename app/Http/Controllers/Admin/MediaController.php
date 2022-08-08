@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Traits\LogfileTrait;
 class MediaController extends Controller
 {
     /**
@@ -13,9 +13,12 @@ class MediaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     use LogfileTrait;
+
     public function index(Request $request)
     {
         $medias = Media::orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Media','view',0);
         return view('admin.media.index', compact('medias'));
     }
 
@@ -56,7 +59,7 @@ class MediaController extends Controller
                 $media->url = '/media/' . $video_new_name;
             }
             $media->save();
-
+            $this->Make_Log('App\Models\Media','create',$media->id);
             return redirect()->route('admin.media.index')->with([
                 'type' => 'success',
                 'message' => 'New Media Created successfuly'
@@ -127,7 +130,7 @@ class MediaController extends Controller
                     unlink(public_path($oldVideo));
                 }
             }
-
+            $this->Make_Log('App\Models\Media','update',$media->id);
             return redirect()->route('admin.media.index')->with([
                 'type' => 'success',
                 'message' => 'New media updated successfuly'
@@ -153,6 +156,7 @@ class MediaController extends Controller
             unlink(public_path($media->url));
         }
         $media->delete();
+        $this->Make_Log('App\Models\Media','delete',$media->id);
         return back();
     }
 }

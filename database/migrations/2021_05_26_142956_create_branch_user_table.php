@@ -17,6 +17,7 @@ class CreateBranchUserTable extends Migration {
 			$table->bigInteger('id', true)->unsigned();
 			$table->bigInteger('branch_id')->unsigned()->index();
 			$table->bigInteger('user_id')->unsigned()->index();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('branch_id')->references('id')->on('branches')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');

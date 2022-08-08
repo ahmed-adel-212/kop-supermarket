@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Traits\LogfileTrait;
 class HealthInfoController extends Controller
 {
     /**
@@ -15,10 +16,12 @@ class HealthInfoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    use LogfileTrait;
+
     public function index()
     {
         $infos = HealthInfo::orderBy('id', 'DESC')->get();
-
+        $this->Make_Log('App\Models\HealthInfo','view',0);
         return view('admin.health.index', compact('infos'));
     }
 
@@ -61,7 +64,7 @@ class HealthInfoController extends Controller
 
             'created_at' => Carbon::now(),
         ]);
-
+        $this->Make_Log('App\Models\HealthInfo','create',$job->id);
 
         return redirect()->route('admin.healthinfo.index')->with([
             'type' => 'success',
@@ -117,7 +120,7 @@ class HealthInfoController extends Controller
                 'description_en' => $request->description_en,
 
             ]);
-
+        $this->Make_Log('App\Models\HealthInfo','update',$id);
         return redirect()->route('admin.healthinfo.index')->with([
             'type' => 'success',
             'message' => 'Blog Update successfuly'
@@ -133,6 +136,7 @@ class HealthInfoController extends Controller
     public function delete($id)
     {
         HealthInfo::find($id)->delete();
+        $this->Make_Log('App\Models\HealthInfo','delete',$id);
         return redirect()->route('admin.healthinfo.index')->with([
             'type' => 'success', 'message' => 'Blog deleted successfuly'
         ]);

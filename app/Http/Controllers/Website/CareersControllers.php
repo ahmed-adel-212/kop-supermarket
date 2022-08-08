@@ -16,7 +16,20 @@ class CareersControllers extends Controller
         $return = (app(FrontController::class)->getAllJobs())->getOriginalContent();
         foreach ($return as $in => $re) {
             if ($in == 'data') {
-                $jobs = $re;
+            $jobs = $re;
+            foreach ($jobs as $job) {
+                $responsibilities_ar_my_string = preg_replace('/\r\n/', '#PH#', $job->responsibilities_ar);
+                $job->arr_responsibilities_ar = explode('#PH#', $responsibilities_ar_my_string);
+                $responsibilities_en_my_string = preg_replace('/\r\n/', '#PH#', $job->responsibilities_en);
+                $job->arr_responsibilities_en = explode('#PH#', $responsibilities_en_my_string);
+
+                $description_ar_my_string = preg_replace('/\r\n/', '#PH#', $job->description_ar);
+                $job->arr_description_ar = explode('#PH#', $description_ar_my_string);
+                $description_en_my_string = preg_replace('/\r\n/', '#PH#', $job->description_en);
+                $job->arr_description_en = explode('#PH#', $responsibilities_en_my_string);
+
+            }
+            // return $jobs;
                 return view('website.page-careers', compact(['jobs']));
             }
         }

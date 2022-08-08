@@ -18,6 +18,7 @@ class CreateGiftsOrderItemsTable extends Migration {
 			$table->bigInteger('gifts_order_id')->unsigned()->index();
 			$table->bigInteger('gift_id')->unsigned()->index();
 			$table->integer('quantity')->default(1);
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('gift_id')->references('id')->on('gifts')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('gifts_order_id')->references('id')->on('gifts_orders')->onUpdate('RESTRICT')->onDelete('CASCADE');

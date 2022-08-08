@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\LogfileTrait;
 
 class OrderController extends Controller
 {
@@ -18,6 +19,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     
+    use LogfileTrait;
+
     public function index(OrderFilters $filters)
     {
         $user = Auth::user();
@@ -31,12 +36,14 @@ class OrderController extends Controller
             $branches = $user->branches->pluck('id')->toArray();
              $orders = Order::whereIn('branch_id', $branches)->filter($filters)->orderBy('id', 'DESC')->get();
         }
+        $this->Make_Log('App\Models\Order','view',0);
         return view('admin.order.index' , compact('orders'));
     }
 
     public function show(Request $request, $order_id)
     {
         $orderDetails = OrderItem::where('order_id', $order_id)->get();
+        $this->Make_Log('App\Models\Order','view details',$order_id);
         return view('admin.order.details' , compact('orderDetails'));
     }
 }

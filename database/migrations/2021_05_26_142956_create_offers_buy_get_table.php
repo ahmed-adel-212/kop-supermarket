@@ -21,6 +21,7 @@ class CreateOffersBuyGetTable extends Migration {
 			$table->integer('get_quantity');
 			$table->bigInteger('get_category_id')->unsigned()->index();
 			$table->integer('offer_price');
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('buy_category_id')->references('id')->on('categories')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('get_category_id')->references('id')->on('categories')->onUpdate('RESTRICT')->onDelete('CASCADE');

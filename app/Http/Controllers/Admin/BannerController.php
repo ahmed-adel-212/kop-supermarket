@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
-
+use App\Traits\LogfileTrait;
 
 class BannerController extends Controller
 {
@@ -14,9 +14,13 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index()
     {
         $banners = Banner::orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Banner','view',0);
         return view('admin.banners.index', compact('banners'));
     }
 
@@ -49,6 +53,7 @@ class BannerController extends Controller
             $image->move(public_path('banners'), $image_new_name);
             $banner->image = '/banners/' . $image_new_name;
             $banner->save();
+            $this->Make_Log('App\Models\Banner','create',$banner->id);
         }
 
         if (!$banner)
@@ -107,6 +112,7 @@ class BannerController extends Controller
             $image->move(public_path('banners'), $image_new_name);
             $banner->image = '/banners/' . $image_new_name;
             $banner->save();
+            $this->Make_Log('App\Models\Banner','update',$banner->id);
         }
 
         return redirect()->route('admin.banner.index')->with([
@@ -125,7 +131,7 @@ class BannerController extends Controller
     {
 
         $banner->delete();
-
+        $this->Make_Log('App\Models\Banner','delete',$banner->id);
         return redirect()->back()->with([
             'type' => 'success',
             'message' => 'Banner deleted successfuly'

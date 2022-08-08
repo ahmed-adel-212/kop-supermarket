@@ -15,6 +15,7 @@ class CreateUserBranchesTable extends Migration {
 		Schema::create('user_branches', function(Blueprint $table)
 		{
 			$table->bigInteger('id', true)->unsigned();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

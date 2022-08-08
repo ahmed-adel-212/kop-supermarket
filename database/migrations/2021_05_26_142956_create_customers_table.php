@@ -27,6 +27,7 @@ class CreateCustomersTable extends Migration {
 			$table->string('image')->nullable();
 			$table->bigInteger('created_by')->unsigned()->nullable()->index();
 			$table->bigInteger('updated_by')->unsigned()->nullable()->index();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('created_by')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('updated_by')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');

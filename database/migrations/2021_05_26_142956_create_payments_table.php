@@ -21,6 +21,7 @@ class CreatePaymentsTable extends Migration {
 			$table->bigInteger('customer_id')->unsigned()->index();
 			$table->bigInteger('order_id')->unsigned()->index();
 			$table->bigInteger('total_paid');
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('customer_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('RESTRICT')->onDelete('CASCADE');

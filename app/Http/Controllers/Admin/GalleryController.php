@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\LogfileTrait;
 
 class GalleryController extends Controller
 {
@@ -13,9 +14,13 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index(Request $request)
     {
         $galleries = Gallery::orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Gallery','view',0);
         return view('admin.gallery.index', compact('galleries'));
     }
 
@@ -56,6 +61,7 @@ class GalleryController extends Controller
                 $gallery->url = '/gallery/' . $image_new_name;
             }
             $gallery->save();
+            $this->Make_Log('App\Models\Gallery','create',$gallery->id);
 
             return redirect()->route('admin.gallery.index')->with([
                 'type' => 'success',
@@ -119,6 +125,7 @@ class GalleryController extends Controller
                 $gallery->url = '/gallery/' . $image_new_name;
             }
             $gallery->save();
+            $this->Make_Log('App\Models\Gallery','update',$gallery->id);
             if ($request->hasFile('url')){
                 if(file_exists(public_path($oldImage))){
                     unlink(public_path($oldImage));
@@ -150,6 +157,7 @@ class GalleryController extends Controller
             unlink(public_path($gallery->url));
         }
         $gallery->delete();
+        $this->Make_Log('App\Models\Gallery','delete',$gallery->id);
         return back();
     }
 }

@@ -20,6 +20,7 @@ class CreateOffersDiscountTable extends Migration {
 			$table->bigInteger('category_id')->unsigned()->index('offers_discount_category_id_foreign');
 			$table->integer('discount_type');
 			$table->integer('discount_value');
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('offer_id')->references('id')->on('offers')->onUpdate('RESTRICT')->onDelete('CASCADE');

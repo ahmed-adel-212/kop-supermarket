@@ -17,6 +17,7 @@ class CreateGeneralTable extends Migration {
 			$table->integer('id', true);
 			$table->string('key', 191)->nullable();
 			$table->string('value', 191)->nullable();
+			$table->softDeletes();
 		});
 	}
 

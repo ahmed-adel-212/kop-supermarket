@@ -19,6 +19,7 @@ class CreatePointsTransactionsTable extends Migration {
 			$table->bigInteger('user_id')->unsigned()->index();
 			$table->bigInteger('order_id')->unsigned()->nullable()->index();
 			$table->integer('status');
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('CASCADE');
 

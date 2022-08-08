@@ -19,6 +19,7 @@ class CreateMediaTable extends Migration {
 			$table->string('title_en');
 			$table->string('url')->nullable();
 			$table->string('author')->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

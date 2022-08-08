@@ -16,6 +16,7 @@ class CreateTaxesTable extends Migration {
 		{
 			$table->bigInteger('id', true)->unsigned();
 			$table->float('taxes');
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

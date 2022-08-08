@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration {
 			$table->string('activation_token');
 			$table->string('password');
 			$table->string('remember_token', 100)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 			$table->bigInteger('created_by')->unsigned()->nullable()->index();
 			$table->bigInteger('updated_by')->unsigned()->nullable()->index();

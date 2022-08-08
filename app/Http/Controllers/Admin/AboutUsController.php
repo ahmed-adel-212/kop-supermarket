@@ -6,7 +6,7 @@ use App\Models\AboutUs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-
+use App\Traits\LogfileTrait;
 class AboutUsController extends Controller
 {
     /**
@@ -14,10 +14,13 @@ class AboutUsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index(Request $request)
     {
         $aboutUS = AboutUs::get();
-
+        $this->Make_Log('App\Models\AboutUS','view',0);
         return view('admin.aboutUS.index', compact('aboutUS'));
     }
 
@@ -44,7 +47,8 @@ class AboutUsController extends Controller
             'description_ar' => 'required',
             'description_en' => 'required'];
         $validator = $request->validate($validator_rules);
-        AboutUs::create($request->all());
+        $action=AboutUs::create($request->all());
+        $this->Make_Log('App\Models\AboutUS','create',$action->id);
         return redirect()->route('admin.aboutUS.index');
     }
 
@@ -89,6 +93,7 @@ class AboutUsController extends Controller
         $validator = $request->validate($validator_rules);
         $about = AboutUs::findOrFail($id);
         $about->update($request->all());
+        $this->Make_Log('App\Models\AboutUS','update',$id);
         return redirect()->route('admin.aboutUS.index');
     }
 
@@ -102,6 +107,7 @@ class AboutUsController extends Controller
     {
         $about = AboutUs::findOrFail($id);
         $about->delete();
+        $this->Make_Log('App\Models\AboutUS','delete',$id);
         return back();
     }
 }

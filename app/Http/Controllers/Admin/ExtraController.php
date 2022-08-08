@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Extra;
 use App\Filters\ExtraFilters;
 use App\Models\Category;
-
+use App\Traits\LogfileTrait;
 
 class ExtraController extends Controller
 {
@@ -16,11 +16,14 @@ class ExtraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index(Request $request, ExtraFilters $filters)
     {
         $categories = Category::orderBy('id', 'DESC')->get();
-
         $extras = Extra::filter($filters)->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Extra','view',0);
         return view('admin.extras.index', compact('categories', 'extras'));
     }
 
@@ -55,7 +58,7 @@ class ExtraController extends Controller
         ]);
 
         $extra = Extra::create($validatedData);
-
+        $this->Make_Log('App\Models\Extra','create',$extra->id);
         if ($request->hasFile('image'))
         {
             $image = $request->image;
@@ -136,7 +139,7 @@ class ExtraController extends Controller
                 'type' => 'error',
                 'message' => 'test'
             ]);
-
+        $this->Make_Log('App\Models\Extra','update',$extra->id);
         return redirect()->route('admin.extra.index')->with([
             'type' => 'success',
             'message' => 'Menu Update successfuly'
@@ -153,7 +156,7 @@ class ExtraController extends Controller
     {
 
         $extra->delete();
-
+        $this->Make_Log('App\Models\Extra','delete',$extra->id);
         return redirect()->back()->with([
             'type' => 'success',
             'message' => 'Menu extra deleted successfuly'

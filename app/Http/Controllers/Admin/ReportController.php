@@ -10,7 +10,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\Extra;
 use App\Models\Branch;
-
+use App\Traits\LogfileTrait;
 use App\Filters\CustomerFilter;
 use App\Filters\ItemFilters;
 use App\Filters\ExtraFilters;
@@ -19,12 +19,13 @@ use App\Filters\IncomeFilters;
 
 class ReportController extends Controller
 {
-
+    use LogfileTrait;
     public function getCustomer(Request $requets, CustomerFilter $filters)
     {
         $customers = User::whereHas('roles', function($role){
             $role->where('name', 'customer');
         })->filter($filters)->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\User','report',0);
     	return view('admin.report.customer' , compact('customers'));
    	}
 
@@ -33,6 +34,7 @@ class ReportController extends Controller
         $orders = Order::when(request()->order_from, function ($q) {
             return $q->where('order_from', request()->order_from);
         })->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Order','report',0);
          return view('admin.report.order' , compact('orders'));
     }
 
@@ -40,7 +42,7 @@ class ReportController extends Controller
     {
         $orders = Order::filter($filters)->where('state', 'completed')->orderBy('id', 'DESC')->get();
         $branches = Branch::orderBy('id', 'DESC')->get();
-
+        $this->Make_Log('App\Models\OrderItems','report',0);
         return view('admin.report.order-item' , compact('orders', 'branches'));
     }
 
@@ -51,6 +53,7 @@ class ReportController extends Controller
         //     return $q->where('order_from', request()->order_from)->where('state', 'completed');
         // })->orderBy('id', 'DESC')->get();
         $branches = Branch::orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Income','report',0);
         return view('admin.report.income' , compact('orders', 'branches'));
     }
 
@@ -58,6 +61,7 @@ class ReportController extends Controller
     {
         $categories = Category::orderBy('id', 'DESC')->get();
         $items = Item::filter($filters)->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Item','report',0);
         return view('admin.report.item' , compact('items', 'categories'));
     }
 
@@ -65,6 +69,7 @@ class ReportController extends Controller
     {
        $categories = Category::orderBy('id', 'DESC')->get();
         $extras = Extra::filter($filters)->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Extra','report',0);
         return view('admin.report.extra' , compact('extras', 'categories'));
     }
 
@@ -73,6 +78,7 @@ class ReportController extends Controller
         $orders = Order::when(request()->order_from, function ($q) {
             return $q->where('order_from', request()->order_from);
         })->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\OrderStatus','report',0);
         return view('admin.report.order-status' , compact('orders'));
     }
 
@@ -81,7 +87,7 @@ class ReportController extends Controller
      $customers = User::whereHas('roles', function($role) {
             $role->where('name', 'customer');
         })->orderBy('id', 'DESC')->get();
-
+        $this->Make_Log('App\Models\OrderCustomer','report',0);
         $orders = Order::filter($filters)->orderBy('id', 'DESC')->get();
 
         return view('admin.report.order-customer' , compact('orders', 'customers'));

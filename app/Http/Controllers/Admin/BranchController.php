@@ -11,13 +11,16 @@ use App\Models\Area;
 use Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-
+use App\Traits\LogfileTrait;
 class BranchController extends Controller
 {
 
     /**
      * Validation rules for Branch resource
      */
+
+    use LogfileTrait;
+
     protected $validationsRules = [
         'name_ar' => 'required|min:3|max:30',
         'name_en' => 'required|min:3|max:30',
@@ -43,6 +46,7 @@ class BranchController extends Controller
     public function index()
     {
         $branches = Branch::OrderBy('created_at')->get();
+        $this->Make_Log('App\Models\Branch','view',0);
         return view('admin.branch.index', compact('branches'));
     }
 
@@ -102,7 +106,7 @@ class BranchController extends Controller
 
         ]);
 
-
+        $this->Make_Log('App\Models\Branch','create',$branch->id);
         // TODO: use this fucntion to return only choosen day
         $days = array_filter($request->WorkingDay, function ($day) {
             return isset($day['on']);
@@ -113,21 +117,23 @@ class BranchController extends Controller
             foreach ($days as $name => $day) {
 
                 if (!empty($day['time_from']) && !empty($day['time_to'])) {
-                    BranchWorkingDay::create([
+                   $action_id= BranchWorkingDay::create([
                         'branch_id' => $branch->id,
                         'day' => $name,
                         'time_from' => $day['time_from'],
                         'time_to' => $day['time_to'],
                     ]);
+                    $this->Make_Log('App\Models\BranchWorkingDay','create',$action_id);
                 }
 
                 if (!empty($day['time_from2']) && !empty($day['time_to2'])) {
-                    BranchWorkingDay::create([
+                    $action_id= BranchWorkingDay::create([
                         'branch_id' => $branch->id,
                         'day' => $name,
                         'time_from' => $day['time_from2'],
                         'time_to' => $day['time_to2'],
                     ]);
+                    $this->Make_Log('App\Models\BranchWorkingDay','create',$action_id);
                 }
             }
         }
@@ -218,6 +224,8 @@ class BranchController extends Controller
             unset($validatedData['areas']);
             unset($validatedData['WorkingDay']);
             $branch->update($validatedData);
+            $this->Make_Log('App\Models\Branch','update',$branch->id);
+
             return redirect()->route('admin.branch.index')->with([
                 'type' => 'success',
                 'message' => 'Branch Has Been Updated'
@@ -240,6 +248,7 @@ class BranchController extends Controller
         $branch->orders()->delete();
         $branch->cashiers2()->delete();
         $branch->delete();
+        $this->Make_Log('App\Models\Branch','delete',$branch->id);
 
         return redirect()->route('admin.branch.index');
     }

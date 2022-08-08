@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends Model
 {
+    use SoftDeletes;
 
      protected $fillable = [
          'name', 'street', 'building_number', 'floor_number','landmark','city_id','customer_id','area_id'

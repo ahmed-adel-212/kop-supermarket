@@ -29,6 +29,7 @@ class CreateBranchesTable extends Migration {
 			/*$table->bigInteger('created_by')->unsigned()->nullable()->index();
 			$table->bigInteger('updated_by')->unsigned()->nullable()->index();
 			*/
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('city_id')->references('id')->on('cities')->onUpdate('RESTRICT')->onDelete('CASCADE');

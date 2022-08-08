@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
 
+use App\Traits\LogfileTrait;
 class OfferController extends Controller
 {
     /**
@@ -24,9 +25,13 @@ class OfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index()
     {
         $offers = Offer::with('buyGet')->with('discount')->orderBy('created_at', 'DESC')->get();
+        $this->Make_Log('App\Models\Offer','view',0);
         return view('admin.offer.index', compact('offers'));
     }
 
@@ -114,7 +119,7 @@ class OfferController extends Controller
             'offer_type' => $request->offer_type,
             'created_by' => $request->user()->id
         ]);
-
+        $this->Make_Log('App\Models\Offer','create',$offer->id);
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
@@ -134,7 +139,7 @@ class OfferController extends Controller
                 'get_category_id' => $request->get_category_id,
                 'offer_price' => $request->offer_price,
             ]);
-
+            $this->Make_Log('App\Models\OfferBuyGet','create',$buy_get_offer->id);
             $buy_get_offer->buyItems()->sync($request->buy_items);
             $buy_get_offer->getItems()->sync($request->get_items);
         }
@@ -152,7 +157,7 @@ class OfferController extends Controller
                 'discount_type' => $request->discount_type,
                 'discount_value' => $request->discount_value,
             ]);
-
+            $this->Make_Log('App\Models\OfferDiscount','create',$discountOffer->id);
             $discountOffer->items()->sync($request->items);
         }
 
@@ -294,7 +299,7 @@ class OfferController extends Controller
             'offer_type' => $request->offer_type,
             'updated_by' => Auth::user()->id
         ]);
-
+        $this->Make_Log('App\Models\Offer','updete',$offer->id);
         if ($request->offer_type == 'discount') {
 
             $validator = Validator::make($request->all(), [
@@ -327,7 +332,7 @@ class OfferController extends Controller
 
         if ($request->has('buy_quantity') && $request->buy_quantity != null) {
 
-            $offer->buyGet()->updateOrCreate([
+            $action_id=$offer->buyGet()->updateOrCreate([
                 'offer_id' => $offer->id,
                 'buy_quantity' => $request->buy_quantity,
                 'buy_category_id' => $request->buy_category_id,
@@ -341,6 +346,7 @@ class OfferController extends Controller
             $now = new DateTime();
             $offer->updated_at = $now;
             $offer->save();
+            $this->Make_Log('App\Models\OfferBuyGet','updete',$action_id);
         }
 
         if ($request->has('discount_quantity') && $request->discount_quantity != null) {
@@ -354,6 +360,7 @@ class OfferController extends Controller
             $now = new DateTime();
             $offer->updated_at = $now;
             $offer->save();
+            $this->Make_Log('App\Models\OfferDiscount','updete',$offer->discount->id);
         }
 
         return redirect()->route('admin.offer.index')->with([
@@ -371,6 +378,7 @@ class OfferController extends Controller
     public function destroy(Offer $offer)
     {
         $offer->delete();
+        $this->Make_Log('App\Models\Offer','delete',$offer->id);
 
         return redirect()->route('admin.offer.index')->with([
             'type' => 'error',

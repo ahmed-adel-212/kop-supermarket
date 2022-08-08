@@ -18,6 +18,7 @@ class CreateNotiTokensTable extends Migration {
 			$table->integer('user_id');
 			$table->string('platform', 191)->nullable();
 			$table->string('token', 191)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

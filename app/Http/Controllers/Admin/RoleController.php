@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\Permission;
-
+use App\Traits\LogfileTrait;
 class RoleController extends Controller
 {
+    use LogfileTrait;
+
+
     public function __construct()
     {
 
@@ -24,6 +27,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
+        $this->Make_Log('App\Models\Role','view',0);
         return view('admin.role.index', compact('roles'));
     }
 
@@ -51,8 +55,8 @@ class RoleController extends Controller
             'description' => 'nullable|min:3',
         ]);
 
-        Role::create($attributes);
-
+        $action=Role::create($attributes);
+        $this->Make_Log('App\Models\Role','create',$action->id);
         return redirect()->route('admin.role.index')->with([
             'type' => 'success',
             'message' => 'Role insert successfuly'
@@ -98,7 +102,7 @@ class RoleController extends Controller
 
 
         $role->update($attributes);
-
+        $this->Make_Log('App\Models\Role','updete',$role->id);
         return redirect()->route('admin.role.index')->with([
             'type' => 'success',
             'message' => 'Role updated successfuly'
@@ -116,7 +120,7 @@ class RoleController extends Controller
     {
 
         $role->delete();
-
+        $this->Make_Log('App\Models\Role','delete',$role->id);
         return redirect()->route('admin.role.index')->with([
             'type' => 'error',
             'message' => 'Role deleted successfuly'
@@ -170,6 +174,9 @@ class RoleController extends Controller
         $role = Role::find($id);
         $permissions = Permission::whereIn('id', $request->permission)->get();
         $role->permissions()->sync($permissions);
+foreach($request->permission as $perm){
+        $this->Make_Log('App\Models\Permission','asignPermission', $perm);
+    }
         return redirect()->route('admin.role.index')->with([
             'type' => 'success',
             'message' => 'Permission asign successfuly'

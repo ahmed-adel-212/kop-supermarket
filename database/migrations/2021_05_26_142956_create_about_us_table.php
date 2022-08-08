@@ -19,6 +19,7 @@ class CreateAboutUsTable extends Migration {
 			$table->string('title_en');
 			$table->text('description_ar')->nullable();
 			$table->text('description_en')->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

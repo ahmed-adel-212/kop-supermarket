@@ -26,6 +26,7 @@ class CreateItemsTable extends Migration {
 			$table->enum('best_seller', ['activate', 'deactivate'])->default('deactivate');
 			$table->boolean('view')->default(1);
 			$table->bigInteger('category_id')->unsigned()->index();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('RESTRICT')->onDelete('CASCADE');
 

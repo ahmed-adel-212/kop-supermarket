@@ -26,6 +26,7 @@ class CreateOrderItemTable extends Migration {
 			$table->float('offer_price', 10, 0)->nullable();
 			$table->bigInteger('offer_id')->nullable();
 			$table->dateTime('offer_last_updated_at')->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

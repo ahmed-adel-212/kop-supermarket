@@ -23,6 +23,7 @@ class CreateWithoutsTable extends Migration {
 			$table->float('calories', 10, 0);
 			$table->bigInteger('category_id')->unsigned()->index();
 			$table->string('image')->nullable();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');
 

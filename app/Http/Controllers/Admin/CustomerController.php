@@ -13,6 +13,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\LogfileTrait;
 
 class CustomerController extends Controller
 {
@@ -21,12 +22,15 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index()
     {
         $customers = User::whereHas('roles', function ($role) {
             $role->where('name', 'customer');
         })->orderBy('id', 'DESC')->get();
-
+        $this->Make_Log('App\Models\User','view',0);
         return view('admin.customer.index', compact('customers'));
     }
 
@@ -89,6 +93,8 @@ class CustomerController extends Controller
             'created_by' => auth()->id()
         ]);
 
+        $this->Make_Log('App\Models\User','create',$customer->id);
+
 
         if ($request->hasFile('image')) {
             $image = $request->image;
@@ -105,7 +111,7 @@ class CustomerController extends Controller
         if ($request->has('Address')) {
             $addresses = $request->get('Address');
             foreach ($addresses as $customer_address) {
-                Address::create([
+             $action_id=   Address::create([
                     'customer_id' => $customer->id,
                     'name' => 'address of ' . $customer->name,
                     'city_id' => $customer_address['city_id'],
@@ -115,6 +121,7 @@ class CustomerController extends Controller
                     'floor_number' => $customer_address['floor_number'],
                     'landmark' => $customer_address['special_marque'],
                 ]);
+                $this->Make_Log('App\Models\Address','create',$action_id);
             }
         }
 
@@ -203,7 +210,7 @@ class CustomerController extends Controller
             'updated_by' => auth()->id()
         ]);
 
-
+        $this->Make_Log('App\Models\User','update',$customer->id);
         // dd(
         //     $request->Address,
         //     $customer->addresses->first()
@@ -264,6 +271,7 @@ class CustomerController extends Controller
     public function destroy(User $customer)
     {
         if ($customer->delete()) {
+            $this->Make_Log('App\Models\User','delete',$customer->id);
             return redirect()->route('admin.customer.index')->with([
                 'type' => 'success',
                 'message' => 'Customer deleted successfuly'

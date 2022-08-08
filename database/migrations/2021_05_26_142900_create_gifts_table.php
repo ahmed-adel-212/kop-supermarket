@@ -19,6 +19,7 @@ class CreateGiftsTable extends Migration {
 			$table->string('name_en');
 			$table->integer('points');
 			$table->string('image', 191)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

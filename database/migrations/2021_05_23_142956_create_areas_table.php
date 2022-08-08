@@ -22,6 +22,7 @@ class CreateAreasTable extends Migration {
 			$table->text('description_en')->nullable();
 			$table->float('delivery_fees', 10, 0)->nullable();
 			$table->float('min_delivery_ammount', 10, 0)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('city_id')->references('id')->on('cities')->onUpdate('RESTRICT')->onDelete('CASCADE');
 		});

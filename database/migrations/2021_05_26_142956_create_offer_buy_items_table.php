@@ -17,6 +17,7 @@ class CreateOfferBuyItemsTable extends Migration {
 			$table->bigInteger('id', true)->unsigned();
 			$table->bigInteger('offer_id')->unsigned();
 			$table->bigInteger('item_id')->unsigned();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

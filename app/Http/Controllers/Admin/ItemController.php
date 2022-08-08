@@ -10,6 +10,9 @@ use App\Models\Category;
 use App\Models\Branch;
 use Illuminate\Support\Facades\Validator;
 
+use App\Traits\LogfileTrait;
+
+
 class ItemController extends Controller
 {
     /**
@@ -17,10 +20,14 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+           
+    use LogfileTrait;
+
     public function index(Request $request, ItemFilters $filters)
     {
         $categories = Category::orderBy('id', 'DESC')->get();
         $items = Item::filter($filters)->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Item','view',0);
         return view('admin.items.index', compact('categories', 'items'));
     }
 
@@ -63,7 +70,7 @@ class ItemController extends Controller
         }
         
         $item = Item::create($validatedData);
-
+        $this->Make_Log('App\Models\Item','create',$item->id);
         if (!$item)
             return redirect()->route('admin.item.index')->with([
                 'type' => 'error',
@@ -197,7 +204,7 @@ class ItemController extends Controller
         $item->branches = implode(',', $r);
         $item->save();
 
-
+        $this->Make_Log('App\Models\Item','update',$item->id);
         return redirect()->route('admin.item.index')->with([
             'type' => 'success',
             'message' => 'Item Update successfuly'
@@ -213,7 +220,7 @@ class ItemController extends Controller
     public function destroy(Request $request, Item $item)
     {
         $item->delete();
-
+        $this->Make_Log('App\Models\Item','delete',$item->id);
         return redirect()->back()->with([
             'type' => 'error', 'message' => 'Item deleted successfuly'
         ]);
@@ -236,7 +243,7 @@ class ItemController extends Controller
     public function dealOfWeekItem(ItemFilters $filters)
     {
         $categories = Category::all();
-        $items = Item::filter($filters)->get();
+        $items = Item::filter($filters)->get(); 
         return view('admin.dealOfWeek.index', compact('categories', 'items'));
     }
 
@@ -245,6 +252,7 @@ class ItemController extends Controller
         $item = Item::find($itemId);
         $item->best_seller = ($item->best_seller == 'activate')? 'deactivate':'activate';
         $item->save();
+         $this->Make_Log('App\Models\Item','dealOfWeekStatus',$itemId);
         return response()->json([
             'message' => 'success',
             'data' => $item->best_seller

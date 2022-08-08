@@ -18,6 +18,7 @@ class CreateDoughTypesTable extends Migration {
 			$table->integer('dough_type_id')->unsigned();
 			$table->string('name_ar');
 			$table->string('name_en');
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration {
 			$table->float('total', 10, 0);
 			$table->enum('state', array('pending','rejected','in-progress','completed','canceled','on-way'));
 			$table->text('cancellation_reason', 65535)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 			$table->bigInteger('created_by')->unsigned()->nullable()->index();
 			$table->bigInteger('updated_by')->unsigned()->nullable()->index();

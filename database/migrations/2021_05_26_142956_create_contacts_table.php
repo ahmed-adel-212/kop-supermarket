@@ -18,6 +18,7 @@ class CreateContactsTable extends Migration {
 			$table->string('subject');
 			$table->string('body');
 			$table->bigInteger('customer_id')->unsigned()->index('contacts_customer_id_foreign');
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('customer_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
 

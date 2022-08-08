@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\Extra;
 use App\Models\DoughType;
+use App\Traits\LogfileTrait;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -17,9 +18,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index()
     {
         $categories = Category::with('items')->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Category','view',0);
         return view('admin.category.index', compact('categories'));
     }
 
@@ -85,7 +90,7 @@ class CategoryController extends Controller
             'image' => '',
             'created_by' => auth()->id()
         ]);
-
+        $this->Make_Log('App\Models\Category','create',$category->id);
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
@@ -228,7 +233,7 @@ class CategoryController extends Controller
             $category->save();
         }
 
-
+        $this->Make_Log('App\Models\Category','update',$category->id);
         if ($request->has('Item'))
             $category->items()->updateOrCreate($request->Item);
         // {
@@ -285,7 +290,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-
+        $this->Make_Log('App\Models\Category','delete',$category->id);
         return redirect()->route('admin.category.index')->with([
             'type' => 'error', 'message' => 'category deleted successfuly'
         ]);

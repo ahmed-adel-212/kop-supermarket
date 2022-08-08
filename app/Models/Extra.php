@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Extra extends Model
 {
+    use SoftDeletes;
     protected $guarded = [];
     
     public function category(){

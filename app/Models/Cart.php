@@ -5,9 +5,11 @@ namespace App\Models;
 use App\Models\Extra;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Without;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cart extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'user_id',
         'item_id',

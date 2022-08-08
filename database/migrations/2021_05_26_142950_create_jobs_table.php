@@ -24,6 +24,7 @@ class CreateJobsTable extends Migration {
 			$table->text('brief_description_en')->nullable();
 			$table->text('responsibilities_ar')->nullable();
 			$table->text('responsibilities_en')->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

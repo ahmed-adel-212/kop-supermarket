@@ -17,6 +17,7 @@ class CreateCategoryExtraTable extends Migration {
 			$table->bigInteger('id', true)->unsigned();
 			$table->bigInteger('category_id')->unsigned()->index();
 			$table->bigInteger('extra_id')->unsigned()->index();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

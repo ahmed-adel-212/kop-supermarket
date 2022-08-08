@@ -6,6 +6,7 @@ use App\Models\News;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\LogfileTrait;
 
 class NewsController extends Controller
 {
@@ -14,9 +15,13 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+           
+    use LogfileTrait;
+
     public function index()
     {
         $news = News::orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\News','view',0);
         return view('admin.News.index', compact('news'));
     }
 
@@ -65,7 +70,7 @@ class NewsController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-
+        $this->Make_Log('App\Models\News','create',$job->id);
         return redirect()->route('admin.news.index')->with([
             'type' => 'success',
             'message' => 'Blog insert successfully'
@@ -136,7 +141,7 @@ class NewsController extends Controller
             }
         }
 
-
+        $this->Make_Log('App\Models\News','update',$id);
         return redirect()->route('admin.news.index')->with([
             'type' => 'success',
             'message' => 'Blog News successfuly'
@@ -159,7 +164,7 @@ class NewsController extends Controller
 //        unlink($blog->image); //delete from folder
 
         $blog->delete();
-
+        $this->Make_Log('App\Models\News','delete',$id);
         return redirect()->back()->with([
             'type' => 'error', 'message' => 'Blog  deleted successfuly'
         ]);

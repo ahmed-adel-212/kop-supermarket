@@ -17,6 +17,7 @@ class CreateBranchDeliveryAreasTable extends Migration {
 			$table->bigInteger('id', true)->unsigned();
 			$table->bigInteger('branch_id')->unsigned()->index();
 			$table->bigInteger('area_id')->unsigned()->index();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

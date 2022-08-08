@@ -10,6 +10,7 @@ use App\Models\Branch;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use App\Traits\LogfileTrait;
 
 class UserController extends Controller
 {
@@ -18,11 +19,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index()
     {
         $users = User::where('id', '!=', auth()->id())->whereHas('roles', function ($role) {
             $role->where('name', '!=', 'customer');
         })->with('roles')->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\User','view',0);
         return view('admin.user.index', compact('users'));
     }
 
@@ -87,7 +92,7 @@ class UserController extends Controller
             'active' => 1
         ]);
 
-
+        $this->Make_Log('App\Models\User','create', $user->id);
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
@@ -179,7 +184,7 @@ class UserController extends Controller
 
         $user->branches()->detach();
         $user->branches()->syncWithoutDetaching($request->branches);
-
+        $this->Make_Log('App\Models\User','update', $user->id);
         return redirect()->route('admin.user.index')->with([
             'type' => 'success',
             'message' => 'User updated successfuly'
@@ -195,7 +200,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-
+        $this->Make_Log('App\Models\User','delete', $user->id);
         return redirect()->route('admin.user.index')->with([
             'type' => 'error',
             'message' => 'User deleted successfuly'

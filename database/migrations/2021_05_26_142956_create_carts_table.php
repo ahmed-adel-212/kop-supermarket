@@ -24,6 +24,7 @@ class CreateCartsTable extends Migration {
 			$table->integer('quantity')->default(1);
 			$table->text('offer_id', 65535)->nullable();
 			$table->float('offer_price', 10, 0)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('item_id')->references('id')->on('items')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');

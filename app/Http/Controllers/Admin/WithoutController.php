@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Without;
 use App\Filters\WithoutFilters;
 use App\Models\Category;
-
+use App\Traits\LogfileTrait;
 
 class WithoutController extends Controller
 {
@@ -16,11 +16,14 @@ class WithoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    use LogfileTrait;
+
     public function index(Request $request, WithoutFilters $filters)
     {
         $categories = Category::orderBy('id', 'DESC')->get();
-
         $withouts = Without::filter($filters)->orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Without','view',0);
         return view('admin.withouts.index', compact('categories', 'withouts'));
     }
 
@@ -55,7 +58,7 @@ class WithoutController extends Controller
         ]);
 
         $without = Without::create($validatedData);
-
+        $this->Make_Log('App\Models\Without','create', $without->id);
         if ($request->hasFile('image'))
         {
             $image = $request->image;
@@ -136,7 +139,7 @@ class WithoutController extends Controller
                 'type' => 'error',
                 'message' => 'There is something wrong!!'
             ]);
-
+        $this->Make_Log('App\Models\Without','update', $without->id);
         return redirect()->route('admin.without.index')->with([
             'type' => 'success',
             'message' => 'Without Updated successfuly'
@@ -153,7 +156,7 @@ class WithoutController extends Controller
     {
 
         $without->delete();
-
+        $this->Make_Log('App\Models\Without','delete', $without->id);
         return redirect()->back()->with([
             'type' => 'success',
             'message' => 'Without deleted successfuly'

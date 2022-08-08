@@ -18,6 +18,7 @@ class CreateThirdPartyUserIdsTable extends Migration {
 			$table->bigInteger('user_id')->unsigned()->index('third_party_user_ids_user_id_foreign');
 			$table->text('google_user_id', 65535)->nullable();
 			$table->text('facebook_user_id', 65535)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
 

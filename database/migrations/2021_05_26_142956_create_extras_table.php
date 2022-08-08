@@ -22,6 +22,7 @@ class CreateExtrasTable extends Migration {
 			$table->float('price', 10, 0);
 			$table->float('calories', 10, 0);
 			$table->bigInteger('category_id')->unsigned()->index();
+			$table->softDeletes();
 			$table->timestamps();
 			$table->string('image')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('RESTRICT')->onDelete('CASCADE');

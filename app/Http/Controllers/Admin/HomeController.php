@@ -9,10 +9,12 @@ use App\Models\Order;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\User;
+use App\Traits\LogfileTrait;
 
 
 class HomeController extends Controller
 {
+    use LogfileTrait;
     public function index()
     {
         // orders
@@ -29,7 +31,7 @@ class HomeController extends Controller
             $role->where('name', 'customer');
         })->count();
 
-
+        $this->Make_Log('App\Models\dashboard','view',0);
         return view('admin.dashboard', compact('ordersCount', 'branchesCount', 'categoriesCount', 'customersCount'));
     }
 }

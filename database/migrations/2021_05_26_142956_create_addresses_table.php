@@ -23,6 +23,7 @@ class CreateAddressesTable extends Migration {
 			$table->bigInteger('city_id')->unsigned()->index();
 			$table->bigInteger('area_id')->index();
 			$table->bigInteger('customer_id')->unsigned()->nullable()->index();
+			$table->softDeletes();
 			$table->timestamps();
             $table->foreign('area_id')->references('id')->on('areas')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('city_id')->references('id')->on('cities')->onUpdate('RESTRICT')->onDelete('CASCADE');

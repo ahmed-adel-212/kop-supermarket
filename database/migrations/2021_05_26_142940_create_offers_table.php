@@ -24,6 +24,7 @@ class CreateOffersTable extends Migration {
 			$table->enum('offer_type', array('buy-get','discount'));
 			$table->string('title_ar', 191)->nullable();
 			$table->string('description_ar', 191)->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 			$table->bigInteger('created_by')->unsigned()->nullable()->index();
 			$table->bigInteger('updated_by')->unsigned()->nullable()->index();

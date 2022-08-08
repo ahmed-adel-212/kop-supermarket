@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Support\Facades\Session;
 
+use App\Traits\LogfileTrait;
 use App\Models\Gift;
 use App\Models\GiftsOrder;
 use App\Models\PointsTransaction;
@@ -22,9 +23,13 @@ class GiftController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    use LogfileTrait;
+
     public function index()
     {
         $gifts = Gift::orderBy('id', 'DESC')->get();
+        $this->Make_Log('App\Models\Gift','view',0);
         return view('admin.gift.index', compact('gifts'));
     }
 
@@ -67,7 +72,7 @@ class GiftController extends Controller
             $branch->save();
         }
 
-
+        $this->Make_Log('App\Models\Gift','create',$branch->id);
         return redirect()->route('admin.gift.index')->with([
             'type' => 'success',
             'message' => 'Gift insert successfuly'
@@ -132,7 +137,7 @@ class GiftController extends Controller
                 $gift->save();
             }
         }
-
+        $this->Make_Log('App\Models\Gift','update',$gift->id);
         Session::flash('success', 'Gift has been updated');
         return redirect()->route('admin.gift.index');
     }
@@ -146,6 +151,7 @@ class GiftController extends Controller
     public function destroy(Gift $gift)
     {
         $gift->delete();
+        $this->Make_Log('App\Models\Gift','delete',$gift->id);
 
         return redirect()->route('admin.gift.index');
     }
@@ -177,7 +183,7 @@ class GiftController extends Controller
             'value' => $request->value,
             'key' => 'pointsValue',
         ]);
-
+        $this->Make_Log('App\Models\General','update',$value->id);
         return back()->with([
             'type' => 'success',
             'message' => 'Value Updated Successfuly'

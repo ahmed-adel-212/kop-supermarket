@@ -20,6 +20,7 @@ class CreateNewsTable extends Migration {
 			$table->text('description_ar')->nullable();
 			$table->text('description_en')->nullable();
 			$table->string('image');
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

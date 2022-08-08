@@ -16,6 +16,7 @@ class CreateBannersTable extends Migration {
 		{
 			$table->bigInteger('id', true)->unsigned();
 			$table->string('image');
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

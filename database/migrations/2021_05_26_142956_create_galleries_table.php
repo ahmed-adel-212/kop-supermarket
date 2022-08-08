@@ -18,6 +18,7 @@ class CreateGalleriesTable extends Migration {
 			$table->string('title_ar');
 			$table->string('title_en');
 			$table->string('url')->nullable();
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}
