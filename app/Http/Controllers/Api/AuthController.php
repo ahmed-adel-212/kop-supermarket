@@ -209,13 +209,12 @@ class AuthController extends BaseController
     }
     public function resendVerificationCode(Request $request)
     {
-
         try {
             $this->sendMessage(
-                $request->user->first_phone, 
-                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user->activation_token
+                $request->user()->first_phone, 
+                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user()->activation_token
             );
-            return $this->sendResponse($request->user, 'Sent SMS successfully');
+            return $this->sendResponse($request->user(), 'Sent SMS successfully');
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
