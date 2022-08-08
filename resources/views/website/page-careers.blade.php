@@ -103,7 +103,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse{{$job->id}}" style="color:#cbcbcb;font-size: 25px;"><b calss="rotate" >></b></a>
+                                <a data-toggle="collapse" href="#collapse{{$job->id}}" style="color:#cbcbcb;font-size: 25px;"><i class="fas fa-angle-right left"></i></a>
                                     <a data-toggle="collapse" href="#collapse{{$job->id}}">{{$job['title_'.app()->getLocale()]}}</a>
                                     <hr style="margin-bottom: 10px;">
                                     <div class="article-intro__date">
