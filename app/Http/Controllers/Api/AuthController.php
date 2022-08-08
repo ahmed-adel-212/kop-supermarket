@@ -112,6 +112,12 @@ class AuthController extends BaseController
         DB::beginTransaction();
         try {
             $name = explode(" ", $request->name);
+            if (count($name) < 2) {
+                return response()->json([
+                    "success" => false,
+                    "message" => 'last_name_not_included',
+                ], 400);
+            }
 
             $request->merge([
                 'first_name' => $name[0],
