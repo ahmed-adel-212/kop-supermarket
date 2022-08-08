@@ -13,7 +13,7 @@
   color: #2387aa;
   cursor: pointer;
   padding: 18px;
-  width: 100%;
+  width: 99%;
   border: none;
   text-align: left;
   outline: none;
@@ -42,7 +42,7 @@
     color: #6dc405;
 }
 .panel-group{
-    margin:20px;
+    margin:0px;
 }
 
 .article-intro__bottom .uk-button
@@ -80,6 +80,13 @@
     padding-right: 3%;
     
 }
+.affix {
+          top: 20px;
+          z-index: 9999 !important;
+          position: sticky;
+
+      }
+
 </style>
 @endif
 @endsection
@@ -121,32 +128,34 @@
                         </div>
                     @endif
                     @if(isset($jobs))
+                    <div class="col-md-6">
                     @foreach($jobs as $job)
-                    <div class="panel-group" >
+                    <div class="panel-group " >
                    
                         <div class="panel panel-default">
 
-                            <div class="article-intro__bottom">
+                            <!-- <div class="article-intro__bottom">
                                     <div class="article-full__date">
                                         <a class="uk-button" href="{{route('apply.form',$job->id)}}"><span style="display: table-cell;vertical-align: middle;text-align:center;">{{__('general.Apply Now')}}</span></a>
                                     </div>
-                            </div>
+                            </div> -->
 
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" href="#collapse{{$job->id}}">{{$job['title_'.app()->getLocale()]}}</a>
-                                    <hr>
+                                    <hr style="margin-bottom: 10px;">
                                     <div class="article-intro__date">
                                             <i class="fas fa-calendar-alt"></i>
                                             <span>{{$job->created_at}}</span>
-                                            @if(app()->getLocale()=='ar')
-                                            <span class="brief_desc">{{$job->brief_description_ar}}</span>
-                                            @else
-                                            <span class="brief_desc">{{$job->brief_description_en}}</span>
-                                            @endif
+                                          
                                     </div>
+                                 
                                 </h4>
-                                
+                                @if(app()->getLocale()=='ar')
+                                            <span class="panel-title">{{$job->brief_description_ar}}</span>
+                                            @else
+                                            <span class="panel-title">{{$job->brief_description_en}}</span>
+                                            @endif
                         </div>
                         <div id="collapse{{$job->id}}" class="panel-collapse collapse">
                             <div class="panel-body">  @if(app()->getLocale()=='ar')
@@ -193,7 +202,87 @@
                         </div>
                         </div>
                     </div>
+                    
                     @endforeach
+</div>
+                    <div class="col-md-6" style="background-color:white;width: 49%;" data-spy="affix">
+                    <br>
+                    <form method="POST" action="{{route('career.request' , $job->id)}}"
+                                      enctype="multipart/form-data">
+                                    @csrf
+                                     <div class="row">
+                                        <div class="col-md-12 d-flex p-3">
+                                            <div class="col-md-2">
+                                                <span>{{__('general.Name')}}</span>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input name="name"  class="form-control"  type="text"
+                                                       value="{{old('name')}}"/>
+
+                                                @error('name')
+                                                <div class="help-block">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-12 d-flex p-3">
+                                            <div class="col-md-2">
+                                                <span>{{__('general.Email')}}</span>
+                                            </div>
+                                            <div class="col-md-10 ">
+                                                <input name="email"  class="form-control" type="email"
+                                                       value="{{old('email')}}"/>
+
+                                                @error('email')
+                                                <div class="help-block">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 d-flex p-3">
+                                            <div class="col-md-2">
+                                                <span>{{__('general.Mobile')}}</span>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input name="phone"  class="form-control" type="tel"
+                                                       value="{{old('phone')}}"/>
+                                                @error('phone')
+                                                <div class="help-block">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 d-flex p-3">
+                                            <div class="col-md-2">
+                                                <span>{{__('general.Details')}}</span>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <textarea name="description" class="form-control" rows="2"
+                                                          cols="20">{{old('description')}}</textarea>
+                                                @error('description')
+                                                <div class="help-block">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 d-flex p-3">
+                                            <div class="col-md-2">
+                                                <span>C.V</span>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input name="cv_file"  class="form-group" type="file"
+                                                value="{{old('cv_file')}}"/>
+                                                @error('cv_file')
+                                                <div class="help-block">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 offset-2" style="padding-left: 25px;padding-bottom: 4%;">
+                                            <button type="submit" class="btn btn-primary ">{{__('general.Apply')}}</button>
+                                            
+                                        </div>
+                                        
+                                    </div>
+
+                                </form>
+                    </div>
                     @endif
                    
                 </div>
