@@ -11,16 +11,15 @@ use App\Models\PointsTransaction;
 
 use App\Notifications\SignupActivate;
 use App\Notifications\activateSMS;
-
-use AWS;
-use Twilio\Rest\Client;
-use Twilio\Jwt\ClientToken;
+use App\Traits\GeneralTrait;
 
 class AuthController extends BaseController
 {
     //website
     //
     //
+
+    use GeneralTrait;
 
     public function login(Request $request)
     {
@@ -38,14 +37,13 @@ class AuthController extends BaseController
                     $user->save();
                 }
 
-                $user->branches;//??
+                $user->branches; //??
 
                 $data = [
                     'userData' => $user,
                     'token' => $user->createToken('AppName')->accessToken
                 ];
-                if(auth()->user()->email_verified_at == null)
-                {
+                if (auth()->user()->email_verified_at == null) {
                     return $this->sendResponse($data, 'Must verify account');
                 }
                 return $this->sendResponse($data, 'User logged in successfuly');
@@ -69,7 +67,6 @@ class AuthController extends BaseController
                 if ($request->has('device_token')) {
                     $user->device_token = $request->device_token;
                     $user->save();
-
                 }
                 $user->branches;
 
@@ -79,8 +76,7 @@ class AuthController extends BaseController
                     'token' => $user->createToken('AppName')->accessToken
                 ];
 
-                if(auth()->user()->email_verified_at == null)
-                {
+                if (auth()->user()->email_verified_at == null) {
 
                     return $this->sendResponse($data, 'Must verify account');
                 }
@@ -98,15 +94,26 @@ class AuthController extends BaseController
             'password' => ['required', 'string', 'min:8'],
             'phone' => ['required', 'min:11']
         ]);
-//, 'unique:users,first_phone'
+        //, 'unique:users,first_phone'
         if ($validator->fails()) {
-            return response()->json(["success" => false,
-                'error' => $validator->errors()],
-                401);
+            return response()->json(
+                [
+                    "success" => false,
+                    'error' => $validator->errors()
+                ],
+                401
+            );
         }
 
+        DB::beginTransaction();
         try {
             $name = explode(" ", $request->name);
+            if (count($name) < 2) {
+                return response()->json([
+                    "success" => false,
+                    "message" => 'last_name_not_included',
+                ], 400);
+            }
 
             $request->merge([
                 'first_name' => $name[0],
@@ -118,10 +125,20 @@ class AuthController extends BaseController
             ]);
 
             $user = User::create($request->all());
-            $user->attachRole(3);
-//            return $this->sendResponse($user, 'Successfully created user!');
+            $user->attachRole(3); // customer
+
+            $this->sendMessage(
+                $user->first_phone,
+                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
+            );
+
+            return $this->sendResponse($user, 'Successfully created user!');
+
+            //            return $this->sendResponse($user, 'Successfully created user!');
 
         } catch (\Exception $e) {
+            DB::rollBack();
+            
             return response()->json([
                 "success" => false,
                 "message" => $e->getMessage()
@@ -129,6 +146,8 @@ class AuthController extends BaseController
 
             //echo "Error: " . $e->getMessage();
         }
+
+        DB::commit();
 
 
         // $user->notify(new SignupActivate($user));
@@ -153,62 +172,57 @@ class AuthController extends BaseController
         // temp
 
         //test twilio
-       
-        $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
-        $authToken  = 'bc26eea7135c1a8f88abbd486c6fa935';
-        $client = new Client($accountSid, $authToken);
-        try {
-            // Use the client to do fun stuff like send text messages!
-            $client->messages->create(
-                // the number you'd like to send the message to
-                $user->first_phone,
-                array(
-                    // A Twilio phone number you purchased at twilio.com/console
-                    'from' => '+16196584381',
-                    // the body of the text message you'd like to send
-                    'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token,
-                )
-            );
-               return $this->sendResponse($user, 'Successfully created user!');
-        } catch (\Exception $e) {
-            return response()->json([
-                    "success" => false,
-                    "message" => $e->getMessage()
-                ], 400);
+
+
+        // $client = new Client($accountSid, $authToken);
+        // try {
+        //     // Use the client to do fun stuff like send text messages!
+        //     $client->messages->create(
+        //         // the number you'd like to send the message to
+        //         $user->first_phone,
+        //         array(
+        //             // A Twilio phone number you purchased at twilio.com/console
+        //             'from' => '+16196584381',
+        //             // the body of the text message you'd like to send
+        //             'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token,
+        //         )
+        //     );
+        //     return $this->sendResponse($user, 'Successfully created user!');
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         "success" => false,
+        //         "message" => $e->getMessage()
+        //     ], 400);
 
             //echo "Error: " . $e->getMessage();
-        }
+        // }
         //end test Twillo
 
 
     }
     /* for verification */
-    public function setVerificationCode(Request $request)
+    public function setVerificationCode(Request $request, string $token)
     {
         $user = $request->user();
-        $user = $user->update(['email_verified_at' => now()]);
+
+        if ($user->activation_token !== $token) {
+            return $this->sendError('token_mismatch');
+        }
+        
+        $user->active = true;
+        $user->email_verified_at = now();
+        $user->save();
+
         return $this->sendResponse($user, 'Successfully customer verified.');
     }
     public function resendVerificationCode(Request $request)
     {
-        $accountSid = 'AC900694d10d105e2da47eacc3edf81cc5';
-        $authToken  = 'bc26eea7135c1a8f88abbd486c6fa935';
-
-
-        $client = new Client($accountSid, $authToken);
         try {
-            // Use the client to do fun stuff like send text messages!
-            $client->messages->create(
-            // the number you'd like to send the message to
-                $request->user->first_phone,
-                array(
-                    // A Twilio phone number you purchased at twilio.com/console
-                    'from' => '+16196584381',
-                    // the body of the text message you'd like to send
-                    'body' => 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user->activation_token,
-                )
+            $this->sendMessage(
+                $request->user()->first_phone, 
+                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user()->activation_token
             );
-            return $this->sendResponse($request->user, 'Sent SMS successfully');
+            return $this->sendResponse($request->user(), 'Sent SMS successfully');
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
@@ -266,8 +280,7 @@ class AuthController extends BaseController
                 'user_points' => $validRefundedPoints - $consumedCanceledPoints,
                 'points_value' => DB::table('general')->where('key', 'pointsValue')->first()->value
             ];
-        }
-        catch (\Exception $ex){
+        } catch (\Exception $ex) {
             $data = [
                 'user_points' => $validRefundedPoints - $consumedCanceledPoints,
                 'points_value' => 0
@@ -313,7 +326,6 @@ class AuthController extends BaseController
         }
         if ($request->user()) {
             $user = $request->user();
-
         } else {
             if (auth('web')->user()) {
                 $user = auth()->user();
@@ -350,7 +362,7 @@ class AuthController extends BaseController
         $user = User::where('activation_token', $token)->first();
 
         if (!$user) {
-            return $this->sendError('This activation token is invalid.');
+            return $this->sendError('token_mismatch');
         }
 
         $user->active = true;

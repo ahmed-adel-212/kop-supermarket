@@ -13,11 +13,15 @@ use App\Models\User;
 use App\Models\Without;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\GeneralTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OrdersController extends Controller
 {
+    use GeneralTrait;
+
     public function make_order(Request $request)
     {
         $items = auth()->user()->carts;
@@ -285,6 +289,10 @@ class OrdersController extends Controller
             'items' => $items,
             'customer_id' => auth()->user()->id,
         ]);
+
+        // remove 50% discount if user trying to reorder an order that has this offer
+        $request->total = $this->removeDiscountIfNotFirstOrder(Auth::user(), $request->total);
+
         $return = $this->store_order($request);
         if (session()->has('point_claim_value')) {
             session()->forget('point_claim_value');
@@ -374,6 +382,8 @@ class OrdersController extends Controller
             $branch_id = $branch->id;
         }
 
+        // apply 50% discount if this is first order
+        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
         $orderData = [
             "address_id" => $request->address_id,

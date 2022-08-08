@@ -9,7 +9,8 @@ use Laravel\Passport\HasApiTokens;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use App\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -126,5 +127,59 @@ class User extends Authenticatable implements MustVerifyEmail
         return "+201018618608";
 
         // return preg_replace('/\D+/', '', $this->first_phone);
+    }
+
+    /**
+     * define favourite items relationship
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favourites(): BelongsToMany
+    {
+        return $this->belongsToMany(Item::class, 'favourite_item');
+    }
+
+    /**
+     * add an item to favourites
+     *
+     * @param Item $item
+     * @return void
+     */
+    public function addToFavourites(Item $item)
+    {
+        $this->favourites()->attach($item);
+    }
+
+    /**
+     * remove an item from favourites
+     *
+     * @param Item $item
+     * @return void
+     */
+    public function removeFromFavourites(Item $item)
+    {
+        $this->favourites()->detach($item);
+    }
+
+    /**
+     * clear all favourites
+     *
+     * @return integer number for removed favourites
+     */
+    public function clearFavourites(): int
+    {
+        return DB::table('favourite_item')->where('user_id', '=', $this->id)->delete();
+    }
+
+    /**
+     * count all orders that has not been cancel or rejected
+     *
+     * @return boolean
+     */
+    public function hasNoOrders(): bool
+    {
+        return $this->orders()->where(function ($q) {
+            return $q->where('state', '!=', 'rejected')->where('state', '!=', 'canceld')->where('state', '!=', 'canceled');
+        })->count() === 0;
     }
 }

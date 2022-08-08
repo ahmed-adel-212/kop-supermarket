@@ -19,7 +19,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'Api\AuthController@login');
     Route::post('login/cashier', 'Api\AuthController@loginCashier');
     Route::post('register', 'Api\AuthController@register');
-    Route::get('activate/{token}', 'Api\AuthController@signupActivate');
+    Route::post('activate/{token}', 'Api\AuthController@signupActivate');
     Route::post('login/google', 'Api\AuthController@loginWithGoogle');
     Route::post('login/facebook', 'Api\AuthController@loginWithFacebook');
 
@@ -29,16 +29,15 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('reset', 'Api\PasswordResetController@createNewPassword');
     });
 
-    Route::post('resend-code', 'Api\AuthController@resendCode');
-    /* for verification */
-    Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
-    Route::post('verify-account', 'Api\AuthController@setVerificationCode');
-
+    Route::post('resend-code', 'Api\AuthController@resendCode');    
 
     Route::group(['middleware' => ['auth:api', 'verifyTwilio']], function () {
         Route::get('user', 'Api\AuthController@getUser');
         Route::put('user', 'Api\AuthController@updateUser');
         Route::get('logout', 'Api\AuthController@logout');
+        /* for verification */
+        Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
+        Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');
     });
 });
 
@@ -171,4 +170,8 @@ Route::get('/payment/response', 'Api\PaymentController@paymentResponse');
 Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
 Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paymentMobile');
 
+
+Route::group(['middleware' => ['auth:api'], 'prefix' => 'favourites', 'as' => 'api.favourites.'], function () {
+    require __DIR__ . '/favourites_routes.php';
+});
 
