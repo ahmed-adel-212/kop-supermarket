@@ -134,7 +134,7 @@ Route::group([
         Route::get('/careers/', [\App\Http\Controllers\Website\CareersControllers::class, 'AllJobs'])->name('careers.all');
         Route::get('/get-career/{id}', [\App\Http\Controllers\Website\CareersControllers::class, 'GetJob'])->name('get.career');
         Route::get('/apply-form/{id}', [\App\Http\Controllers\Website\CareersControllers::class, 'ApplyJobForm'])->name('apply.form');
-        Route::post('/career-request/{id}', [\App\Http\Controllers\Website\CareersControllers::class, 'CareerRequest'])->name('career.request');
+        Route::post('/career-request', [\App\Http\Controllers\Website\CareersControllers::class, 'CareerRequest'])->name('career.request');
 
         Route::get('/Blogs/', [\App\Http\Controllers\Website\NewsController::class, 'AllBlogs'])->name('news.all');
         Route::get('/Blog/{id}', [\App\Http\Controllers\Website\NewsController::class, 'Blog'])->name('get.new');

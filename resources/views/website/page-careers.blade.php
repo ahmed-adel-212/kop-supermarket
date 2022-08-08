@@ -26,10 +26,10 @@
     font-size: 20px;
 }
 
-.panel-heading:hover 
+/* .panel-heading:hover 
 {
   background-color: #c3c3c3c3;
-}
+} */
 
 
 .article-intro__date span{
@@ -42,43 +42,13 @@
     color: #6dc405;
 }
 .panel-group{
-    margin:0px;
+    margin:5px;
+    margin-left:10px;
 }
 
 .article-intro__bottom .uk-button
 {    margin-top: -15%;
     font-size: 11px;
-}
-</style>
-@if(app()->getLocale()=='ar')
-<style>
-.article-intro__bottom .uk-button {
-    margin-top: -44%;
-    line-height: 50px;
-}
-.brief_desc
-{
-    float: left;
-    padding-left: 3%;
-}
-.panel .article-intro__bottom{
-    float: left;
-    padding-left: 1%;
-    line-height: 50px;
-
-}
-</style>
-@else
-<style>
-.brief_desc
-{
-    float: right;
-    padding-right: 3%;
-}
-.panel .article-intro__bottom{
-    float: right;
-    padding-right: 3%;
-    
 }
 .affix {
           top: 20px;
@@ -86,9 +56,9 @@
           position: sticky;
 
       }
-
+    
 </style>
-@endif
+
 @endsection
 
 @section('pageName')
@@ -110,7 +80,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="page-content" style="background-color:#f2f2f2;">
                 <div class="uk-section ">
                     @if(Session::has('success'))
@@ -128,20 +97,13 @@
                         </div>
                     @endif
                     @if(isset($jobs))
-                    <div class="col-md-6">
+                    <div class="col-md-8" >
                     @foreach($jobs as $job)
                     <div class="panel-group " >
-                   
                         <div class="panel panel-default">
-
-                            <!-- <div class="article-intro__bottom">
-                                    <div class="article-full__date">
-                                        <a class="uk-button" href="{{route('apply.form',$job->id)}}"><span style="display: table-cell;vertical-align: middle;text-align:center;">{{__('general.Apply Now')}}</span></a>
-                                    </div>
-                            </div> -->
-
                             <div class="panel-heading">
                                 <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse{{$job->id}}" style="color:#cbcbcb;font-size: 25px;"><b calss="rotate" >></b></a>
                                     <a data-toggle="collapse" href="#collapse{{$job->id}}">{{$job['title_'.app()->getLocale()]}}</a>
                                     <hr style="margin-bottom: 10px;">
                                     <div class="article-intro__date">
@@ -205,83 +167,89 @@
                     
                     @endforeach
 </div>
-                    <div class="col-md-6" style="background-color:white;width: 49%;" data-spy="affix">
-                    <br>
-                    <form method="POST" action="{{route('career.request' , $job->id)}}"
-                                      enctype="multipart/form-data">
-                                    @csrf
-                                     <div class="row">
-                                        <div class="col-md-12 d-flex p-3">
-                                            <div class="col-md-2">
-                                                <span>{{__('general.Name')}}</span>
+                    <div class="content-wrapper col-md-4" data-spy="affix">
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                    <h3 class="card-title">APPLY NOW</h3>
+                                    </div>
+                                    <form method="post" action="{{route('career.request')}}" enctype="multipart/form-data">
+                                     @csrf
+                                    <div class="card-body">
+                                        <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            <label for="name">{{__('general.Name')}}</label>
+                                            <input type="text" class="form-control " id="name" placeholder="Enter Full Name" name="name" required>
+                                            {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
                                             </div>
-                                            <div class="col-md-10">
-                                                <input name="name"  class="form-control"  type="text"
-                                                       value="{{old('name')}}"/>
+                                        </div>
+                                    
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            <label for="phone"> {{__('general.Mobile')}}</label>
+                                            <input type="text" class="form-control {!! $errors->first('phone', 'is-invalid') !!}" id="phone" placeholder="Enter Phone" name="phone" required>
+                                            </div>
 
-                                                @error('name')
-                                                <div class="help-block">{{ $message }}</div>
-                                                @enderror
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                            <label for="email">{{__('general.Email')}}</label>
+                                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+                                            {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                            <label for="job_id">{{__('general.Careers')}}</label>
+                                            <select class="select " data-placeholder="Select a Role" style="width: 100%;" name="job_id">
+                                                @foreach($jobs as $job)
+                                                <option value="{{$job->id}}">{{$job['title_'.app()->getLocale()]}}</option>
+                                                @endforeach
+                                            </select>
+                                            {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                            <label for="description"> {{__('general.Details')}}</label>
+                                            <textarea name="description" class="form-control" rows="2"  cols="20">{{old('description')}}</textarea>
+                                                    @error('description')
+                                                        <div class="help-block">{{ $message }}</div>
+                                                    @enderror
                                             </div>
 
-                                        </div>
-                                        <div class="col-md-12 d-flex p-3">
-                                            <div class="col-md-2">
-                                                <span>{{__('general.Email')}}</span>
-                                            </div>
-                                            <div class="col-md-10 ">
-                                                <input name="email"  class="form-control" type="email"
-                                                       value="{{old('email')}}"/>
-
-                                                @error('email')
-                                                <div class="help-block">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 d-flex p-3">
-                                            <div class="col-md-2">
-                                                <span>{{__('general.Mobile')}}</span>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <input name="phone"  class="form-control" type="tel"
-                                                       value="{{old('phone')}}"/>
-                                                @error('phone')
-                                                <div class="help-block">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 d-flex p-3">
-                                            <div class="col-md-2">
-                                                <span>{{__('general.Details')}}</span>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <textarea name="description" class="form-control" rows="2"
-                                                          cols="20">{{old('description')}}</textarea>
-                                                @error('description')
-                                                <div class="help-block">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 d-flex p-3">
-                                            <div class="col-md-2">
-                                                <span>C.V</span>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <input name="cv_file"  class="form-group" type="file"
-                                                value="{{old('cv_file')}}"/>
+                                        </div></div>
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                            <label for="cv_file"> C.V</label>
+                                            <input  type="file" name="cv_file" id="cv_file" class="form-group"/>
                                                 @error('cv_file')
                                                 <div class="help-block">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                        </div>
-                                        <div class="col-md-8 offset-2" style="padding-left: 25px;padding-bottom: 4%;">
-                                            <button type="submit" class="btn btn-primary ">{{__('general.Apply')}}</button>
-                                            
-                                        </div>
-                                        
+                                            </div>
                                     </div>
-
-                                </form>
+                                    
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-primary float-right" style="margin-left: 35%;margin-right: 35%;width: 30%;">Submit</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                </div>
+                        </section>
+<!-- </div><br> -->
                     </div>
                     @endif
                    

@@ -68,13 +68,14 @@ class CareersControllers extends Controller
         }
     }
 
-    public function CareerRequest(Request $request, $id)
+    public function CareerRequest(Request $request)
     {
-
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), 
+        [
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
+            'job_id' => 'required',
             'description' => 'required',
             'cv_file' => 'required|mimes:pdf',
 
@@ -83,7 +84,7 @@ class CareersControllers extends Controller
             return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
 
         }
-        $return = (app(FrontController::class)->jobRequest($request, $id))->getOriginalContent();
+        $return = (app(FrontController::class)->jobRequest($request, $request->job_id))->getOriginalContent();
         $temp = '';
          foreach ($return as $in => $re) {
 
