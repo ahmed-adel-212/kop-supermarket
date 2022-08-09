@@ -26,14 +26,13 @@ class ContactController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('Validation Errors!', $validator->errors());
         }
-
-        $user = Auth::user();
+        $user = auth()->user();
         $contact = new Contact;
         $contact->subject = $request->subject;
         $contact->body = $request->body;
         $contact->customer_id = $user->id;
         $contact->save();
-
+         
         Mail::to("kop@wahfyservices.com")
             ->send(new Contacts($contact));
 

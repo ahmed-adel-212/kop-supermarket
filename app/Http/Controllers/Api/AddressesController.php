@@ -23,7 +23,7 @@ class AddressesController extends BaseController
         'landmark' => ['string', 'nullable'],
         'city_id' => ['required', 'exists:cities,id'],
         'area_id' => ['required', 'exists:areas,id'],
-        'customer_id' => ['exists:customer,id'],
+        'customer_id' => ['exists:customers,id'],
     ];
 
     /**
@@ -51,9 +51,8 @@ class AddressesController extends BaseController
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), $this->validationRules);
-
+        
         if ($validator->fails()) {
             return $this->sendError('Validation Error!', $validator->errors(), 400);
         }
@@ -61,7 +60,7 @@ class AddressesController extends BaseController
         // attach customer reference
         if ($request->user()) {
             if ($request->user()->hasRole('customer')) {
-                $request->merge(['customer_id' => $request->user()->id]);
+              return  $request->merge(['customer_id' => $request->user()->id]);
             }
         } else {
             if (auth('web')->user()->hasRole('customer')) {
