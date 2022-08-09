@@ -40,6 +40,20 @@
             font-family: inherit;
             font-weight: 600;
         }
+
+        body.dm-light {
+            background: #f5f5f5 !important;
+        }
+
+        .dot-borderd {
+            border: 1px solid;
+            width: 15px;
+            height: 15px;
+            text-align: center;
+            border-radius: 3px;
+            font-size: 35px;
+            line-height: 7px;
+        }
     </style>
 @endsection
 
@@ -83,74 +97,350 @@
                             <input type="hidden" name="offer_id" value="{{ $item['offer']['offer_id'] }}">
                             <input type="hidden" name="offer_price" value="{{ round($item['offer']['offer_price'], 2) }}">
                         @endif
-                        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
-                            <div class="uk-card-media-left uk-cover-container">
+                        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin " uk-grid>
+                            <div class="uk-card-media-left uk-cover-container" style="height: 340px;">
                                 <img src="{{ asset($item->image) }}" alt="pizza-big" uk-cover>
                             </div>
                             <div>
                                 <div class="uk-card-body" style="padding: 15px 30px;">
                                     <h3 class="uk-card-title"
-                                        data-uk-tooltip="title: {{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }}; pos: bottom-right">
+                                        data-uk-tooltip="title: {{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }}; pos: bottom-right"
+                                        style="margin: 0">
                                         {{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }}
                                     </h3>
-                                    <p>
+                                    <p style="margin: 0">
                                         {{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}
                                     </p>
 
-                                    {{-- <hr class="uk-divider-icon"> --}}
-
-                                    <div class="product-full-card__category"><span>{{ __('general.Category') }}:
+                                    <div class="product-full-card__category" style="margin: 0;margin-top: .5rem">
+                                        <span>{{ __('general.Category') }}:
                                         </span><a
                                             href="{{ route('menu.page') }}">{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}</a>
                                     </div>
                                     <div class="product-full-card__category"><span>{{ __('home.Calories') }}:
                                             {{ $item->calories }}</span></div>
-                                            <style>
-                                                .dough label.active{
-                                                    border-color: #fe3000!important;
-                                                    background-color: #fe3000!important;
-                                                    background: #fe3000!important;
-                                                    color: #fff !important;
-                                                }
-                                            </style>
+                                    <style>
+                                        .dough label.active {
+                                            border-color: #cc3333 !important;
+                                            background-color: #cc3333 !important;
+                                            background: #cc3333 !important;
+                                            color: #fff !important;
+                                        }
 
-                                            <div class="btn-group btn-group-toggle dough" data-toggle="buttons" style="width: 60%;" >
-                                                @foreach ($item['dough_type'] as $dough)
-                                                    <label class="btn btn-light"><input id="d{{$dough->id}}" type="radio" name="dough_type"
-                                                                value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"><span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
-                                                    
-                                                @endforeach
-                                              </div>
+                                        .card-header.active {
+                                            background: #fe3000;
+                                            color: #fff !important;
+                                        }
 
-                                        <div class="product-full-card__inf mt-3">
-                                            <div class="product-full-card__price">
-                                                <span>{{ __('home.Price') }}: </span><span class="value"
-                                                    @if ($item['offer']) style="text-decoration: line-through;font-size: 20px;" @endif>
-                                                    {{ round($item->price, 2) }} </span>
-                                                @if ($item['offer'])
-                                                    <span style="font-size: 26px;color:#6dc405;text-decoration: none">
-                                                        {{ round($item['offer']['offer_price'], 2) }} </span>
+                                        .card-header.active button {
+                                            color: #fff;
+                                        }
+                                    </style>
+
+                                    <div class="btn-group btn-group-toggle dough" data-toggle="buttons" style="width: 60%;">
+                                        @foreach ($item['dough_type'] as $dough)
+                                            <label class="btn btn-light" for="{{ $dough['name_en'] }}"><input
+                                                    id="{{ $dough['name_en'] }}" type="radio" name="dough_type"
+                                                    value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
+                                                    @if ($loop->first) checked @endif><span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
+                                        @endforeach
+                                    </div>
+
+                                    <div class="product-full-card__inf mt-3">
+                                        <div class="product-full-card__price" style="margin: 1rem;">
+                                            <span>{{ __('home.Price') }}: </span><span class="value"
+                                                @if ($item['offer']) style="text-decoration: line-through;font-size: 20px;" @endif>
+                                                {{ round($item->price, 2) }} </span>
+                                            @if ($item['offer'])
+                                                <span style="font-size: 26px;color:#6dc405;text-decoration: none">
+                                                    {{ round($item['offer']['offer_price'], 2) }} </span>
+                                            @endif
+                                            @lang('general.SR')
+                                        </div>
+                                        <div class="product-full-card__btns"><span class="counter"><span
+                                                    class="minus">-</span><input type="text" name="quantity"
+                                                    value="1" id="quantity"><span class="plus" x-data
+                                                    x-on:click="$dispatch('add-item')">+</span></span>
+                                            <button class="uk-button" type="submit">
+                                                @if (app()->getLocale() == 'ar')
+                                                    <span data-uk-icon="cart"></span> {{ __('home.Add to Cart') }}
+                                                @else
+                                                    {{ __('home.Add to Cart') }} <span data-uk-icon="cart"></span>
                                                 @endif
-                                                @lang('general.SR')
-                                            </div>
-                                            <div class="product-full-card__btns"><span class="counter"><span
-                                                        class="minus">-</span><input type="text" name="quantity"
-                                                        value="1"><span class="plus">+</span></span>
-                                                <button class="uk-button" type="submit">
-                                                    @if (app()->getLocale() == 'ar')
-                                                        <span data-uk-icon="cart"></span> {{ __('home.Add to Cart') }}
-                                                    @else
-                                                        {{ __('home.Add to Cart') }} <span data-uk-icon="cart"></span>
-                                                    @endif
-                                                </button>
-                                            </div>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
+                <hr class="uk-divider-icon">
+
+                <div class="row" x-data="{
+                    items: [],
+                    activeItem: '',
+                    addItem: function() {
+                        const dough = document.querySelectorAll('[name=dough_type]');
+                        let active = '';
+                
+                        for (let d of dough) {
+                            if (d.checked) {
+                                active = d;
+                            }
+                        }
+                
+                        this.items.push({
+                            uid: Math.floor(Math.random() * 100000000),
+                            id: {{ $item['id'] }},
+                            title: '{{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }}',
+                            info: '{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}',
+                            category: '{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}',
+                            calories: {{ $item->calories }},
+                            dough: active.value,
+                            price: {{ round($item->price, 2) }},
+                            offer_price: {{ round($item['offer']['offer_price'], 2) }},
+                            extras: [],
+                            withouts: [],
+                        });
+                    },
+                    removeItem: function(itemId) {
+                        this.items.splice(
+                            this.items.findIndex(x => x.uid === itemId),
+                            1
+                        );
+                
+                        const qty = document.querySelector('#quantity');
+                        qty.value = parseInt(qty.value) - 1;
+                    },
+                    addToItem: function(type, id, name, price) {
+                        this.items.map(x => {
+                            if (x.uid === this.activeItem) {
+                                const found = x[type].findIndex(x => x.id === id);
+                                if (found < 0) {
+                                    x[type].push({
+                                        id: id,
+                                        name: name,
+                                        price: price
+                                    });
+                                }
+                            }
+                            return x;
+                        });
+                    },
+                }" x-on:add-item.window="addItem" x-init="addItem();
+                activeItem = items[0].uid">
+                    <div class="col-8">
+                        @if ($item['category']['extras']->count() > 0)
+                            <div class="uk-card uk-card-default">
+                                <div class="uk-card-header">
+                                    <h3 class="uk-card-title">
+                                        {{ __('general.Extra') }}
+                                    </h3>
+                                </div>
+                                <div class="uk-card-body" style="padding: 10px 15px;">
+                                    <ul class="list-group list-group-flush">
+                                        @foreach ($item['category']['extras'] as $extra)
+                                            <li class="list-group-item px-0 pb-0">
+                                                <div class="media my-2">
+                                                    <div class="mr-3">
+                                                        {{-- <i class="icofont-ui-press text-danger food-item"></i> --}}
+                                                        <div class="mr-2 text-danger align-items-center d-flex justify-content-center dot-borderd"
+                                                            style="">·</div>
+                                                        <input type="checkbox" value="{{ $extra['id'] }}" name="extras[]"
+                                                            class="d-none checkExtra" style="visibility: hidden">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="media-body row">
+                                                            <div class="col-10">
+                                                                <h6 class="m-0"
+                                                                    style="font-size: 14px;line-height: 1.8;">
+                                                                    {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}
+                                                                </h6>
+                                                                <p class="text-gray m-0 d-flex justify-content-between align-items-center col-9"
+                                                                    style="font-size: 11px;">
+                                                                    <span>
+                                                                        {{ __('home.Calories') }}:
+                                                                        {{ $extra['calories'] }}
+                                                                    </span>
+                                                                    <span>
+                                                                        ({{ round($extra['price'], 2) }}
+                                                                        {{ __('general.SR') }})
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary btn-sm btnAdd"
+                                                                    x-on:click="addToItem(
+                                                                    'extras',
+                                                                    {{ $extra['id'] }},
+                                                                    '{{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}',
+                                                                    {{ round($extra['price'], 2) }}
+                                                                )">
+                                                                    {{ __('general.ADD') }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($item['category']['withouts']->count() > 0)
+                            <div class="uk-card uk-card-default mt-4">
+                                <div class="uk-card-header">
+                                    <h3 class="uk-card-title">
+                                        {{ __('general.Without') }}
+                                    </h3>
+                                </div>
+                                <div class="uk-card-body" style="padding: 10px 15px;">
+                                    <ul class="list-group list-group-flush">
+                                        @foreach ($item['category']['withouts'] as $extra)
+                                            <li class="list-group-item px-0 pb-0">
+                                                <div class="media my-2">
+                                                    <div class="mr-3">
+                                                        <div class="mr-2 text-success align-items-center d-flex justify-content-center dot-borderd"
+                                                            style="">·</div><input type="checkbox"
+                                                            value="{{ $extra['id'] }}" name="withouts[]"
+                                                            class="d-none checkExtra" style="visibility: hidden">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="media-body row">
+                                                            <div class="col-10">
+                                                                <h6 class="m-0"
+                                                                    style="font-size: 14px;line-height: 1.8;">
+                                                                    {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}
+                                                                </h6>
+                                                                <p class="text-gray m-0 d-flex justify-content-between align-items-center col-9"
+                                                                    style="font-size: 11px;">
+                                                                    <span>
+                                                                        {{ __('home.Calories') }}:
+                                                                        {{ $extra['calories'] }}
+                                                                    </span>
+                                                                    <span>
+                                                                        ({{ round($extra['price'], 2) }}
+                                                                        {{ __('general.SR') }})
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary btn-sm btnAdd"
+                                                                    x-on:click="addToItem(
+                                                                    'withouts',
+                                                                    {{ $extra['id'] }},
+                                                                    '{{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}',
+                                                                    {{ round($extra['price'], 2) }}
+                                                                )">
+                                                                    {{ __('general.ADD') }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="col-4">
+                        <div class="uk-card uk-card-default uk-grid-collapse">
+                            <div class="uk-card-header">
+                                <h3 class="uk-card-title text-center">
+                                    {{ __('general.Orders') }}
+                                </h3>
+                            </div>
+                            <div id="accordion">
+                                <template x-for="(item, inx) in items" :key="item.uid">
+                                    <div class="card mb-2">
+                                        <div class="card-header" x-bind:id="'heading' + item.uid"
+                                            x-bind:class="{ 'active': activeItem === item.uid }">
+                                            <h5 class="mb-0 row">
+                                                <button class="btn btn-link col-9"
+                                                    style="text-align: start;text-indent: .5rem" data-toggle="collapse"
+                                                    x-bind:data-target="'#collapse' + item.uid" aria-expanded="false"
+                                                    x-bind:aria-controls="'#collapse' + item.uid"
+                                                    x-on:click="activeItem = item.uid">
+                                                    <span
+                                                        x-text="item.title + '#' + (item.uid.toString()).substr(5)"></span>
+                                                </button>
+                                                <div class="col-3" style="text-align: end">
+                                                    <button type="button" x-on:click.prevent="removeItem(item.uid)"
+                                                        class="btn btn-danger p-1 rounded" uk-icon="trash"></button>
+                                                </div>
+                                            </h5>
+                                        </div>
+
+                                        <div x-bind:id="'collapse' + item.uid" class="collapse"
+                                            x-bind:aria-labelledby="'heading' + item.uid" data-parent="#accordion">
+                                            <div class="card-body p-0">
+                                                <div class="">
+                                                    <ul class="list-group list-group-flush">
+                                                        <template x-for="ex in item.extras"
+                                                            :key="item.extras.length * Math.random()">
+                                                            <li class="list-group-item">
+                                                                <div
+                                                                    class="w-full p-1 d-flex align-items-center justify-content-between">
+                                                                    <div class="text-lg d-flex align-items-center">
+                                                                        <span
+                                                                            class="mr-2 text-danger align-items-center d-flex justify-content-center dot-borderd"
+                                                                            style="">·</span>
+                                                                        {{-- </span> --}}
+                                                                        <span class="text-lg text-black"
+                                                                            x-text="ex.name"></span>
+                                                                    </div>
+                                                                    <div>
+                                                                        (<span class="text-gray" x-text="ex.price"></span>
+                                                                        {{ __('general.SR') }})
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </template>
+                                                        <template x-for="ex in item.withouts"
+                                                            :key="item.withouts.length * Math.random()">
+                                                            <li class="list-group-item">
+                                                                <div
+                                                                    class="w-full p-1 d-flex align-items-center justify-content-between">
+                                                                    <div class="text-lg d-flex align-items-center">
+                                                                        <span
+                                                                            class="mr-2 text-success align-items-center d-flex justify-content-center dot-borderd"
+                                                                            style="">·</span>
+                                                                        {{-- </span> --}}
+                                                                        <span class="text-lg text-black"
+                                                                            x-text="ex.name"></span>
+                                                                    </div>
+                                                                    <div>
+                                                                        (<span class="text-gray" x-text="ex.price"></span>
+                                                                        {{ __('general.SR') }})
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            </div>
+
+            </form>
+            </div>
             </div>
 
         </main>
