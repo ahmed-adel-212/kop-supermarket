@@ -15,6 +15,55 @@ class CartController extends Controller
 
     public function addCart(Request $request)
     {
+        
+        if ($request->has('add_items')) {
+            // dd(json_decode($request->add_items), $request->all());
+            $items = json_decode($request->add_items);
+            foreach ($items as $index => $item) {
+                $newRequest = new Request();
+                $newRequest->merge(['item_id' => $request->item_id]);
+                $newRequest->merge(['offer_id' => $request->offer_id]);
+                $newRequest->merge(['offer_price' => $request->offer_price[$index]]);
+                $newRequest->merge(['quantity' => $request->quantity]);
+                
+                $dough = explode(',', $item->dough);
+                $request->merge([
+                    'dough_type_ar' => $dough[0],
+                ]);
+                $request->merge([
+                    'dough_type_en' => $dough[1],
+                ]);
+                
+
+                // dd([
+                //     'user_id' =>  Auth::user()->id,
+                //     'item_id' =>  $request->item_id,
+                //     'extras' =>  json_encode($item->extras),
+                //     'withouts' =>  json_encode($item->withouts),
+                //     'dough_type_ar' =>  $request->dough_type_ar,
+                //     'dough_type_en' =>  $request->dough_type_en,
+                //     'quantity' =>  $request->quantity,
+                //     'offer_id' =>  $request->offer_id,
+                //     'offer_price' =>  $request->offer_price,
+                // ]);
+                
+                $cart = Cart::create([
+                    'user_id' =>  Auth::user()->id,
+                    'item_id' =>  $request->item_id,
+                    'extras' =>  json_encode($item->extras),
+                    'withouts' =>  json_encode($item->withouts),
+                    'dough_type_ar' =>  $request->dough_type_ar,
+                    'dough_type_en' =>  $request->dough_type_en,
+                    'quantity' =>  $request->quantity,
+                    'offer_id' =>  $request->offer_id,
+                    'offer_price' =>  $request->offer_price,
+                ]);
+
+                // dump($cart);
+
+            }
+            return redirect()->route('menu.page');
+        }
         if ($request->has('buy_items')) {
             foreach ($request->buy_items as $index => $buy_item) {
                 $newRequest = new Request();
