@@ -14,7 +14,7 @@ class AlterTableItemsAddRecomendedColumn extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->boolean('recommended')->default(0);
+            $table->boolean('recommended')->default(0)->nullable();
         });
     }
 

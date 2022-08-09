@@ -40,7 +40,11 @@ Route::group([
         Route::resource('customer', 'CustomerController');
         Route::resource('category', 'CategoryController');
 
+        // item
         Route::resource('item', 'ItemController');
+        Route::put('item/{item}/recommended', 'ItemController@recommend')->name('item.recommend');
+        Route::delete('item/{item}/recommended', 'ItemController@unRecommend')->name('item.unrecommend');
+
         Route::resource('extra', 'ExtraController');
         Route::resource('without', 'WithoutController');
         Route::resource('order', 'OrderController');

@@ -251,4 +251,19 @@ class ItemController extends Controller
         ]);
     }
 
+    public function recommend(Item $item)
+    {
+        $item->recommended = true;
+        $item->save();
+
+        return back();
+    }
+
+    public function unRecommend(Item $item)
+    {
+        $item->recommended = false;
+        $item->save();
+
+        return back();
+    }
 }
