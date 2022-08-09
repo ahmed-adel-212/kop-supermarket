@@ -87,13 +87,78 @@
                     </div>
                 </div>
             </div>
-            <div class="page-content">
+            <div class="page-content" x-data="{
+                items: [],
+                activeItem: '',
+                buy_items: {},
+                addItem: function() {
+                    const dough = document.querySelectorAll('[name=dough_type]');
+                    let active = '';
+            
+                    for (let d of dough) {
+                        if (d.checked) {
+                            active = d;
+                        }
+                    }
+            
+                    this.items.push({
+                        uid: Math.floor(Math.random() * 100000000),
+                        item_id: {{ $item['id'] }},
+                        title: '{{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }}',
+                        info: '{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}',
+                        category: '{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}',
+                        calories: {{ $item->calories }},
+                        dough: active.value,
+                        real_price: {{ round($item->price, 2) }},
+                        price: {{ round(isset($item['offer']) ? $item['offer']['offer_price'] : $item->price, 2) }},
+                        offer_price: {{ isset($item['offer']) ? round($item['offer']['offer_price'], 2) : 0 }},
+                        extras: [],
+                        withouts: [],
+                    });
+                },
+                removeItem: function(itemId) {
+                    this.items.splice(
+                        this.items.findIndex(x => x.uid === itemId),
+                        1
+                    );
+            
+                    const qty = document.querySelector('#quantity');
+                    qty.value = parseInt(qty.value) - 1;
+                },
+                addToItem: function(type, id, name, price) {
+                    this.items.map(x => {
+                        if (x.uid === this.activeItem) {
+                            const found = x[type].findIndex(x => x.id === id);
+                            if (found < 0) {
+                                x[type].push({
+                                    id: id,
+                                    name: name,
+                                    price: price
+                                });
+                            }
+                        }
+                        return x;
+                    });
+                },
+                getItems: function() {
+                    const it = JSON.parse(JSON.stringify(this.items));
+                    it.map(x => {
+                        x.extras = x.extras.map(ex => ex.id);
+                        x.withouts = x.withouts.map(wi => wi.id);
+                        return x;
+                    });
+                    return JSON.stringify(it);
+                },
+            }" x-on:add-item.window="addItem" x-init="addItem();
+            activeItem = items[0].uid" x-ref="form">
                 <div class="uk-margin-large-top uk-container">
-                    <form id="addToCard" action="{{ route('add.cart') }}" method="POST">
+                    <form id="addToCard" action="{{ route('add.cart') }}" method="POST" >
                         @csrf
 
                         <input type="hidden" name="item_id" value="{{ $item['id'] }}">
-                        @if ($item['offer'])
+                        <input type='hidden' name='add_items' x-bind:value="getItems" />
+                        <input type='hidden' name='quantity' x-bind:value="items.length" />
+                         @if ($item['offer'])
                             <input type="hidden" name="offer_id" value="{{ $item['offer']['offer_id'] }}">
                             <input type="hidden" name="offer_price" value="{{ round($item['offer']['offer_price'], 2) }}">
                         @endif
@@ -128,12 +193,16 @@
                                         }
 
                                         .card-header.active {
-                                            background: #fe3000;
+                                            background: #cc3333;
                                             color: #fff !important;
                                         }
 
                                         .card-header.active button {
                                             color: #fff;
+                                        }
+
+                                        * {
+                                            font-family: Cairo !important;
                                         }
                                     </style>
 
@@ -176,60 +245,8 @@
                 </div>
                 <hr class="uk-divider-icon">
 
-                <div class="row" x-data="{
-                    items: [],
-                    activeItem: '',
-                    addItem: function() {
-                        const dough = document.querySelectorAll('[name=dough_type]');
-                        let active = '';
-                
-                        for (let d of dough) {
-                            if (d.checked) {
-                                active = d;
-                            }
-                        }
-                
-                        this.items.push({
-                            uid: Math.floor(Math.random() * 100000000),
-                            id: {{ $item['id'] }},
-                            title: '{{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }}',
-                            info: '{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}',
-                            category: '{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}',
-                            calories: {{ $item->calories }},
-                            dough: active.value,
-                            price: {{ round($item->price, 2) }},
-                            offer_price: {{ round($item['offer']['offer_price'], 2) }},
-                            extras: [],
-                            withouts: [],
-                        });
-                    },
-                    removeItem: function(itemId) {
-                        this.items.splice(
-                            this.items.findIndex(x => x.uid === itemId),
-                            1
-                        );
-                
-                        const qty = document.querySelector('#quantity');
-                        qty.value = parseInt(qty.value) - 1;
-                    },
-                    addToItem: function(type, id, name, price) {
-                        this.items.map(x => {
-                            if (x.uid === this.activeItem) {
-                                const found = x[type].findIndex(x => x.id === id);
-                                if (found < 0) {
-                                    x[type].push({
-                                        id: id,
-                                        name: name,
-                                        price: price
-                                    });
-                                }
-                            }
-                            return x;
-                        });
-                    },
-                }" x-on:add-item.window="addItem" x-init="addItem();
-                activeItem = items[0].uid">
-                    <div class="col-8">
+                <div class="row px-lg-5" >
+                    <div class="col-9">
                         @if ($item['category']['extras']->count() > 0)
                             <div class="uk-card uk-card-default">
                                 <div class="uk-card-header">
@@ -241,11 +258,11 @@
                                     <ul class="list-group list-group-flush">
                                         @foreach ($item['category']['extras'] as $extra)
                                             <li class="list-group-item px-0 pb-0">
-                                                <div class="media my-2">
+                                                <div class="media">
                                                     <div class="mr-3">
                                                         {{-- <i class="icofont-ui-press text-danger food-item"></i> --}}
                                                         <div class="mr-2 text-danger align-items-center d-flex justify-content-center dot-borderd"
-                                                            style="">·</div>
+                                                            style="font-family: sans !important;">·</div>
                                                         <input type="checkbox" value="{{ $extra['id'] }}" name="extras[]"
                                                             class="d-none checkExtra" style="visibility: hidden">
                                                     </div>
@@ -256,7 +273,7 @@
                                                                     style="font-size: 14px;line-height: 1.8;">
                                                                     {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}
                                                                 </h6>
-                                                                <p class="text-gray m-0 d-flex justify-content-between align-items-center col-9"
+                                                                <p class="text-gray m-0 d-flex justify-content-between align-items-center col-9 px-0 px-0"
                                                                     style="font-size: 11px;">
                                                                     <span>
                                                                         {{ __('home.Calories') }}:
@@ -301,12 +318,13 @@
                                     <ul class="list-group list-group-flush">
                                         @foreach ($item['category']['withouts'] as $extra)
                                             <li class="list-group-item px-0 pb-0">
-                                                <div class="media my-2">
+                                                <div class="media">
                                                     <div class="mr-3">
                                                         <div class="mr-2 text-success align-items-center d-flex justify-content-center dot-borderd"
-                                                            style="">·</div><input type="checkbox"
-                                                            value="{{ $extra['id'] }}" name="withouts[]"
-                                                            class="d-none checkExtra" style="visibility: hidden">
+                                                            style="font-family: sans !important;">·</div><input
+                                                            type="checkbox" value="{{ $extra['id'] }}"
+                                                            name="withouts[]" class="d-none checkExtra"
+                                                            style="visibility: hidden">
                                                     </div>
                                                     <div class="media-body">
                                                         <div class="media-body row">
@@ -315,7 +333,7 @@
                                                                     style="font-size: 14px;line-height: 1.8;">
                                                                     {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}
                                                                 </h6>
-                                                                <p class="text-gray m-0 d-flex justify-content-between align-items-center col-9"
+                                                                <p class="text-gray m-0 d-flex justify-content-between align-items-center col-9 px-0"
                                                                     style="font-size: 11px;">
                                                                     <span>
                                                                         {{ __('home.Calories') }}:
@@ -350,86 +368,138 @@
                         @endif
                     </div>
 
-                    <div class="col-4">
-                        <div class="uk-card uk-card-default uk-grid-collapse">
-                            <div class="uk-card-header">
-                                <h3 class="uk-card-title text-center">
-                                    {{ __('general.Orders') }}
-                                </h3>
-                            </div>
-                            <div id="accordion">
-                                <template x-for="(item, inx) in items" :key="item.uid">
-                                    <div class="card mb-2">
-                                        <div class="card-header" x-bind:id="'heading' + item.uid"
-                                            x-bind:class="{ 'active': activeItem === item.uid }">
-                                            <h5 class="mb-0 row">
-                                                <button class="btn btn-link col-9"
-                                                    style="text-align: start;text-indent: .5rem" data-toggle="collapse"
-                                                    x-bind:data-target="'#collapse' + item.uid" aria-expanded="false"
-                                                    x-bind:aria-controls="'#collapse' + item.uid"
-                                                    x-on:click="activeItem = item.uid">
-                                                    <span
-                                                        x-text="item.title + '#' + (item.uid.toString()).substr(5)"></span>
-                                                </button>
-                                                <div class="col-3" style="text-align: end">
-                                                    <button type="button" x-on:click.prevent="removeItem(item.uid)"
-                                                        class="btn btn-danger p-1 rounded" uk-icon="trash"></button>
-                                                </div>
-                                            </h5>
-                                        </div>
+                    <div class="col-3">
+                        <div style="position: sticky; top: 0;">
+                            <div class="uk-card uk-card-default">
+                                <div class="uk-card-header">
+                                    <h3 class="uk-card-title text-center">
+                                        {{ 'Order Details' }}
+                                    </h3>
+                                </div>
+                                <div id="accordion">
+                                    <template x-for="(item, inx) in items" :key="item.uid">
+                                        <div class="card mb-2">
+                                            <div class="card-header" x-bind:id="'heading' + item.uid"
+                                                x-bind:class="{ 'active': activeItem === item.uid }">
+                                                <h5 class="mb-0 row">
+                                                    <button class="btn btn-link col-9"
+                                                        style="text-align: start;text-indent: .5rem"
+                                                        data-toggle="collapse" x-bind:data-target="'#collapse' + item.uid"
+                                                        aria-expanded="false" x-bind:aria-controls="'#collapse' + item.uid"
+                                                        x-on:click="activeItem = item.uid">
+                                                        <span
+                                                            x-text="item.title + '#' + (item.uid.toString()).substr(5)"></span>
+                                                    </button>
+                                                    <div class="col-3" style="text-align: end">
+                                                        <button type="button" x-on:click.prevent="removeItem(item.uid)"
+                                                            class="btn btn-danger p-1 rounded" uk-icon="trash"></button>
+                                                    </div>
+                                                </h5>
+                                            </div>
 
-                                        <div x-bind:id="'collapse' + item.uid" class="collapse"
-                                            x-bind:aria-labelledby="'heading' + item.uid" data-parent="#accordion">
-                                            <div class="card-body p-0">
-                                                <div class="">
-                                                    <ul class="list-group list-group-flush">
-                                                        <template x-for="ex in item.extras"
-                                                            :key="item.extras.length * Math.random()">
-                                                            <li class="list-group-item">
-                                                                <div
-                                                                    class="w-full p-1 d-flex align-items-center justify-content-between">
-                                                                    <div class="text-lg d-flex align-items-center">
-                                                                        <span
-                                                                            class="mr-2 text-danger align-items-center d-flex justify-content-center dot-borderd"
-                                                                            style="">·</span>
-                                                                        {{-- </span> --}}
-                                                                        <span class="text-lg text-black"
-                                                                            x-text="ex.name"></span>
+                                            <div x-bind:id="'collapse' + item.uid" class="collapse"
+                                                x-bind:aria-labelledby="'heading' + item.uid" data-parent="#accordion">
+                                                <div class="card-body p-0">
+                                                    <div class="">
+                                                        <ul class="list-group list-group-flush">
+                                                            <template x-for="ex in item.extras"
+                                                                :key="item.extras.length * Math.random()">
+                                                                <li class="list-group-item"
+                                                                    style="padding: 0.3rem 0.5rem;">
+                                                                    <div
+                                                                        class="w-full p-1 d-flex align-items-center justify-content-between">
+                                                                        <div class="text-lg d-flex align-items-center">
+                                                                            <span
+                                                                                class="mr-2 text-danger align-items-center d-flex justify-content-center dot-borderd"
+                                                                                style="font-family: sans !important;">·</span>
+                                                                            {{-- </span> --}}
+                                                                            <span class="text-lg text-black"
+                                                                                x-text="ex.name"></span>
+                                                                        </div>
+                                                                        <div>
+                                                                            (<span class="text-gray"
+                                                                                x-text="ex.price"></span>
+                                                                            {{ __('general.SR') }})
+                                                                        </div>
                                                                     </div>
-                                                                    <div>
-                                                                        (<span class="text-gray" x-text="ex.price"></span>
-                                                                        {{ __('general.SR') }})
+                                                                </li>
+                                                            </template>
+                                                            <template x-for="ex in item.withouts"
+                                                                :key="item.withouts.length * Math.random()">
+                                                                <li class="list-group-item"
+                                                                    style="padding: 0.3rem 0.5rem;">
+                                                                    <div
+                                                                        class="w-full p-1 d-flex align-items-center justify-content-between">
+                                                                        <div class="text-lg d-flex align-items-center">
+                                                                            <span
+                                                                                class="mr-2 text-success align-items-center d-flex justify-content-center dot-borderd"
+                                                                                style="font-family: sans !important;">·</span>
+                                                                            {{-- </span> --}}
+                                                                            <span class="text-lg text-black"
+                                                                                x-text="ex.name"></span>
+                                                                        </div>
+                                                                        <div>
+                                                                            (<span class="text-gray"
+                                                                                x-text="ex.price"></span>
+                                                                            {{ __('general.SR') }})
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                        </template>
-                                                        <template x-for="ex in item.withouts"
-                                                            :key="item.withouts.length * Math.random()">
-                                                            <li class="list-group-item">
-                                                                <div
-                                                                    class="w-full p-1 d-flex align-items-center justify-content-between">
-                                                                    <div class="text-lg d-flex align-items-center">
-                                                                        <span
-                                                                            class="mr-2 text-success align-items-center d-flex justify-content-center dot-borderd"
-                                                                            style="">·</span>
-                                                                        {{-- </span> --}}
-                                                                        <span class="text-lg text-black"
-                                                                            x-text="ex.name"></span>
-                                                                    </div>
-                                                                    <div>
-                                                                        (<span class="text-gray" x-text="ex.price"></span>
-                                                                        {{ __('general.SR') }})
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </template>
-                                                    </ul>
+                                                                </li>
+                                                            </template>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </template>
+                                    </template>
+                                </div>
+                            </div>
+
+                            {{-- order details --}}
+                            <div class="uk-card uk-card-default">
+                                <div class="card-body" style="line-height: .75rem;">
+                                    <p>
+                                        {{__('general.over_all')}}: (<span
+                                            x-text="(
+                                        (items.reduce((a, b) => {
+                                            return a + b.real_price + b.extras.reduce((ea, eb) => ea+eb.price, 0) + b.withouts.reduce((ea, eb) => ea+eb.price, 0);    
+                                        }, 0))
+                                    ).toFixed(2)"></span>
+                                        SA)
+                                    </p>
+                                    <p>
+                                        {{__('general.Total')}}: (<span
+                                            x-text="(
+                                        (items.reduce((a, b) => {
+                                            return a + b.real_price + b.extras.reduce((ea, eb) => ea+eb.price, 0) + b.withouts.reduce((ea, eb) => ea+eb.price, 0);    
+                                        }, 0))
+                                    ).toFixed(2)"></span>
+                                        SA)
+                                    </p>
+                                    <hr>
+                                    <h4 class="p-0 m-0">
+                                        {{__('general.to_pay')}}: (<span
+                                            x-text="(
+                                        (items.reduce((a, b) => {
+                                            return a + b.price + b.extras.reduce((ea, eb) => ea+eb.price, 0) + b.withouts.reduce((ea, eb) => ea+eb.price, 0);    
+                                        }, 0))
+                                    ).toFixed(2)"></span>
+                                        SA)
+                                    </h4>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button class="uk-button" type="submit">
+                                        {{__('general.to_pay')}} (<span
+                                            x-text="(
+                                        (items.reduce((a, b) => {
+                                            return a + b.price + b.extras.reduce((ea, eb) => ea+eb.price, 0) + b.withouts.reduce((ea, eb) => ea+eb.price, 0);    
+                                        }, 0))
+                                    ).toFixed(2)"></span>
+                                        SA)
+                                        <span class="fa fa-arrow-right"></span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
