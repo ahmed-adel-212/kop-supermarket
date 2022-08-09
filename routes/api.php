@@ -163,7 +163,7 @@ Route::group(['prefix' => 'website'], function () {
     Route::get('/health-info', 'Api\FrontController@getAllHealthInfo');
     // careers
     Route::get('/careers', 'Api\FrontController@getAllJobs');
-    Route::post('/careers', 'Api\FrontController@jobRequest');
+    Route::post('/careers/{id}', 'Api\FrontController@jobRequest');
 
 
 });
