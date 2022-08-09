@@ -138,6 +138,8 @@ Route::group(['prefix' => 'menu'], function () {
     // Route::get('/extras/{extra}/', 'Api\MenuController@getCategory');
 
     Route::get('/categories/{category}/withouts', 'Api\MenuController@getWithouts');
+
+    Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 });
 
 // helper endpoints

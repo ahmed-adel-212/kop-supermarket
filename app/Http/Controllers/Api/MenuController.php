@@ -11,16 +11,18 @@ use App\Models\OfferDiscount;
 
 class MenuController extends BaseController
 {
-    public function getAllCategories() {
+    public function getAllCategories()
+    {
         $categories = Category::all();
         return $this->sendResponse($categories, 'All Categories retrieved successfully.');
     }
 
-    public function getCategory(Request $request, Category $category) {
+    public function getCategory(Request $request, Category $category)
+    {
         $category = $category->with('items', 'extras', 'withouts')->find($category->id);
 
         foreach ($category->items as $key => $item) {
-            $branches = explode(',',$item->branches);
+            $branches = explode(',', $item->branches);
             //if(in_array($request->branch_id, $branches))
             {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
@@ -31,7 +33,6 @@ class MenuController extends BaseController
 
 
                     if ($parent_offer)  break;
-
                 }
 
                 if ($parent_offer) {
@@ -46,9 +47,9 @@ class MenuController extends BaseController
 
                 if ($parent_offer) {
                     if ($parent_offer->discount_type == 1) {
-                        $disccountValue = $item->price * $parent_offer->discount_value / 100 ;
+                        $disccountValue = $item->price * $parent_offer->discount_value / 100;
                         $item->offer->offer_price = $item->price - $disccountValue;
-                    } elseif($parent_offer->discount_type == 2) {
+                    } elseif ($parent_offer->discount_type == 2) {
                         $item->offer->offer_price = $item->price - $parent_offer->discount_value;
                     }
 
@@ -60,11 +61,12 @@ class MenuController extends BaseController
         return $this->sendResponse($category, 'Categories retrieved successfully.');
     }
 
-    public function getItems(Request $request, Category $category) {
+    public function getItems(Request $request, Category $category)
+    {
         $items = $category->items()->with('category.extras', 'category.withouts')->get();
 
         foreach ($items as $key => $item) {
-            $branches = explode(',',$item->branches);
+            $branches = explode(',', $item->branches);
             //if(in_array($request->branch_id, $branches))
             {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
@@ -75,7 +77,6 @@ class MenuController extends BaseController
 
                     // Just edit
                     if ($parent_offer)  break;
-
                 }
 
                 if ($parent_offer) {
@@ -90,9 +91,9 @@ class MenuController extends BaseController
 
                 if ($parent_offer) {
                     if ($parent_offer->discount_type == 1) {
-                        $disccountValue = $item->price * $parent_offer->discount_value / 100 ;
+                        $disccountValue = $item->price * $parent_offer->discount_value / 100;
                         $item->offer->offer_price = $item->price - $disccountValue;
-                    } elseif($parent_offer->discount_type == 2) {
+                    } elseif ($parent_offer->discount_type == 2) {
                         $item->offer->offer_price = $item->price - $parent_offer->discount_value;
                     }
 
@@ -104,28 +105,39 @@ class MenuController extends BaseController
         return $this->sendResponse($items, 'items retrieved successfully.');
     }
 
-    public function getItem(Request $request, Item $item) {
+    public function getItem(Request $request, Item $item)
+    {
         dd($item, 'test');
     }
 
-    public function getExtras(Request $request, Category $category) {
+    public function getExtras(Request $request, Category $category)
+    {
         return $this->sendResponse($category->extras, 'Extras retrieved successfully.');
     }
 
-    public function getWithouts(Request $request, Category $category) {
+    public function getWithouts(Request $request, Category $category)
+    {
         return $this->sendResponse($category->withouts, 'Withouts retrieved successfully.');
     }
 
-    public function getExtra(Request $request, Extra $extra) {
+    public function getExtra(Request $request, Extra $extra)
+    {
         dd($extra, 'test');
     }
 
-    public function getWithout(Request $request, Without $without) {
+    public function getWithout(Request $request, Without $without)
+    {
         dd($without, 'test');
     }
 
-    public function getOffers() {
-
+    public function getOffers()
+    {
     }
 
+    public function getRecommendedItems(Request $request)
+    {
+        $items = Item::inRandomOrder()->simplePaginate();
+
+        return $this->sendResponse($items, 'recommended items retrieved successfully.');
+    }
 }
