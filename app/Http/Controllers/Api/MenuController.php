@@ -136,7 +136,7 @@ class MenuController extends BaseController
 
     public function getRecommendedItems(Request $request)
     {
-        $items = Item::inRandomOrder()->simplePaginate();
+        $items = Item::where('recommended', true)->simplePaginate();
 
         return $this->sendResponse($items, 'recommended items retrieved successfully.');
     }
