@@ -10,6 +10,7 @@
 <script src="{{asset('website2-assets/vendor/sidebar/hc-offcanvas-nav.js')}}"></script>
 <script src="{{asset('website2-assets/js/osahan.js')}}"></script>
 <script src="{{ asset('admin-assets/js/jquery.validate.min.js') }}"></script>
+<script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
 
 <!-- Bootstrap RTL -->
 @if(LaravelLocalization::getCurrentLocaleName() == 'Arabic')

@@ -792,3 +792,17 @@ body.dm-dark .toppings-item__media .counter .plus {
         border-bottom: 1px solid #3e3c3c;
     }
 }
+
+body.dm-dark .uk-card {
+    background: #152530;
+    color: #fff;
+}
+
+body.dm-dark .uk-card .uk-card-title
+{
+    color: #fff;
+}
+
+body.dm-dark .uk-card .text-gray {
+    color: gray;
+}

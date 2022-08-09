@@ -138,6 +138,8 @@ Route::group(['prefix' => 'menu'], function () {
     // Route::get('/extras/{extra}/', 'Api\MenuController@getCategory');
 
     Route::get('/categories/{category}/withouts', 'Api\MenuController@getWithouts');
+
+    Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 });
 
 // helper endpoints
@@ -161,7 +163,7 @@ Route::group(['prefix' => 'website'], function () {
     Route::get('/health-info', 'Api\FrontController@getAllHealthInfo');
     // careers
     Route::get('/careers', 'Api\FrontController@getAllJobs');
-    Route::post('/careers', 'Api\FrontController@jobRequest');
+    Route::post('/careers/{id}', 'Api\FrontController@jobRequest');
 
 
 });
