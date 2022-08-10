@@ -139,7 +139,7 @@ class AuthController extends BaseController
                 "success" => true,
                 'user_created' => true,
                 'user' => $user,
-                'otp' => $user->activation_token,
+                'otp' => null,
                 'message_sent'=> true,
                 "message" => 'Successfully created user!',
             ], 200);
@@ -153,7 +153,7 @@ class AuthController extends BaseController
                 "success" => false,
                 'user_created' => true,
                 'user' => $user,
-                'otp' => $user->activation_code,
+                'otp' => null,
                 'message_sent'=> false,
                 "message" => $e->getMessage()
             ], 400);
