@@ -139,6 +139,7 @@ class AuthController extends BaseController
                 "success" => true,
                 'user_created' => true,
                 'user' => $user,
+                'data' => $user,
                 'otp' => null,
                 'message_sent'=> true,
                 "message" => 'Successfully created user!',
