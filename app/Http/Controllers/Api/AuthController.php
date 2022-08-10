@@ -127,6 +127,10 @@ class AuthController extends BaseController
             $user = User::create($request->all());
             $user->attachRole(3); // customer
 
+            Auth::login($user);
+
+            $token = $user->createToken('AppName')->accessToken;
+
         try {
             
             $this->sendMessage(
@@ -140,7 +144,7 @@ class AuthController extends BaseController
                 'user_created' => true,
                 'user' => $user,
                 'data' => $user,
-                'otp' => null,
+                'token' => $token,
                 'message_sent'=> true,
                 "message" => 'Successfully created user!',
             ], 200);
@@ -154,7 +158,7 @@ class AuthController extends BaseController
                 "success" => true,
                 'user_created' => true,
                 'user' => $user,
-                'otp' => null,
+                'token' => $token,
                 'message_sent'=> false,
                 "message" => $e->getMessage()
             ], 200);
@@ -221,7 +225,7 @@ class AuthController extends BaseController
         $user = $request->user();
 
         if ($user->activation_token !== $token) {
-            return $this->sendError('token_mismatch');
+            return $this->sendError('invalid token');
         }
         
         $user->active = true;
