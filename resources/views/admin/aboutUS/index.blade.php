@@ -7,7 +7,7 @@
         <div class="col-sm-6">
           <h1>AboutUS</h1>
         </div>
-      @if($aboutUS->count() <= 0)
+      @if($aboutUS->count() <= 4)
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('admin.aboutUS.create')}}">Add New AboutUS</a></li>

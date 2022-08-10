@@ -51,10 +51,30 @@
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title_ar">Icon</label>
+                                        <input type="text"
+                                               class="form-control "
+                                               id="title_ar" placeholder="Enter Icon Name" name="icon" value="{{old('icon')}}" >
+                                        @error('icon')
+                                        <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group d-flex align-items-center justify-content-center">
+                                        select icon from &nbsp; <a href='https://fontawesome.com/v4/icons/' target="_blank">Here</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="description_en">Description English</label>
-                                        <textarea rows="5" class="form-control p-1 editor" id="description_en"
+                                        <textarea rows="5" class="form-control p-1" id="description_en"
                                                   placeholder="Enter Description" name="description_en"
                                         >{{$about->description_en}}</textarea>
                                         @error('description_en')
@@ -65,7 +85,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="description_ar">Description Arabic</label>
-                                        <textarea rows="5" class="form-control p-1 editor" id="description_ar"
+                                        <textarea rows="5" class="form-control p-1" id="description_ar"
                                                   placeholder="Enter Description"
                                                   name="description_ar">{{$about->description_ar}}</textarea>
                                         @error('description_ar')
