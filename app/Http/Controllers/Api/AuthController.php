@@ -151,7 +151,7 @@ class AuthController extends BaseController
             // DB::rollBack();
             
             return response()->json([
-                "success" => false,
+                "success" => true,
                 'user_created' => true,
                 'user' => $user,
                 'otp' => null,

@@ -23,6 +23,17 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="exampleInputFile">Image</label>
+                                <br>
+                                 @if($info->image)
+                                      <img src="{{ $info->image }}" alt="..." class="img-thumbnail w-90">
+                                  @endif
+                              </div>
+                            </div>
+                          </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputArabicName">Arabic Title</label>
