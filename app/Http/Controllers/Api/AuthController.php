@@ -105,9 +105,9 @@ class AuthController extends BaseController
             );
         }
 
-        DB::beginTransaction();
-        try {
-            $name = explode(" ", $request->name);
+        // DB::beginTransaction();
+
+        $name = explode(" ", $request->name);
             if (count($name) < 2) {
                 return response()->json([
                     "success" => false,
@@ -127,27 +127,41 @@ class AuthController extends BaseController
             $user = User::create($request->all());
             $user->attachRole(3); // customer
 
+        try {
+            
             $this->sendMessage(
                 $user->first_phone,
                 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
             );
 
-            return $this->sendResponse($user, 'Successfully created user!');
+            // return $this->sendResponse($user, 'Successfully created user!');
+            return response()->json([
+                "success" => true,
+                'user_created' => true,
+                'user' => $user,
+                'otp' => $user->activation_token,
+                'message_sent'=> true,
+                "message" => 'Successfully created user!',
+            ], 200);
 
             //            return $this->sendResponse($user, 'Successfully created user!');
 
         } catch (\Exception $e) {
-            DB::rollBack();
+            // DB::rollBack();
             
             return response()->json([
                 "success" => false,
+                'user_created' => true,
+                'user' => $user,
+                'otp' => $user->activation_code,
+                'message_sent'=> false,
                 "message" => $e->getMessage()
             ], 400);
 
             //echo "Error: " . $e->getMessage();
         }
 
-        DB::commit();
+        // DB::commit();
 
 
         // $user->notify(new SignupActivate($user));
