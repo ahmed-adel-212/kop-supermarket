@@ -157,7 +157,7 @@ class AuthController extends BaseController
                 'otp' => null,
                 'message_sent'=> false,
                 "message" => $e->getMessage()
-            ], 400);
+            ], 200);
 
             //echo "Error: " . $e->getMessage();
         }
