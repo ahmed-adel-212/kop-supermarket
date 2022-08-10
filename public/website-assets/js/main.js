@@ -58,15 +58,15 @@ var options = {
     saveOnToggle: true
 };
 
-var DarkMode = new DarkMode(options); // Function for `mode-toggler` button
+// var DarkMode = new DarkMode(options); // Function for `mode-toggler` button
 
-var ModeToggler = document.getElementById('mode-toggler');
-changeTogglerText();
+// var ModeToggler = document.getElementById('mode-toggler');
+// changeTogglerText();
 
-ModeToggler.onclick = function () {
-    DarkMode.toggleMode();
-    changeTogglerText();
-}; // Changes `mode-toggler` text on mode changing
+// ModeToggler.onclick = function () {
+//     DarkMode.toggleMode();
+//     changeTogglerText();
+// }; // Changes `mode-toggler` text on mode changing
 
 
 
