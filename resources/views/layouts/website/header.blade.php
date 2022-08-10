@@ -75,7 +75,7 @@
                 <div class="uk-navbar-left">
                     <div>
                         <div class="block-with-phone"><img style="color:#f00" src="{{asset('website-assets/img/icons/delivery-man-') . app()->getLocale() . '.svg' }}"
-                                                           alt="delivery" data-uk-svg>
+                                                           alt="delivery" data-uk-svg width="42" height="42">
                             <div><span>{{__('header.For Delivery, Call us')}}</span><a href="tel:920001939">920001939</a>
                             </div>
                         </div>
