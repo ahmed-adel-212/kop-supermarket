@@ -2,7 +2,17 @@
 
 @section('title') {{__('general.Health Information')}} @endsection
 
-@section('styles')@endsection
+@section('styles')
+<style>
+    .article .card {
+        transition: all ease-in .4s;
+    }
+    .article .card:hover {
+        box-shadow: 0 0 5px #000;
+        transform: scale(1.1);
+    }
+</style>
+@endsection
 
 @section('pageName')
     <body class="page-blog dm-dark"> @endsection
@@ -32,31 +42,40 @@
                         <div class="uk-width-2-3@m align-self-md-center">
                             @if(isset($infos))
                                 @foreach($infos as $info)
-                                    <article class="article-intro">
-                                        {{--                                        <div class="article-intro__image"><a href="page-blog-article.html"><img src="{{$article--}}
-                                        {{--->image}}" alt="img-article"></a></div>--}}
+                                    {{-- <article class="article-intro">
+                                   
                                         <div class="article-intro__body align text-center">
                                             <div class="article-intro__info">
-                                                {{--                                                <div class="article-intro__author"><i--}}
-                                                {{--                                                        class="fas fa-user"></i><span>By {{$article->author}}</span>--}}
-                                                {{--                                                </div>--}}
-                                                {{--                                    <div class="article-intro__category"><i class="fas fa-folder-open"></i><span>Posted in FOOD</span></div>--}}
+                                               
                                                 <div class="article-intro__date"><i
                                                         class="fas fa-calendar-alt"></i><span>{{$info->created_at}}</span>
                                                 </div>
-                                                {{--                                    <div class="article-intro__comments"><i class="fas fa-comment"></i><span>210</span></div>--}}
+                                               
                                             </div>
                                             <h2 class="article-intro__title">           {{(app()->getLocale() == 'ar') ?$info->title_ar:$info->title_en}}</h2>
                                             <div class="article-intro__content">
                                                 <div> {!! nl2br(e((app()->getLocale() == 'ar') ?$info ->description_ar:$info->description_en)) !!} </div>
                                             </div>
-                                            {{--                                            <div class="article-intro__bottom">--}}
-                                            {{--                                                --}}{{--                                    <div class="article-intro__tags"><i class="fas fa-tags"></i><span>cheese, Pizza, Cookies, Bake</span></div>--}}
-                                            {{--                                                <div class="article-intro__more"><a class="uk-button"--}}
-                                            {{--                                                                                    href="{{route('get.new',$article->id)}}">Read--}}
-                                            {{--                                                        More</a></div>--}}
-                                            {{--                                            </div>--}}
+                                           
                                         </div>
+                                    </article> --}}
+                                    <article class="article">
+                                        <div class="card mb-3 rounded">
+                                            <img class="card-img-top" src="{{$info->image}}" alt="{{$info->title_en}}" style="max-height: 200px" />
+                                            <div class="card-body">
+                                              <h5 class="card-title">
+                                                {{app()->getLocale() === 'ar' ? $info->title_ar : $info->title_en}}
+                                              </h5>
+                                              <p class="card-text text-muted">
+                                                {{app()->getLocale() === 'ar' ? $info->description_ar : $info->description_en}}
+                                              </p>
+                                              <p class="card-text text-muted">
+                                                <i class="fas fa fa-clock"></i>
+                                                <small class="text-muted">
+                                                {{$info->updated_at->diffForHumans()}}    
+                                            </small></p>
+                                            </div>
+                                          </div>
                                     </article>
                                 @endforeach
                             @endif
