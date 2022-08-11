@@ -14,11 +14,13 @@ class MenuController extends Controller
 {
     public function menuPage(){
         $menu = [];
-        // $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
-        // if($return['success'] == 'success'){
-        //     $menu['categories'] = $return['data'];
-        // }
-        $menu['categories'] = Category::all();
+
+        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
+        
+        if($return['success'] == 'success'){
+            $menu['categories'] = $return['data']['categories'];
+        }
+
         return view('website.menu',compact(['menu']));
     }
 
