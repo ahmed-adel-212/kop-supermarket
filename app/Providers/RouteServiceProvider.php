@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\LangMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -66,6 +67,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
              ->middleware('api')
+             ->middleware(LangMiddleware::class)
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
     }
