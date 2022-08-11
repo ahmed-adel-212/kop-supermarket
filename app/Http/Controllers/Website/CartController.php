@@ -24,7 +24,7 @@ class CartController extends Controller
                 $newRequest->merge(['item_id' => $request->item_id]);
                 $newRequest->merge(['offer_id' => $request->offer_id]);
                 $newRequest->merge(['offer_price' => $request->offer_price[$index]]);
-                $newRequest->merge(['quantity' => $request->quantity]);
+                $newRequest->merge(['quantity' => 1]);
                 
                 $dough = explode(',', $item->dough);
                 $request->merge([
@@ -54,7 +54,7 @@ class CartController extends Controller
                     'withouts' =>  json_encode($item->withouts),
                     'dough_type_ar' =>  $request->dough_type_ar,
                     'dough_type_en' =>  $request->dough_type_en,
-                    'quantity' =>  $request->quantity,
+                    'quantity' =>  1,
                     'offer_id' =>  $request->offer_id,
                     'offer_price' =>  $request->offer_price,
                 ]);
