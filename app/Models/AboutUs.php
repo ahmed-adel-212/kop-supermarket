@@ -13,6 +13,9 @@ class AboutUs extends Model
         'title_en',
         'description_ar',
         'description_en',
+        'icon',
+        'image',
+        'type',
         'created_at',
         'updated_at',
     ];

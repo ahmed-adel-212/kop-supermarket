@@ -50,18 +50,26 @@ class HealthInfoController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
-
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
 
         $attributes = $request->validate($validationRules);
+
+        $img = null;
+        if ($request->hasFile('image')) {
+            $image = $request->image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('health_infos'), $image_new_name);
+            $img = '/health_infos/' . $image_new_name;
+        }
 
         $job = HealthInfo::create([
             'title_ar' => $request->title_ar,
             'title_en' => $request->title_en,
             'description_ar' => $request->description_ar,
             'description_en' => $request->description_en,
-
+            'image' => $img,
             'created_at' => Carbon::now(),
         ]);
         $this->Make_Log('App\Models\HealthInfo','create',$job->id);

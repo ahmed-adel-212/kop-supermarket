@@ -30,9 +30,10 @@
                         </tr>
                         </thead>
                         <tbody>
+                            
                         @foreach ($infos as $index => $info)
                             <tr>
-                                <td>{{$index + 1 }}</td>
+                                <td>{{$index + 1 }}<img class="img-fluid" src="{{$info->image}}"/></td>
                                 <td>{{ $info->title_en}}</td>
                                 <td>{{ $info->title_ar}}</td>
 

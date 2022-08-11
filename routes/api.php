@@ -29,15 +29,15 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('reset', 'Api\PasswordResetController@createNewPassword');
     });
 
-    Route::post('resend-code', 'Api\AuthController@resendCode');    
+    Route::post('resend-code', 'Api\AuthController@resendCode');
+    /* for verification */
+    Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
+    Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');  
 
     Route::group(['middleware' => ['auth:api', 'verifyTwilio']], function () {
         Route::get('user', 'Api\AuthController@getUser');
         Route::put('user', 'Api\AuthController@updateUser');
         Route::get('logout', 'Api\AuthController@logout');
-        /* for verification */
-        Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
-        Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');
     });
 });
 

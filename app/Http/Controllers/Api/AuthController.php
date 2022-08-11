@@ -104,9 +104,9 @@ class AuthController extends BaseController
             );
         }
 
-        DB::beginTransaction();
-        try {
-            $name = explode(" ", $request->name);
+        // DB::beginTransaction();
+
+        $name = explode(" ", $request->name);
             if (count($name) < 2) {
                 return response()->json([
                     "success" => false,
@@ -126,27 +126,46 @@ class AuthController extends BaseController
             $user = User::create($request->all());
             $user->attachRole(3); // customer
 
+            Auth::login($user);
+
+            $token = $user->createToken('AppName')->accessToken;
+
+        try {
+            
             $this->sendMessage(
                 $user->first_phone,
                 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
             );
 
-            return $this->sendResponse($user, 'Successfully created user!');
+            // return $this->sendResponse($user, 'Successfully created user!');
+            return response()->json([
+                "success" => true,
+                'user_created' => true,
+                'user' => $user,
+                'data' => $user,
+                'token' => $token,
+                'message_sent'=> true,
+                "message" => 'Successfully created user!',
+            ], 200);
 
             //            return $this->sendResponse($user, 'Successfully created user!');
 
         } catch (\Exception $e) {
-            DB::rollBack();
+            // DB::rollBack();
             
             return response()->json([
-                "success" => false,
+                "success" => true,
+                'user_created' => true,
+                'user' => $user,
+                'token' => $token,
+                'message_sent'=> false,
                 "message" => $e->getMessage()
-            ], 400);
+            ], 200);
 
             //echo "Error: " . $e->getMessage();
         }
 
-        DB::commit();
+        // DB::commit();
 
 
         // $user->notify(new SignupActivate($user));
@@ -205,7 +224,7 @@ class AuthController extends BaseController
         $user = $request->user();
 
         if ($user->activation_token !== $token) {
-            return $this->sendError('token_mismatch');
+            return $this->sendError('invalid token');
         }
         
         $user->active = true;

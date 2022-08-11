@@ -195,4 +195,7 @@ return [
     'tit4' => 'Nutritional value',
     'sec4' => 'Our products contain essential food benefits for human health such as Spinach contains (iron-potassiumcalcium-phosphorus-vitamin C and folic acid) Proteins like meat, chicken, eggs and cheese also contain (zinc-amino acids, vitamin D, iron, omega-3, calcium and vitamin B).',
     'titv' => 'We are always think about serving up better fast-food. Here is how we actually do it.',
+    "over_all" => "Over All",
+    "to_pay" => "ToPay",
+    'story' => 'Our Story',
 ];

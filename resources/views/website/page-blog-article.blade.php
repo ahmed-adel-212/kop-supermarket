@@ -11,7 +11,7 @@
         <main class="page-main">
             <div class="section-first-screen">
                 <div class="first-screen__bg"
-                     style="background-image: url({{$article->image}})"></div>
+                     style="background-image: url('{{$article->image}}')"></div>
                 <div class="first-screen__content">
                     <div class="uk-container">
                         <div class="first-screen__box">

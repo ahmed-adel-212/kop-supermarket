@@ -7,7 +7,7 @@
         <div class="col-sm-6">
           <h1>AboutUS</h1>
         </div>
-      @if($aboutUS->count() <= 0)
+      @if($aboutUS->where('type', '!=', 'feat')->count() <= 3)
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('admin.aboutUS.create')}}">Add New AboutUS</a></li>
@@ -32,7 +32,9 @@
           <tbody>
             @foreach($aboutUS as $about)
             <tr>
-              <td><a href="{{ route('admin.aboutUS.show', $about->id) }}">{{ $about->id }}</a></td>
+              <td><a href="{{ route('admin.aboutUS.show', $about->id) }}">{{ $about->id }}</a>
+                <img src="{{$about->image}}" class="img-thumbnail" style="    height: 200px;" />
+              </td>
               <td>{{$about->title_en}}</td>
               <td>{{$about->title_ar}}</td>
               <td>

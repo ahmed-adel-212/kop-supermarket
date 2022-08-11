@@ -14,6 +14,7 @@ class HealthInfo extends Model
         'title_en',
          'description_ar',
         'description_en',
+        'image',
         'created_at',
         'updated_at',
      ];
