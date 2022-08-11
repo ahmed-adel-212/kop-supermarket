@@ -108,12 +108,12 @@ class MenuController extends BaseController
         return $this->sendResponse($items, 'items retrieved successfully.');
     }
 
-    public function getCategoryItems(Request $request, Category $category)
-    {
+
+    public function getcategoryItems(Request $request, Category $category) {
         $items = $category->items()->get();
 
         foreach ($items as $key => $item) {
-            $branches = explode(',', $item->branches);
+            $branches = explode(',',$item->branches);
             //if(in_array($request->branch_id, $branches))
             {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
@@ -124,6 +124,7 @@ class MenuController extends BaseController
 
                     // Just edit
                     if ($parent_offer)  break;
+
                 }
 
                 if ($parent_offer) {
@@ -138,9 +139,10 @@ class MenuController extends BaseController
 
                 if ($parent_offer) {
                     if ($parent_offer->discount_type == 1) {
-                        $disccountValue = $item->price * $parent_offer->discount_value / 100;
+
+                        $disccountValue = $item->price * $parent_offer->discount_value / 100 ;
                         $item->offer->offer_price = $item->price - $disccountValue;
-                    } elseif ($parent_offer->discount_type == 2) {
+                    } elseif($parent_offer->discount_type == 2) {
                         $item->offer->offer_price = $item->price - $parent_offer->discount_value;
                     }
 
@@ -152,8 +154,8 @@ class MenuController extends BaseController
         return $this->sendResponse($items, 'items retrieved successfully.');
     }
 
-    public function getItem(Request $request, Item $item)
-    {
+
+    public function getItem(Request $request, Item $item) {
         dd($item, 'test');
     }
 
