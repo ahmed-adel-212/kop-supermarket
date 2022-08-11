@@ -14,8 +14,8 @@ class MenuController extends BaseController
     public function getAllCategories()
     {
         $categories = Category::all();
-        // get first category items
-        $items = $categories->first()->items()->simplePaginate();
+        // load first category items
+        $categories->first()->load('items');
         
         return $this->sendResponse(compact('categories', 'items'), 'All Categories retrieved successfully.');
     }
