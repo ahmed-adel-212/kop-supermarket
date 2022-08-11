@@ -18,7 +18,7 @@ class MenuController extends Controller
         $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
         
         if($return['success'] == 'success'){
-            $menu['categories'] = $return['data']['categories'];
+            $menu['categories'] = $return['data'];
         }
 
         return view('website.menu',compact(['menu']));
