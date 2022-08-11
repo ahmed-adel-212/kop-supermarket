@@ -109,7 +109,7 @@ class MenuController extends BaseController
     }
 
 
-    public function getcategoryItems(Request $request, Category $category) {
+    public function getCategoryItems(Request $request, Category $category) {
         $items = $category->items()->get();
 
         foreach ($items as $key => $item) {
@@ -149,8 +149,9 @@ class MenuController extends BaseController
                     unset($item->offer->offer);
                 }
             }
+            unset($item->category);
         }
-
+        
         return $this->sendResponse($items, 'items retrieved successfully.');
     }
 
