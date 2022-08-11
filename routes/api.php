@@ -131,7 +131,7 @@ Route::group(['prefix' => 'menu'], function () {
 
     // items
     Route::post('/categories/{category}/items', 'Api\MenuController@getItems');
-    // Route::get('/items/{item}/', 'Api\MenuController@getCategory');
+    Route::post('/categories/{category}/getitems', 'Api\MenuController@getcategoryItems');
 
     // extras
     Route::get('/categories/{category}/extras', 'Api\MenuController@getExtras');
