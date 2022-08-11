@@ -17,7 +17,7 @@ class MenuController extends BaseController
         // load first category items
         $categories->first()->load('items');
         
-        return $this->sendResponse(compact('categories'), 'All Categories retrieved successfully.');
+        return $this->sendResponse($categories, 'All Categories retrieved successfully.');
     }
 
     public function getCategory(Request $request, Category $category)
