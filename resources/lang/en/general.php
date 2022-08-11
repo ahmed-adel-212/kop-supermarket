@@ -197,4 +197,5 @@ return [
     'titv' => 'We are always think about serving up better fast-food. Here is how we actually do it.',
     "over_all" => "Over All",
     "to_pay" => "ToPay",
+    'story' => 'Our Story',
 ];

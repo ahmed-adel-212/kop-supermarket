@@ -112,7 +112,7 @@
                             @foreach ($galleries as $gallery)
                                 <div class="col-4 my-2 image-card">
                                     <div class="card overflow-hidden">
-                                        <img class="card-img" src="{{ $gallery->url }}"
+                                        <img uk-img class="card-img" src="{{ $gallery->url }}"
                                             alt="{{ app()->getLocale('ar') ? $gallery->title_ar : $gallery->title_en }}"
                                             x-on:click.prevent="active = {{ $loop->index }};showModal = true;" />
                                         <div class="card-img-overlay-custom py-1 rounded">
@@ -148,7 +148,7 @@
                                                 x-bind:class="{
                                                     'active': active === {{ $loop->index }}
                                                 }">
-                                                <img class="d-block w-100" src="{{ $gallery->url }}"
+                                                <img uk-img class="d-block w-100" src="{{ $gallery->url }}"
                                                     alt="{{ app()->getLocale('ar') ? $gallery->title_ar : $gallery->title_en }}" />
                                                 <div class="carousel-caption d-none d-md-block">
                                                     <h5 class="rounded">{{ app()->getLocale('ar') ? $gallery->title_ar : $gallery->title_en }}
