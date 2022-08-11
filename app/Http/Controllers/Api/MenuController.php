@@ -157,7 +157,39 @@ class MenuController extends BaseController
 
 
     public function getItem(Request $request, Item $item) {
-        dd($item, 'test');
+        $item->category= Category::with('extras', 'withouts')->where('id',$item->category_id)->get();
+        $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
+
+        $parent_offer = null;
+        foreach ($offers as $offer) {
+            $parent_offer = OfferDiscount::find($offer->offer_id);
+
+            // Just edit
+            if ($parent_offer)  break;
+
+        
+
+        if ($parent_offer) {
+
+            if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
+                $parent_offer = null;
+            }
+        }
+
+        $item->offer = $parent_offer;
+
+        if ($parent_offer) {
+            if ($parent_offer->discount_type == 1) {
+
+                $disccountValue = $item->price * $parent_offer->discount_value / 100 ;
+                $item->offer->offer_price = $item->price - $disccountValue;
+            } elseif($parent_offer->discount_type == 2) {
+                $item->offer->offer_price = $item->price - $parent_offer->discount_value;
+            }}
+
+            unset($item->offer->offer);}
+        return $this->sendResponse($item, 'item retrieved successfully.');
+     
     }
 
     public function getExtras(Request $request, Category $category)
