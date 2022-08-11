@@ -62,11 +62,24 @@
                                         @error('icon')
                                         <div class="help-block">{{ $message }}</div>
                                         @enderror
+                                        <div class="form-group d-flex align-items-center justify-content-center">
+                                            select icon from &nbsp; <a href='https://fontawesome.com/v4/icons/' target="_blank">Here</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group d-flex align-items-center justify-content-center">
-                                        select icon from &nbsp; <a href='https://fontawesome.com/v4/icons/' target="_blank">Here</a>
+                                    <div class="form-group">
+                                        <label for="title_ar">Type</label>
+                                        <select name="type" class="form-control">
+                                            @foreach (['first', 'bg-st', 'feat', 'bg-nd'] as $ty)
+                                                <option value="{{$ty}}" @if(old('type') === $ty) selected @endif @if($about->type === $ty) selected @endif>
+                                                    {{__('general.'. $ty)}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('type')
+                                        <div class="help-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

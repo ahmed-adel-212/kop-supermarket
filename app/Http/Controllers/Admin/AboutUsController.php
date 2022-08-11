@@ -48,6 +48,7 @@ class AboutUsController extends Controller
             'description_en' => 'required',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'icon' => 'nullable|string',
+            'type' => 'required|in:first,bg-st,feat,bg-nd',
         ];
         $validator = $request->validate($validator_rules);
 
@@ -56,7 +57,7 @@ class AboutUsController extends Controller
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('aboutus'), $image_new_name);
-            $img = '/offers/' . $image_new_name;
+            $img = '/aboutus/' . $image_new_name;
         }
 
         $arr = $request->all();
@@ -104,10 +105,13 @@ class AboutUsController extends Controller
         $validator_rules = ['title_ar' => 'required',
             'title_en' => 'required',
             'description_ar' => 'required',
-            'description_en' => 'required'];
+            'description_en' => 'required',
+            'icon' => 'nullable|string',
+            'type' => 'required|in:first,bg-st,feat,bg-nd',];
         $validator = $request->validate($validator_rules);
         $about = AboutUs::findOrFail($id);
-        $about->update($request->all());
+        $about->fill($request->all());
+        $about->save();
         $this->Make_Log('App\Models\AboutUS','update',$id);
         return redirect()->route('admin.aboutUS.index');
     }
