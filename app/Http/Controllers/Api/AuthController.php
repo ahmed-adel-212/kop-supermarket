@@ -59,9 +59,8 @@ class AuthController extends BaseController
             'email' => request('email'),
             'password' => request('password')
         ];
-
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+             $user = Auth::user();
 
             if ($user->hasRole('cashier')) {
                 if ($request->has('device_token')) {

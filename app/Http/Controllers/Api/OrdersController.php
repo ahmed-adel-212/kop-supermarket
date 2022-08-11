@@ -48,7 +48,7 @@ class OrdersController extends BaseController
             $address->with(['city', 'area']);
         }])->orderBy('id', 'DESC')->paginate(10);
 
-
+ 
         foreach ($orders as $order) {
             foreach ($order->items as $item) {
                 $extras = $item->pivot->item_extras;

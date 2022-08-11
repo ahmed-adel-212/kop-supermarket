@@ -14,10 +14,11 @@ class MenuController extends Controller
 {
     public function menuPage(){
         $menu = [];
-        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
-        if($return['success'] == 'success'){
-            $menu['categories'] = $return['data'];
-        }
+        // $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
+        // if($return['success'] == 'success'){
+        //     $menu['categories'] = $return['data'];
+        // }
+        $menu['categories'] = Category::all();
         return view('website.menu',compact(['menu']));
     }
 
@@ -25,7 +26,7 @@ class MenuController extends Controller
         $item = 0;
         $category = Category::find($category_id);
         $request = new \Illuminate\Http\Request();
-        $request->branch_id = (session()->has('branch_id'))? session()->get('branch_id'): 0 ;//det branch_id
+       return $request->branch_id = (session()->has('branch_id'))? session()->get('branch_id'): 0 ;//det branch_id
         $return = (app(\App\Http\Controllers\Api\MenuController::class)->getItems($request,$category))->getOriginalContent();
         foreach ($return['data'] as $product){
             if($product->id == $item_id){

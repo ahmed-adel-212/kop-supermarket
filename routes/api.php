@@ -44,11 +44,14 @@ Route::group(['prefix' => 'auth'], function () {
 Route::get('get-branch-working-hours', 'Api\BranchesController@getBranchWorkingHours');
 
 Route::middleware('api')->group(function () {
+
+    Route::group(['middleware' => ['auth:api']],function () {
     Route::get('get-user-points', 'Api\AuthController@getUserPoints');
     Route::post('change-user-points', 'Api\AuthController@changeUserPoints');
     Route::get('get-gifts', 'Api\GiftsController@getGifts');
     Route::post('buy-gifts', 'Api\GiftsController@buyGifts');
     Route::get('get-user-gifts-orders', 'Api\GiftsController@getUserGiftsOrders');
+    });
 
 
     Route::group(['prefix' => 'cart'], function () {
@@ -78,7 +81,7 @@ Route::middleware('api')->group(function () {
 
 
     // orders routes
-    Route::group(['prefix' => 'orders'], function () {
+    Route::group(['middleware' => ['auth:api'],'prefix' => 'orders'], function () {
 
 
         // list all orders
@@ -111,15 +114,16 @@ Route::middleware('api')->group(function () {
     Route::post('/payment/complete', 'Api\OrdersController@orderPayed');
 
     // offers routes
-    Route::group(['prefix' => 'offers'], function () {
+    Route::group(['middleware' => ['auth:api'],'prefix' => 'offers' ], function () {
         Route::get('/', 'Api\OffersController@index')->name("offers.index");
         Route::get('/{offer}', 'Api\OffersController@get');
         Route::get('/check/{order_id}', 'Api\OffersController@check');
     });
 
     // Address routes
+    Route::group(['middleware' => ['auth:api']], function () {
     Route::resource('/address', 'Api\AddressesController');
-    Route::post('/addressmaps', 'Api\AddressesController@sotreWithMaps');
+    Route::post('/addressmaps', 'Api\AddressesController@sotreWithMaps');});
 });
 
 // Menu routes
@@ -131,6 +135,9 @@ Route::group(['prefix' => 'menu'], function () {
 
     // items
     Route::post('/categories/{category}/items', 'Api\MenuController@getItems');
+
+    Route::post('/categories/{category}/getitems', 'Api\MenuController@getCategoryItems');
+    
     // Route::get('/items/{item}/', 'Api\MenuController@getCategory');
 
     // extras

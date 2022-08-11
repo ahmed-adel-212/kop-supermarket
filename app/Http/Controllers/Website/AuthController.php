@@ -19,16 +19,18 @@ class AuthController extends Controller
 
     public function get_sign_up()
     {
+        
         return view('website.signup');
     }
 
     public function sign_up(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        
+       return $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => ['required', 'min:11']
+            'phone' => ['required']
         ]);
         //, 'unique:users,first_phone'
         if ($validator->fails()) {

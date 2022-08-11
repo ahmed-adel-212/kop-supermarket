@@ -59,7 +59,7 @@ class UserController extends Controller
             'last_name' => 'required|min:3|max:20',
             'roles' => 'required|array',
             'branches' => 'required|array',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email', 
             'first_phone' => 'required|numeric|digits:14',
             'second_phone' => 'nullable|numeric|digits:14',
             'password' => 'required|confirmed|min:4',

@@ -30,7 +30,7 @@ class ContactController extends BaseController
         $contact = new Contact;
         $contact->subject = $request->subject;
         $contact->body = $request->body;
-        $contact->customer_id = $user->id;
+        $contact->customer_id = 91;
         $contact->save();
          
         Mail::to("kop@wahfyservices.com")
