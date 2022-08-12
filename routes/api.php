@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/home', 'Api\FrontController@getHomeSections')->name('home');
+
 // Authintication routes
 Route::group(['prefix' => 'auth'], function () {
 
@@ -32,7 +34,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('resend-code', 'Api\AuthController@resendCode');
     /* for verification */
     Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
-    Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');  
+    Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');
 
     Route::group(['middleware' => ['auth:api', 'verifyTwilio']], function () {
         Route::get('user', 'Api\AuthController@getUser');
@@ -45,12 +47,12 @@ Route::get('get-branch-working-hours', 'Api\BranchesController@getBranchWorkingH
 
 Route::middleware('api')->group(function () {
 
-    Route::group(['middleware' => ['auth:api']],function () {
-    Route::get('get-user-points', 'Api\AuthController@getUserPoints');
-    Route::post('change-user-points', 'Api\AuthController@changeUserPoints');
-    Route::get('get-gifts', 'Api\GiftsController@getGifts');
-    Route::post('buy-gifts', 'Api\GiftsController@buyGifts');
-    Route::get('get-user-gifts-orders', 'Api\GiftsController@getUserGiftsOrders');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('get-user-points', 'Api\AuthController@getUserPoints');
+        Route::post('change-user-points', 'Api\AuthController@changeUserPoints');
+        Route::get('get-gifts', 'Api\GiftsController@getGifts');
+        Route::post('buy-gifts', 'Api\GiftsController@buyGifts');
+        Route::get('get-user-gifts-orders', 'Api\GiftsController@getUserGiftsOrders');
     });
 
 
@@ -81,7 +83,7 @@ Route::middleware('api')->group(function () {
 
 
     // orders routes
-    Route::group(['middleware' => ['auth:api'],'prefix' => 'orders'], function () {
+    Route::group(['middleware' => ['auth:api'], 'prefix' => 'orders'], function () {
 
 
         // list all orders
@@ -114,7 +116,7 @@ Route::middleware('api')->group(function () {
     Route::post('/payment/complete', 'Api\OrdersController@orderPayed');
 
     // offers routes
-    Route::group(['middleware' => ['auth:api'],'prefix' => 'offers' ], function () {
+    Route::group(['middleware' => ['auth:api'], 'prefix' => 'offers'], function () {
         Route::get('/', 'Api\OffersController@index')->name("offers.index");
         Route::get('/{offer}', 'Api\OffersController@get');
         Route::get('/check/{order_id}', 'Api\OffersController@check');
@@ -122,8 +124,9 @@ Route::middleware('api')->group(function () {
 
     // Address routes
     Route::group(['middleware' => ['auth:api']], function () {
-    Route::resource('/address', 'Api\AddressesController');
-    Route::post('/addressmaps', 'Api\AddressesController@sotreWithMaps');});
+        Route::resource('/address', 'Api\AddressesController');
+        Route::post('/addressmaps', 'Api\AddressesController@sotreWithMaps');
+    });
 });
 
 // Menu routes
@@ -169,8 +172,6 @@ Route::group(['prefix' => 'website'], function () {
     // careers
     Route::get('/careers', 'Api\FrontController@getAllJobs');
     Route::post('/careers/{id}', 'Api\FrontController@jobRequest');
-
-
 });
 Route::get('/payment/refund/{id}', 'Api\PaymentController@refund');
 Route::get('/payment/response', 'Api\PaymentController@paymentResponse');
@@ -181,4 +182,3 @@ Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paym
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'favourites', 'as' => 'api.favourites.'], function () {
     require __DIR__ . '/favourites_routes.php';
 });
-
