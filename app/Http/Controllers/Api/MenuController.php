@@ -13,7 +13,7 @@ class MenuController extends BaseController
 {
     public function getAllCategories()
     {
-        $categories = Category::all();
+        $categories = Category::with('items')->get();
         // load first category items
         $categories->first()->load('items');
         
