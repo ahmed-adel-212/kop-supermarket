@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/home', 'Api\FrontController@getHomeSections')->name('home');
+
 // Authintication routes
 Route::group(['prefix' => 'auth'], function () {
 

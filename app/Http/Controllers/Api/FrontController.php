@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
 use DB;
 use App\Models\AboutUs;
+use App\Models\Banner;
+use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Media;
 use App\Models\HealthInfo;
+use App\Models\Item;
 use App\Models\News;
+use App\Models\Offer;
 use Illuminate\Support\Facades\Validator;
 
 class FrontController extends BaseController
@@ -131,11 +135,24 @@ class FrontController extends BaseController
             $jobRequest->save();
 
             return $this->sendResponse($jobRequest, 'Application Sent');
-
         } catch (\Exception $ex) {
             return $this->sendError('There is something', $validator->errors());
         }
-
     }
 
+    public function getHomeSections()
+    {
+        $banner = Banner::all();
+
+        // recommended items
+        $recommended = Item::where('recommended', true)->get();
+
+        // categories with items
+        $categories = Category::with('items')->get();
+
+        // offers
+        $offers = Offer::with('buyGet', 'discount')->get();
+
+        return $this->sendResponse(compact('banner', 'recommended', 'categories', 'offers'), 'Get all menu items');
+    }
 }
