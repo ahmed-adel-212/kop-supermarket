@@ -793,15 +793,49 @@ class OrdersController extends BaseController
             $res[] = (object)[
                 'points' => $order->points * -1,
                 'order_id' => $order->id,
+                'created_at' => $order->updated_at,
             ];
         }
         foreach ($points_still as $point) {
             $res[] = (object)[
                 'points' => $point->points,
                 'order_id' => $point->order_id,
+                'created_at' => $point->created_at,
             ];
         }
 
         return $this->sendResponse($res, 'user points history');
+    }
+
+    public function getPointsScreen(Request $request)
+    {
+        // user points
+        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3, 4])->get()->sum('points');
+        $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2])->get()->sum('points');
+        $user_points = $validRefundedPoints - $consumedCanceledPoints;
+
+        // points table
+        $point_values = General::where('key', 'pointsValue')->get();
+
+        // history
+        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();
+        $points_still = PointsTransaction::where('status', 0)->where('user_id', Auth::id())->get();
+        $history = [];
+        foreach ($completed as $order) {
+            $history[] = (object)[
+                'points' => $order->points * -1,
+                'order_id' => $order->id,
+                'created_at' => $order->updated_at,
+            ];
+        }
+        foreach ($points_still as $point) {
+            $history[] = (object)[
+                'points' => $point->points,
+                'order_id' => $point->order_id,
+                'created_at' => $point->created_at,
+            ];
+        }
+
+        return $this->sendResponse(compact('user_points', 'point_values', 'history'), 'loyality screen');
     }
 }

@@ -112,6 +112,7 @@ Route::middleware('api')->group(function () {
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/points/history', 'Api\OrdersController@getPointsHistory')->name('points.history');
+        Route::get('/points/screen', 'Api\OrdersController@getPointsScreen')->name('points.screen');
     });
 
     // get points table
