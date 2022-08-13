@@ -290,8 +290,8 @@ class AuthController extends BaseController
 
     public function getUserPoints(Request $request)
     {
-        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3])->get()->sum('points');
-        $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2, 4])->get()->sum('points');
+        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3, 4])->get()->sum('points');
+        $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2])->get()->sum('points');
         try {
             $data = [
                 //'user_points' => Auth::user()->points_transactions()->whereIn('status', [0, 2])->get()->sum('points'),
@@ -314,6 +314,14 @@ class AuthController extends BaseController
         $validator = Validator::make($request->all(), [
             'points' => ['required', 'numeric']
         ]);
+        
+        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3, 4])->get()->sum('points');
+        $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2])->get()->sum('points');
+        $userPoints = $validRefundedPoints - $consumedCanceledPoints;
+
+        if ($request->points > $userPoints) {
+            return response()->json(['error' => 'user points is less than ' . $request->points], 400);
+        }
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 400);

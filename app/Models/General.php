@@ -13,6 +13,7 @@ class General extends Model
         'id',
         'key',
         'value',
+        'for',
     ];
     public $timestamps = false;
 

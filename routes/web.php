@@ -1,7 +1,5 @@
 <?php
 
-
-
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
@@ -32,6 +30,7 @@ Route::group([
 
         Route::get('/points-value', 'GiftController@pointsValue')->name('pointsValue');
         Route::post('/points-value-post', 'GiftController@pointsValuePost')->name('pointsValuePost');
+        Route::resource('/points', 'PointController');
 
         // Admin Dashboard
         Route::get('/home', 'HomeController@index')->name('home');
