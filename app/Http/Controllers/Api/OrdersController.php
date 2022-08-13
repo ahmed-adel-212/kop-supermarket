@@ -816,6 +816,10 @@ class OrdersController extends BaseController
 
         // points table
         $point_values = General::where('key', 'pointsValue')->get();
+        $point_values->map(function (General $general) {
+            $general->addHidden('for');
+            return $general;
+        });
 
         // history
         $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();

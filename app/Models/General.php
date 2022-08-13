@@ -17,4 +17,10 @@ class General extends Model
     ];
     public $timestamps = false;
 
+    public $appends = ['points'];
+
+    public function getPointsAttribute()
+    {
+        return isset($this->for) ? $this->for : 0;
+    }
 }
