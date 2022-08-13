@@ -113,10 +113,12 @@ Route::middleware('api')->group(function () {
     //payment
     Route::post('/payment/complete', 'Api\OrdersController@orderPayed');
 
-    // offers routes
-    Route::group(['middleware' => ['auth:api'],'prefix' => 'offers' ], function () {
+    Route::group(['prefix' => 'offers' ], function () {
         Route::get('/', 'Api\OffersController@index')->name("offers.index");
         Route::get('/{offer}', 'Api\OffersController@get');
+    });
+    // offers routes
+    Route::group(['middleware' => ['auth:api'],'prefix' => 'offers' ], function () {
         Route::get('/check/{order_id}', 'Api\OffersController@check');
     });
 

@@ -17,7 +17,7 @@ class OffersController extends BaseController
 {
     public function index(Request $request, OfferFilters $filters)
     {
-        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
+        $offers = Offer::with('buyGet', 'discount')->filter($filters)->simplePaginate();
         return $this->sendResponse($offers, 'Offers retreived successfully');
     }
 
