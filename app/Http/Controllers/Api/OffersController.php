@@ -12,12 +12,22 @@ use App\Models\Order;
 use App\Models\Without;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class OffersController extends BaseController
 {
     public function index(Request $request, OfferFilters $filters)
     {
-        $offers = Offer::with('buyGet', 'discount')->filter($filters)->simplePaginate();
+        $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
+
+        if (!empty($user_branches)) {
+            $offer_id = DB::table("branch_offer")->whereIn('branch_id', $user_branches)->pluck('offer_id');
+            $offers = Offer::whereIn('id',$offer_id);
+        }
+
+        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
+
         return $this->sendResponse($offers, 'Offers retreived successfully');
     }
 
@@ -312,15 +322,11 @@ class OffersController extends BaseController
                      * 3- Multiply: the sum of all items after discount (X) the number of times to apply the offer based on demanded quantity.
                      *
                      * UNCOMMENT THE FOLLOWING CODE (in case you want to apply offer discount for get items)
-
                     $getItems = $visibleOfferPivotRowsItems->whereIn('id', $offerGetItemsIds)->values();
                     $getItemsPriceBeforeDiscount = $getItems->sum('price') ?: 0;
                     $getItemsPriceAfterDiscount = $getItemsPriceBeforeDiscount - ($getItemsPriceBeforeDiscount * $sub_offer->offer_price / 100);
-
                     $howManyTimesToApplyOffer = floor($purchasedQty / $offerQty);
                     $getItemsTotalAfterDiscount = $howManyTimesToApplyOffer * $getItemsPriceAfterDiscount;
-
-
                     // Calculate the final item price + the price items to get from offer (get items price * get items quanity).
                     $itemOfferPrices += $getItemsTotalAfterDiscount * $getItems->count();
                      */

@@ -86,6 +86,23 @@
                             </div>
                         </div>
                         <div class="row">
+                        <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputBranch">Branches</label>
+                                        <select class="select2  {!! $errors->first('branches', 'is-invalid') !!}"
+                                                multiple="multiple" data-placeholder="Select a branch"
+                                                style="width: 100%;" name="branches[]">
+                                            @foreach($branches as $branch)
+                                                <option value="{{$branch->id}}"
+                                                        @if($offer->branches->contains($branch->id)) selected @endif>{{$branch->name_en}}</option>
+                                            @endforeach
+                                        </select>
+                                        {!! $errors->first('branches', '<p class="help-block">:message</p>') !!}
+
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="offerDescription">Description English</label>
@@ -330,7 +347,6 @@
 <script>
     $("#exampleInputCategory1").click(function(e){
     e.preventDefault();
-
     var category_id = $("#exampleInputCategory1").val();
     if(category_id)
     {
@@ -363,7 +379,6 @@
 <script>
     $("#exampleInputCategory2").click(function(e){
     e.preventDefault();
-
     var category_id = $("#exampleInputCategory2").val();
     if(category_id)
     {
@@ -396,7 +411,6 @@
 <script>
     $("#exampleInputCategory3").click(function(e){
     e.preventDefault();
-
     var category_id = $("#exampleInputCategory3").val();
     if(category_id)
     {
