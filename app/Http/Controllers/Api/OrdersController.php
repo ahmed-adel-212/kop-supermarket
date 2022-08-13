@@ -834,8 +834,8 @@ class OrdersController extends BaseController
         }
         foreach ($points_still as $point) {
             $history[] = (object)[
-                'points' => $point->points,
-                'order_id' => $point->order_id,
+                'points' => (int)$point->points,
+                'order_id' => (int)$point->order_id,
                 'created_at' => $point->created_at,
             ];
         }
