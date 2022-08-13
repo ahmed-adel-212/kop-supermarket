@@ -62,7 +62,9 @@
                             @foreach ($items as $index => $item)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
+                                    @if ($item->category)
                                     <td>{{ $item->category['name_' . app()->getLocale()] }}</td>
+                                    @endif
                                     <td>{{ $item->name_ar }}</td>
                                     <td>{{ $item->name_en }}</td>
                                     <td>{{ $item->price }}</td>
