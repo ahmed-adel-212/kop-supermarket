@@ -26,7 +26,8 @@ class Order extends Model
         'address_id',
         'points_paid',
         'offer_type',
-        'order_from'
+        'order_from',
+        'points'
     ];
 
     public function customer()

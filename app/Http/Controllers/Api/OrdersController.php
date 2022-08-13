@@ -14,6 +14,7 @@ use App\Models\Order;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Extra;
+use App\Models\General;
 use App\Models\Offer;
 use App\Models\Without;
 use App\Models\PointsTransaction;
@@ -203,6 +204,7 @@ class OrdersController extends BaseController
             "delivery_fees" => $request->delivery_fees,
             "total" => $request->total,
             "points_paid" => $request->points_paid,
+            'points' => $request->points,
             'order_from' => 'mobile'
         ];
 
@@ -669,7 +671,7 @@ class OrdersController extends BaseController
 
         if ($order->points_paid != 0) {
             PointsTransaction::create([
-                'points' => $order->points_paid,
+                'points' => $order->points,
                 'user_id' => $order->customer_id,
                 'order_id' => $order->id,
                 'status' => 3
@@ -711,7 +713,7 @@ class OrdersController extends BaseController
     public function cancelOrder(Request $request, Order $order)
     {
 
-        if ($order->state == 'completed' or $order == 'rejected') {
+        if ($order->state == 'completed' or $order->state == 'rejected') {
             return $this->sendError('You cannot cancel this order');
         }
 
@@ -720,7 +722,7 @@ class OrdersController extends BaseController
 
         if ($order->points_paid != 0) {
             PointsTransaction::create([
-                'points' => $order->points_paid,
+                'points' => $order->points,
                 'user_id' => $order->customer_id,
                 'order_id' => $order->id,
                 'status' => 4
@@ -774,4 +776,32 @@ class OrdersController extends BaseController
         }
     }
 
+    public function pointValues(Request $request)
+    {
+        $points = General::where('key', 'pointsValue')->get();
+
+        return $this->sendResponse($points, 'get point values');
+    }
+
+    public function getPointsHistory(Request $request)
+    {
+        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();
+        $points_still = PointsTransaction::where('status', 0)->where('user_id', Auth::id())->get();
+
+        $res = [];
+        foreach ($completed as $order) {
+            $res[] = (object)[
+                'points' => $order->points * -1,
+                'order_id' => $order->id,
+            ];
+        }
+        foreach ($points_still as $point) {
+            $res[] = (object)[
+                'points' => $point->points,
+                'order_id' => $point->order_id,
+            ];
+        }
+
+        return $this->sendResponse($res, 'user points history');
+    }
 }

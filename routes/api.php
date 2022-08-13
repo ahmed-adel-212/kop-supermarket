@@ -84,8 +84,6 @@ Route::middleware('api')->group(function () {
 
     // orders routes
     Route::group(['middleware' => ['auth:api'], 'prefix' => 'orders'], function () {
-
-
         // list all orders
         Route::get('/', "Api\OrdersController@index")->name('api.orders.index');
 
@@ -109,9 +107,16 @@ Route::middleware('api')->group(function () {
         // get specific order by id
         Route::get('/{order}', "Api\OrdersController@getById")->name('api.orders.getById');
 
-
         Route::post('/branch', "Api\OrdersController@getBranch")->name('api.orders.branch');
     });
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('/points/history', 'Api\OrdersController@getPointsHistory')->name('points.history');
+    });
+
+    // get points table
+    Route::get('/points/values', 'Api\OrdersController@pointValues')->name('points.table');
+
     //payment
     Route::post('/payment/complete', 'Api\OrdersController@orderPayed');
 
