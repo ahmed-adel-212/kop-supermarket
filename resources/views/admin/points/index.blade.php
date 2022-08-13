@@ -28,24 +28,23 @@
                     </thead>
                     <tbody>
                         @foreach ($points as  $point)
-                        {{-- <tr>
-                            <td>{{$gift->name_en}}</td>
-                            <td>{{$gift->name}}</td>
-                            <td>{{$gift->points}}</td>
-                            <td><img style="width:200px;" src="{{$gift->image}}"></td>
+                        <tr>
+                            <td>#{{$point->id}}</td>
+                            <td>{{$point->value}}</td>
+                            <td>{{$point->for}}</td>
                             <td>
-                                <a href="{{ route('admin.gift.edit', $gift->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
-                                <a onclick="deleteGift('{{ 'delete-gift-' . $gift->id }}')" href="#" class="btn btn-danger btn-circle btn-sm" title="delete">
+                                <a href="{{ route('admin.points.edit', $point->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
+                                <a onclick="deletepoint('{{ 'delete-point-' . $point->id }}')" href="#" class="btn btn-danger btn-circle btn-sm" title="delete">
                                     <i class="fas fa-trash"></i>
                                 </a>
                                 <!-- Form Delete branch -->
-                                <form action="{{ route('admin.gift.destroy', $gift->id) }}" method="POST" id="{{ 'delete-gift-' . $gift->id }}">
+                                <form action="{{ route('admin.points.destroy', $point->id) }}" method="POST" id="{{ 'delete-point-' . $point->id }}">
                                     @csrf
                                     @method('DELETE')
                                 </form>
                                 <!-- End Delete branch -->
                             </td>
-                        </tr> --}}
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -57,10 +56,10 @@
 
 @push('js')
 <script type="text/javascript">
-    function deleteGift(id) {
+    function deletepoint(id) {
         event.preventDefault();
         swal({
-            title: 'Are you sure to delete this Gift ?',
+            title: 'Are you sure to delete this point ?',
             text: 'Once the branch has been deleted you cannot retrieve its data',
             icon: 'warning',
             buttons: true,
@@ -69,11 +68,11 @@
         .then((willDelete) => {
             if (willDelete) {
                 $('#' + id).submit();
-                swal('Gift successfully deleted', {
+                swal('point successfully deleted', {
                     icon: 'success',
                 });
             } else {
-                swal('Gift undeleted');
+                swal('point undeleted');
             }
         });
     }

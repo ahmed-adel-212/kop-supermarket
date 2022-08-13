@@ -165,22 +165,24 @@ class GiftController extends Controller
 
     public function pointsValue()
     {
-        $pointValue = DB::table('general')->where('key', 'pointsValue')->first();
-        $value = 0;
-        if($pointValue){
-            $value = $pointValue->value;
-        }
-        return view('admin.gift.pointsValue', compact('value'));
+        $points = General::where('key', 'pointsValue')->get();
+        // $value = 0;
+        // if($pointValue){
+        //     $value = $pointValue->value;
+        // }
+        return view('admin.points.index', compact('points'));
     }
 
     public function pointsValuePost(Request $request)
     {
         $attributes = $request->validate([
-            'value' => 'required|numeric|min:0'
+            'value' => 'required|numeric|min:0',
+            'for' => 'required|numeric|min:0'
         ]);
 
-        $value = General::where('key', 'pointsValue')->updateOrCreate([
+        $value = General::create([
             'value' => $request->value,
+            'for' => $attributes['for'],
             'key' => 'pointsValue',
         ]);
         $this->Make_Log('App\Models\General','update',$value->id);
