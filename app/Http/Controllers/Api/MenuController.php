@@ -20,9 +20,11 @@ class MenuController extends BaseController
         return $this->sendResponse($categories, 'All Categories retrieved successfully.');
     }
 
-    public function getCategory(Request $request, Category $category)
+    public function getCategory(Request $request, int $category)
     {
-        $category = $category->with('items', 'extras', 'withouts')->find($category->id);
+        $category = Category::findOrFail($category);
+        $category->loadMissing('items', 'extras', 'withouts');
+
 
         foreach ($category->items as $key => $item) {
             $branches = explode(',', $item->branches);
