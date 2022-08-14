@@ -130,6 +130,8 @@ Route::middleware('api')->group(function () {
     // offers routes
     Route::group(['middleware' => ['auth:api'],'prefix' => 'offers' ], function () {
         Route::get('/check/{order_id}', 'Api\OffersController@check');
+        Route::post('/delivery-offer/{address_id}', 'Api\OffersController@delivery_offer');
+        Route::post('/takeway-offer/{branch_id}', 'Api\OffersController@takeway_offer');
     });
 
     // Address routes

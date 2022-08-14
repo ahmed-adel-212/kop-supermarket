@@ -9,6 +9,7 @@ use App\Models\Extra;
 use App\Models\Offer;
 use App\Models\Item;
 use App\Models\Order;
+use App\Models\Address;
 use App\Models\Without;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -815,5 +816,32 @@ class OffersController extends BaseController
         $item = Item::where('id', $pivot->item_id)->first();
 
         return compact('extras', 'withouts', 'item');
+    }
+
+    protected function takeway_offer(Request $request, OfferFilters $filters ,$branch_id)
+    {
+       
+            $offer_id = DB::table("branch_offer")->where('branch_id',  $branch_id)->pluck('offer_id');
+            $offers = Offer::whereIn('id',$offer_id);
+        
+
+        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
+
+        return $this->sendResponse($offers, 'Offers retreived successfully');
+    }
+
+    protected function delivery_offer(Request $request, OfferFilters $filters , $address_id)
+    {
+         $address = Address::find($address_id);
+        $branches=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
+        if (!empty($branches)) {
+            $offer_id = DB::table("branch_offer")->whereIn('branch_id', $branches)->pluck('offer_id');
+            $offers = Offer::whereIn('id',$offer_id);
+        }
+
+        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
+
+        return $this->sendResponse($offers, 'Offers retreived successfully');
+
     }
 }

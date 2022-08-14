@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\LogfileTrait;
+
 class BranchController extends Controller
 {
 
