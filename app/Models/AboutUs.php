@@ -16,8 +16,12 @@ class AboutUs extends Model
         'icon',
         'image',
         'type',
+        'links',
         'created_at',
         'updated_at',
     ];
 
+    protected $casts = [
+        'links' => 'array'
+    ];
 }

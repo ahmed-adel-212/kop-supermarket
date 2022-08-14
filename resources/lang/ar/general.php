@@ -221,4 +221,9 @@ return [
 "over_all" => "التكلفة الكلية",
 "to_pay" => "للدفع",
 'story' => 'قصتنا',
+'feat' => 'Feature',
+'first' => "First Block",
+'bg-st' => 'Block with Background and text at right',
+'bg-nd' => 'Block with Background and text at left',
+'emp' => 'Employee',
 ];
