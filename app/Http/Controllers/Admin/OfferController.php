@@ -392,4 +392,26 @@ class OfferController extends Controller
             'message' => 'Offer deleted successfully'
         ]);
     }
+
+    public function setAsMain(Request $request, Offer $offer)
+    {
+        $offer->main = true;
+        $offer->save();
+
+        return  redirect()->route('admin.offer.index')->with([
+            'type' => 'success',
+            'message' => 'Offer added to homepage successfully'
+        ]);
+    }
+
+    public function removeFromMain(Request $request, Offer $offer)
+    {
+        $offer->main = false;
+        $offer->save();
+
+        return  redirect()->route('admin.offer.index')->with([
+            'type' => 'error',
+            'message' => 'Offer removed from homepage successfully'
+        ]);
+    }
 }

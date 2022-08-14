@@ -20,6 +20,8 @@ class Item extends Model
     protected $hidden = ["branches"];
     protected $appends = ['is_hidden', 'dough_type', 'favoured'];
 
+    public $casts = ['main' => 'boolean'];
+
     public function category()
     {
         return $this->belongsTo('App\Models\Category');

@@ -48,6 +48,8 @@ Route::group([
         Route::resource('without', 'WithoutController');
         Route::resource('order', 'OrderController');
         Route::resource('offer', 'OfferController');
+        Route::put('offer/main/{offer}', 'OfferController@setAsMain')->name('offer.main');
+        Route::delete('offer/main/{offer}', 'OfferController@removeFromMain')->name('offer.unmain');
         Route::resource('banner', 'BannerController');
         Route::resource('contact', 'ContactController');
 
