@@ -67,7 +67,11 @@ class Item extends Model
 
     public function getDoughTypeAttribute()
     {
-        $category = Category::where('id', $this->category_id)->first();
+        // $category = Category::where('id', $this->category_id)->first();
+        $category = Category::find($this->category_id);
+        if (!$category) {
+            return [];
+        }
         $dough_type_id = $category->dough_type_id;
         $dough_type = DoughType::where('dough_type_id', $dough_type_id)->select('name_ar', 'name_en')->get();
 
