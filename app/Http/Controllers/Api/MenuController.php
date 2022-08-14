@@ -64,9 +64,9 @@ class MenuController extends BaseController
         return $this->sendResponse($category, 'Categories retrieved successfully.');
     }
 
-    public function getItems(Request $request, Category $category)
+    public function getItems(Request $request,$category)
     {
-        $items = $category->items()->with('category.extras', 'category.withouts')->get();
+      return  $items = Category::find($category)->items()->with('category.extras', 'category.withouts')->get();
 
         foreach ($items as $key => $item) {
             $branches = explode(',', $item->branches);
@@ -167,15 +167,14 @@ class MenuController extends BaseController
             $parent_offer = OfferDiscount::find($offer->offer_id);
 
             // Just edit
-            if ($parent_offer)  break;
-
+            //  if ($parent_offer)  break;
         
-
         if ($parent_offer) {
-
+           if(isset($parent_offer->offer->date_from)){
             if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
                 $parent_offer = null;
-            }
+            }}
+            else{break;}
         }
 
         $item->offer = $parent_offer;
@@ -187,9 +186,11 @@ class MenuController extends BaseController
                 $item->offer->offer_price = $item->price - $disccountValue;
             } elseif($parent_offer->discount_type == 2) {
                 $item->offer->offer_price = $item->price - $parent_offer->discount_value;
-            }}
+            }
+        
+        }
 
-            unset($item->offer->offer);}
+        }
         return $this->sendResponse($item, 'item retrieved successfully.');
      
     }
