@@ -842,4 +842,68 @@ class OrdersController extends BaseController
 
         return $this->sendResponse(compact('user_points', 'point_values', 'history'), 'loyality screen');
     }
+    public function today_orders(Request $request, OrderFilters $filters)
+    {
+        $orders = Order::filter($filters);
+
+        $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
+
+        if (!empty($user_branches)) {
+            $orders = $orders->whereIn('branch_id', $user_branches);
+        }
+
+        $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
+            $address->with(['city', 'area']);
+        }])->whereDate('created_at', \Carbon\Carbon::today())->orderBy('id', 'DESC')->paginate(10);
+
+ 
+        foreach ($orders as $order) {
+            foreach ($order->items as $item) {
+                $extras = $item->pivot->item_extras;
+                $extras = $extras ? explode(", ", $extras) : [];
+
+                $all_extras = [];
+                foreach ($extras as $extra) {
+                    $all_extras[] = Extra::find($extra);
+                }
+
+                $item->extras = $all_extras;
+            }
+        }
+
+        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully.');
+    }
+
+    public function order_history(Request $request, OrderFilters $filters)
+    {
+
+        $orders = Order::filter($filters);
+
+        $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
+
+        if (!empty($user_branches)) {
+            $orders = $orders->whereIn('branch_id', $user_branches);
+        }
+
+        $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
+            $address->with(['city', 'area']);
+        }])->whereIn('state',['completed','canceled','rejected'])->orderBy('id', 'DESC')->paginate(10);
+
+ 
+        foreach ($orders as $order) {
+            foreach ($order->items as $item) {
+                $extras = $item->pivot->item_extras;
+                $extras = $extras ? explode(", ", $extras) : [];
+
+                $all_extras = [];
+                foreach ($extras as $extra) {
+                    $all_extras[] = Extra::find($extra);
+                }
+
+                $item->extras = $all_extras;
+            }
+        }
+
+        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully.');
+    }
 }

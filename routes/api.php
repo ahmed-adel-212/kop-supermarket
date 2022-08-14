@@ -86,7 +86,8 @@ Route::middleware('api')->group(function () {
     Route::group(['middleware' => ['auth:api'], 'prefix' => 'orders'], function () {
         // list all orders
         Route::get('/', "Api\OrdersController@index")->name('api.orders.index');
-
+        Route::get('/order-history', "Api\OrdersController@order_history")->name('api.orders.order_history');
+        Route::get('/today-orders', "Api\OrdersController@today_orders")->name('api.orders.today_orders');
         // create an order
         Route::post('/', "Api\OrdersController@store")->name('api.orders.store');
         // reoder an order
