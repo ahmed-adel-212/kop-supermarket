@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class FavouriteItemController extends Controller
 {
-    public function checkItem(Item $item)
+    public function checkItem(int $item)
     {
+        $item = Item::findOrFail($item);
+
         $result = $item->isFavouredBy(Auth::user());
 
         return response()->json([
@@ -17,8 +19,10 @@ class FavouriteItemController extends Controller
         ]);
     }
 
-    public function addItem(Item $item)
+    public function addItem(int $item)
     {
+        $item = Item::findOrFail($item);
+
         Auth::user()->addToFavourites($item);
 
         return response()->json([
@@ -26,8 +30,10 @@ class FavouriteItemController extends Controller
         ]);
     }
 
-    public function removeItem(Item $item)
+    public function removeItem(int $item)
     {
+        $item = Item::findOrFail($item);
+
         Auth::user()->removeFromFavourites($item);
 
         return response()->json([
@@ -44,8 +50,10 @@ class FavouriteItemController extends Controller
         ]);
     }
 
-    public function count(Item $item)
+    public function count(int $item)
     {
+        $item = Item::findOrFail($item);
+
         return response()->json([
             'message' => $item->favouritesCount(),
         ]);

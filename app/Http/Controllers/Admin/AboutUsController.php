@@ -44,11 +44,13 @@ class AboutUsController extends Controller
     {
         $validator_rules = ['title_ar' => 'required',
             'title_en' => 'required',
-            'description_ar' => 'required',
-            'description_en' => 'required',
+            'description_ar' => 'nullable|string',
+            'description_en' => 'nullable|string',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'icon' => 'nullable|string',
-            'type' => 'required|in:first,bg-st,feat,bg-nd',
+            'type' => 'required|in:first,bg-st,feat,bg-nd,emp',
+            'links' => 'array',
+            'links.*' => 'nullable|url',
         ];
         $validator = $request->validate($validator_rules);
 
@@ -107,7 +109,10 @@ class AboutUsController extends Controller
             'description_ar' => 'required',
             'description_en' => 'required',
             'icon' => 'nullable|string',
-            'type' => 'required|in:first,bg-st,feat,bg-nd',];
+            'type' => 'required|in:first,bg-st,feat,bg-nd,emp',
+            'links' => 'array',
+            'links.*' => 'nullable|url',
+        ];
         $validator = $request->validate($validator_rules);
         $about = AboutUs::findOrFail($id);
         $about->fill($request->all());

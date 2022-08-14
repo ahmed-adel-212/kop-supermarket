@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTypeToAboutUsTable extends Migration
+class AddLinksColumnToAboutUsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddTypeToAboutUsTable extends Migration
     public function up()
     {
         Schema::table('about_us', function (Blueprint $table) {
-            $table->enum('type', ['first', 'bg-st', 'feat', 'bg-nd', 'emp']);
+            $table->string('links');
         });
     }
 
@@ -26,7 +26,7 @@ class AddTypeToAboutUsTable extends Migration
     public function down()
     {
         Schema::table('about_us', function (Blueprint $table) {
-            $table->dropColumn('type');
+            $table->dropColumn('links');
         });
     }
 }
