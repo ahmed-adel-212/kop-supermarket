@@ -37,10 +37,12 @@ class HomeController extends Controller
         }
         $request->merge(['now' => Carbon::now()]);
         $filters = new OfferFilters($request);
-        $return = (app(\App\Http\Controllers\Api\OffersController::class)->index($request, $filters))->getOriginalContent();
-        if($return['success'] == 'success'){
-            $menu['offers'] = (count($return['data']))? $return['data'] : [];
-        }
+        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
+        // $return = (app(\App\Http\Controllers\Api\OffersController::class)->index($request, $filters))->getOriginalContent();
+        // if($return['success'] == 'success'){
+        //     $menu['offers'] = (count($return['data']))? $return['data'] : [];
+        // }
+        $menu['offers'] = $offers;
         $dealItems = Item::where('best_seller', 'activate')->get();
         $menu['dealItems'] = ($dealItems->count() > 0)? $dealItems : [];
 
