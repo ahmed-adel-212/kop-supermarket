@@ -12,8 +12,10 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\NotiToken;
 use App\Models\User;
+use App\Models\NotificationLog;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class NotificationController extends Controller
 {
@@ -88,7 +90,14 @@ class NotificationController extends Controller
         
             curl_close($ch);
 
-        
+            
+            NotificationLog::create([
+                'user_id' => FacadesAuth::check() ? auth()->id() : null,
+                'chat_id' => $chat_id,
+                'body' => $message,
+                'data' => $data_message,
+                'type' => $type,
+            ]);
     }
     
 }
