@@ -669,7 +669,7 @@ class OrdersController extends BaseController
         $order->update(['state' => 'rejected', 'cancellation_reason' => $request->cancellation_reason]);
 
 
-        if ($order->points_paid != 0) {
+        if ($order->points_paid != 0 && is_int($order->points)) {
             PointsTransaction::create([
                 'points' => $order->points,
                 'user_id' => $order->customer_id,
@@ -720,7 +720,7 @@ class OrdersController extends BaseController
         $order->update(['state' => 'canceled', 'cancellation_reason' => $request->cancellation_reason]);
 
 
-        if ($order->points_paid != 0) {
+        if ($order->points_paid != 0 && is_int($order->points)) {
             PointsTransaction::create([
                 'points' => $order->points,
                 'user_id' => $order->customer_id,
