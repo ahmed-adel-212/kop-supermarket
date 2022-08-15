@@ -205,6 +205,7 @@ class OrdersController extends BaseController
             "total" => $request->total,
             "points_paid" => $request->points_paid,
             'points' => $request->points,
+            'offer_value' =>$request->offer_value,
             'order_from' => 'mobile'
         ];
 
@@ -221,7 +222,7 @@ class OrdersController extends BaseController
             }
         }
 
-        $subtotal = 0;
+        // $subtotal = 0;
 
         foreach ($request->items as $item) {
             $orderItem = Item::where('id', $item['item_id'])->first();
@@ -251,7 +252,7 @@ class OrdersController extends BaseController
                 $itemPrice = $orderItem->price + $extras;
             }
 
-            $subtotal = $subtotal + $itemPrice;
+            // $subtotal = $subtotal + $itemPrice;
             $offer = Offer::find(isset($item['offerId']) ? $item['offerId'] : 0);
             $order->items()->attach($item['item_id'], [
                 'item_extras' => array_key_exists('extras', $item) ? implode(', ', $item['extras']) : null,

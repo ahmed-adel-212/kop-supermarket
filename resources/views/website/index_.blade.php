@@ -277,7 +277,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        @endforeach
+                                        @endforeach 
                                     </ul>
                                 </div>
                                 <div class="uk-visible@l"><a class="uk-position-top-left-out" href="#"

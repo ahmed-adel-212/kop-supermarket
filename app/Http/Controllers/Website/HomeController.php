@@ -26,7 +26,7 @@ class HomeController extends Controller
         $return = (app(FrontController::class)->getAboutUS())->getOriginalContent();
         if($return['success'] == 'success'){
             $menu['aboutus'] = (count($return['data']))? $return['data'][0] : '';
-        }
+        } 
         $return = (app(FrontController::class)->getAllNews())->getOriginalContent();
         if($return['success'] == 'success'){
              $menu['news'] = (count($return['data']))? $return['data'] : [];
@@ -43,9 +43,10 @@ class HomeController extends Controller
         //     $menu['offers'] = (count($return['data']))? $return['data'] : [];
         // }
         $menu['offers'] = $offers;
+        $menu['main_offer']=Offer::with('buyGet', 'discount')->filter($filters)->where('main',1)->get();
         $dealItems = Item::where('best_seller', 'activate')->get();
         $menu['dealItems'] = ($dealItems->count() > 0)? $dealItems : [];
-
+        $menu['recommended']=Item::where('recommended', true)->get();
         return view('website.index',compact(['menu']));
     }
 }

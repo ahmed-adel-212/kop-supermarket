@@ -26,6 +26,7 @@ class Order extends Model
         'address_id',
         'points_paid',
         'offer_type',
+        'offer_value',
         'order_from',
         'points'
     ];
