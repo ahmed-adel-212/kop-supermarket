@@ -205,7 +205,7 @@
                             <div class="col-lg-4 col-sm-6 padding-15">
                                 <div class="gallery-item">
                                     <img src="{{ $ga->url }}" width='500' height='300' alt="img">
-                                    <a class="img-popup" data-gall="gallery0{{ $loop->index + 1 }}"
+                                    <a class="img-popup" data-gall="gallery01"
                                         href="{{ $ga->url }}"><i class="fas fa-expand"></i></a>
                                 </div>
                             </div>
