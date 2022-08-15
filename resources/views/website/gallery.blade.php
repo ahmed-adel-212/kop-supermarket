@@ -67,9 +67,11 @@
             color: gray;
             border-color: #fff;
         }
+
         .carousel-caption {
             bottom: 15%;
         }
+
         .carousel-caption h5 {
             background: #0000008c;
             color: #fff;
@@ -79,12 +81,12 @@
 
 @section('pageName')
 
-    <body class="page-catalog dm-dark">
+    <body class="page-catalog gallery-page dm-dark">
     @endsection
 
     @section('content')
         <main class="page-main">
-            <div class="section-first-screen">
+            {{-- <div class="section-first-screen">
                 <div class="first-screen__bg"
                     style="background-image: url({{ asset('website-assets/img/pages/home/gallery.jpg') }})"></div>
                 <div class="first-screen__content">
@@ -123,7 +125,6 @@
                                 </div>
                             @endforeach
                         </div>
-                        {{-- </ul> --}}
                         <div class="position-relative">
                             <div class="position-fixed modal-backdrop w-100 h-100" x-show="showModal"
                                 x-on:click.outside="showModal = false" x-on:keydown.esc="showModal = false">
@@ -178,7 +179,45 @@
                     {{ $galleries->links() }}
                 </div>
             </div>
-            </div>
+            </div> --}}
+
+            <section class="page-header"
+                style="background-image: url({{ asset('website-assets/img/pages/home/gallery.jpg') }})">
+                <div class="bg-shape grey"></div>
+                <div class="container">
+                    <div class="page-header-content">
+                        <h4>
+                            {{ __('general.Gallery') }}
+                        </h4>
+                        <h2>
+                            {{ __('general.Pictures of pastries kingdom products') }}
+                        </h2>
+                    </div>
+                </div>
+            </section>
+            <!--/.page-header-->
+
+            <section class="gallery-section bg-grey padding">
+                <div class="bg-shape white"></div>
+                <div class="container">
+                    <div class="row">
+                        @foreach ($galleries as $ga)
+                            <div class="col-lg-4 col-sm-6 padding-15">
+                                <div class="gallery-item">
+                                    <img src="{{ $ga->url }}" width='500' height='300' alt="img">
+                                    <a class="img-popup" data-gall="gallery0{{ $loop->index + 1 }}"
+                                        href="{{ $ga->url }}"><i class="fas fa-expand"></i></a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="text-center mt-40">
+                        {{-- <a href="#" class="default-btn">Load More <span></span></a> --}}
+                        {{$galleries->links()}}
+                    </div>
+                </div>
+            </section>
+            <!--/.gallery-section-->
         </main>
     @endsection
 
