@@ -23,7 +23,7 @@ class AddressesController extends BaseController
         'landmark' => ['string', 'nullable'],
         'city_id' => ['required', 'exists:cities,id'],
         'area_id' => ['required', 'exists:areas,id'],
-        'customer_id' => ['exists:customers,id'],
+        'customer_id' => ['exists:users,id'],
     ];
 
     /**
