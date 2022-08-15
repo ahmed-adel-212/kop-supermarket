@@ -209,9 +209,9 @@ class OrdersController extends BaseController
             'order_from' => 'mobile'
         ];
 
-        $order = Order::create($orderData);
-
-        if (!$order) {
+        try{
+            $order = Order::create($orderData);
+        }catch(\Exception $ex){
             return $this->sendError('Order did not placed');
         }
 
