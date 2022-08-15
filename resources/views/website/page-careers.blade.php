@@ -66,20 +66,26 @@
 
     @section('content')
         <main class="page-main">
-            <div class="section-first-screen">
-                <div class="first-screen__bg"
-                     style="background-image: url({{asset('website-assets/img/pages/contacts/career.jpg')}})"></div>
-                <div class="first-screen__content">
-                    <div class="uk-container">
-                        <div class="first-screen__box">
-                            <h2 class="first-screen__title">{{__('general.Careers')}}</h2>
-                            <div class="first-screen__breadcrumb">
+            <section class="page-header" style="background-image: url({{asset('website-assets/img/pages/home/careers.jpg')}})">
+                <div class="bg-shape grey"></div>
+                 <div class="container">
+                     <div class="page-header-content">
+                         <h4>{{__('general.Job Information')}}</h4>
+                         <h2>{!! __('general.carrer_title') !!}</h2>
+                     </div>
+                 </div>
+             </section><!--/.page-header-->
 
-                            </div>
-                        </div>
+             <section class="blog-section bg-grey padding">
+                <div class="bg-shape white"></div>
+                <div class="container">
+                    <div class="row">
+                        
                     </div>
                 </div>
-            </div>
+             </section>
+
+            
             <div class="page-content" style="background-color:#f2f2f2;">
                 <div class="uk-section ">
                     @if(Session::has('success'))
