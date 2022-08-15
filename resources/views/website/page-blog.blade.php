@@ -42,86 +42,64 @@
 
     @section('content')
         <main class="page-main">
-            <div class="section-first-screen">
-                <div class="first-screen__bg"
-                    style="background-image: url({{ asset('website-assets/img/pages/contacts/latest.jpg') }}"></div>
-                <div class="first-screen__content">
-                    <div class="uk-container">
-                        <div class="first-screen__box">
-                            <h2 class="first-screen__title">{{ __('general.Latest News') }}</h2>
-                            <div class="first-screen__breadcrumb">
-                                <ul class="uk-breadcrumb">
-                                    <li><a href="/">{{ __('menu.Home') }}</a></li>
-                                    <li><span>{{ __('general.News Blog') }}</span></li>
-                                </ul>
+            <section class="page-header"
+                style="background-image: url({{ asset('website-assets/img/pages/contacts/latest.jpg') }}">
+                <div class="bg-shape grey"></div>
+                <div class="container">
+                    <div class="page-header-content">
+                        <h4>{{ __('general.Latest News') }}</h4>
+                        <h2>
+                            {!! __('general.blog_title') !!}
+                        </h2>
+                    </div>
+                </div>
+            </section>
+            <!--/.page-header-->
+
+            <section class="blog-section bg-grey padding">
+                <div class="bg-shape white"></div>
+                <div class="container">
+                    <div class="row blog-posts">
+                        <div class="col-lg-8 sm-padding">
+                            <div class="row grid-layout">
+                                @foreach ($articles as $ar)
+                                    <div class="col-md-6 padding-15 d-flex">
+                                        <div class="post-card">
+                                            <div class="post-thumb">
+                                                <img src="{{ $ar->image }}" alt="img">
+                                            </div>
+                                            <div class="post-content">
+                                                <ul class="post-meta">
+                                                    <li><i class="far fa-calendar-alt"></i><a href="#">
+                                                            {{ $ar->updated_at->format('d M Y') }}
+                                                        </a></li>
+                                                    {{-- <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li> --}}
+                                                </ul>
+                                                <h3><a href="{{ route('get.new', $ar->id) }}">
+                                                        {{ $ar['title_' . app()->getLocale()] }}
+                                                    </a></h3>
+                                                <p>
+                                                    {{ Str::limit($ar['description_' . app()->getLocale()], 60) }}
+                                                </p>
+                                                <a href="{{ route('get.new', $ar->id) }}" class="read-more">
+                                                    {{__('general.Read More')}} <i
+                                                        class="las la-long-arrow-alt-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+
+                            <div class="row text-center">
+                                {{ $articles->links() }}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 sm-padding">
+                            @include('website.page-blog-sidebar')
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="page-content">
-                @if (isset($articles))
-                    <div class="d-flex flex-row flex-wrap m-auto">
-                        @foreach ($articles as $article)
-                            {{-- <article class="col-md-4 col-sm-12 article-intro m-0 mt-3">
-                        <div class="article-intro__image">
-                            <a href="{{route('get.new',$article->id)}}">
-                                <img style="height:262px;" src="{{$article->image}}" alt="img-article">
-                            </a>
-                        </div>
-                        <div class="article-intro__body" style="height:370px;">
-                            <h2 class="article-intro__title line-clamp2">{{$article['title_'.app()->getLocale()]}}</h2>
-                            <div class="article-intro__info justify-content-center">
-                                <div class="article-intro__date">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <span>{{$article->created_at}}</span>
-                                </div>
-                            </div>
-                            <div class="article-intro__content">
-                                <div class="line-clamp5"> {{$article['description_'.app()->getLocale()]}} </div>
-                            </div>
-                            <div class="article-intro__bottom row justify-content-center">
-                                <div class="article-intro__more align-self-center">
-                                    <a class="uk-button" href="{{route('get.new',$article->id)}}">
-                                        {{__('general.More')}}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </article> --}}
-                            <div class="col-12 col-sm-6 col-md-4 p-2">
-                                <article class="card">
-                                    <a href="{{ route('get.new', $article->id) }}">
-                                        <img class="card-img-top" style="height:262px;" src="{{ $article->image }}"
-                                            alt="img-article">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5
-                                            class="card-title d-flex flex-row justify-content-between align-items-center flex-wrap">
-                                            <span class="py-1">
-                                                <a href="{{ route('get.new', $article->id) }}" class="text-dark">
-                                                    {{ $article['title_' . app()->getLocale()] }}</span>
-                                            </a>
-                                            <span class="text-muted py-1">
-                                                <i class="fas fa fa-calendar"></i>
-                                                {{ $article->updated_at->diffForHumans() }}
-                                            </span>
-                                        </h5>
-                                        <p class="card-text text-muted">
-                                            {{ Str::limit($article['description_' . app()->getLocale()], 150) }}
-                                        </p>
-                                        <a class="btn btn-primary" href="{{ route('get.new', $article->id) }}">
-                                            {{ __('general.More') }}
-                                            <i
-                                                class="fas fa fa-arrow-{{ app()->getLocale() === 'ar' ? 'left' : 'right' }}"></i>
-                                        </a>
-                                    </div>
-                                </article>
-                            </div>
-                        @endforeach
-                    </div>
-                    {{ $articles->links() }}
-                @endif
+            </section>
             </div>
         </main>
     @endsection

@@ -47,8 +47,9 @@ class AboutUsController extends Controller
             'description_ar' => 'nullable|string',
             'description_en' => 'nullable|string',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'video' => 'nullable|mimes:mp4|max:2048',
             'icon' => 'nullable|string',
-            'type' => 'required|in:first,bg-st,feat,bg-nd,emp',
+            'type' => 'required|in:first,bg-st,feat,bg-nd,emp,with-bg',
             'links' => 'array',
             'links.*' => 'nullable|url',
         ];
@@ -62,8 +63,17 @@ class AboutUsController extends Controller
             $img = '/aboutus/' . $image_new_name;
         }
 
+        $vd = null;
+        if ($request->hasFile('video')) {
+            $video = $request->video;
+            $video_new_name = time() . $video->getClientOriginalName();
+            $video->move(public_path('aboutus'), $video_new_name);
+            $vd = '/aboutus/' . $video_new_name;
+        }
+
         $arr = $request->all();
         $arr['image'] = $img;
+        $arr['video'] = $vd;
         
         $action=AboutUs::create($arr);
         $this->Make_Log('App\Models\AboutUS','create',$action->id);
@@ -109,7 +119,7 @@ class AboutUsController extends Controller
             'description_ar' => 'required',
             'description_en' => 'required',
             'icon' => 'nullable|string',
-            'type' => 'required|in:first,bg-st,feat,bg-nd,emp',
+            'type' => 'required|in:first,bg-st,feat,bg-nd,emp,with-bg',
             'links' => 'array',
             'links.*' => 'nullable|url',
         ];

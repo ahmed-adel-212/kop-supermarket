@@ -7,13 +7,13 @@
         <div class="col-sm-6">
           <h1>AboutUS</h1>
         </div>
-      @if($aboutUS->where('type', '!=', 'feat')->count() <= 3)
+      {{-- @if($aboutUS->where('type', '!=', 'feat')->count() <= 3) --}}
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('admin.aboutUS.create')}}">Add New AboutUS</a></li>
           </ol>
         </div>
-      @endif
+      {{-- @endif --}}
       </div>
     </div>
   </section>
@@ -23,7 +23,7 @@
         <table class="table table-bordered table-striped dataTable">
           <thead>
             <tr>
-              <th>#ID</th>
+              <th>Type</th>
               <th>Title_en</th>
               <th>Title_ar</th>
               <th>Action</th>
@@ -32,6 +32,9 @@
           <tbody>
             @foreach($aboutUS as $about)
             <tr>
+              <td>
+                {{__('general.' . $about->type)}}
+              </td>
               <td><a href="{{ route('admin.aboutUS.show', $about->id) }}">{{ $about->id }}</a>
                 <img src="{{$about->image}}" class="img-thumbnail" style="    height: 200px;" />
               </td>

@@ -17,6 +17,7 @@ class AboutUs extends Model
         'image',
         'type',
         'links',
+        'video',
         'created_at',
         'updated_at',
     ];

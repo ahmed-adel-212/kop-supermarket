@@ -198,4 +198,28 @@ return [
     "over_all" => "Over All",
     "to_pay" => "ToPay",
     'story' => 'Our Story',
+    'do_you_have' => 'Do You Have Any Questions?',
+    'send_us' => 'Get in touch to discuss your employee wellbeing needs today. Please give us a call,
+    drop us an email or fill out the contact form.',
+    'drop_us' => 'Drop Us A Line',
+    'about' => [
+        'exp' => 'Experience The Taste <br>of Italian Food.',
+        'food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+        'team' => 'Team Mebmers',
+        'cook' => 'They Will <span>Cook</span> For You'
+    ],
+    'first' => 'Section With Video',
+    'bg-st' => 'Section with Image at end',
+    'bg-nd' => 'Section with Image at start',
+    'feat' => 'Section of Features',
+    'emp' => 'Section of Employees',
+    'with-bg' => 'Section with Background Image',
+    'blog_title' => 'Read our Latest News <br> Findout More about Us',
+    'recent' => 'Recent Articles',
+    'prev' => 'Previous',
+    'next' => 'Next',
+    'Archives' => 'Archives',
+    'health_title' => 'Read our Food Health information <br> and Learn More',
+    'Follow Us' => 'Follow Us',
+    'carrer_title' => 'Find out our Latest Careers <br> Feel free to submit'
 ];

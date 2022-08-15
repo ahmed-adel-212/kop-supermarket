@@ -55,6 +55,22 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="title_ar">Type</label>
+                                        <select name="type" class="form-control">
+                                            @foreach (['first', 'bg-st', 'feat', 'bg-nd', 'emp', 'with-bg'] as $ty)
+                                                <option value="{{$ty}}" @if(old('type') === $ty) selected @endif @if($about->type === $ty) selected @endif>
+                                                    {{__('general.'. $ty)}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('type')
+                                        <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                @if ($about->type === 'feat')
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="title_ar">Icon</label>
                                         <input type="text"
                                                class="form-control "
@@ -67,22 +83,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="title_ar">Type</label>
-                                        <select name="type" class="form-control">
-                                            @foreach (['first', 'bg-st', 'feat', 'bg-nd'] as $ty)
-                                                <option value="{{$ty}}" @if(old('type') === $ty) selected @endif @if($about->type === $ty) selected @endif>
-                                                    {{__('general.'. $ty)}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('type')
-                                        <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @endif
                             </div>
+                            @if ($about->type !== 'emp')
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -107,6 +110,40 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
+
+                            @if ($about->type === 'emp')
+                                <div class="row" id="links">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="facebook">Facebook</label>
+                                            <input type="url" class="form-control " id="facebook"
+                                                placeholder="Enter Profile Link" name="links[]" value="{{$about->links[0]}}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="twitter">Twitter</label>
+                                            <input type="url" class="form-control " id="twitter"
+                                                placeholder="Enter Profile Link" name="links[]" value="{{$about->links[1]}}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="instgram">Instgram</label>
+                                            <input type="url" class="form-control " id="instgram"
+                                                placeholder="Enter Profile Link" name="links[]" value="{{$about->links[2]}}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="behance">Behance</label>
+                                            <input type="url" class="form-control " id="behance"
+                                                placeholder="Enter Profile Link" name="links[]" value="{{$about->links[3]}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right">Submit</button>

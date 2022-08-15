@@ -144,6 +144,7 @@ Route::group([
         Route::post('/career-request', [\App\Http\Controllers\Website\CareersControllers::class, 'CareerRequest'])->name('career.request');
 
         Route::get('/Blogs/', [\App\Http\Controllers\Website\NewsController::class, 'AllBlogs'])->name('news.all');
+        Route::get('/Blogs/{year}/{month}', [\App\Http\Controllers\Website\NewsController::class, 'blogsArchive'])->name('news.archive');
         Route::get('/Blog/{id}', [\App\Http\Controllers\Website\NewsController::class, 'Blog'])->name('get.new');
         Route::get('/health-infos/', [\App\Http\Controllers\Website\HealthInfo::class, 'Infos'])->name('health-infos.all');
 

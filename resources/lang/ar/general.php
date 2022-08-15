@@ -221,4 +221,28 @@ return [
 "over_all" => "التكلفة الكلية",
 "to_pay" => "للدفع",
 'story' => 'قصتنا',
+'do_you_have' => 'هل لديك أى أسئلة',
+'send_us' => 'تواصل معنا لمناقشة احتياجاتك. من فضلك اتصل بنا ،
+أرسل لنا بريدًا إلكترونيًا أو املأ نموذج الاتصال.',
+'drop_us' => 'إترك لنا كلمة',
+'about' => [
+    'exp' => 'Experience The Taste <br>of Italian Food.',
+    'food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+    'team' => 'أعضاء الفريق',
+    'cook' => 'سوف يقومون <span>بالطبخ</span> من اجلك'
+],
+'first' => 'قسم به فيديو',
+'bg-st' => 'قسم به صورة فى نهايته',
+'bg-nd' => 'قسم به صورة فى بدايته',
+'feat' => 'قسم المميزات',
+'emp' => 'قسم الموظفين',
+'with-bg' => 'قسم له خلفية خاصة',
+'blog_title' => 'اقرأ آخر أخبارنا <br> اكتشف المزيد عنا',
+'recents' => 'اخر المقالات',
+'prev' => 'السابق',
+'next' => 'التالى',
+'Archives' => 'الأرشيف',
+'health_title' => 'اقرأ معلومات صحة الغذاء <br> وتعرف على المزيد',
+'Follow Us' => 'تابعنا',
+'carrer_title' => 'تعرف على أحدث وظائفنا <br> لا تتردد في الإرسال'
 ];

@@ -14,6 +14,7 @@ class Media extends Model
         'title_en',
         'url',
         'author',
+        'img',
         'created_at',
         'updated_at',
      ];

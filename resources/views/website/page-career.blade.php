@@ -17,13 +17,15 @@
 
     @section('content')
         <main class="page-main">
+            
+
             <div class="section-first-screen">
                 <div class="first-screen__bg"
-                     style="background-image: url({{asset('website-assets/img/pages/home/careers.jpg')}})"></div>
+                     ></div>
                 <div class="first-screen__content">
                     <div class="uk-container">
                         <div class="first-screen__box">
-                            <h2 class="first-screen__title">{{__('general.Job Information')}}</h2>
+                            <h2 class="first-screen__title"></h2>
                             <div class="first-screen__breadcrumb">
                             </div>
                         </div>

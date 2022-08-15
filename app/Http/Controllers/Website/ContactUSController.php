@@ -9,25 +9,26 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Contact;
 use App\Mail\Contacts;
+use App\Models\Branch;
 use Mail;
 class ContactUSController extends Controller
 {
     public function contactPage()
     {
-        return view('website.page-contacts');
+        $branches = Branch::all();
+        
+        return view('website.page-contacts', compact('branches'));
     }
 
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'body' => 'required',
-            'subject' => 'required'
+        $req = $request->validate([
+            'body' => 'required|string',
+            'subject' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
-        }
-
+        
         $user = Auth::user();
         $contact = new Contact;
         $contact->subject = $request->subject;
