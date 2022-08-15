@@ -82,7 +82,23 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input {!! $errors->first('img', 'is-invalid') !!}"
+                                                        name="img" value="{{ old('img') }}">
+                                                    <label class="custom-file-label">Choose Image</label>
+                                                </div>
+                                            </div>
+                                            @error('img')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

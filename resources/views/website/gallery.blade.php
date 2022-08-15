@@ -206,7 +206,7 @@
                                 <div class="gallery-item">
                                     <img src="{{ $ga->url }}" width='500' height='300' alt="img">
                                     <a class="img-popup" data-gall="gallery01"
-                                        href="{{ $ga->url }}"><i class="fas fa-expand"></i></a>
+                                        href="{{ $ga->url }}" title="{{$ga['title_'. app()->getLocale()]}}"><i class="fas fa-expand"></i></a>
                                 </div>
                             </div>
                         @endforeach

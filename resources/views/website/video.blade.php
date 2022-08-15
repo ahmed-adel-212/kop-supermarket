@@ -19,88 +19,52 @@
 
     @section('content')
         <main class="page-main">
-            <div class="section-first-screen">
-                <div class="first-screen__bg"
-                    style="background-image: url({{ asset('website-assets/img/pages/home/video.jpg') }})"></div>
-                <div class="first-screen__content">
-                    <div class="uk-container">
-                        <div class="first-screen__box">
-                            <h2 class="first-screen__title">{{ __('general.Video') }}</h2>
-                            <p class="first-screen__desc">{{ __('general.Video Library') }}</p>
-                            <div class="first-screen__breadcrumb">
-                                <ul class="uk-breadcrumb">
-                                    <li><a href="/">{{ __('menu.Home') }}</a></li>
-                                    <li><span>{{ __('general.Video') }}</span></li>
-                                </ul>
-                            </div>
-                        </div>
+            <section class="page-header"
+                style="background-image: url({{ asset('website-assets/img/pages/home/video.jpg') }})">
+                <div class="bg-shape grey"></div>
+                <div class="container">
+                    <div class="page-header-content">
+                        <h4>
+                            {{ __('general.Video') }}
+                        </h4>
+                        <h2>
+                            {{ __('general.Video Library') }}
+                        </h2>
                     </div>
                 </div>
-            </div>
-            <div class="page-content">
-                <div class="uk-container">
-                    {{-- <div class="mt-5 w-100" style="height: 490px"> --}}
-                    {{-- @if (count($videos) > 0)
-                    <div class="col-md-9 col-sm-12">
-                        <iframe class="the-iframe" style="width: 100%; height: 100%"
-                                src="{{asset($videos['current']->url)}}?controls=0" frameborder="0" allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="col-md-3 col-sm-12" style="overflow-y: auto">
-                         @foreach ($videos['allRemain'] as $vedio)
-                            <div class="row w-100 mb-4" style="height: 75px">
-                                <div class="offset-2 col-md-5 col-x-5 p-0 text-right">
-                                    <h3 style="font-size: medium" class="text-truncate">
-                                        <a style="color: #6dc405" href="{{route('video.page',$vedio->id)}}">{{(app()->getLocale() == 'ar')? $vedio->title_ar : $vedio->title_en }}</a>
-                                    </h3>
-                                    <h5 style="font-size: small" class="m-1">{{$vedio->author}}</h5>
-                                    <h6 style="font-size: x-small" class="m-1 text-right">{{$vedio->created_at}}</h6>
-                                </div>
-                                <div class="col-md-5 col-s-5 h-100">
-                                        <iframe class="the-iframe" style="cursor: pointer;width: 100%; height: 100%"
-                                                src="{{asset($vedio->url)}}" sandbox>
-                                        </iframe>
+            </section>
+            <!--/.page-header-->
+            
+            <section class="gallery-section bg-grey padding">
+                <div class="bg-shape white"></div>
+                <div class="container">
+                    <div class="row">
+                        @foreach ($videos as $video)
+                            <div class="col-lg-4 col-sm-6 padding-15">
+                                <div class="gallery-item">
+                                    @if(is_null($video->img))
+                                    <div class="p-4 bg-dark rounded d-flex align-items-center justify-content-center" style="height:300px">
+                                        <svg class="w-100 h-100 animate__animated animate__faster animate__heartBeat animate__infinite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 384 512"><path d="M361 215C375.3 223.8 384 239.3 384 256C384 272.7 375.3 288.2 361 296.1L73.03 472.1C58.21 482 39.66 482.4 24.52 473.9C9.377 465.4 0 449.4 0 432V80C0 62.64 9.377 46.63 24.52 38.13C39.66 29.64 58.21 29.99 73.03 39.04L361 215z"/></svg>
+                                    </div>
+                                    @else
+                                        <img src="{{$video->img}}" width='500' height='300' alt="img">
+                                    @endif
+                                    <a class="img-popup" data-gall="gallery01"
+                                        href="{{ $video->url }}" data-autoplay="true" data-vbtype="video" title="{{$video['title_'. app()->getLocale()]}}"><i class="fas fa-expand"></i></a>
+                                    <p class="text-center">
+                                        {{$video['title_'. app()->getLocale()]}}
+                                    </p>
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
-                    @endif --}}
-                    <div class="row mt-5" x-data="{
-                        active: '{{ $videos->items()[0]->url }}'
-                    }">
-                        <div class="col-9">
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="the-iframe" style="width: 100%; height: 100%"
-                                    x-bind:src="active + '?controls=0&autoplay=1'" frameborder="0" allowfullscreen>
-                                </iframe>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <ul class="list-group list-group-flush">
-                                @foreach ($videos as $v)
-                                    <li class="list-group-item"
-                                        x-bind:class="{
-                                            'active': active === '{{ $v->url }}',
-                                        }" x-on:click="active = '{{ $v->url }}'">
-                                        <video controls width="250" preload="none">                                        
-                                            <source src="{{$v->url}}"
-                                                    type="video/mp4">
-                                            Sorry, your browser doesn't support embedded videos.
-                                        </video>
-                                        {{ $v->title_ar }}
-                                    </li>
-                                @endforeach
-
-                            </ul>
-                        </div>
+                    <div class="text-center mt-40">
+                        {{-- <a href="#" class="default-btn">Load More <span></span></a> --}}
+                        {{$videos->links()}}
                     </div>
-                    <div>
-                        {{ $videos->links() }}
-                    </div>
-                    {{-- </div> --}}
                 </div>
-            </div>
+            </section>
+            <!--/.gallery-section-->
         </main>
     @endsection
 

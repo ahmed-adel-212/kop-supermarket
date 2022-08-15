@@ -28,6 +28,8 @@
                       <iframe class="w-100" height="250"
                               src="{{asset($media->url)}}?controls=0">
                       </iframe>
+
+                      <img src="{{$media->img}}" class="img-thumbnail" />
                   </div>
                   <div class="col-md-6">
                       <div class="row">

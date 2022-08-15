@@ -31,7 +31,9 @@
           <tbody>
             @foreach($medias as $media)
             <tr>
-              <td>{{ $media->id }}</td>
+              <td>{{ $media->id }}
+                <img src="{{$media->img}}" class="img-thumbnail" style="height: 200px;" />
+            </td>
               <td>{{$media->title_en}}</td>
               <td>{{$media->title_ar}}</td>
               <td>{{$media->author}}</td>
