@@ -14,11 +14,12 @@ class CartController extends Controller
 {
 
     public function addCart(Request $request)
-    {
+    { 
+        return $request;
         
         if ($request->has('add_items')) {
             // dd(json_decode($request->add_items), $request->all());
-            $items = json_decode($request->add_items);
+           return  $items = json_decode($request->add_items);
             foreach ($items as $index => $item) {
                 $newRequest = new Request();
                 $newRequest->merge(['item_id' => $request->item_id]);
@@ -90,7 +91,7 @@ class CartController extends Controller
             $request->merge(['dough_type_en' => $dough_type[1]]);
         }
 
-        $request->merge(['withouts' => json_encode($request->withouts)]);
+      return  $request->merge(['withouts' => json_encode($request->withouts)]);
         $request->merge(['extras' => json_encode($request->extras)]);
         $request->merge(['offer_price' => $request->offer_price]);
 

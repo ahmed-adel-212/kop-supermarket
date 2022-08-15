@@ -68,7 +68,7 @@ class MenuController extends BaseController
 
     public function getItems(Request $request,$category)
     {
-      return  $items = Category::find($category)->items()->with('category.extras', 'category.withouts')->get();
+        $items = Category::find($category)->items()->with('category.extras', 'category.withouts')->get();
 
         foreach ($items as $key => $item) {
             $branches = explode(',', $item->branches);

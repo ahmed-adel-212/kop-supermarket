@@ -15,58 +15,58 @@
     <body class="page-catalog dm-dark"> @endsection
 
     @section('content')
-
-<section class="page-header">
-            <div class="bg-shape grey"></div>
-            <div class="container">
-                <div class="page-header-content">
-                    <h4>Our Food Menu</h4>
-                    <h2>Experience The Taste <br>of Italian Food.</h2>
-                    <p>Food is any substance consumed to provide nutritional <br>support for an organism.</p>
-                </div>
-            </div>
-        </section><!--/.page-header-->
-
-        <section class="food-menu bg-grey padding">
-            <div class="container">
-                <ul class="food-menu-filter">
-                    <li class="active" data-filter="*">All</li>
-                    @foreach($menu['categories'] as $index => $category)
-                    <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
-                    @endforeach
-                </ul>
-                <div class="row product-items">
-                @foreach($menu['categories'] as $index => $category)    
-                    @foreach($category->items as $dealItem)
-                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category->id}}">
-                        <div class="product-item wow fadeInUp" data-wow-delay="200ms">
-                           <!-- <div class="sale"></div> -->
-                            <div class="product-thumb">
-                                <img src="{{$dealItem->image}}" alt="food">
-                                <div><a href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
-                            </div>
-                            <div class="food-info">
-                               <ul class="ratting">
-                                   <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
-                                   <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                               </ul>
-                                <h3>{{$dealItem['description_'.app()->getLocale()]}}</h3>
-                                <div class="price">
-                                    <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
-                                </div>
+        <main class="page-main">
+            <div class="section-first-screen">
+                <div class="first-screen__bg"
+                     style="background-image: url({{asset('website-assets/img/pages/home/menu.jpg')}})"></div>
+                <div class="first-screen__content">
+                    <div class="uk-container">
+                        <div class="first-screen__box">
+                            <h2 class="first-screen__title">{{__('menu.Menu')}}</h2>
+                            <p class="first-screen__desc">{{__('menu.Delicious & Tasty Pastries By Expert Chefs')}}</p>
+                            <div class="first-screen__breadcrumb">
+                                <ul class="uk-breadcrumb">
+                                    <li><a href="{{route('home.page')}}">{{__('menu.Home')}}</a></li>
+                                    <li><span>{{__('menu.Menu')}}</span></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                @endforeach
-                @endforeach
+                </div>
             </div>
-        </section><!--/.food-menu-->
+            <div class="page-content mt-5">
+                <div class="uk-container">
+                    <div data-uk-filter="target: .js-filter">
+                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
 
-        @endsection
+                            <ul class="uk-slider-items uk-child-width-1-5@l uk-child-width-1-3@m uk-child-width-1-1@s uk-grid">
+                                @foreach($menu['categories'] as $index => $category)
+                                    <li>
+                                        <div class="uk-panel h-75">
+                                            <img src="{{$category->image}}" id="{{$category->id}}" class="img-thumbnail rounded w-100 h-100 cat" alt="">
+                                            <h4 class="m-1 text-center">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</h4>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" @if(app()->getLocale() == 'en') uk-slidenav-previous @else uk-slidenav-next @endif uk-slider-item="previous"></a>
+                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" @if(app()->getLocale() == 'en') uk-slidenav-next @else uk-slidenav-previous @endif uk-slider-item="next"></a>
+
+                        </div>
+                        <div class="mt-5 uk-light" >
+
+                            <div class="items row">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+@endsection
 
 @section('scripts')
     <script>

@@ -28,8 +28,8 @@ class MenuController extends Controller
         $item = 0;
         $category = Category::find($category_id);
         $request = new \Illuminate\Http\Request();
-       return $request->branch_id = (session()->has('branch_id'))? session()->get('branch_id'): 0 ;//det branch_id
-        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getItems($request,$category))->getOriginalContent();
+        $request->branch_id = (session()->has('branch_id'))? session()->get('branch_id'): 0 ;//det branch_id
+        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getItems($request,$category_id))->getOriginalContent();
         foreach ($return['data'] as $product){
             if($product->id == $item_id){
                 $item = $product;

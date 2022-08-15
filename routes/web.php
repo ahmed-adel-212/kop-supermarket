@@ -159,15 +159,17 @@ Route::group([
         Route::get('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
 
         /*********** Auth Routes ***********/
+        Route::get('/item/{category_id}/{item_id}', 'MenuController@itemPage')->name('item.page');
+        Route::post('/cart', 'CartController@addCart')->name('add.cart');
         Route::group(['middleware' => ['auth']], function () {
 
             //for all ordering route needs branch_id
             Route::group(['middleware' => 'service'], function () {
                 // menu
-                Route::get('/item/{category_id}/{item_id}', 'MenuController@itemPage')->name('item.page');
+              //  Route::get('/item/{category_id}/{item_id}', 'MenuController@itemPage')->name('item.page');
 
                 //cart Route
-                Route::post('/cart', 'CartController@addCart')->name('add.cart');
+                // Route::post('/cart', 'CartController@addCart')->name('add.cart');
                 Route::get('/get-cart/', [\App\Http\Controllers\Website\CartController::class, 'get_cart'])->name('get.cart');
                 Route::get('/get-cart-res/', [\App\Http\Controllers\Website\CartController::class, 'get_cart_res'])->name('get.cart-res');
                 Route::post('/delete-cart/', [\App\Http\Controllers\Website\CartController::class, 'delete_cart'])->name('delete.cart');
