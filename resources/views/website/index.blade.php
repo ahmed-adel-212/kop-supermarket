@@ -2,650 +2,767 @@
 
 @section('title') Home @endsection
 
-@section('styles')
-    <style>
-        .categoriesActive {
-            border-color: #6dc405;
-            background-color: #6dc405;
-        }
-        .line-clamp2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .line-clamp5 {
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .video-img a img {
-            width: 400px;
-            height: 20.83333vw;
-        }
-    </style>
-@endsection
+
 
 @section('pageName')
     <body class="page-home dm-dark"> @endsection
 
     @section('content')
-        <main class="page-main">
-            <div class="section-first-screen">
-                <div class="first-screen__slideshow">
-                    <div data-uk-slideshow="min-height: 400; max-height: 785; autoplay: true">
-                        <div class="uk-position-relative" tabindex="-1">
-                            <ul class="uk-slideshow-items">
-                                <li>
-                                    <div
-                                        class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
-                                        <img src="{{asset('website-assets/img/pages/home/khome.jpg')}}"
-                                             alt="slider-1" data-uk-cover></div>
+    <div class="site-preloader-wrap">
+            <div class="spinner"></div>
+        </div><!-- /.site-preloader-wrap -->
+
+        <header class="header">
+            <div class="primary-header-one primary-header">
+                <div class="container">
+                    <div class="primary-header-inner">
+                        <div class="header-logo">
+                            <a href="#">
+                                <img class="light" src="assets/img/logo-light.png" alt="Logo"/>
+                                <img class="dark" src="assets/img/logo-dark.png" alt="Logo"/>
+                            </a>
+                        </div><!-- /.header-logo -->
+                        <div class="header-menu-wrap">
+                            <ul class="slider-menu">
+                                <li><a href="index.html">Home</a>
+                                    <ul>
+                                        <li><a href="index.html">Home Default</a></li>
+                                        <li><a href="index-2.html">Home Modern</a></li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <div
-                                        class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
-                                        <img src="{{asset('website-assets/img/pages/home/khome2.jpg')}}"
-                                             alt="slider-2" data-uk-cover></div>
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="#">Pages</a>
+                                    <ul>
+                                        <li><a href="gallery.html">Food Gallery</a></li>
+                                        <li><a href="reviews.html">Reviews</a></li>
+                                        <li><a href="team.html">Our Chef</a></li>
+                                        <li><a href="food-menu.html">Food Menu</a></li>
+                                        <li><a href="reservation.html">Reservation</a></li>
+                                        <li><a href="faqs.html">Help &amp; Faq's</a></li>
+                                        <li><a href="404.html">404 Error</a></li>
+                                    </ul>
                                 </li>
-                                <li>
-                                    <div
-                                        class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
-                                        <img src="{{asset('website-assets/img/pages/home/khome3.jpg')}}"
-                                             alt="slider-3" data-uk-cover></div>
+                                <li><a href="shop.html">Shop</a>
+                                    <ul>
+                                        <li><a href="shop.html">Shop Grid</a></li>
+                                        <li><a href="shop-details.html">Shop Details</a></li>
+                                        <li><a href="cart.html">Cart Page</a></li>
+                                        <li><a href="checkout.html">Checkout Page</a></li>
+                                        
+                                    </ul>
                                 </li>
+                                <li><a href="blog-grid.html">Blog</a>
+                                    <ul>
+                                        <li><a href="blog-grid.html">Grid Layout</a></li>
+                                        <li><a href="blog-classic.html">Classic Layout</a></li>
+                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">Contact Us</a></li>
                             </ul>
-                        </div>
-                        <div class="slideshow-dotnav uk-position-bottom-center">
-                            <ul class="uk-slideshow-nav uk-dotnav uk-flex-center"></ul>
+                        </div><!-- /.header-menu-wrap -->
+                        <div class="header-right">
+                            <div class="search-icon dl-search-icon"><i class="las la-search"></i></div>
+                            <a class="header-btn" href="reservation.html">Reservation<span></span></a>
+                            <!-- Burger menu -->
+                            <div class="mobile-menu-icon">
+                                <div class="burger-menu">
+                                    <div class="line-menu line-half first-line"></div>
+                                    <div class="line-menu"></div>
+                                    <div class="line-menu line-half last-line"></div>
+                                </div>
+                            </div>
+                        </div><!-- /.header-right -->
+                    </div><!-- /.primary-header-one-inner -->
+                </div>
+            </div><!-- /.primary-header-one -->
+        </header><!-- /.header-one -->
+
+        <div id="popup-search-box">
+            <div class="box-inner-wrap d-flex align-items-center">
+                <form id="form" action="#" method="get" role="search">
+                    <input id="popup-search" type="text" name="s" placeholder="Type keywords here..." />
+                    <button id="popup-search-button" type="submit" name="submit"><i class="las la-search"></i></button>
+                </form>
+            </div>
+        </div><!-- /#popup-search-box -->
+
+        <div id="main-slider" class="main-slider">
+            <div class="single-slide">
+                <div class="bg-img kenburns-top" style="background-image: url(assets/img/slider-bg-01.jpg);"></div>
+                <div class="slider-shape" style="background-image: url(assets/img/slider-shape-01.png);" data-animation="fade-in-right" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url(assets/img/food-img-01.png);" data-animation="fade-in-right" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url(assets/img/slider-elements.png);" data-animation="zoomIn" data-delay="1.3s"></div>
+                <div class="slider-content-wrap d-flex align-items-center">
+                    <div class="container">
+                        <div class="slider-content">
+                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div data-animation="reveal-text" data-delay="1s">Supper delicious<br> Burger in town!</div></div>
+                            </div>
+                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
+                            <div class="slider-btn-group justify-content-left">
+                                <div class="inner-layer">
+                                    <a href="reservation.html" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">Book A Table</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="first-screen__content">
-                    <div class="uk-container">
-                        <div class="first-screen__box">
-                            <h2 class="first-screen__title">{{__('home.Order Today, While It’s Hot!')}}</h2>
-                            <p class="first-screen__desc">{{__('home.Eat Delicious & Tasty Fast-Foods With Real Flavours')}}</p>
-                            <a class="uk-button" style="height: auto;" href="{{route('menu.page')}}">{{__('footer.Our Menu')}}</a>
+            </div><!--Slide-1-->
+            <div class="single-slide center">
+                <div class="bg-img kenburns-top" style="background-image: url(assets/img/slider-bg-02.jpg);"></div>
+                <div class="slider-shape" style="background-image: url(assets/img/slider-shape-01.png);" data-animation="fade-in-right" data-delay="0.5s"></div>
+                <div class="slider-shape left" style="background-image: url(assets/img/slider-shape-02.png);" data-animation="fade-in-left" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url(assets/img/food-img-02.png);" data-animation="fade-in-bottom" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url(assets/img/slider-elements-center.png);" data-animation="zoomIn" data-delay="1.3s"></div>
+                <div class="slider-content-wrap d-flex align-items-center text-center">
+                    <div class="container">
+                        <div class="slider-content">
+                           <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splitting>Tasty Pizza</div></div>
+                            </div>
+                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="1.5s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
+                            <div class="slider-btn-group justify-content-center">
+                                <div class="inner-layer">
+                                    <a href="reservation.html" class="slider-btn" data-animation="fade-in-bottom" data-delay="2s">Book A Table</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--Slide-2-->
+            <div class="single-slide right">
+                <div class="bg-img kenburns-top" style="background-image: url(assets/img/slider-bg-03.jpg);"></div>
+                <div class="slider-shape left" style="background-image: url(assets/img/slider-shape-02.png);" data-animation="fade-in-left" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url(assets/img/food-img-03.png);" data-animation="fade-in-top" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url(assets/img/slider-elements.png);" data-animation="zoomIn" data-delay="1.3s"></div>
+                <div class="slider-content-wrap d-flex align-items-center text-right">
+                    <div class="container">
+                        <div class="slider-content">
+                           <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splitting>Fried masala <br>in town!</div></div>
+                            </div>
+                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
+                            <div class="slider-btn-group justify-content-left">
+                                <div class="inner-layer">
+                                    <a href="reservation.html" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">Book A Table</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--Slide-3-->
+        </div><!-- slider-section -->
+
+        <section class="promo-section bg-grey padding">
+            <div class="bg-shape white"></div>
+            <div class="container">
+                <div class="nav-outside">
+                  <div class="food-carousel swiper-container nav-visible">
+                       <div class="swiper-wrapper">
+                           <div class="swiper-slide">
+                               <div class="food-item">
+                                    <div class="food-icon">
+                                        <i class="fi fi-pizza-slice"></i>
+                                    </div>
+                                    <div class="food-content">
+                                        <h3>Maxican Pizza</h3>
+                                        <p>Food is any substance consumed to provide nutritional support for an organism.</p>
+                                    </div>
+                                    <div class="food-thumb">
+                                        <img src="assets/img/promo01.png" alt="img">
+                                    </div>
+                                </div>
+                           </div>
+                            <div class="swiper-slide">
+                                <div class="food-item">
+                                    <div class="food-icon">
+                                        <i class="fi fi-beer"></i>
+                                    </div>
+                                    <div class="food-content">
+                                        <h3>Soft Drinks</h3>
+                                        <p>Food is any substance consumed to provide nutritional support for an organism.</p>
+                                    </div>
+                                    <div class="food-thumb">
+                                        <img src="assets/img/promo02.png" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="food-item">
+                                    <div class="food-icon">
+                                        <i class="fi fi-fried-potatoes"></i>
+                                    </div>
+                                    <div class="food-content">
+                                        <h3>French Fry</h3>
+                                        <p>Food is any substance consumed to provide nutritional support for an organism.</p>
+                                    </div>
+                                    <div class="food-thumb">
+                                        <img src="assets/img/promo03.png" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="food-item">
+                                    <div class="food-icon">
+                                        <i class="fi fi-burger"></i>
+                                    </div>
+                                    <div class="food-content">
+                                        <h3>Burger Kingo</h3>
+                                        <p>Food is any substance consumed to provide nutritional support for an organism.</p>
+                                    </div>
+                                    <div class="food-thumb">
+                                        <img src="assets/img/promo04.png" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="food-item">
+                                    <div class="food-icon">
+                                        <i class="fi fi-chicken-leg"></i>
+                                    </div>
+                                    <div class="food-content">
+                                        <h3>Chicken Masala</h3>
+                                        <p>Food is any substance consumed to provide nutritional support for an organism.</p>
+                                    </div>
+                                    <div class="food-thumb">
+                                        <img src="{{asset('website2-assets/img/promo05.png')}}" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dl-slider-controls style-2">
+                            <div class="dl-slider-button-prev"><i class="las la-arrow-left"></i></div>
+                            <div class="dl-swiper-pagination"></div>
+                            <div class="dl-slider-button-next"><i class="las la-arrow-right"></i></div>
+                        </div>
+                        <div class="carousel-preloader"><div class="dot-flashing"></div></div>
+                   </div>
+              </div>
+            </div>
+        </section><!--/.promo-section-->
+
+        <section class="about-section padding">
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                   <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
+                       <div class="content-img-holder">
+                          <img src="assets/img/about01.png" alt="img">
+                           <div class="sale">
+                               <div>
+                                   <h4>Get Up To</h4>
+                                    <h2><span>50%</span>Off Now</h2>
+                                </div>
+                            </div>
+                       </div>
+                   </div>
+                    <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
+                        <div class="about-info">
+                            <h2>Caferio, Burgers, and <br>Best Pizzas <span>in Town!</span></h2>
+                            <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
+                            <ul class="check-list">
+                                <li><i class="fas fa-check"></i>Delicious &amp; Healthy Foods</li>
+                                <li><i class="fas fa-check"></i>Spacific Family And Kids Zone</li>
+                                <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
+                                <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
+                            </ul>
+                            <a href="shop-details.html" class="default-btn">Order Now <span></span></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--<div class="section-about">-->
-            <!--    <div class="uk-section uk-container">-->
-            <!--        <div class="uk-grid uk-child-width-1-2@m uk-flex-middle" data-uk-grid>-->
-            <!--            <div class="uk-text-center"><img src="{{asset('website-assets/img/pages/home/Aboutus.jpg')}}"-->
-            <!--                                             alt=""></div>-->
-            <!--            <div>-->
-            <!--                <div class="section-title burger wave">-->
-            <!--                    <h3 class="uk-h3">{{$menu['aboutus']["title_".app()->getLocale()] ?? 'About Us'}}</h3>-->
-            <!--                </div>-->
-            <!--                <div class="section-content">-->
-            <!--                    <div style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 7;-webkit-box-orient: vertical;">{!!$menu['aboutus']["description_".app()->getLocale()] ?? 'about us'!!}</p>-->
-            <!--                    <div class="uk-margin-medium-top"><a class="uk-button" href="{{route('aboutUS.page')}}"><span>{{__('home.Read More')}}</span><img-->
-            <!--                                class="uk-margin-small-left"-->
-            <!--                                src="{{asset('website-assets/img/icons/ice-cream.svg')}}" alt=""></a></div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--        </div>-->
-            <!--    </div>-->
-            <!--</div>-->
-            <!--<div class="section-features" style="background-image: url({{asset('website-assets/img/pages/home/khomeicon.jpg')}});">-->
-            <!--    <div class="uk-section uk-container">-->
-            <!--        <div class="uk-grid uk-child-width-1-3@s" data-uk-grid>-->
-            <!--            <div>-->
-            <!--                <div class="feature-item text-center">-->
-            <!--                    <div class="feature-item__icon"><img-->
-            <!--                            src="{{asset('website-assets/img/icons/feature-1.svg')}}" alt="feature"></div>-->
-            <!--                    <div class="feature-item__title">{{__('home.Fresh Ingredients')}}</div>-->
-            <!--                    <div class="feature-item__desc">Magna aliqua enim minim veniam quisya nost exercitation-->
-            <!--                        ullamco sed laboris nisy.-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div>-->
-            <!--                <div class="feature-item text-center">-->
-            <!--                    <div class="feature-item__icon"><img-->
-            <!--                            src="{{asset('website-assets/img/icons/feature-2.svg')}}" alt="feature"></div>-->
-            <!--                    <div class="feature-item__title">{{__('home.The Certified Chefs')}}</div>-->
-            <!--                    <div class="feature-item__desc">Magna aliqua enim minim veniam quisya nost exercitation-->
-            <!--                        ullamco sed laboris nisy.-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <div>-->
-            <!--                <div class="feature-item text-center">-->
-            <!--                    <div class="feature-item__icon"><img-->
-            <!--                            src="{{asset('website-assets/img/icons/feature-3.svg')}}" alt="feature"></div>-->
-            <!--                    <div class="feature-item__title">{{__('home.30 Mins Delivery')}}</div>-->
-            <!--                    <div class="feature-item__desc">Magna aliqua enim minim veniam quisya nost exercitation-->
-            <!--                        ullamco sed laboris nisy.-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--        </div>-->
-            <!--    </div>-->
-            <!--</div>-->
-            <div class="section-special-deals">
-                <div class="uk-section uk-container">
-                    <div class="section-title section-title--center wave french-fries">
-                        <h3 class="uk-h3">{{__('home.Our Special Deals')}}</h3>
-                    </div>
-                    <div class="section-content" data-uk-filter="target: .js-filter">
-                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+        </section><!--/.about-section-->
 
-                            <ul class="uk-slider-items uk-child-width-1-5@l uk-child-width-1-3@m uk-child-width-1-1@s uk-grid">
-                                @foreach($menu['categories'] as $index => $category)
-                                    <li>
-                                        <div class="uk-panel h-75">
-                                            <img src="{{$category->image}}" id="{{$category->id}}" class="img-thumbnail rounded w-100 h-100 cat" alt="">
-                                            <h4 class="m-1 text-center">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</h4>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-
-                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" @if(app()->getLocale() == 'en') uk-slidenav-previous @else uk-slidenav-next @endif uk-slider-item="previous"></a>
-                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" @if(app()->getLocale() == 'en') uk-slidenav-next @else uk-slidenav-previous @endif uk-slider-item="next"></a>
-
-                        </div>
-
-                        <div class="uk-position-relative uk-visible-toggle mt-5 uk-light" tabindex="-1" uk-slider>
-
-                            <ul class="items uk-slider-items uk-child-width-1-4@l uk-child-width-1-3@m uk-child-width-1-1@s uk-grid">
-
-                            </ul>
-
-                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" @if(app()->getLocale() == 'en') uk-slidenav-previous @else uk-slidenav-next @endif uk-slider-item="previous"></a>
-                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" @if(app()->getLocale() == 'en') uk-slidenav-next @else uk-slidenav-previous @endif uk-slider-item="next"></a>
-
-                        </div>
-
-                    </div>
+        <section class="food-menu bg-grey padding">
+            <div class="container">
+                <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
+                    <h4>Popular Dishes</h4>
+                    <h2>Our Delicious <span>Foods</span></h2>
+                    <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
                 </div>
-            </div>
-            <div class="section-steps" style="background-image: url({{asset('website-assets/img/pages/home/khomestep.jpg')}});">
-                <div class="uk-section">
-                    <div class="uk-container p-0">
-                        <div class="section-title"><span>{{__('home.Order Your Own Tasty Food')}}</span>
-                            <h3 class="uk-h3">{{__('home.It Takes 2 Minutes To Make Your')}}
-                                <br>{{__('home.Own Tasty Pizza And Order From Us')}}</h3>
+                <ul class="food-menu-filter">
+                    <li class="active" data-filter="*">All</li>
+                    <li data-filter=".pizza">Pizza</li>
+                    <li data-filter=".burger">Burger</li>
+                    <li data-filter=".drinks">Drinks</li>
+                    <li data-filter=".sandwich">Sandwich</li>
+                </ul>
+                <div class="row product-items">
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid pizza sandwich">
+                        <div class="product-item wow fadeInUp" data-wow-delay="200ms">
+                           <div class="sale">-15%</div>
+                            <div class="product-thumb">
+                                <img src="assets/img/food01.png" alt="food">
+                                <div><a href="shop-details.html" class="order-btn">Order Now</a></div>
+                            </div>
+                            <div class="food-info">
+                               <ul class="ratting">
+                                   <li>Chicken</li>
+                                   <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                               </ul>
+                                <h3>Fried Chicken Unlimited</h3>
+                                <div class="price">
+                                    <h4>Price: <span>$49.00</span> <span class="reguler">$69.00</span></h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="uk-container-expand">
-                        <div class="section-content">
-                            <div class="uk-grid" data-uk-grid>
-                                <!--<div class="uk-width-1-3@m"><img-->
-                                <!--        src="{{asset('website-assets/img/pages/home/Pizza steps big.png')}}" alt="">-->
-                                <!--</div>-->
-                                <div class="uk-width-3-3@m">
-                                    <div data-uk-slider="finite: true">
-                                        <div class="uk-position-relative">
-                                            <div class="uk-slider-container">
-                                                <ul class="m-4 uk-slider-items uk-grid uk-grid-medium uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-4@l uk-child-width-1-4@xl">
-                                                    <li>
-                                                        <div class="step-item step-item--1">
-                                                            <div class="step-item__icon"><img
-                                                                    src="{{asset('website-assets/img/pages/home/step1.png')}}"
-                                                                    alt="img-step"></div>
-                                                            <div class="step-item__numb">@lang('home.Step') 1</div>
-                                                            <div class="step-item__title">@lang('home.st1t')</div>
-                                                            <div class="step-item__desc">@lang('home.st1d')</div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="step-item step-item--2">
-                                                            <div class="step-item__icon"><img
-                                                                    src="{{asset('website-assets/img/pages/home/step2.png')}}"
-                                                                    alt="img-step"></div>
-                                                            <div class="step-item__numb">@lang('home.Step') 2</div>
-                                                            <div class="step-item__title">@lang('home.st2t')</div>
-                                                            <div class="step-item__desc">@lang('home.st2d')</div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="step-item step-item--3">
-                                                            <div class="step-item__icon"><img
-                                                                    src="{{asset('website-assets/img/pages/home/step3.png')}}"
-                                                                    alt="img-step"></div>
-                                                            <div class="step-item__numb">@lang('home.Step') 3</div>
-                                                            <div class="step-item__title">@lang('home.st3t')</div>
-                                                            <div class="step-item__desc">@lang('home.st3d')</div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="step-item step-item--4">
-                                                            <div class="step-item__icon"><img
-                                                                    src="{{asset('website-assets/img/pages/home/Pizza steps big.png')}}"
-                                                                    alt="img-step" style="height:284px"></div>
-                                                            <div class="step-item__numb">@lang('home.Step') 4</div>
-                                                            <div class="step-item__title">@lang('home.st4t')</div>
-                                                            <div class="step-item__desc">@lang('home.st4d')</div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin-medium-top"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="uk-margin-medium-top uk-text-center"><a class="uk-button d-table m-auto"
-                                                                                        href="{{route('menu.page')}}"><span style="display: table-cell;vertical-align: middle;">@lang('home.Create & Order Now!')</span><img
-                                                class="uk-margin-small-left"
-                                                src="{{asset('website-assets/img/icons/ice-cream.svg')}}" alt=""></a>
-                                    </div>
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid burger sandwich">
+                        <div class="product-item wow fadeInUp" data-wow-delay="400ms">
+                            <div class="sale">-10%</div>
+                            <div class="product-thumb">
+                                <img src="assets/img/food02.png" alt="food">
+                                <div><a href="shop-details.html" class="order-btn">Order Now</a></div>
+                            </div>
+                            <div class="food-info">
+                               <ul class="ratting">
+                                   <li>Noddles</li>
+                                   <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                               </ul>
+                                <h3>Burger King Whopper</h3>
+                                <div class="price">
+                                    <h4>Price: <span>$29.00</span> <span class="reguler">$39.00</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid drinks burger">
+                        <div class="product-item wow fadeInUp" data-wow-delay="600ms">
+                            <div class="sale">-25%</div>
+                            <div class="product-thumb">
+                                <img src="assets/img/food03.png" alt="food">
+                                <div><a href="shop-details.html" class="order-btn">Order Now</a></div>
+                            </div>
+                            <div class="food-info">
+                               <ul class="ratting">
+                                   <li>Pizzas</li>
+                                   <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                               </ul>
+                                <h3>White Castle Pizzas</h3>
+                                <div class="price">
+                                    <h4>Price: <span>$49.00</span> <span class="reguler">$69.00</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid sandwich drinks">
+                        <div class="product-item wow fadeInUp" data-wow-delay="200ms">
+                            <div class="sale">-20%</div>
+                            <div class="product-thumb">
+                                <img src="assets/img/food04.png" alt="food">
+                                <div><a href="shop-details.html" class="order-btn">Order Now</a></div>
+                            </div>
+                            <div class="food-info">
+                               <ul class="ratting">
+                                   <li>Burrito</li>
+                                   <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                               </ul>
+                                <h3>Bell Burrito Supreme</h3>
+                                <div class="price">
+                                    <h4>Price: <span>$59.00</span> <span class="reguler">$69.00</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid burger drinks">
+                        <div class="product-item wow fadeInUp" data-wow-delay="400ms">
+                            <div class="sale">-5%</div>
+                            <div class="product-thumb">
+                                <img src="assets/img/food05.png" alt="food">
+                                <div><a href="shop-details.html" class="order-btn">Order Now</a></div>
+                            </div>
+                            <div class="food-info">
+                               <ul class="ratting">
+                                   <li>Nuggets</li>
+                                   <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                               </ul>
+                                <h3>Kung Pao Chicken BBQ</h3>
+                                <div class="price">
+                                    <h4>Price: <span>$49.00</span> <span class="reguler">$69.00</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid sandwich pizza">
+                        <div class="product-item wow fadeInUp" data-wow-delay="600ms">
+                            <div class="sale">-15%</div>
+                            <div class="product-thumb">
+                                <img src="assets/img/food06.png" alt="food">
+                                <div><a href="shop-details.html" class="order-btn">Order Now</a></div>
+                            </div>
+                            <div class="food-info">
+                               <ul class="ratting">
+                                   <li>Chicken</li>
+                                   <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                                    <li><i class="las la-star"></i></li>
+                               </ul>
+                                <h3>Wendy's Chicken</h3>
+                                <div class="price">
+                                    <h4>Price: <span>$49.00</span> <span class="reguler">$69.00</span></h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="section-recommend">
-                <div class="uk-section uk-container">
-                    <div class="section-title section-title--center wave french-fries">
-                        <h3 class="uk-h3">@lang('home.Our Offers')</h3>
+        </section><!--/.food-menu-->
+
+        <section class="content-section">
+            <div class="bg-shape white"></div>
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
+                        <div class="content-info">
+                            <h2>The Caferio Have Excellent <br>Of <span>Quality Burgers!</span></h2>
+                            <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
+                            <a href="shop-details.html" class="default-btn">Order Now <span></span></a>
+                        </div>
                     </div>
-                    <div class="section-content">
-                        @if(isset($menu['offers']))
-                        <div class="uk-margin-medium-top" data-uk-slider>
-                            <div class="uk-position-relative">
-                                <div class="uk-slider-container">
-                                    <ul class="uk-slider-items uk-grid uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-3@xl uk-child-width-1-3@xl"
-                                        data-uk-height-match=".product-card__intro">
-                                        @foreach($menu['offers'] as $offer)
-                                        <li class="{{$menu['offers']}}">
-                                            <div class="product-card">
-                                                <div class="product-card__media"><a href="{{route('offer.item',$offer->id)}}"><img
-                                                            class="uk-width-1-1"
-                                                            src="{{asset($offer->image)}}"
-                                                            alt="The Spruce Burger"/></a></div>
-                                                <div class="product-card__body">
-                                                    <div class="product-card__title">
-                                                        <a href="{{route('offer.item',$offer->id)}}">
-                                                            {{(app()->getLocale() == 'ar') ?$offer->title_ar:$offer->title}}
-                                                        </a>
-                                                    </div>
-                                                    <div class="product-card__intro">
-                                                        <div>{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}</div>
-                                                    </div>
-                                                    <div class="product-card__addcart">
-                                                        <a class="uk-button uk-width-1-1 d-table" href="{{route('offer.item',$offer->id)}}">
-                                                            <span style="display: table-cell;vertical-align: middle;text-align:center;">{{__('general.Get Offer')}}</span>
-                                                            <img class="uk-margin-small-left" src="{{asset('website-assets/img/icons/ice-cream.svg')}}" alt="">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        @endforeach
+                    <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
+                        <div class="content-img-holder">
+                            <img src="assets/img/food-img-04.png" alt="img">
+                            <div class="sale">
+                               <div>
+                                   <h4>Get Up To</h4>
+                                    <h2><span>50%</span>Off Now</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/.content-section-->
+
+        <section class="delivery-section padding">
+           <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
+                        <div class="delivery-info">
+                            <h2>A Moments Of Delivered <br> On <span>Right Time</span> &amp; Place</h2>
+                            <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
+                            <div class="order-content">
+                               <a href="shop-details.html" class="default-btn">Order Now <span></span></a>
+                                <h3><span>Order Number</span>012-345-6789</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                       <div class="delivery-boy-wrap">
+                           <img class="delivery" src="assets/img/cloud.png" alt="img">
+                            <div class="delivery-boy"></div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/.delivery-section-->
+
+        <section class="testimonial-section bg-grey padding">
+           <div class="bg-shape white"></div>
+            <div class="container">
+                <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
+                    <h4>Testimonials</h4>
+                    <h2>Our Customers <span>Reviews</span></h2>
+                    <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
+                </div>
+                <div class="nav-outside">
+                  <div class="testimonial-carousel swiper-container nav-visible">
+                       <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testi-thumb">
+                                        <img src="assets/img/testi01.jpg" alt="img">
+                                        <div class="author">
+                                            <h3>Robert William</h3>
+                                            <h4>CEO Kingfisher</h4>
+                                        </div>
+                                    </div>
+                                    <p> "I would be lost without restaurant. I would like to personally thank you for your outstanding product."</p>
+                                    <ul class="ratting">
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
                                     </ul>
                                 </div>
-                                <div class="uk-visible@l"><a class="uk-position-top-left-out" href="#"
-                                                             data-uk-slidenav-previous
-                                                             data-uk-slider-item="previous"></a><a
-                                        class="uk-position-top-right-out" href="#" data-uk-slidenav-next
-                                        data-uk-slider-item="next"></a></div>
-                                <div>
-                                    <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin-medium-top"></ul>
-                                </div>
                             </div>
-                        </div>
-                        @endif
-                        <div class="uk-margin-large-top">
-                            <div style="height:300px" class="uk-grid uk-grid-medium uk-child-width-1-2@m" data-uk-grid>
-                                <div>
-                                    <div class="banner-card">
-                                        <div class="banner-card__bg"
-                                             style="background-image: url({{asset('website-assets/img/first.jpeg')}})"></div>
-                                        <!--<div class="banner-card__box"><a class="banner-card__category" href="">INTRODUCING</a>-->
-                                        <!--    <h4 class="banner-card__title">For lovers of<br> good taste</h4>-->
-                                        <!--    <a class="banner-card__btn" href="{{route('menu.page')}}">{{__('home.Read More')}}</a>-->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="banner-card">
-                                        <div class="banner-card__bg"
-                                             style="background-image: url({{asset('website-assets/img/second.jpeg')}})"></div>
-                                        <!--<div class="banner-card__box"><a class="banner-card__category" href="">INTRODUCING</a>-->
-                                        <!--    <h4 class="banner-card__title">For lovers of<br> different flavours</h4>-->
-                                        <!--    <a class="banner-card__btn" href="{{route('menu.page')}}">{{__('home.Read More')}}</a>-->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @if(count($menu['dealItems']) > 0)
-            <div class="section-deal-of-the-week">
-                <div class="uk-section uk-container uk-container-expand">
-                    <div data-uk-slider>
-                        <div class="uk-position-relative">
-                            <div class="uk-slider-container uk-light" style="height: 390px;">
-                                <ul class="uk-slider-items uk-grid uk-grid-small uk-child-width-1-1">
-
-                                        @foreach($menu['dealItems'] as $dealItem)
-                                            <li>
-                                                <div class="section-deal-of-the-week__box">
-                                                    <div class="d-flex flex-column w-100">
-                                                        <div class="section-title">
-                                                            <span> @lang('home.Deal of the Week') </span>
-                                                        </div>
-                                                        <div class="section-deal-of-the-week__content" style="max-width: unset">
-                                                            <div class="section-content">
-                                                                <div class="section-title">
-                                                                    <h3 class="uk-h3">{{$dealItem['name_'.app()->getLocale()]}}</h3>
-                                                                </div>
-                                                                <p>{{$dealItem['description_'.app()->getLocale()]}}</p>
-                                                                <div class="price-item"><span>@lang('home.Price') </span><span class="value">{{$dealItem->price}} @lang('general.SR')</span></div>
-                                                                <div class="uk-margin-medium-top"><a class="uk-button" href="{{route('item.page',[$dealItem->category_id, $dealItem->id])}}"><span>@lang('home.Create & Order Now!')</span><img
-                                                                            class="uk-margin-small-left"
-                                                                            src="{{asset('website-assets/img/icons/ice-cream.svg')}}" alt=""></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="section-deal-of-the-week__media"><img class="rounded-circle" style="right: 45%;"
-                                                            src="{{$dealItem->image}}"
-                                                            alt="deal-of-the-week">
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endforeach
-
-                                </ul>
-                            </div>
-                            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin-medium-top"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <div class="section-video">
-                <div class="uk-section uk-container">
-                    <div class="section-title section-title--center wave french-fries">
-                        <h3 class="uk-h3">We Value Our Food<br> Only Familits & Communities</h3>
-                    </div>
-                    <div class="section-content">
-                        <div class="uk-text-large uk-text-center">@lang('general.titv')</div>
-                        <!--<div class="uk-grid uk-child-width-1-2@m uk-margin-medium-top" data-uk-grid>-->
-                        <!--    <div>-->
-                        <!--        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor-->
-                        <!--            incididunt ut labore dolore magna aliqua. Ut enim ad minim veniam quis nostrud-->
-                        <!--            exercitation ullamco laboris nisi ut aliquip.</p>-->
-                        <!--    </div>-->
-                        <!--    <div>-->
-                        <!--        <p>Velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat-->
-                        <!--            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum sed ut-->
-                        <!--            perspiciatis unde omnis iste.</p>-->
-                        <!--    </div>-->
-                        <!--</div>-->
-                        <div class="video-box">
-                            <div class="video-column video-column--center">
-                                <div class="video-img">
-                                    <div data-uk-lightbox="video-autoplay: true"><a
-                                            href="https://www.youtube.com/watch?v=ecXnEXhq75A"
-                                            data-attrs="width: 1280; height: 720;"><img
-                                                src="{{asset('website-assets/img/pages/home/home-video.png')}}"
-                                                alt="img-video"></a></div>
-                                </div>
-                            </div>
-                            <div class="video-column video-column--left">
-                                <div class="video-item">
-                                    <div class="video-item__icon text-center"><img
-                                            src="{{asset('website-assets/img/icons/video-1.svg')}}" alt="icon-video">
-                                    </div>
-                                    <div class="video-item__title text-center">@lang('general.tit1')</div>
-                                    <div class="video-item__text text-center">@lang('general.sec1')</div>
-                                </div>
-                                <div class="video-item">
-                                    <div class="video-item__icon text-center"><img
-                                            src="{{asset('website-assets/img/icons/video-2.svg')}}" alt="icon-video">
-                                    </div>
-                                    <div class="video-item__title text-center">@lang('general.tit2')</div>
-                                    <div class="video-item__text text-center">@lang('general.sec2')</div>
-                                </div>
-                            </div>
-                            <div class="video-column video-column--right">
-                                <div class="video-item">
-                                    <div class="video-item__icon text-center"><img
-                                            src="{{asset('website-assets/img/icons/video-3.svg')}}" alt="icon-video">
-                                    </div>
-                                    <div class="video-item__title text-center">@lang('general.tit3')</div>
-                                    <div class="video-item__text text-center">@lang('general.sec3')</div>
-                                </div>
-                                <div class="video-item">
-                                    <div class="video-item__icon text-center"><img
-                                            src="{{asset('website-assets/img/icons/video-4.svg')}}" alt="icon-video">
-                                    </div>
-                                    <div class="video-item__title text-center">@lang('general.tit4')</div>
-                                    <div class="video-item__text text-center">@lang('general.sec4')</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="section-featured-deals">
-                <div class="uk-container">
-                    <div data-uk-slider>
-                        <div class="uk-position-relative">
-                            <div class="uk-slider-container uk-light">
-                                <ul class="uk-slider-items uk-grid uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l uk-child-width-1-4@xl">
-                                    @if(isset($menu['galleries']))
-                                        @foreach($menu['galleries'] as $gallery)
-                                    <li style="height: 260px;">
-                                        <div class="featured-deal-item h-100">
-                                            <div class="uk-width-1-1 uk-inline-clip uk-transition-toggle h-100" tabindex="0">
-                                                <img class="uk-width-1-1 w-100 h-100"
-                                                     src="{{asset($gallery->url)}}"
-                                                     alt="featured-deal">
-                                                <a class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-primary uk-flex uk-flex-column uk-flex-center uk-flex-middle"
-                                                    href="{{route('gallery.page')}}">
-                                                    <div class="featured-deal-item__title">{{$gallery['title_'.app()->getLocale()]}}</div>
-                                                </a>
-                                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testi-thumb">
+                                        <img src="assets/img/testi02.jpg" alt="img">
+                                        <div class="author">
+                                            <h3>Thomas Josef</h3>
+                                            <h4>CEO Getforce</h4>
                                         </div>
-                                    </li>
-                                        @endforeach
-                                    @endif
+                                    </div>
+                                    <p> "I would be lost without restaurant. I would like to personally thank you for your outstanding product."</p>
+                                    <ul class="ratting">
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testi-thumb">
+                                        <img src="assets/img/testi03.jpg" alt="img">
+                                        <div class="author">
+                                            <h3>Charles Richard</h3>
+                                            <h4>CEO Angela</h4>
+                                        </div>
+                                    </div>
+                                    <p> "I would be lost without restaurant. I would like to personally thank you for your outstanding product."</p>
+                                    <ul class="ratting">
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                        <li><i class="las la-star"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dl-slider-controls style-2">
+                            <div class="dl-slider-button-prev"><i class="las la-arrow-left"></i></div>
+                            <div class="dl-swiper-pagination"></div>
+                            <div class="dl-slider-button-next"><i class="las la-arrow-right"></i></div>
+                        </div>
+                        <div class="carousel-preloader"><div class="dot-flashing"></div></div>
+                   </div>
+                </div>
+            </div>
+        </section><!--/.testimonial-section-->
+
+        <section class="banner-section padding">
+           <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="row banner-wrapper">
+                   <div class="col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                       <div class="banner-item">
+                            <img src="assets/img/banner01.jpg" alt="banner">
+                            <div class="banner-content">
+                                <h3>-50% Off Now!</h3>
+                                <h2>Discount For Delicious <br>Tasty Burgers!</h2>
+                                <p>Sale off 50% only this week</p>
+                                <a href="shop.html" class="order-btn">Order Now</a>
+                            </div>
+                        </div>
+                   </div>
+                    <div class="col-md-6">
+                       <div class="row">
+                           <div class="col-md-6 wow fadeInUp" data-wow-delay="400ms">
+                               <div class="banner-item">
+                                    <img src="assets/img/banner02.jpg" alt="banner">
+                                    <div class="banner-content">
+                                        <h3>Delicious <br> Pizza</h3>
+                                        <p>50% off Now</p>
+                                        <a href="shop.html" class="order-btn">Order Now</a>
+                                    </div>
+                                </div>
+                           </div>
+                           <div class="col-md-6 wow fadeInUp" data-wow-delay="600ms">
+                               <div class="banner-item">
+                                    <img src="assets/img/banner03.jpg" alt="banner">
+                                    <div class="banner-content">
+                                        <h3>American <br>Burgers</h3>
+                                        <p>50% off Now</p>
+                                        <a href="shop.html" class="order-btn">Order Now</a>
+                                    </div>
+                                </div>
+                           </div>
+                           <div class="col-md-12 wow fadeInUp" data-wow-delay="800ms">
+                               <div class="banner-item">
+                                    <img src="assets/img/banner04.jpg" alt="banner">
+                                    <div class="banner-content">
+                                        <h3>Tasty Buzzed <br>Pizza</h3>
+                                        <p>Sale off 50% only this week</p>
+                                        <a href="shop.html" class="order-btn">Order Now</a>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/.banner-section-->
+
+        <section class="blog-section bg-grey padding">
+           <div class="bg-shape white"></div>
+            <div class="container">
+                <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
+                    <h4>Latest Blog Posts</h4>
+                    <h2>This Is All About <span>Foods</span></h2>
+                    <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
+                </div>
+                <div class="row blog-posts">
+                    <div class="col-lg-4 col-md-6 sm-padding wow fadeInUp" data-wow-delay="200ms">
+                        <div class="post-card">
+                            <div class="post-thumb">
+                                <img src="assets/img/post-1.jpg" alt="img">
+                                <div class="category"><a href="#">Pizza</a></div>
+                            </div>
+                            <div class="post-content">
+                                <ul class="post-meta">
+                                   <li><i class="far fa-calendar-alt"></i><a href="#">Jan 01 2021</a></li>
+                                   <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li>
+                                </ul>
+                                <h3><a href="blog-details.html">What Do You Think About Cheese Pizza Recipes?</a></h3>
+                                <p>Financial experts support or help you to to find out which way you can raise your funds more...</p>
+                                <a href="blog-details.html" class="read-more">Read More <i class="las la-long-arrow-alt-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 sm-padding wow fadeInUp" data-wow-delay="400ms">
+                        <div class="post-card">
+                            <div class="post-thumb">
+                                <img src="assets/img/post-2.jpg" alt="img">
+                                <div class="category"><a href="#">Burger</a></div>
+                            </div>
+                            <div class="post-content">
+                               <ul class="post-meta">
+                                   <li><i class="far fa-calendar-alt"></i><a href="#">Jan 01 2021</a></li>
+                                   <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li>
+                                </ul>
+                                <h3><a href="blog-details.html">Making Chicken Strips With New Delicious Ingridents.</a></h3>
+                                <p>Financial experts support or help you to to find out which way you can raise your funds more...</p>
+                                <a href="blog-details.html" class="read-more">Read More <i class="las la-long-arrow-alt-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 sm-padding wow fadeInUp" data-wow-delay="600ms">
+                        <div class="post-card">
+                            <div class="post-thumb">
+                                <img src="assets/img/post-3.jpg" alt="img">
+                                <div class="category"><a href="#">Chicken</a></div>
+                            </div>
+                            <div class="post-content">
+                               <ul class="post-meta">
+                                   <li><i class="far fa-calendar-alt"></i><a href="#">Jan 01 2021</a></li>
+                                   <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li>
+                                </ul>
+                                <h3><a href="blog-details.html">Innovative Hot Chessyraw Pasta Make Creator Fact.</a></h3>
+                                <p>Financial experts support or help you to to find out which way you can raise your funds more...</p>
+                                <a href="blog-details.html" class="read-more">Read More <i class="las la-long-arrow-alt-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.blog-section -->
+
+        <footer class="footer-section">
+            <div class="footer-top">
+                <div class="footer-illustration"></div>
+                <div class="running-cycle"><div></div></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6 sm-padding">
+                            <div class="footer-widget">
+                                <a class="logo" href="#"><img src="assets/img/logo-dark.png" alt="img"></a>
+                                <p>Financial experts support or help you to to find out which way you can raise your funds more.</p>
+                                <ul class="footer-social">
+                                    <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
                                 </ul>
                             </div>
-                            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin-medium-top"></ul>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-blog">
-                <div class="uk-section uk-container">
-                    <div class="section-title section-title--center wave burger">
-                        <h3 class="uk-h3">@lang('general.News Blog Articles')</h3>
-                    </div>
-
-                    <div class="section-content">
-                        <div class="uk-margin-medium-top" data-uk-slider>
-                            <div class="uk-position-relative">
-                                <div class="uk-slider-container">
-                                    <ul class="uk-slider-items uk-grid uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-3@xl uk-child-width-1-3@xl">
-                                        @if(isset($menu['news']))
-                                            @foreach($menu['news'] as $new)
-
-                                                <li>
-                                                    <div class="article-card">
-
-                                                        <div class="article-card__media"><a
-                                                                href="{{route('get.new',$new->id)}}"><img 
-                                                                    style="height:268px;"
-                                                                    src="{{$new->image}}"
-                                                                    alt="Soft &amp; fresh-baked chocolate cookie with chunks"></a>
-                                                        </div>
-                                                        <div class="article-card__body" style="height:370px;">
-                                                            <div class="article-card__info"><span
-                                                                    class="article-card__date">{{$new ->created_at}}</span>
-                                                                {{--                                                        <span  class="article-card__comments">210 </span>--}}
-                                                            </div>
-                                                            <div class="article-card__title">
-                                                                <a class="line-clamp2" href="{{route('get.new',$new->id)}}">{{$new['title_'.app()->getLocale()]}}</a>
-                                                            </div>
-                                                            <div class="article-card__intro">
-                                                                <div class="line-clamp5">{{$new['description_'.app()->getLocale()]}}</div>
-                                                            </div>
-                                                            <div class="article-card__more" style="position: absolute;bottom:35px;">
-                                                                <a class="uk-button-link"
-                                                                   href="{{route('get.new',$new->id)}}"
-                                                                   data-uk-icon="arrow-right">@lang('general.Read More')</a>
-                                                           </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                            @endforeach
-                                        @endif
-                                    </ul>
-
-                                </div>
-                                <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin-medium-top"></ul>
+                        <div class="col-lg-2 col-sm-6 sm-padding">
+                            <div class="footer-widget">
+                                <h3>Contact Info <span></span></h3>
+                                <ul class="contact-info-list">
+                                    <li>+1 (062) 109-9222</li>
+                                    <li>Info@YourGmail24.com</li>
+                                    <li>153 Williamson Plaza, <br> Maggieberg, MT 09514</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 sm-padding">
+                            <div class="footer-widget ml-25">
+                                <h3>Opening Hours <span></span></h3>
+                                <ul class="opening-hours-list">
+                                    <li>Monday-Friday: 08:00-22:00</li>
+                                    <li>Tuesday4PM:  Till Mid Night</li>
+                                    <li>Saturday: 10:00-16:00</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 sm-padding">
+                            <div class="footer-widget booking-form">
+                                <h3>Book a Table <span></span></h3>
+                                <form action="booking-form.php" method="post" id="ajax_booking_form" class="form-horizontal">
+                                    <div class="booking-form-group">
+                                        <div class="form-padding">
+                                            <input type="text" id="b_name" name="b_name" class="form-control" placeholder="Your Name" required>
+                                        </div>
+                                        <div class="form-padding">
+                                            <input type="email" id="b_email" name="b_email" class="form-control" placeholder="Email" required>
+                                        </div>
+                                        <div class="form-padding">
+                                            <select class="form-select" id="b_person" name="b_person">
+                                              <option selected>Person</option>
+                                              <option>2 Person</option>
+                                              <option>3 Person</option>
+                                              <option>4 Person</option>
+                                              <option>5 Person</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-padding">
+                                            <input class="form-control" type="date" id="b_date" name="b_date">
+                                        </div>
+                                        <div class="form-padding">
+                                            <textarea id="b_message" name="b_message" cols="30" rows="5" class="form-control message" placeholder="Message" required></textarea>
+                                        </div>
+                                    </div>
+                                    <button id="b_submit" class="book-btn" type="submit">Book a Table</button>
+                                    <div id="b-form-messages" class="alert" role="alert"></div>
+                                </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div>
+            </div><!--/.footer-top -->
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="copyright-wrap">
+                        <p>© <span id="currentYear"></span> ThemeEaster All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div><!--/.footer-bottom -->
+        </footer><!--/.footer-section -->
 
-        </main>
-    @endsection
+		<div id="scrollup">
+            <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
+        </div>
 
-    @section('scripts')
-        <script>
-            $('.cat').click(function () {
-                $('img.cat').removeClass('categoriesActive');
-                $(this).addClass('categoriesActive');
-                var styleOffer = '';
-                var offerPrice = '';
-                var doughTypes = '';
-                $.ajax({
-                    type:'post',
-                    url:'{{url('api/menu/categories/')}}' + '/' + $(this).attr('id') + '/items',
-                    data:{
-                        "_token": "{{ csrf_token() }}",
-                        'branch_id': {{(session()->has('branch_id'))? session()->get('branch_id'): 0}}
-                    },
-                    success:function (data){
-                        if(data.success === true)
-                        {
-                            $('.items').html('');
-                            $.each(data.data, function(index, item) {
-                                if(! item.is_hidden)
-                                {
-                                    styleOffer = '';
-                                    offerPrice = '';
-                                    doughTypes = '';
-                                    if(item.offer) {
-                                        styleOffer = 'style="text-decoration: line-through;font-size: 20px;"';
-                                        offerPrice = '<span style="font-size: 26px;color:#6dc405;text-decoration: none">' + (parseFloat(item['offer']['offer_price'])).toFixed(2) + '</span>';
-                                    }
-                                    $.each(item.dough_type, function(index2, dough) {
-                                        doughTypes+= '<li><label class="mb-0">';
-                                        if(index2 == 0){
-                                            doughTypes+= '<input type="radio" name="thickness-' + item.id + '" checked="checked" /><span>'+
-                                                @if(app()->getLocale() == 'ar')
-                                                    dough.name_ar +
-                                                @else
-                                                    dough.name_en +
-                                                @endif
-                                                    '</span></label></li>';
-                                        }
-                                        else {
-                                            doughTypes+= '<input type="radio" name="thickness-' + item.id + '" /><span>'+
-                                                @if(app()->getLocale() == 'ar')
-                                                    dough.name_ar +
-                                                @else
-                                                    dough.name_en +
-                                                @endif
-                                                    '</span></label></li>';
-                                        }
-                                    });
-                                    $('.items').append(
-                                        '<li>'+
-                                        '<div class="product-item shadow mb-5 rounded">'+
-                                        '<div class="product-item__box">'+
-
-                                        '<div class="product-item__intro">'+
-
-                                        '<div class="product-item__not-active">'+
-
-                                        '<div class="product-item__media">'+
-                                        '<a href="{{url('/item/')}}'+ '/' + item.category_id + '/' + item.id + '">'+
-                                        '<div class="uk-inline-clip p-4 uk-transition-toggle uk-light" style="background-color: #d6d6d6;">'+
-                                        '<img class="w-100 h-100" src="' + item.image + '" alt="Image"/>'+
-                                        '</div>'+
-                                        '</a>'+
-                                        '</div>'+
-
-                                        '<div class="product-item__title uk-text-truncate">'+
-                                        '<a href="{{url('/item/')}}'+ '/' + item.category_id + '/' + item.id + '">' +
-                                        @if(app()->getLocale() == 'ar')
-                                            item.name_ar +
-                                        @else
-                                            item.name_en +
-                                        @endif
-                                            '</a>'+
-                                        '</div>'+
-
-                                        '<div class="product-item__desc">'+
-                                        @if(app()->getLocale() == 'ar')
-                                            item.description_ar +
-                                        @else
-                                            item.description_en +
-                                        @endif
-                                            '</div>'+
-
-                                        '<div class="product-item__price">{{__('home.Calories')}}: ' + item.calories + '</div>'+
-
-                                        '<div class="product-item__select">'+
-                                        '<div class="select-box select-box--thickness">'+
-                                        '<ul>'+
-                                        doughTypes
-                                        +'</ul>'+
-                                        '</div>'+
-                                        '</div>'+
-
-                                        '</div>'+
-
-                                        '</div>'+
-
-                                        '<div class="product-item__info">'+
-                                        '<div class="product-item__price">'+
-                                        '<span>{{__('home.Price')}}: </span>'+
-                                        '<span class="value"'+ styleOffer + '>' + (parseFloat(item.price)).toFixed(2) + '</span>'+
-                                        offerPrice
-                                        + ' @lang('general.SR')'
-                                        +'</div>'+
-                                        '<div class="product-item__addcart">'+
-                                        '<a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="uk-button uk-button-default cart" href="{{url('/item/')}}'+ '/' + item.category_id + '/' + item.id + '">'+
-                                        @if(app()->getLocale() == 'ar')
-                                            '<span data-uk-icon="cart"></span> {{__('home.Add to Cart')}}'+
-                                        @else
-                                            '{{__('home.Add to Cart')}} <span data-uk-icon="cart"></span>'+
-                                        @endif
-                                            '</a>'+
-                                        '</div>'+
-                                        '</div>'+
-                                        '</div>'+
-                                        '</div>'+
-                                        '</li>');
-
-                                }
-                            });
-                        }//end success
-                    },
-                    error:function (reject){
-                    }
-                })
-            });
-        </script>
 @endsection

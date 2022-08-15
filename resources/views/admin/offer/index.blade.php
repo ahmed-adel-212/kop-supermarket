@@ -40,25 +40,6 @@
               <td>{{$offer->service_type}}</td>
               <td style="max-width:50px" class="text-center"><img class="img-fluid" src="{{$offer->image}}"/></td>
               <td>
-                @unless ($offer->main)
-                <form
-                      action="{{ route('admin.offer.main', $offer->id) }}"
-                      method="POST"
-                      id="add-to-main" class="d-inline-block">
-                      @csrf
-                      @method('PUT')
-                      <button type="submit" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-home"></i></button>
-                  </form>
-                @else
-                <form
-                      action="href="{{ route('admin.offer.unmain', $offer->id) }}""
-                      method="POST"
-                      id="remove-from-main" class='d-inline-block'>
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger text-white btn-circle btn-sm" title="edit"><i class="fa fa-home"></i></button>
-                  </form>
-                @endunless
                   <a href="{{ route('admin.offer.edit', $offer->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
                   <a onclick="deleteOffer('{{ 'delete-offer-' . $offer->id }}')"
                      href="#" class="btn btn-danger btn-circle btn-sm"

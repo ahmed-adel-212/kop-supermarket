@@ -198,9 +198,4 @@ return [
     "over_all" => "Over All",
     "to_pay" => "ToPay",
     'story' => 'Our Story',
-    'feat' => 'Feature',
-    'first' => "First Block",
-    'bg-st' => 'Block with Background and text at right',
-    'bg-nd' => 'Block with Background and text at left',
-    'emp' => 'Employee',
 ];
