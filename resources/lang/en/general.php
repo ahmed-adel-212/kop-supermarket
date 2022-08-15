@@ -216,4 +216,7 @@ return [
     'with-bg' => 'Section with Background Image',
     'blog_title' => 'Read our Latest News <br> Findout More about Us',
     'recent' => 'Recent Articles',
+    'prev' => 'Previous',
+    'next' => 'Next',
+    'Archives' => 'Archives'
 ];
