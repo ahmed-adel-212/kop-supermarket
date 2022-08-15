@@ -9,6 +9,16 @@
 
     @section('content')
         <main class="page-main">
+            <section class="page-header" style="background-image: url({{ asset('website-assets/img/pages/contacts/latest.jpg') }}">
+                <div class="bg-shape grey"></div>
+                <div class="container">
+                    <div class="page-header-content">
+                        <h4>{{ __('general.Latest News') }}</h4>
+                        <h2>{!! __('general.blog_title') !!}</h2>
+                    </div>
+                </div>
+            </section><!--/.page-header-->
+
             <div class="section-first-screen">
                 <div class="first-screen__bg"
                      style="background-image: url('{{$article->image}}')"></div>
