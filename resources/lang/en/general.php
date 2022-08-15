@@ -218,5 +218,7 @@ return [
     'recent' => 'Recent Articles',
     'prev' => 'Previous',
     'next' => 'Next',
-    'Archives' => 'Archives'
+    'Archives' => 'Archives',
+    'health_title' => 'Read our Food Health information <br> and Learn More',
+    'Follow Us' => 'Follow Us',
 ];

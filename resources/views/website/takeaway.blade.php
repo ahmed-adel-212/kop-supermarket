@@ -10,6 +10,7 @@
             color: #e23744 !important;
             text-decoration: none !important;
         }
+
         .card.active .card-title {
             color: #fff;
         }
@@ -17,8 +18,27 @@
         .card.active .card-text.text-muted {
             color: #c9c9c9 !important;
         }
+
         .card.active .text-info {
             color: #95f1ff !important;
+        }
+
+        .branch {
+            padding-top: .5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all ease-in .2s;
+        }
+
+        .branch:hover {
+
+            box-shadow: 0 0 10px #000;
+
+        }
+
+        .branch.active {
+            background-color: #ff9d2d;
+            color: #fff;
         }
     </style>
 @endsection
@@ -36,64 +56,60 @@
                         <div class="py-2">
                             <h2 class="mb-3 mt-0">{{ __('general.Branches') }}</h2>
                             <div class="row">
-                                @foreach ($branches as $branche)
-                                    {{-- <div class="custom-control col-md-4 custom-radio mb-3 p-2 position-relative border-custom-radio">
-                                <input type="radio" id="customRadioInline{{$branche->id}}" name="customRadioInline"
-                                       class="custom-control-input hidden" @if (session()->has('branch_id')) {{(session()->get('branch_id') == $branche->id)? "checked" : "" }} @endif>
-                                <label class="custom-control-label w-100 h-100" for="customRadioInline{{$branche->id}}"> --}}
-                                    {{-- <a href="{{route('takeaway.branch',[$branche->id,'takeaway'])}}" class="text-dark">
-                                        <div class="w-100 h-100">
-                                            <div class="bg-white shadow-sm rounded p-4 w-100 h-100">
-                                                <p class="h6 mb-3"><span class="feather-home"></span><span
-                                                        class="ml-3 font-weight-bold">{{(app()->getLocale() == 'ar')? $branche->name_ar : $branche->name_en }}</span></p>
-                                                <p class="mb-4 text-gray-light">{{(app()->getLocale() == 'ar')? $branche->address_description_ar .' '. $branche->city->name_ar .' '. $branche->area->name_ar : $branche->address_description_en .' '. $branche->city->name_en .' '. $branche->area->name_en }}</p>
-                                                @if ($branche->working_hours->count() > 0)
-                                                    @foreach ($branche->working_hours as $working_hour)
-                                                        <p class="m-1" style="font-size: 14px;"><span
-                                                                class="font-weight-bold">Working hours &nbsp;</span><span
-                                                                class="text-info">From: {{$working_hour->time_from}}&nbsp;&nbsp; To: {{$working_hour->time_to}}</span>
-                                                        </p>
-                                                    @endforeach
-                                                @endif
+                                <section class="branches-section bg-grey padding">
+                                    <div class="bg-shape white"></div>
+                                    <div class="container">
+                                        <div class="row branches-lists">
+                                            @foreach ($branches as $branch)
+                                                <div class="col-lg-3 col-sm-6 sm-padding my-3 branch {{ session()->get('branch_id') === $branch->id ? 'text-white active' : '' }}"
+                                                    data-href="{{ route('takeaway.branch', [$branch->id, 'takeaway']) }}">
+                                                    <div class="branches-list">
+                                                        <h3>
+                                                            {{ $branch['name_' . app()->getLocale()] }}
+                                                        </h3>
+                                                        <ul>
+                                                            <li>
+                                                                {{ app()->getLocale() === 'ar' ? $branch->address_description : $branch->address_description_en }}
+                                                            </li>
+                                                            <li><a href="tel:{{ $branch->first_phone }}">
+                                                                    {{ $branch->first_phone }}</a></li>
+                                                            <li><a
+                                                                    href="mailto:{{ $branch->email }}">{{ $branch->email }}</a>
+                                                            </li>
+                                                            <div class="btn-group" role="group"
+                                                                aria-label="Basic example">
+                                                                <button type="button"
+                                                                    class="btn btn-sm @if (in_array('delivery', explode(',', $branch->service_type))) btn-secondary @else btn-danger @endif">
+                                                                    {{ __('general.Delivery') }}
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-sm @if (in_array('takeaway', explode(',', $branch->service_type))) btn-secondary @else btn-danger @endif">
+                                                                    {{ __('general.Take away') }}
+                                                                </button>
+                                                            </div>
+                                                            <div class="">
+                                                                <i class="fa fa-clock"></i>
+                                                                {{ __('general.Working Hours') }}:
+                                                            </div>
+                                                            @foreach ($branch->working_hours as $working_hour)
+                                                                <li class="" style="font-size: 14px;">
+                                                                    <div class="w-100 text-center">
+                                                                        <span
+                                                                            class=" text-center">{{ __('general.From') }}:
+                                                                            {{ $working_hour->time_from }}&nbsp;&nbsp;
+                                                                            {{ __('general.To') }}:
+                                                                            {{ $working_hour->time_to }}</span>
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
 
-                                            </div>
-                                        </div>
-                                    </a> --}}
-                                    <div class="col-4">
-                                        <a class="card mb-3 {{ session()->get('branch_id') == $branche->id ? 'text-white bg-primary active' : '' }}"
-                                            href="{{ route('takeaway.branch', [$branche->id, 'takeaway']) }}"
-                                            style="max-width: 18rem;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <i class="fa fa-home"></i>
-                                                    {{ app()->getLocale() == 'ar' ? $branche->name_ar : $branche->name_en }}
-                                                </h5>
-                                                <p class="card-text text-muted" style="color">
-                                                    {{ app()->getLocale() == 'ar' ? $branche->address_description_ar . ' ' . $branche->city->name_ar . ' ' . $branche->area->name_ar : $branche->address_description_en . ' ' . $branche->city->name_en . ' ' . $branche->area->name_en }}
-                                                </p>
-                                            </div>
-                                            @if ($branche->working_hours->count() > 0)
-                                                <div class="card-footer p-1">
-                                                    @foreach ($branche->working_hours as $working_hour)
-                                                        <p class="m-1" style="font-size: 14px;">
-                                                            <i class="fa fa-clock"></i>
-                                                            {{ __('general.Working Hours') }}
-                                                            <br>
-                                                        <div class="w-100 text-center">
-                                                            <span class="text-info text-center">{{ __('general.From') }}:
-                                                                {{ $working_hour->time_from }}&nbsp;&nbsp;
-                                                                {{ __('general.To') }}:
-                                                                {{ $working_hour->time_to }}</span>
-                                                        </div>
-                                                        </p>
-                                                    @endforeach
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            @endif
-                                        </a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                    {{-- </label>
-                            </div> --}}
-                                @endforeach
+                                </section>
                             </div>
                         </div>
                     </div>
@@ -103,4 +119,13 @@
     @endsection
 
     @section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.branch').click(function() {
+                const href = $(this).data('href');
+
+                window.location.href = href;
+            });
+        });
+    </script>
     @endsection
