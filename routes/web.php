@@ -36,6 +36,8 @@ Route::group([
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/', 'HomeController@index')->name('dashboard');
 
+        Route::resource('hero', 'HeroController');
+
         Route::resource('customer', 'CustomerController');
         Route::resource('category', 'CategoryController');
 
