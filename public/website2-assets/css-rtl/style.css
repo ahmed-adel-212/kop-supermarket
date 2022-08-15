@@ -1,0 +1,117 @@
+.uk-navbar-right {
+    margin-right: auto;
+    margin-left: unset;
+}
+.block-with-phone svg {
+    margin-right: unset;
+    margin-left: 15px;
+}
+.other-links-list {
+    margin: 0 0 0 30px;
+}
+.other-links-list li + li {
+    margin-right: 15px;
+    margin-left: unset;
+}
+.uk-margin-small-left {
+    margin-right: 10px!important;
+    margin-left: unset;
+}
+.page-header__top .uk-navbar-left .uk-navbar-nav {
+    margin-right: 0px;
+    margin-left: unset;
+}
+.page-header__top .uk-navbar-right .uk-navbar-nav {
+    margin-left: -50px;
+}
+.section-steps .section-title::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -85px;
+    right: unset;
+    width: 85px;
+    height: 109px;
+    /*background-image: url(../img/decor/chilli.png);*/
+    content: '';
+}
+/*.step-item:not(.step-item--4) .step-item__icon::before {*/
+/*    display: block;*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 60px;*/
+/*    right: unset;*/
+/*    width: 21px;*/
+/*    height: 36px;*/
+/*    margin-top: -18px;*/
+/*    background-image: url(../img/decor/custome-arrow.svg);*/
+/*    content: '';*/
+/*}*/
+.login-page video {
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+}
+.ml-auto, .mx-auto {
+    margin-left: unset!important;
+}
+.btn-primary {
+    border-color: #ff0000!important;
+    background-color: #ff0000!important;
+}
+.btn-lg {
+    font-size: 16px;
+    padding: 16px 16px;
+    font-weight: 600;
+}
+p {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+input{
+    text-align: right;
+}
+.offset-2 {
+    margin-right: 16.666667%;
+    margin-left: unset;
+}
+h3{
+    margin-bottom: 20px;
+}
+h6, h4, .form-group{
+    text-align: right;
+}
+.col-md-5{
+    padding-right: 8px;
+    padding-left: 8px;
+}
+#myTab{
+    padding: 0;
+}
+.btn-outline-primary {
+    color: #ff0000;
+    border-color: #ff0000;
+}
+.offset-9 {
+    margin-left: unset;
+}
+.modal-header .close {
+    padding: 1rem 1rem;
+    margin: -1rem auto -1rem -1rem !important;
+}
+.counter{
+    margin-left: 10px;
+}
+.page-footer__contacts > * + * {
+    margin-left: unset;
+    margin-right: 5.41667vw;
+}
+.section-title span::after {
+    margin: 5px 10px 0 0;
+}
+.price-item .value {
+    margin-left: unset;
+    margin-right: 10px;
+}

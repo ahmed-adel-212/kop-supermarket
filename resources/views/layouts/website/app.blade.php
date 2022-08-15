@@ -92,7 +92,7 @@
                                                     @endif
 
                                                     <div class="media-body">
-                                                        <h6 class="mb-1 text-secondary">
+                                                        <h6 class="mb-1 text-secondary"> 
 
                                                             {{$address ->name}}
                                                             , {{(app()->getLocale() == 'ar') ?$address->city->name_ar:$address->city->name_en}}
