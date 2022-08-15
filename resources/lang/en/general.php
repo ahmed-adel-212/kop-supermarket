@@ -198,4 +198,8 @@ return [
     "over_all" => "Over All",
     "to_pay" => "ToPay",
     'story' => 'Our Story',
+    'do_you_have' => 'Do You Have Any Questions?',
+    'send_us' => 'Get in touch to discuss your employee wellbeing needs today. Please give us a call,
+    drop us an email or fill out the contact form.',
+    'drop_us' => 'Drop Us A Line',
 ];
