@@ -33,4 +33,4 @@
         crossorigin="anonymous"></script>
 @endif
 
-<script src="{{asset('website-assets/js/main.js')}}"></script>
+{{-- <script src="{{asset('website-assets/js/main.js')}}"></script> --}}

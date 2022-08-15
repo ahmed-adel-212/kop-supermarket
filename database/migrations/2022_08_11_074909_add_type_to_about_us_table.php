@@ -14,7 +14,7 @@ class AddTypeToAboutUsTable extends Migration
     public function up()
     {
         Schema::table('about_us', function (Blueprint $table) {
-            $table->enum('type', ['first', 'bg-st', 'feat', 'bg-nd', 'emp']);
+            $table->enum('type', ['first', 'bg-st', 'feat', 'bg-nd', 'emp', 'with-bg']);
         });
     }
 

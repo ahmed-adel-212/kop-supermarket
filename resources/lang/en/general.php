@@ -202,4 +202,16 @@ return [
     'send_us' => 'Get in touch to discuss your employee wellbeing needs today. Please give us a call,
     drop us an email or fill out the contact form.',
     'drop_us' => 'Drop Us A Line',
+    'about' => [
+        'exp' => 'Experience The Taste <br>of Italian Food.',
+        'food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+        'team' => 'Team Mebmers',
+        'cook' => 'They Will <span>Cook</span> For You'
+    ],
+    'first' => 'Section With Video',
+    'bg-st' => 'Section with Image at end',
+    'bg-nd' => 'Section with Image at start',
+    'feat' => 'Section of Features',
+    'emp' => 'Section of Employees',
+    'with-bg' => 'Section with Background Image',
 ];

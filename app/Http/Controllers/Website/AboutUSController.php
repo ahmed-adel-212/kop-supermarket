@@ -20,8 +20,8 @@ class AboutUSController extends Controller
         // }
 
         $sections = AboutUs::all();
-        $galleries = Gallery::limit(6)->get();
+        // $galleries = Gallery::limit(6)->get();
 
-        return view('website.aboutUS',compact(['sections', 'galleries']));
+        return view('website.aboutUS',compact(['sections']));
     }
 }
