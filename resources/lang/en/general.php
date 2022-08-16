@@ -226,5 +226,6 @@ return [
     'profile_photo' => 'Profile Photo',
     'user_updated' => 'Account Details Updated Successfuly',
     'add_address' => 'you don`t have any addresses, you can start by adding new one',
-    'find_your_orders' => 'Find your Orders <br> Reorder or Check Details'
+    'find_your_orders' => 'Find your Orders <br> Reorder or Check Details',
+    'order_details' => 'Order Details',
 ];

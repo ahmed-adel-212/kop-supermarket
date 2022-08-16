@@ -7,10 +7,10 @@
             <div class="bg-shape grey"></div>
             <div class="container">
                 <div class="page-header-content">
-                    <h4>
+                    <h4 class="text-white">
                         {{ __('general.Account') }}
                     </h4>
-                    <h2>
+                    <h2 class="text-warning">
                         {{ __('general.Manage account') }}
                     </h2>
                 </div>
