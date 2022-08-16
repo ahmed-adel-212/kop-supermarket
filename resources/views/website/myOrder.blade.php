@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') My Orders @endsection
+@section('title') {{__('general.My Orders')}} @endsection
 
 @section('styles')
     <style>
@@ -41,6 +41,22 @@
 
     @section('content')
         <main class="page-main">
+            <section class="page-header"
+            style="background-image: url({{ asset('website-assets/img/pages/home/careers.jpg') }})">
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                    <h4>
+                        {{ __('general.My Orders') }}
+                    </h4>
+                    <h2>
+                        {!! __('general.find_your_orders') !!}
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <!--/.page-header-->
+
             <div class="page-content">
 
                 <div class="uk-margin-small-top uk-container">
@@ -66,21 +82,21 @@
                                     style="    box-shadow: 0 .125rem .25rem rgba(0,0,0,.25)!important;">
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link border-0 text-dark py-3 active" id="completed-tab"
-                                           data-toggle="tab" href="#completed" role="tab" aria-controls="completed"
+                                           data-bs-toggle="tab" href="#completed" role="tab" aria-controls="completed"
                                            aria-selected="true">
-                                            <i class="feather-check @if(app()->getLocale() == 'en') mr-2 @else ml-2 @endif text-success mb-0"></i> {{__('general.Completed')}}
+                                            <i class="fas fa-check @if(app()->getLocale() == 'en') mr-2 @else ml-2 @endif text-success mb-0"></i> {{__('general.Completed')}}
                                         </a>
                                     </li>
                                     <li class="nav-item border-top" role="presentation">
-                                        <a class="nav-link border-0 text-dark py-3" id="progress-tab" data-toggle="tab"
+                                        <a class="nav-link border-0 text-dark py-3" id="progress-tab" data-bs-toggle="tab"
                                            href="#progress" role="tab" aria-controls="progress" aria-selected="false">
-                                            <i class="feather-clock mr-2 text-warning mb-0"></i> {{__('general.On Progress')}}
+                                            <i class="fas fa-clock mr-2 text-warning mb-0"></i> {{__('general.On Progress')}}
                                         </a>
                                     </li>
                                     <li class="nav-item border-top" role="presentation">
-                                        <a class="nav-link border-0 text-dark py-3" id="canceled-tab" data-toggle="tab"
+                                        <a class="nav-link border-0 text-dark py-3" id="canceled-tab" data-bs-toggle="tab"
                                            href="#canceled" role="tab" aria-controls="canceled" aria-selected="false">
-                                            <i class="feather-x-circle mr-2 text-danger mb-0"></i> {{__('general.Canceled')}}
+                                            <i class="fas fa-times-circle mr-2 text-danger mb-0"></i> {{__('general.Canceled')}}
                                         </a>
                                     </li>
                                 </ul>
@@ -114,7 +130,7 @@
                                                                     {{__('general.Completed')}}</p>
                                                             </div>
                                                         </div>
-                                                        <div class="d-flex pt-3">
+                                                        <div class="d-flex pt-3 align-items-center justify-content-between">
                                                             <div class="text-muted m-0 small"
                                                                  style="padding: 8px; @if(app()->getLocale() == 'en') margin-right: auto!important; @else margin-left: auto!important; @endif">{{__('general.Total')}}
                                                                 :
@@ -124,14 +140,16 @@
                                                             <div class="text-right">
                                                                 @if(app()->getLocale() == 'en')
                                                                     <a href="{{route('order.details',[$co->id,'reorder'])}}"
-                                                                       class="btn btn-primary px-3">{{__('general.Reorder')}}</a>
+                                                                       class="btn bg-danger px-3 default-btn rounded">{{__('general.Reorder')}}<span></span></a>
                                                                     <a href="{{route('order.details',$co->id)}}"
-                                                                       class="btn btn-outline-primary px-3">{{__('general.Details')}}</a>
+                                                                       class="btn px-3 default-btn rounded">{{__('general.Details')}}
+                                                                    <span></span>
+                                                                    </a>
                                                                 @else
                                                                     <a href="{{route('order.details',$co->id)}}"
-                                                                       class="btn btn-outline-primary px-3">{{__('general.Details')}}</a>
+                                                                       class="btn px-3 default-btn">{{__('general.Details')}}</a>
                                                                     <a href="{{route('order.details',[$co->id,'reorder'])}}"
-                                                                       class="btn btn-primary px-3">{{__('general.Reorder')}}</a>
+                                                                       class="btn btn-outline-primary text-white px-3 default-btn">{{__('general.Reorder')}}</a>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -170,12 +188,14 @@
                                                                 <p class="mb-0">{{$pe->items->count()}}
                                                                     {{__('general.Orders')}}</p>
                                                             </div>
-                                                            <div class="ml-auto">
-                                                                <p class="bg-warning text-white py-1 px-2 rounded small mb-1">
-                                                                    {{__('general.Pending')}}</p>
+                                                            <div
+                                                                style="@if(app()->getLocale() == 'en') margin-left: auto!important; @else margin-right: auto!important;  @endif">
+                                                                <p class="bg-success text-white py-1 px-2 rounded small mb-1">
+                                                                    {{__('general.Pending')}}
+                                                                </p>
                                                             </div>
                                                         </div>
-                                                        <div class="d-flex pt-3">
+                                                        <div class="d-flex pt-3 align-items-center justify-content-between">
                                                             <div class="text-muted m-0 mr-auto mr-3 small"
                                                                  style="padding: 8px;">{{__('general.Total')}}:
                                                                 <span
@@ -219,12 +239,14 @@
                                                                 <p class="mb-0 font-weight-bold">{{__('general.ORDER')}} {{$index +1}}</p>
                                                                 <p class="mb-0">{{$ca->items->count()}} {{__('general.Orders')}}</p>
                                                             </div>
-                                                            <div class="ml-auto">
-                                                                <p class="bg-danger text-white py-1 px-2 rounded small mb-1">
-                                                                    {{__('general.Canceled')}}</p>
+                                                            <div
+                                                                style="@if(app()->getLocale() == 'en') margin-left: auto!important; @else margin-right: auto!important;  @endif">
+                                                                <p class="bg-success text-white py-1 px-2 rounded small mb-1">
+                                                                    {{__('general.Canceled')}}
+                                                                </p>
                                                             </div>
                                                         </div>
-                                                        <div class="d-flex pt-3">
+                                                        <div class="d-flex pt-3 align-items-center justify-content-between">
                                                             <div class="text-muted m-0 mr-auto mr-3 small"
                                                                  style="padding: 8px;">{{__('general.Total')}}:
                                                                 <span
