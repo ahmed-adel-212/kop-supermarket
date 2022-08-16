@@ -10,12 +10,14 @@ class HelperController extends BaseController
 
     public function getCities() 
     {
-        $cities = City::get();
+        $cities = City::all();
         return $this->sendResponse($cities, 'test');
     }
 
-    public function getAreas(Request $request, City $city) 
+    public function getAreas(Request $request, int $city) 
     {
+        $city = City::findOrFail($city);
+        $city->loadMissing('areas');
         $areas = $city->areas;
         return $areas;
     }

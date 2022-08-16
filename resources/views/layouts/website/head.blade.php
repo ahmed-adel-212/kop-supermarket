@@ -75,13 +75,13 @@
 
     @yield('styles')
     <style>
-        @font-face {
+        /* @font-face {
           font-family: sans-arab-bold;
           src: url({{asset('fonts/TheSans-bold.otf')}});
         }
         *{
             font-family: sans-arab-bold !important;
-        }
+        } */
         body{
             overflow-x: hidden;
         }
@@ -159,6 +159,9 @@
         }
         .uk-slidenav-previous, .uk-slidenav-next{
             border-radius: 50%!important;
+        }
+        .select2.select2-container {
+            width: 100% !important;
         }
     </style>
     @if(app()->getLocale() == 'ar')

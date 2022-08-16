@@ -170,8 +170,8 @@ return [
     'sorry there is no branch cover this area' => 'sorry there is no branch cover this area',
     'Your cart is currently empty.' => 'Your cart is currently empty.',
     'Return to Shop' => 'Return to Shop',
-    'Address been Add!' => 'Address been Add!',
-    'Address Can Not be Add!' => 'Address Can Not be Add!',
+    'Address been Add!' => 'Address saved successfully',
+    'Address Can Not be Add!' => 'Address Can Not be saved!',
     'Your order been submitted successfully' => 'Your order been submitted successfully',
     'Confirm Password' => 'Confirm Password',
     'New Password' => 'New Password',
@@ -225,4 +225,5 @@ return [
     'Age' => 'Age',
     'profile_photo' => 'Profile Photo',
     'user_updated' => 'Account Details Updated Successfuly',
+    'add_address' => 'you don`t have any addresses, you can start by adding new one'
 ];

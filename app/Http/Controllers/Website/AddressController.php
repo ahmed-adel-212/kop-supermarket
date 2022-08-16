@@ -29,7 +29,7 @@ class AddressController extends Controller
 
         $pageName = request()->routeIs('profile.address') ? 'website.address' : 'website.profile';
 
-        return view($pageName, compact(['addresses', 'points', 'cities']));
+        return view($pageName, compact(['addresses', 'points']));
     }
 
     public function delete(Address $address)
@@ -37,10 +37,10 @@ class AddressController extends Controller
         $request = new \Illuminate\Http\Request();
         $return = (app(\App\Http\Controllers\Api\AddressesController::class)->destroy($address, $request))->getOriginalContent();
         if ($return['success'] == 'success') {
-            return redirect()->route('profile')->with('success', __('general.address deleted successfully'));
+            return back()->with('success', __('general.address deleted successfully'));
         }
         if ($return['success'] == false) {
-            return redirect()->route('profile')->with('error', __('general.you can\'t delete this address'));
+            return back()->with('error', __('general.you can\'t delete this address'));
 
         }
 
@@ -50,11 +50,11 @@ class AddressController extends Controller
     {
         $return = (app(\App\Http\Controllers\Api\AddressesController::class)->store($request))->getOriginalContent();
         if ($return['success'] == true) {
-            return redirect('profile')->with(['success' => __('general.Address been Add!')]);
+            return back()->with(['success' => __('general.Address been Add!')]);
 
         } else {
 
-            return redirect('profile')->with(['error' => __('general.Address Can Not be Add!')]);
+            return back()->with(['error' => __('general.Address Can Not be Add!')]);
         }
     }
 
@@ -64,15 +64,15 @@ class AddressController extends Controller
 
         $return = (app(\App\Http\Controllers\Api\AddressesController::class)->update($request, $address))->getOriginalContent();
         if ($return['success'] == true) {
-            session()->put(['success' => 'Address been Updated!']);
+            session()->put(['success' => __('general.Address been Add!')]);
 
-            return redirect()->route('profile');
+            return back();
         }
 
 
         if ($return['success'] == false) {
             $errorarray = [];
-            session()->put(['error' => 'Address Can Not be Updated!']);
+            session()->put(['error' => __('general.Address Can Not be Add!')]);
 
             if (array_key_exists('message', $return)) {
                 $errorarray['message'] = "Update Addresses Failed";
