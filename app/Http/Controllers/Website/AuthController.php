@@ -26,16 +26,18 @@ class AuthController extends Controller
     public function sign_up(Request $request)
     {
         
-       return $validator = Validator::make($request->all(), [
+    //    return $validator = Validator::make($request->all(), );
+    //     //, 'unique:users,first_phone'
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
+    //     }
+
+        $req = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'phone' => ['required']
         ]);
-        //, 'unique:users,first_phone'
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
-        }
         try {
             $name = explode(" ", $request->name);
             if (count($name) < 2) {
