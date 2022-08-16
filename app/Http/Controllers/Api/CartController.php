@@ -70,7 +70,7 @@ class CartController extends BaseController
 
         $deletedID = Auth::user()->carts()->where('id', $request->cart_id)
             ->select('id')->get();
-        $cart = Auth::user()->carts()->find($request->cart_id);
+        $cart = Auth::user()->carts()->findOrFail($request->cart_id);
         if($cart->offer_id){
             $offer = Offer::find($cart->offer_id);
             /* to delete offer(buy and get) package from cart */
@@ -99,7 +99,7 @@ class CartController extends BaseController
             return response()->json(['error'=>$validator->errors()], 401);
         }
 
-        Auth::user()->carts()->find($request->cart_id)->update(['quantity' => $request->quantity]);
+        Auth::user()->carts()->findOrFail($request->cart_id)->update(['quantity' => $request->quantity]);
 
         return $this->sendResponse(Auth::user()->carts()->with('item')->get(), 'User Cart Updated');
     }
