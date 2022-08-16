@@ -62,7 +62,7 @@ class FavouriteItemController extends Controller
     public function getFavourites()
     {
         return response()->json([
-            'items' => Auth::user()->favourites()->paginate(),
+            'items' => Auth::user()->favourites()->get(),
         ]);
     }
 }
