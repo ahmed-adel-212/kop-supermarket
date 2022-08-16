@@ -84,7 +84,7 @@ class FrontController extends BaseController
     //Jobs
     public function getAllJobs()
     {
-        $careers = Careers::all();
+        $careers = Careers::where('status', true)->get();
         return $this->sendResponse($careers, 'All Careers Info retrieved successfully.');
     }
 

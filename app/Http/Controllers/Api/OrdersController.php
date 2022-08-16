@@ -69,8 +69,7 @@ class OrdersController extends BaseController
 
     public function getUserOrders(Request $request)
     {
-
-        $orders = Auth::user()->orders()->with(['branch', 'items'])->with(['address' => function ($address) {
+        $orders = auth('api')->user()->orders()->with(['branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
         }])->orderBy('id', 'DESC')->paginate(10);
 
