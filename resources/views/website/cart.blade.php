@@ -40,9 +40,12 @@
             <div class="bg-shape grey"></div>
             <div class="container">
                 <div class="page-header-content">
-                    <h4>Cart Page</h4>
-                    <h2>Your Order Page</h2>
-                    <p>Food is any substance consumed to provide nutritional <br>support for an organism.</p>
+                    <h4>
+                        {{__('general.cart')}}
+                    </h4>
+                    <h2>
+                        {{__('general.my_cart')}}
+                    </h2>
                 </div>
             </div>
         </section><!--/.page-header-->
@@ -50,10 +53,10 @@
         <section class="cart-section bg-grey padding">
             <div class="container">
                 <div class="row cart-header">
-                    <div class="col-lg-6">Product</div>
-                    <div class="col-lg-3">Quantity</div>
-                    <div class="col-lg-1">Price</div>
-                    <div class="col-lg-1">Total</div>
+                    <div class="col-lg-6">{{__('general.Name')}}</div>
+                    <div class="col-lg-3">{{__('general.Quantity')}}</div>
+                    <div class="col-lg-1">{{__('menu.Price')}}</div>
+                    <div class="col-lg-1">{{__('general.Total')}}</div>
                     <div class="col-lg-1"></div>
                 </div>
                 @if($carts->count())
@@ -139,7 +142,7 @@
                                                         <input id="totalinput" hidden name="total"
                                                                value="{{$arr_check['total']}}"/></li>
 
-                            <li><p>Continue Shopping</p><button type="submit" class="default-btn"
+                            <li><p>{{__('general.continue')}}</p><button type="submit" class="default-btn"
                                                         style="border-radius: 5px;">
                                                     {{__('general.Checkout')}}<span></span></button></li>
                         </ul>
