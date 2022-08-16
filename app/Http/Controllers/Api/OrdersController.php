@@ -335,19 +335,38 @@ class OrdersController extends BaseController
             }
 
 
-            $orderData = [
-                "address_id" => $request->address_id,
-                "customer_id" => $request->customer_id, //$request->user()->id,
-                "branch_id" => $branch_id, //$branch->id,
-                "service_type" => $request->service_type,
-                "state" => 'pending',
-                "subtotal" => $request->subtotal,
-                "taxes" => $request->taxes,
-                "delivery_fees" => $request->delivery_fees,
-                "total" => $request->total,
-                "points_paid" => $request->points_paid,
-                'order_from' => 'mobile'
-            ];
+            // $orderData = [
+            //     "address_id" => $request->address_id,
+            //     "customer_id" => $request->customer_id, //$request->user()->id,
+            //     "branch_id" => $branch_id, //$branch->id,
+            //     "service_type" => $request->service_type,
+            //     "state" => 'pending',
+            //     "subtotal" => $request->subtotal,
+            //     "taxes" => $request->taxes,
+            //     "delivery_fees" => $request->delivery_fees,
+            //     "total" => $request->total,
+            //     "points_paid" => $request->points_paid,
+            //     'order_from' => 'mobile'
+            // ];
+
+        // apply 50% discount if this is first order
+        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
+
+        $orderData = [
+            "address_id" => $request->address_id,
+            "customer_id" => $request->customer_id, //$request->user()->id,
+            "branch_id" => $branch_id, //$branch->id,
+            "service_type" => $request->service_type,
+            "state" => 'pending',
+            "subtotal" => $request->subtotal,
+            "taxes" => $request->taxes,
+            "delivery_fees" => $request->delivery_fees,
+            "total" => $request->total,
+            "points_paid" => $request->points_paid,
+            'points' => $request->points,
+            'offer_value' =>$request->offer_value,
+            'order_from' => 'mobile'
+        ];
 
             $order = Order::create($orderData);
 
@@ -613,6 +632,7 @@ class OrdersController extends BaseController
             'service_type' => $order->service_type,
             'items' => $items,
             'customer_id' => $order->customer_id,
+            // 'offer_value' =>$request->offer_value,
         ]);
 
         // Get address or branch based on service_type
@@ -633,6 +653,7 @@ class OrdersController extends BaseController
         $taxes = $requestt->taxes;
         $reorder = compact('location', 'offers', 'noOffers', 'total', 'subtotal', 'taxes', 'delivery_fees');
         // confirm order
+        // show popup if offer have changes or price changed
         if ($request->has('confirm') && $request->input('confirm')) {
             $return = $this->store($requestt);
             if ($return->getOriginalContent()['success']) {
