@@ -24,6 +24,7 @@ class OrdersController extends Controller
 
     public function make_order(Request $request)
     {
+        // return $request;
         $items = auth()->user()->carts;
         foreach ($items as $item) {
             $item->extras = json_decode($item->extras);

@@ -170,7 +170,8 @@
                                 <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
                                 <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
                             </ul>
-                            <a href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn">Order Now <span></span></a>
+                           
+                            <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn">Order Now <span></span></a>
                         </div>
                     </div>
                 </div>
@@ -198,8 +199,13 @@
                            <!-- <div class="sale"></div> -->
                             <div class="product-thumb">
                                 <img src="{{$dealItem->image}}" alt="food">
-                                <div><a href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
-                            </div>
+                                <div>
+                                @auth @if(!session()->has('branch_id'))
+                                    <a data-toggle="modal" data-target="#service-modal" href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
+                                    @else
+                                    <a  href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
+                                  @endif  @endauth
+                                </div>
                             <div class="food-info">
                                <ul class="ratting">
                                    <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
@@ -230,7 +236,12 @@
                         <div class="content-info">
                         <h2>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][1]->title_ar:$menu['main_offer'][1]->title}}</h2>
                             <p>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][1]->description_ar:$menu['main_offer'][1]->description}}</p>
-                            <a href="{{route('offer.item',$menu['main_offer'][1]->id)}}" class="default-btn">Order Now <span></span></a>
+                            @auth @if(!session()->has('branch_id'))
+                            <a  data-toggle="modal" data-target="#service-modal"  href="{{route('offer.item',$menu['main_offer'][1]->id)}}"  class="default-btn cart">Order Now <span></span></a>
+                            @else
+                            <a href="{{route('offer.item',$menu['main_offer'][1]->id)}}"  class="default-btn">Order Now <span></span></a>
+                            @endif
+                            @endauth
                         </div>
                     </div>
                     <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
@@ -256,11 +267,87 @@
                     </div>
                 </div>
             </div>
-        </section><!--/.content-section-->
+        </section>
+        <!--/.content-section-->
 
        
-       
+        <section class="delivery-section padding">
+           <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
+                        <div class="delivery-info">
+                            <h2>A Moments Of Delivered <br> On <span>Right Time</span> &amp; Place</h2>
+                            <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
+                            <div class="order-content">
+                               <a href="{{route('menu.page')}}" class="default-btn">{{ __('header.Menu')}}<span></span></a>
+                                <h3><span>Order Number</span>012-345-6789</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                       <div class="delivery-boy-wrap">
+                           <img class="delivery" src="{{asset('website2-assets/img/cloud.png')}}" alt="img">
+                            <div class="delivery-boy"></div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/.delivery-section-->
 
+        <section class="banner-section padding">
+           <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="row banner-wrapper">
+                   <div class="col-md-6 wow fadeInUp" data-wow-delay="200ms">
+                       <div class="banner-item">
+                            <img src="assets/img/banner01.jpg" alt="banner">
+                            <div class="banner-content">
+                                <h3>-50% Off Now!</h3>
+                                <h2>Discount For Delicious <br>Tasty Burgers!</h2>
+                                <p>Sale off 50% only this week</p>
+                                <a href="shop.html" class="order-btn">Order Now</a>
+                            </div>
+                        </div>
+                   </div>
+                    <div class="col-md-6">
+                       <div class="row">
+                           <div class="col-md-6 wow fadeInUp" data-wow-delay="400ms">
+                               <div class="banner-item">
+                                    <img src="assets/img/banner02.jpg" alt="banner">
+                                    <div class="banner-content">
+                                        <h3>Delicious <br> Pizza</h3>
+                                        <p>50% off Now</p>
+                                        <a href="shop.html" class="order-btn">Order Now</a>
+                                    </div>
+                                </div>
+                           </div>
+                           <div class="col-md-6 wow fadeInUp" data-wow-delay="600ms">
+                               <div class="banner-item">
+                                    <img src="assets/img/banner03.jpg" alt="banner">
+                                    <div class="banner-content">
+                                        <h3>American <br>Burgers</h3>
+                                        <p>50% off Now</p>
+                                        <a href="shop.html" class="order-btn">Order Now</a>
+                                    </div>
+                                </div>
+                           </div>
+                           <div class="col-md-12 wow fadeInUp" data-wow-delay="800ms">
+                               <div class="banner-item">
+                                    <img src="assets/img/banner04.jpg" alt="banner">
+                                    <div class="banner-content">
+                                        <h3>Tasty Buzzed <br>Pizza</h3>
+                                        <p>Sale off 50% only this week</p>
+                                        <a href="shop.html" class="order-btn">Order Now</a>
+                                    </div>
+                                </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--/.banner-section-->
+<!-- 
        
  @if(isset($menu['offers']))
         <section class="banner-section padding">
@@ -286,8 +373,8 @@
                  </div> 
                 </div>
             </div>
-        </section><!--/.banner-section-->
-@endif
+        </section>
+@endif -->
 
         <section class="blog-section bg-grey padding">
            <div class="bg-shape white"></div>
@@ -300,7 +387,7 @@
                 <div class="row blog-posts">
                 @if(isset($menu['news']))
                     @foreach($menu['news'] as $new)
-                    <div class="col-lg-4 col-md-6 sm-padding wow fadeInUp" data-wow-delay="200ms">
+                    <div class="col-lg-4 col-md-6 sm-padding wow fadeInUp" style="margin-bottom: 2%;" data-wow-delay="200ms">
                         <div class="post-card">
                             <div class="post-thumb">
                                 <img src="{{$new->image}}" alt="img">

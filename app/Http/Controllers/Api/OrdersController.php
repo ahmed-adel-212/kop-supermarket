@@ -866,6 +866,7 @@ class OrdersController extends BaseController
     }
     public function today_orders(Request $request, OrderFilters $filters)
     {
+        
         $orders = Order::filter($filters);
 
         $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
@@ -876,7 +877,7 @@ class OrdersController extends BaseController
 
         $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
-        }])->whereDate('created_at', \Carbon\Carbon::today())->orderBy('id', 'DESC')->paginate(10);
+        }])->whereRaw('Date(created_at) >= CURDATE()')->orderBy('id', 'DESC')->paginate(10);
 
  
         foreach ($orders as $order) {
