@@ -111,7 +111,7 @@
 
                                                 <div class="pb-3">
                                                     <div class="p-3 rounded shadow-sm bg-white"
-                                                         style="background-color: #e6e6e68c!important;box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
+                                                         style=";box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
 
                                                         <div class="d-flex border-bottom pb-3">
                                                             <div class="text-muted"
@@ -173,7 +173,7 @@
                                                 <div class="pb-3">
 
                                                     <div class="p-3 rounded shadow-sm bg-white"
-                                                         style="background-color: #e6e6e68c!important;box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
+                                                         style=";box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
 
                                                         <div class="d-flex border-bottom pb-3">
                                                             <div class="text-muted mr-3"
@@ -190,22 +190,32 @@
                                                             </div>
                                                             <div
                                                                 style="@if(app()->getLocale() == 'en') margin-left: auto!important; @else margin-right: auto!important;  @endif">
-                                                                <p class="bg-success text-white py-1 px-2 rounded small mb-1">
+                                                                <p class="bg-warning text-white py-1 px-2 rounded small mb-1">
                                                                     {{__('general.Pending')}}
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="d-flex pt-3 align-items-center justify-content-between">
-                                                            <div class="text-muted m-0 mr-auto mr-3 small"
-                                                                 style="padding: 8px;">{{__('general.Total')}}:
+                                                            <div class="text-muted m-0 small"
+                                                                 style="padding: 8px; @if(app()->getLocale() == 'en') margin-right: auto!important; @else margin-left: auto!important; @endif">{{__('general.Total')}}
+                                                                :
                                                                 <span
-                                                                    class="text-dark font-weight-bold">{{$pe->total - $pe->points_paid}} {{__('general.SR')}}</span>
+                                                                    class="text-dark font-weight-bold">{{$co->total - $co->points_paid}} {{__('general.SR')}}</span>
                                                             </div>
                                                             <div class="text-right">
-                                                                <a href="{{route('order.details',[$pe->id,'reorder'])}}"
-                                                                   class="btn btn-primary px-3">{{__('general.Reorder')}}</a>
-                                                                <a href="{{route('order.details',$pe->id)}}"
-                                                                   class="btn btn-outline-primary px-3">{{__('general.Details')}}</a>
+                                                                @if(app()->getLocale() == 'en')
+                                                                    <a href="{{route('order.details',[$co->id,'reorder'])}}"
+                                                                       class="btn bg-danger px-3 default-btn rounded">{{__('general.Reorder')}}<span></span></a>
+                                                                    <a href="{{route('order.details',$co->id)}}"
+                                                                       class="btn px-3 default-btn rounded">{{__('general.Details')}}
+                                                                    <span></span>
+                                                                    </a>
+                                                                @else
+                                                                    <a href="{{route('order.details',$co->id)}}"
+                                                                       class="btn px-3 default-btn">{{__('general.Details')}}</a>
+                                                                    <a href="{{route('order.details',[$co->id,'reorder'])}}"
+                                                                       class="btn btn-outline-primary text-white px-3 default-btn">{{__('general.Reorder')}}</a>
+                                                                @endif
                                                             </div>
                                                         </div>
 
@@ -227,7 +237,7 @@
 
                                                 <div class="pb-3">
                                                     <div class="p-3 rounded shadow-sm bg-white"
-                                                         style="background-color: #e6e6e68c!important;box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
+                                                         style=";box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
                                                         <div class="d-flex border-bottom pb-3">
                                                             <div class="text-muted mr-3"
                                                                  style="width: 110px;height: 110px">
@@ -241,22 +251,32 @@
                                                             </div>
                                                             <div
                                                                 style="@if(app()->getLocale() == 'en') margin-left: auto!important; @else margin-right: auto!important;  @endif">
-                                                                <p class="bg-success text-white py-1 px-2 rounded small mb-1">
+                                                                <p class="bg-danger text-white py-1 px-2 rounded small mb-1">
                                                                     {{__('general.Canceled')}}
                                                                 </p>
                                                             </div>
                                                         </div>
                                                         <div class="d-flex pt-3 align-items-center justify-content-between">
-                                                            <div class="text-muted m-0 mr-auto mr-3 small"
-                                                                 style="padding: 8px;">{{__('general.Total')}}:
+                                                            <div class="text-muted m-0 small"
+                                                                 style="padding: 8px; @if(app()->getLocale() == 'en') margin-right: auto!important; @else margin-left: auto!important; @endif">{{__('general.Total')}}
+                                                                :
                                                                 <span
-                                                                    class="text-dark font-weight-bold">{{$ca->total - $ca->points_paid}} {{__('general.SR')}}</span>
+                                                                    class="text-dark font-weight-bold">{{$co->total - $co->points_paid}} {{__('general.SR')}}</span>
                                                             </div>
                                                             <div class="text-right">
-                                                                <a href="{{route('order.details',[$ca->id,'reorder'])}}"
-                                                                   class="btn btn-primary px-3">{{__('general.Reorder')}}</a>
-                                                                <a href="{{route('order.details',$ca->id)}}"
-                                                                   class="btn btn-outline-primary px-3">{{__('general.Details')}}</a>
+                                                                @if(app()->getLocale() == 'en')
+                                                                    <a href="{{route('order.details',[$co->id,'reorder'])}}"
+                                                                       class="btn bg-danger px-3 default-btn rounded">{{__('general.Reorder')}}<span></span></a>
+                                                                    <a href="{{route('order.details',$co->id)}}"
+                                                                       class="btn px-3 default-btn rounded">{{__('general.Details')}}
+                                                                    <span></span>
+                                                                    </a>
+                                                                @else
+                                                                    <a href="{{route('order.details',$co->id)}}"
+                                                                       class="btn px-3 default-btn">{{__('general.Details')}}</a>
+                                                                    <a href="{{route('order.details',[$co->id,'reorder'])}}"
+                                                                       class="btn btn-outline-primary text-white px-3 default-btn">{{__('general.Reorder')}}</a>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
