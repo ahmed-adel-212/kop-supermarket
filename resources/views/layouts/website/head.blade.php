@@ -50,6 +50,14 @@
     <link href="{{asset('website2-assets/vendor/sidebar/demo.css')}}" rel="stylesheet">
     <link href="{{asset('website2-assets/vendor/icofont/icofont.min.css')}}" rel="stylesheet"> -->
 
+    <style>
+        .default-bg {
+            background: #ff9d2d;
+        }
+        .default-bg:hover {
+            background: #fe9d2d;
+        }
+    </style>
     
     
     <link id="dm-light" rel="stylesheet" href="{{asset('website-assets/css/light.css')}}">

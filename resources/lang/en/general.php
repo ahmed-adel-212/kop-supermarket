@@ -221,5 +221,8 @@ return [
     'Archives' => 'Archives',
     'health_title' => 'Read our Food Health information <br> and Learn More',
     'Follow Us' => 'Follow Us',
-    'carrer_title' => 'Find out our Latest Careers <br> Feel free to submit'
+    'carrer_title' => 'Find out our Latest Careers <br> Feel free to submit',
+    'Age' => 'Age',
+    'profile_photo' => 'Profile Photo',
+    'user_updated' => 'Account Details Updated Successfuly',
 ];
