@@ -79,7 +79,7 @@ Route::middleware('api')->group(function () {
     Route::post('/set-push-token', "Api\NotificationController@setPushToken")->name('api.setPushToken');
     Route::post('/set-first-offer-flag', "Api\AuthController@setFirstOfferFlag")->name('api.setFirstOfferFlag');
 
-    Route::get('/get-user-orders', "Api\OrdersController@getUserOrders")->name('api.getUserOrders');
+    Route::get('/get-user-orders', "Api\OrdersController@getUserOrders")->name('api.getUserOrders')->middleware('auth:api');
 
 
     // orders routes
