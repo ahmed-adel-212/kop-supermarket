@@ -229,4 +229,6 @@ return [
     'find_your_orders' => 'Find your Orders <br> Reorder or Check Details',
     'order_details' => 'Order Details',
     'continue' => 'Continue Shopping',
+    'cart' => 'Cart',
+    'my_cart' => 'My Cart',
 ];
