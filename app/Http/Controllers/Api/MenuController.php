@@ -111,7 +111,8 @@ class MenuController extends BaseController
     }
 
 
-    public function getCategoryItems(Request $request, Category $category) {
+    public function getCategoryItems(Request $request, int $category) {
+        $category = Category::findOrFail($category);
         $items = $category->items()->get();
 
         foreach ($items as $key => $item) {
@@ -197,13 +198,17 @@ class MenuController extends BaseController
      
     }
 
-    public function getExtras(Request $request, Category $category)
+    public function getExtras(Request $request, int $category)
     {
+        $category = Category::findOrFail($category);
+
         return $this->sendResponse($category->extras, 'Extras retrieved successfully.');
     }
 
-    public function getWithouts(Request $request, Category $category)
+    public function getWithouts(Request $request, int $category)
     {
+        $category = Category::findOrFail($category);
+
         return $this->sendResponse($category->withouts, 'Withouts retrieved successfully.');
     }
 
