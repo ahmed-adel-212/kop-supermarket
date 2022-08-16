@@ -5,16 +5,17 @@
 <style>
     .login-page video {
     width: 50%;
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    right: 50%;
+    left: 0;
+    height: 100%;
 }
 @media (max-width: 992px) {
     .login-page video {
-        display: none;
+        width: 30%;
     }
 }
-@media (max-width: 576px) {
+@media (max-width: 736px) {
     .login-page video {
         display: none;
     }
@@ -28,16 +29,16 @@
 <div class="page-wrapper">
 
     <div class="login-page vh-100 row position-relative">
-        <div class="col-0 col-md-6">
+        <div class="col-0 col-md-4 col-lg-6">
             <video loop autoplay muted id="video" style="object-fit: fill;height: 100%;">
                 <source src="{{asset('website2-assets/img/bg.mp4')}}" type="video/mp4">
                 <source src="{{asset('website2-assets/img/bg.mp4')}}" type="video/ogg">
                 Your browser does not support the video tag.
             </video>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-8 col-lg-6">
             <div class="d-flex justify-content-center vh-100">
-                <div class="ml-auto">
+                <div class="ml-auto w-100">
                     <div class="px-2 col-12 mx-auto">
                         <a href="{{route('home.page')}}">
                             <img class="logo__img logo__img--full m-auto" style="cursor: pointer;height: 14rem;" src="{{asset('website-assets/img/logokop.bmp')}}" alt="logo">
