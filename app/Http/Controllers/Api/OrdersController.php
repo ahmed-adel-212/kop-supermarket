@@ -905,12 +905,12 @@ class OrdersController extends BaseController
         $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
 
         if (!empty($user_branches)) {
-            $orders = $orders->whereIn('branch_id', $user_branches);
+            $orders = $orders->whereIn('branch_id', $user_branches)->whereIn('state',['completed','canceled','rejected']);
         }
 
         $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
-        }])->whereIn('state',['completed','canceled','rejected'])->orderBy('id', 'DESC')->paginate(10);
+        }])->orderBy('id', 'DESC')->paginate(10);
 
  
         foreach ($orders as $order) {
