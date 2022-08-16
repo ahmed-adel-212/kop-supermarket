@@ -125,9 +125,9 @@
                     const qty = document.querySelector('#quantity');
                     qty.value = parseInt(qty.value) - 1;
                 },
-                addToItem: function(type, id, name, price) {
+                addToItem: function(type, id, name, price, itemId) {
                     this.items.map(x => {
-                        if (x.uid === this.activeItem) {
+                        if (x.uid === itemId) {
                             const found = x[type].findIndex(x => x.id === id);
                             if (found < 0) {
                                 x[type].push({

@@ -15,11 +15,11 @@ class CartController extends Controller
 
     public function addCart(Request $request)
     { 
-        return $request;
+        // return $request;
         
         if ($request->has('add_items')) {
             // dd(json_decode($request->add_items), $request->all());
-           return  $items = json_decode($request->add_items);
+            $items = json_decode($request->add_items);
             foreach ($items as $index => $item) {
                 $newRequest = new Request();
                 $newRequest->merge(['item_id' => $request->item_id]);
