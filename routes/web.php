@@ -143,9 +143,9 @@ Route::group([
         Route::get('/apply-form/{id}', [\App\Http\Controllers\Website\CareersControllers::class, 'ApplyJobForm'])->name('apply.form');
         Route::post('/career-request', [\App\Http\Controllers\Website\CareersControllers::class, 'CareerRequest'])->name('career.request');
 
-        Route::get('/Blogs/', [\App\Http\Controllers\Website\NewsController::class, 'AllBlogs'])->name('news.all');
-        Route::get('/Blogs/{year}/{month}', [\App\Http\Controllers\Website\NewsController::class, 'blogsArchive'])->name('news.archive');
-        Route::get('/Blog/{id}', [\App\Http\Controllers\Website\NewsController::class, 'Blog'])->name('get.new');
+        Route::get('/whats-new/', [\App\Http\Controllers\Website\NewsController::class, 'AllBlogs'])->name('news.all');
+        Route::get('/whats-new/{year}/{month}', [\App\Http\Controllers\Website\NewsController::class, 'blogsArchive'])->name('news.archive');
+        Route::get('/whats-new/{id}', [\App\Http\Controllers\Website\NewsController::class, 'Blog'])->name('get.new');
         Route::get('/health-infos/', [\App\Http\Controllers\Website\HealthInfo::class, 'Infos'])->name('health-infos.all');
 
         Route::get('/get-sign-in', [\App\Http\Controllers\Website\AuthController::class, 'get_login'])->name('get.login');
