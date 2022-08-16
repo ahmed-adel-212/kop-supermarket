@@ -27,7 +27,9 @@ class AddressController extends Controller
             $addresses = $return['data'];
         }
 
-        return view('website.profile', compact(['addresses', 'points', 'cities']));
+        $pageName = request()->routeIs('profile.address') ? 'website.address' : 'website.profile';
+
+        return view($pageName, compact(['addresses', 'points', 'cities']));
     }
 
     public function delete(Address $address)
