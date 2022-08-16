@@ -876,7 +876,7 @@ class OrdersController extends BaseController
 
         $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
-        }])->whereRaw('Date(created_at) >= CURDATE()')->orderBy('id', 'DESC')->paginate(10);
+        }])->whereRaw('Date(created_at) >= CURDATE()')->orderBy('id', 'DESC')->get();
 
  
         foreach ($orders as $order) {
@@ -909,7 +909,7 @@ class OrdersController extends BaseController
 
         $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
-        }])->orderBy('id', 'DESC')->paginate(10);
+        }])->orderBy('id', 'DESC')->get();
 
  
         foreach ($orders as $order) {
