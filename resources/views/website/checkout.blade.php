@@ -2,165 +2,103 @@
 
 @section('title') Checkout @endsection
 
-@section('styles')@endsection
+@section('styles')
+<style>
+    .additional-info .form-field textarea, .checkout-form .form-field input 
+    {
+        color:#6c757d!important;
+    }
+</style>
+@endsection
 
 @section('pageName')
     <body class="page-article dm-light"> @endsection
 
     @section('content')
-        <main class="page-main">
-            <div class="page-content">
 
-                <div class="uk-margin-small-top uk-container">
-
-
-                    <div class="position-relative">
-                        <div class="py-5 row">
-                            <div class="col-md-8 mb-3">
-                                <div>
-                                    <div class="osahan-cart-item mb-3 rounded shadow-sm bg-white overflow-hidden">
-                                        <div class="osahan-cart-item-profile bg-white p-3">
-                                            <div class="d-flex flex-column">
-                                                <div class="row">
-                                                    @if(isset($branch))
-
-                                                        <div
-                                                            class="custom-control text-center col-lg-12 custom-radio mb-3 position-relative border-custom-radio">
-                                                            <input type="radio" id="customRadioInline1"
-                                                                   class="custom-control-input" checked>
-                                                            <label class="custom-control-label w-100"
-                                                                   for="customRadioInline1">
-                                                                <div>
-                                                                    <div class="p-3 bg-white rounded shadow-sm w-100">
-                                                                        <div class="d-flex align-items-center mb-2">
-                                                                        </div>
-                                                                        <h4 class="mb-3 mt-2 font-weight-bold">{{__('general.Receive Your Order From')}}</h4>
-                                                                        <p class="small text m-0 font-weight-bold">{{(app()->getLocale() == 'ar')? $branch->name_ar : $branch->name_en }}</p>
-                                                                        <p class="small text m-0">
-                                                                            {{(app()->getLocale() == 'ar')? $branch->address_description_ar .' '. $branch->city->name_ar .' '. $branch->area->name_ar : $branch->address_description_en .' '. $branch->city->name_en .' '. $branch->area->name_en }}
-                                                                        </p>
-
-                                                                        @if(isset($work_hours))
-                                                                            <h6 class="mb-0">{{__('general.Working Hours')}}</h6>
-
-                                                                        @foreach($work_hours as $h)
-                                                                                <p class="small text-muted m-0">{{__('general.From')}}
-                                                                                    : {{$h->time_from }} {{__('general.To')}}
-                                                                                    :{{$h->time_to}}</p>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                            </label>
-                                                        </div>
-
-                                                    @endif
-                                                    @if(isset($address))
-
-                                                        <div
-                                                            class="custom-control text-center col-lg-12 custom-radio mb-3 position-relative border-custom-radio">
-                                                            <input type="radio" id="customRadioInline1"
-                                                                   class="custom-control-input" checked>
-                                                            <label class="custom-control-label w-100"
-                                                                   for="customRadioInline1">
-                                                                <div>
-                                                                    <div class="p-3 bg-white rounded shadow-sm w-100">
-                                                                        <div class="d-flex align-items-center mb-2">
-                                                                        </div>
-                                                                        <h4 class="mb-3 mt-2 font-weight-bold">{{__('general.We will deliver your address to')}}</h4>
-                                                                        <p class="small text m-0">{{$address ->name}}
+    <section class="checkout-section bg-grey padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 sm-padding">
+                        <form class="checkout-form-wrap"method="post">
+                                            @csrf
+                        <h2>{{__('general.Personal information')}}</h2>
+                        <div class="checkout-form mb-30">
+                                <div class="row">
+                                <div class="col-md-4">
+                                <label for="full_name" style="line-height: 3;"> {{__('general.Full name')}}</label>
+                                </div>
+                                <div class="form-field col-md-8">
+                                    <input type="text" id="full_name" name="full_name" class="form-control"  value="{{auth()->user()->name}}" disabled>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-4">
+                                <label for="Phone" style="line-height: 3;"> {{__('general.Phone')}}</label>
+                                </div>
+                                <div class="form-field col-md-8">
+                                    <input type="text" id="Phone" name="Phone" class="form-control"  value="{{auth()->user()->first_phone}}" disabled>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-4">
+                                <label for="Email" style="line-height: 3;"> {{__('general.Email')}}</label>
+                                </div>
+                                <div class="form-field col-md-8">
+                                    <input type="text" id="Email" name="Email" class="form-control"  value="{{auth()->user()->email}}" disabled>
+                                </div>
+                                </div>
+                            </div>    
+                        @if(isset($address))
+                            <h2>{{__('general.We will deliver your address to')}}</h2>
+                            <div class="checkout-form mb-30">
+                                <div class="row">
+                                <p class="small text m-0">{{$address ->name}}
                                                                             , {{(app()->getLocale() == 'ar') ?$address->city->name_ar:$address->city->name_en}}
                                                                             , {{(app()->getLocale() == 'ar') ?$address->area->name_ar:$address->area->name_en}}</p>
-                                                                        <p class="small text m-0">{{$address-> street}}
+                                </div>
+                                <div class="row">
+                                <p class="small text m-0">{{$address-> street}}
                                                                             , {{__('general.BuildNo')}}: {{$address-> building_number}}
                                                                             , {{__('general.FloorNo')}}: {{ $address-> floor_number}}
                                                                             , {{__('general.Landmark')}}: {{$address-> landmark}}
                                                                         </p>
-                                                                    </div>
-                                                                </div>
-                                                            </label>
-                                                        </div>
+                                </div>
 
-                                                    @endif
-                                                </div>
-                                                <a class="btn btn-primary" href="#" data-toggle="modal"
-                                                   data-target="#service-modal"> {{__('general.Change ServiceType')}} </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
+                            @endif
+
+                            @if(isset($branch))
+                            <h2>{{__('general.Receive Your Order From')}}</h2>
+                            <div class="checkout-form mb-30">
+                                <div class="row">
+                                <p class="">{{(app()->getLocale() == 'ar')? $branch->name_ar : $branch->name_en }}</p>
+                                 
+                                <p class="small text m-0">
+                                    {{(app()->getLocale() == 'ar')? $branch->address_description_ar .' '. $branch->city->name_ar .' '. $branch->area->name_ar : $branch->address_description_en .' '. $branch->city->name_en .' '. $branch->area->name_en }}
+                                </p>
+                                </div><br>
+                                <div class="row">
+                                @if(isset($work_hours))
+                                    <h6 class="mb-0">{{__('general.Working Hours')}}</h6>
+                                    @foreach($work_hours as $h)
+                                        <p class="small text-muted m-0">{{__('general.From')}}
+                                        : {{$h->time_from }} {{__('general.To')}}
+                                        :{{$h->time_to}}</p>
+                                    @endforeach
+                                @endif
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div
-                                    class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">
-                                    <div class="bg-white p-3 clearfix border-bottom">
-                                        <p class="mb-1">{{__('general.Full name')}}<span
-                                                class="float-right text-dark">{{auth()->user()->name}}</span></p>
-                                        <p class="mb-1">{{__('general.Phone')}}<span
-                                                class="float-right text-dark">{{auth()->user()->first_phone}}</span></p>
-                                        <p class="mb-1">{{__('general.Email')}}<span
-                                                class="float-right text-dark">{{auth()->user()->email}}</span></p>
-
-                                        <form method="post">
-                                            @csrf
-
-                                            @if(isset($request))
-                                                <p class="mb-1">{{__('general.Sub Total')}}<span class="float-right text-dark">{{$request->subtotal}} {{__('general.SR')}}</span>
-                                                    <input id="subtotalinput" hidden name="subtotal"
-                                                           value="{{$request->subtotal}} "/>
-
-                                                </p>
-                                                <p class="mb-1">Tax<span class="float-right text-dark">{{$request->taxes}} {{__('general.SR')}}</span>
-                                                    <input id="taxesinput" hidden name="taxes"
-                                                           value="{{$request->taxes}}"/>
-
-                                                </p>
-                                                <p class="mb-1">{{__('general.Delivery Fees')}}<span
-
-                                                        class="float-right text-dark">{{$request->delivery_fees}} {{__('general.SR')}}</span>
-
-                                                    <input id="delivery_feesnput" hidden name="delivery_fees"
-                                                           value="{{$request->delivery_fees}}"/>
-                                                </p>
-                                                @if($request->has('points_paid'))
-                                                    <p class="mb-1">{{__('general.Loyality Points')}}<span
-                                                            class="float-right text-dark">- {{round($request->points_paid, 2)}} {{__('general.SR')}}</span>
-                                                        <input id="pointsinput" hidden name="points_paid"
-                                                               value="{{$request->points_paid}}"/>
-
-                                                    </p>
-                                                @endif
-                                                @if($request->has('branch_id'))
-                                                    <input hidden name="branch_id" value="{{$request->branch_id}}"/>
-
-
-                                                @endif
-                                                @if($request->has('address_id'))
-                                                    <input id="pointsinput" hidden name="address_id"
-                                                           value="{{$request->address_id}}"/>
-
-
-                                                @endif
-                                                @if($request->has('service_type'))
-                                                    <input id="pointsinput" hidden name="service_type"
-                                                           value="{{$request->service_type}}"/>
-
-
-                                                @endif
-                                                @auth()
-                                                    <input id="pointsinput" hidden name="customer_id"
-                                                           value="{{auth()->user()->id}}"/>
-                                                @endauth
-                                                <hr>
-
-                                                <h5 class="font-weight-bold mb-0 text-success">{{__('general.Total')}} <span
-                                                        class="float-right">{{$request->total}} {{__('general.SR')}}</span>
-                                                    <input id="delivery_feesnput" hidden name="total"
-                                                           value="{{$request->total}}"/>
-
-                                                </h5>
-
-                                            <div class="p-3">
+                            @endif
+                            <!-- <div class="additional-info mb-30">
+                                <h2>Additional Information</h2>
+                                <div class="form-field">
+                                    <textarea id="message" name="message" cols="30" rows="3" class="form-control" placeholder="Order Note"></textarea>
+                                </div>
+                            </div> -->
+                            <div class="payment-method">
+                                <h2>Payment Method</h2>
+                                <div class="mb-20">
                                                 <button class="btn btn-success btn-block btn-lg" type="submit" formaction="{{route('make_order')}}">
                                                     {{__('general.Confirm Order Cash')}}
                                                     <i class="feather-arrow-right"></i>
@@ -170,18 +108,69 @@
                                                     <i class="feather-arrow-right"></i>
                                                 </button>
                                             </div>
-                                            @endif
-                                        </form>
-                                    </div>
-                                </div>
+                                <ul class="mb-20">
+                            <input id="subtotalinput" hidden name="subtotal" value="{{$request->subtotal}} "/>
+
+                            <input id="taxesinput" hidden name="taxes" value="{{$request->taxes}}"/>
+
+                            <input id="delivery_feesnput" hidden name="delivery_fees" value="{{$request->delivery_fees}}"/>
+                            
+                            @if($request->has('points_paid'))
+                                    <input id="pointsinput" hidden name="points_paid"value="{{$request->points_paid}}"/>
+                            @endif
+                            @if($request->has('branch_id'))
+                             <input hidden name="branch_id" value="{{$request->branch_id}}"/>
+                            @endif
+                            @if($request->has('address_id'))
+                            <input id="pointsinput" hidden name="address_id" value="{{$request->address_id}}"/>
+                            @endif
+                            @if($request->has('service_type'))
+                            <input id="pointsinput" hidden name="service_type" value="{{$request->service_type}}"/>
+                            @endif
+                            @auth()
+                            <input id="pointsinput" hidden name="customer_id" value="{{auth()->user()->id}}"/>
+                            @endauth
+                            <input id="delivery_feesnput" hidden name="total" value="{{$request->total}}"/>
+
+                                    <li>
+                                        <input type="radio" id="option-1" name="selector" checked="">
+                                        <label for="option-1">Direct Bank Transfer</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="option-2" name="selector">
+                                        <label for="option-2">Check Payments</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="option-3" name="selector">
+                                        <label for="option-3">Cash On Delivery</label>
+                                    </li>
+                                </ul>
+                                <a href="#" class="default-btn">Place Order <span></span></a>
                             </div>
-                        </div>
+
+                        </form>
                     </div>
+                    <div class="col-lg-4 sm-padding">
+                        <ul class="cart-total">
+                            <li><span>{{__('general.Sub Total')}}:</span>{{$request->subtotal}} {{__('general.SR')}}</li>
 
+                            <li><span>Tax :</span>{{$request->taxes}} {{__('general.SR')}}</li>
+
+                            <li><span>{{__('general.Delivery Fees')}} :</span>{{$request->delivery_fees}} {{__('general.SR')}}</li>
+                            
+                            @if($request->has('points_paid'))
+                            <li><span>{{__('general.Loyality Points')}} :</span> <span>- {{round($request->points_paid, 2)}} {{__('general.SR')}}</span></li>
+                            @endif
+                            <li><span>{{__('general.Total')}} :</span>{{$request->total}} {{__('general.SR')}}</li>
+
+                                       
+
+                            <!-- <li><a href="shop.html">Continue Shopping</a><a href="#" class="default-btn">Checkout <span></span></a></li> -->
+                        </ul>
+                    </div>
                 </div>
-
             </div>
-        </main>
+        </section><!--/.checkout-section-->
 
 @endsection
 

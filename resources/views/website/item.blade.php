@@ -6,25 +6,7 @@
 
 @section('styles')
     <style>
-        /* .dough label.active
-                   {
-                        border-color: #cc3333 !important;
-                        background-color: #cc3333 !important;
-                        background: #cc3333 !important;
-                        color: #fff !important;
-                    }
-
-                    .card-header.active {
-                        background: #cc3333;
-                        color: #fff !important;
-                    }
-
-                    .card-header.active button {
-                        color: #fff;
-                    
-                    * {
-                        font-family: Cairo !important;
-                    } */
+      
         .text-danger {
             color: #f32129;
         }
@@ -170,8 +152,8 @@
                 <form id="addToCard" action="{{ route('add.cart') }}" method="POST">
                     @csrf
                     @if ($item['offer'])
-                        <input type="hidden" name="offer_id" value="{{ $item['offer']['offer_id'] }}">
-                        <input type="hidden" name="offer_price" value="{{ round($item['offer']['offer_price'], 2) }}">
+                        <input type="hidden" name="offer_id" value="{{$item['offer']? $item['offer']['offer_id'] :'' }}">
+                        <input type="hidden" name="offer_price" value="{{ $item['offer']?round($item['offer']['offer_price'], 2):'' }}">
                     @endif
                     <input type="hidden" name="item_id" value="{{ $item['id'] }}">
                     <input type='hidden' name='add_items' x-bind:value="getItems" />
@@ -204,35 +186,14 @@
                                         @endif
                                         @lang('general.SR')
                                     </h4>
-
-                                    <style>
-                                        .dough label.active {
-                                            border-color: #cc3333 !important;
-                                            background-color: #cc3333 !important;
-                                            background: #cc3333 !important;
-                                            color: #fff !important;
-                                        }
-
-                                        .card-header.active {
-                                            background: #cc3333;
-                                            color: #fff !important;
-                                        }
-
-                                        .card-header.active button {
-                                            color: #fff;
-                                        }
-
-                                        * {
-                                            font-family: Cairo !important;
-                                        }
-                                    </style>
-
-                                    <div class="btn-group btn-group-toggle dough" data-toggle="buttons" style="width: 60%;">
+                                   
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 75%;">
                                         @foreach ($item['dough_type'] as $dough)
-                                            <label class="btn btn-light" for="{{ $dough['name_en'] }}"><input
-                                                    id="{{ $dough['name_en'] }}" type="radio" name="dough_type"
+                                        <input
+                                        class="btn-check" autocomplete="off"  id="{{ $dough['name_en'] }}" type="radio" name="dough_type"
                                                     value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
-                                                    @if ($loop->first) checked @endif><span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
+                                                    @if ($loop->first) checked @endif>
+                                        <label class="btn btn-outline-primary"  for="{{ $dough['name_en'] }}"> <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
                                         @endforeach
                                     </div>
 
@@ -517,3 +478,19 @@
             <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
         </div>
     @endsection
+    <style>
+      
+      label.btn.btn-outline-primary
+        {border: none;
+        color:black;}
+        label.btn.btn-outline-primary:hover
+        {color: #6dc405 !important;
+         background-color: white !important;}
+        .btn-check:checked+.btn
+        {
+            background-color: #6dc405 !important;
+            border-radius: 10px!important;
+            border-color: #6dc405 !important;
+        }
+    
+                    </style>

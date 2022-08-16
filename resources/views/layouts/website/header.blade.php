@@ -10,13 +10,14 @@
                 </div><!-- /.header-logo -->
                 <div class="header-menu-wrap">
                     <ul class="slider-menu">
-                        <li><a href="index.html">Home</a>
-                            <ul>
+                        <li><a href="{{route('home.page')}}">{{ __('header.Home')}}</a>
+                            <!-- <ul>
                                 <li><a href="{{route('home.page')}}">{{ __('header.Home')}}</a></li>
-                                <li><a href="index-2.html">Home Modern</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
                         <li><a href="{{route('menu.page')}}">{{ __('header.Menu')}}</a></li>
+                        <li><a href="{{route('offers')}}">{{ __('header.Offers')}}</a></li>
+                        <li><a href="{{route('get.cart')}}">{{ __('header.Cart')}}</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="#">Pages</a>
                             <ul>
@@ -47,7 +48,9 @@
                         </li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
-                </div><!-- /.header-menu-wrap -->
+                </div>
+                
+                <!-- /.header-menu-wrap -->
                 <!-- <div class="header-right">
                     <div class="search-icon dl-search-icon"><i class="las la-search"></i></div>
                     <a class="header-btn" href="reservation.html">Reservation<span></span></a>
