@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="col-2 col-lg-1 ">
-                        <div class="cart-item delete_cart" data-id="{{$cart->id}}">
+                        <div @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="cart-item delete_cart cart" data-id="{{$cart->id}}">
                             <a class="remove" href="#"><i class="las la-times"></i></a>
                         </div>
                     </div>

@@ -205,7 +205,7 @@
                                                 x-on:click="$dispatch('remove-last-item')">-</span><input type="text"
                                                 name="quantity" x-bind:value="items.length" id="quantity"><span
                                                 class="plus" x-data x-on:click="$dispatch('add-item')">+</span></span>
-                                        <div> <button class="purchase-btn"
+                                        <div> <button @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="purchase-btn cart" 
                                                 type="submit">{{ __('home.Add to Cart') }}</button></div>
                                     </div>
                                     <ul class="product-meta">

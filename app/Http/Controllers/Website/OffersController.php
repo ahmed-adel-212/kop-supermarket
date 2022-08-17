@@ -45,7 +45,7 @@ class OffersController extends Controller
     public function get_offers()
     {
         $request = new \Illuminate\Http\Request();
-        // $request->merge(['branch' => session()->get('branch_id')]);
+        //  $request->merge(['branch' => session()->get('branch_id')]);
         $request->merge(['type' => session()->get('service_type')]);
         $request->merge(['now' => Carbon::now()]);
         $filters = new OfferFilters($request);

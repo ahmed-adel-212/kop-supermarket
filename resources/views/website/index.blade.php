@@ -171,7 +171,7 @@
                                 <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
                             </ul>
                            
-                            <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn">Order Now <span></span></a>
+                            <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn cart">Order Now <span></span></a>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                                 <img src="{{$dealItem->image}}" alt="food">
                                 <div>
                                 @auth @if(!session()->has('branch_id'))
-                                    <a data-toggle="modal" data-target="#service-modal" href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
+                                    <a data-toggle="modal" data-target="#service-modal" href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                                     @else
                                     <a  href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
                                   @endif  @endauth

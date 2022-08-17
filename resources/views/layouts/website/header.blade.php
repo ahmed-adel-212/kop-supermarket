@@ -16,7 +16,7 @@
                             </ul> -->
                         </li>
                         <li><a href="{{route('menu.page')}}">{{ __('header.Menu')}}</a></li>
-                        <li><a href="{{route('offers')}}">{{ __('header.Offers')}}</a></li>
+                        <li><a class="cart" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offers')}}">{{ __('header.Offers')}}</a></li>
                         <li><a href="{{route('get.cart')}}">{{ __('header.Cart')}}</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="#">Pages</a>

@@ -146,6 +146,13 @@
                                     <p>Website<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                        <a href="{{route('admin.homeitem.index')}}" class="nav-link"><i
+                                                class="fab fa-first-order nav-icon"></i>
+                                            <p>Home Item</p>
+                                        </a>
+                                </li>
+
                                     <li class="nav-item">
                                         <a href="{{route('admin.hero.index')}}" class="nav-link"><i
                                                 class="fab fa-first-order nav-icon"></i>
