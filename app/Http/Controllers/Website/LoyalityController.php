@@ -32,11 +32,10 @@ class LoyalityController extends Controller
         return redirect()->route('profile');
     }
 
-    public function getPage()
+    public function getPage(Request $request)
     {
-        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3, 4])->get()->sum('points');
-        $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2])->get()->sum('points');
-        $points =  $validRefundedPoints - $consumedCanceledPoints;
+        $pointsApi = (app(\App\Http\Controllers\Api\AuthController::class)->getUserPoints($request))->getOriginalContent();
+        $points =  $pointsApi['data'];
 
         $pointValues = DB::table('general')->where('key', 'pointsValue')->get();
 
@@ -59,6 +58,15 @@ class LoyalityController extends Controller
             ];
         }
 
-        return view('website.loyality', compact('points', 'pointValues', 'history'));
+        $cartHasItems = Auth::user()->carts()->count() > 0;
+
+        return view('website.loyality', compact('points', 'pointValues', 'history', 'cartHasItems'));
+    }
+
+    public function setValue($value, $points)
+    {
+        session()->flash('loyality-points', compact('value', 'points'));
+
+        return redirect()->route('get.cart');
     }
 }

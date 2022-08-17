@@ -234,4 +234,7 @@ return [
     'confirm_message' => 'some products price have changed please confirm to reorder with new prices',
     'blog' => "What's New",
     'contact_us' => 'Contact Us',
+    'loyality_earned' => 'Loyality Earned',
+    'on' => 'On',
+    'cart_empty' => 'your cart is empty, please add items to your cart first',
 ];
