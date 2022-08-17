@@ -75,7 +75,6 @@ class PaymentController extends BaseController
             if ($errors) {
                 session()->flash('err', $errors);
             }
-            dd(session()->get('err'));
             return redirect(route('get.paymentMobile',$amount))->withInput();
         }
 
