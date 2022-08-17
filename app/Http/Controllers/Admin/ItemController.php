@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Filters\ItemFilters;
 use App\Models\Category;
 use App\Models\Branch;
+use App\Models\HomeItem;
 use Illuminate\Support\Facades\Validator;
 
 use App\Traits\LogfileTrait;
@@ -228,7 +229,6 @@ class ItemController extends Controller
 
     public function getCategory($category)
     {
-
         $category = Category::findOrFail($category);
 
         $items = Item::where('category_id', $category->id)->get();
@@ -274,4 +274,99 @@ class ItemController extends Controller
 
         return back();
     }
+
+    public function Homeitem(Request $request)
+    {
+        $homeitems = HomeItem::all()->load('item','category');
+        return view('admin.homeitem.index',compact('homeitems'));
+    }
+
+    public function Create_Homeitem(Request $request)
+    {
+        $categories=Category::all();
+        return view('admin.homeitem.create',compact('categories'));
+    }
+    public function Store_Homeitem(Request $request)
+    {
+        $validatedData = $request->validate([
+            "description_ar" => 'required|string',
+            "description_en" => 'required|string',
+            "category_id" => 'required|exists:categories,id',
+            "item_id" => 'required|exists:items,id',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'number' => 'required|unique:home_item',
+        ]);
+
+
+        if ($request->hasFile('image')) {
+            $image = $request->image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('items'), $image_new_name);
+            $validatedData['image'] = '/items/' . $image_new_name;
+        }
+        
+        $HomeItem = HomeItem::create($validatedData);
+        $this->Make_Log('App\Models\HomeItem','create',$HomeItem->id);
+        
+        if (!$HomeItem)
+            return redirect()->route('admin.homeitem.index')->with([
+                'type' => 'error',
+                'message' => 'test'
+            ]);
+
+        return redirect()->route('admin.homeitem.index')->with([
+            'type' => 'success',
+            'message' => 'homeitem Update successfully'
+        ]);
+    }
+    public function Edit_Homeitem(Request $request ,HomeItem $homeitem)
+    {
+        $categories = Category::all();
+        $item->load('item','category');
+        return view('admin.homeitem.edit',compact('categories','homeitem'));
+    }
+    public function Update_Homeitem(Request $request ,HomeItem $homeitem)
+    {
+        $validatedData = $request->validate([
+            "description_ar" => 'required|string',
+            "description_en" => 'required|string',
+            "category_id" => 'required|exists:categories,id',
+            "item_id" => 'required|exists:items,id',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+
+        if ($request->hasFile('image')) {
+            $image = $request->image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('items'), $image_new_name);
+            $validatedData['image'] = '/items/' . $image_new_name;
+        }
+        
+        if (!$homeitem->update($validatedData))
+            return redirect()->route('admin.homeitem.index')->with([
+                'type' => 'error',
+                'message' => 'test'
+            ]);
+
+  
+        $homeitem->save();
+
+        $this->Make_Log('App\Models\homeitem','update',$homeitem->id);
+        return redirect()->route('admin.homeitem.index')->with([
+            'type' => 'success',
+            'message' => 'homeitem Update successfuly'
+        ]);
+
+    }
+
+    public function Destroy_Homeitem(Request $request, HomeItem $homeitem)
+    {
+        $homeitem->delete();
+        $this->Make_Log('App\Models\HomeItem','delete',$homeitem->id);
+        return redirect()->back()->with([
+            'type' => 'error', 'message' => 'homeitem deleted successfuly'
+        ]);
+    }
+   
 }

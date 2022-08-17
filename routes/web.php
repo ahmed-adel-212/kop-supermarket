@@ -9,7 +9,7 @@ Route::group([
     Route::group(['prefix' => 'admin'], function () {
         Auth::routes(['register' => false]);
     });
-    Route::get('/categories/{category}', 'Admin\ItemController@getCategory');
+    Route::get('/categories/{category}', 'Admin\ItemController@getCategory')->name('categoryitems');
     Route::get('admin/deal-of-week', 'Admin\ItemController@dealOfWeekItem')->name('admin.itemDealOfWeek')->middleware('auth');
     Route::get('/deal-of-week/status/{itemID}', 'Admin\ItemController@dealOfWeekStatus')->name('itemDealOfWeekStatus');
 
@@ -41,11 +41,19 @@ Route::group([
         Route::resource('customer', 'CustomerController');
         Route::resource('category', 'CategoryController');
 
+        //homeitem
+        Route::get('homeitem', 'ItemController@Homeitem')->name('homeitem.index');
+        Route::get('homeitem/create', 'ItemController@Create_Homeitem')->name('homeitem.create');
+        Route::post('homeitem/store', 'ItemController@Store_Homeitem')->name('homeitem.store');
+        Route::get('homeitem/edit/{homeitem}', 'ItemController@Edit_Homeitem')->name('homeitem.edit');
+        Route::put('homeitem/update/{homeitem}', 'ItemController@Update_Homeitem')->name('homeitem.update');
+        Route::delete('homeitem/destroy/{homeitem}', 'ItemController@Destroy_Homeitem')->name('homeitem.destroy');
+        //=======================================================================
+
         // item
         Route::resource('item', 'ItemController');
         Route::put('item/{item}/recommended', 'ItemController@recommend')->name('item.recommend');
         Route::delete('item/{item}/recommended', 'ItemController@unRecommend')->name('item.unrecommend');
-
         Route::resource('extra', 'ExtraController');
         Route::resource('without', 'WithoutController');
         Route::resource('order', 'OrderController');

@@ -650,6 +650,8 @@ class OrdersController extends BaseController
         
         $subtotal = $requestt->subtotal;
         $taxes = $requestt->taxes;
+        $noOffers=(count($noOffers)==0)?$noOffers:$noOffers[0];
+        $offers=(count($offers)==0)?$offers:$offers[0];
         $reorder = compact('location', 'offers', 'noOffers', 'total', 'subtotal', 'taxes', 'delivery_fees');
         // confirm order
         // show popup if offer have changes or price changed
