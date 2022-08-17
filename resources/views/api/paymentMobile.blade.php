@@ -24,10 +24,10 @@
                                     </button>
                                 </div>
                             @endif
-                            @if(Session::has('error'))
+                            @if(Session::has('err'))
                                 <div class="row mr-2 ml-2" >
                                     <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
-                                            id="type-error">{{Session::get('error')}}
+                                            id="type-error">{{Session::get('err')['company'][0]}}
                                     </button>
                                 </div>
                             @endif

@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\Extra;
 use App\Models\General;
 use App\Models\Offer;
+use App\Models\OrderItem;
 use App\Models\Without;
 use App\Models\PointsTransaction;
 use App\Traits\GeneralTrait;
@@ -442,8 +443,9 @@ class OrdersController extends BaseController
 
     public function re_order(Request $request)
     {
+        $message='success';
+        $validation=true;
         $order = Order::find($request->order_id);
-
         // check if order exists in DB
         if (!$order) {
             return $this->sendError("Order not found");
@@ -455,12 +457,31 @@ class OrdersController extends BaseController
 
         $offers = [];
         $noOffers = [];
+        $allItems = [];
+
+        if( $order->items->count() != OrderItem::where('order_id',$request->order_id)->count())
+        {
+            $message='item deleted';
+            $validation=false;
+            return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+
+        }
 
         foreach ($order->items as $item) {
             $extras_price = 0;
             $is_valid = false;
             $hasOffer = 0;
+            
+            if($item->price != OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('price')->first())
+            {
+                $message='item price changed';
+                $validation=false;
+                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+            }
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] < now()) {
+                $message='offer expired';
+                $validation=false;
+                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
                 $final_item_price = ($item_price * $quantity);
@@ -470,6 +491,7 @@ class OrdersController extends BaseController
                 }
                 $deletedOfferPrice += $final_item_price;
                 $hasOffer = 1;
+          
             }
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] >= now()) {
                 $quantity = $item->pivot->quantity;
@@ -483,6 +505,12 @@ class OrdersController extends BaseController
                 $hasOffer = 1;
             } 
             if ($item->pivot->offer_id == null) {
+                if(OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('offer_id')->first())
+                {
+                $message='offer deleted';
+                $validation=false;
+                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+                }
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
                 $final_item_price = ($item_price * $quantity);
@@ -507,7 +535,8 @@ class OrdersController extends BaseController
                 ]);
                 $hasOffer = 1;
                 $is_valid = true;
-            } else {
+            } 
+            else {
                 $items[] = collect([
                     'item_id' => $item->id,
                     'extras' => explode(', ', $item->pivot->item_extras),
@@ -567,16 +596,23 @@ class OrdersController extends BaseController
                     "item" => $item,
                     "type" => (Offer::find($item->pivot->offer_id))['offer_type'],
                 ];
+
                 if ($is_valid == true) {
                     $Offer_price = (((Offer::find($item->pivot->offer_id))['offer_type'] == 'discount') ? $this->calcOfferItem($item->pivot->offer_id, $item->id) : $item->pivot->offer_price) * $item->pivot->quantity;
                     if ($item->pivot->item_extras) {
                         $Offer_price += Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') * $item->pivot->quantity;
                     }
                 } else {
+                   
+                    $message='offer deleted';
+                    $validation=false;
+                    return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+                    
                     $Offer_price = (Item::find($item->id)->price) * $item->pivot->quantity;
                     if ($item->pivot->item_extras) {
                         $Offer_price += Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') * $item->pivot->quantity;
                     }
+
                 }
                 $offer = Offer::find($item->pivot->offer_id);
                 if ((Offer::find($item->pivot->offer_id))['offer_type'] == 'discount') {
@@ -587,8 +623,8 @@ class OrdersController extends BaseController
                 $offers[] = [
                     'offer' => $offer,
                     'order_items' => $order_items,
-                    'is_valid' => $is_valid,
-                    'final_offer_price' => $Offer_price,
+                    // 'is_valid' => $is_valid,
+                    // 'final_offer_price' => $Offer_price,
                 ];
             }
         }
@@ -650,18 +686,18 @@ class OrdersController extends BaseController
         
         $subtotal = $requestt->subtotal;
         $taxes = $requestt->taxes;
-        $noOffers=(count($noOffers)==0)?$noOffers:$noOffers[0];
-        $offers=(count($offers)==0)?$offers:$offers[0];
-        $reorder = compact('location', 'offers', 'noOffers', 'total', 'subtotal', 'taxes', 'delivery_fees');
+        $allItems=array_merge($noOffers,$offers);
+        $reorder = compact('location', 'allItems', 'total', 'subtotal', 'taxes', 'delivery_fees');
         // confirm order
         // show popup if offer have changes or price changed
-        if ($request->has('confirm') && $request->input('confirm')) {
-            $return = $this->store($requestt);
-            if ($return->getOriginalContent()['success']) {
-                return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
-            }
-        }
-        return $this->sendResponse($reorder, 'Success.');
+        // if ($request->has('confirm') && $request->input('confirm')) {
+        //     $return = $this->store($requestt);
+        //     if ($return->getOriginalContent()['success']) {
+        //         return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
+        //     }
+        // }
+     
+        return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>$reorder], '');
     }
 
     public function getById(Request $request, Order $order)

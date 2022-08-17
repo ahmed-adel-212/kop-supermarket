@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add New homeitem</h1>
+                    <h1>Edit New homeitem</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
                                     <select class="form-control categories " id="categories" name="category_id">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}" {{@if($item->id==$homeitem->category_id) selected @endif}}>
+                                            <option value="{{ $item->id }}" @if($item->id==$homeitem->category_id) selected @endif>
                                                 {{ $item['name_'.app()->getLocale()] }}
                                             </option>
                                         @endforeach
@@ -56,7 +56,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>homeitem Arabic Description</label>
-                                    <textarea class="form-control {!! $errors->first('description_ar', 'is-invalid') !!}" placeholder="Enter Item Arabic Description" name="description_ar">{{ old('description_ar') ?? "" }}</textarea>
+                                    <textarea class="form-control {!! $errors->first('description_ar', 'is-invalid') !!}" placeholder="Enter Item Arabic Description" name="description_ar">{{$homeitem->description_ar}}</textarea>
                                     {!! $errors->first('description_ar', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>homeitem English Description</label>
-                                    <textarea class="form-control {!! $errors->first('description_en', 'is-invalid') !!}" placeholder="Enter Item English Description" name="description_en">{{ old('description_en') }}</textarea>
+                                    <textarea class="form-control {!! $errors->first('description_en', 'is-invalid') !!}" placeholder="Enter Item English Description" name="description_en">{{ $homeitem->description_en }}</textarea>
                                     {!! $errors->first('description_en', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>homeitem number</label>
-                                    <input type="number" step="any" class="form-control {!! $errors->first('number', 'is-invalid') !!}" placeholder="Enter homeitem number" name="number" min='1' max='4' value="{{ old('number') }}">
+                                    <input disabled type="number" step="any" class="form-control {!! $errors->first('number', 'is-invalid') !!}" placeholder="Enter homeitem number" name="number" min='1' max='4' value="{{ $homeitem->number }}">
                                     {!! $errors->first('number', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
@@ -84,12 +84,21 @@
                                     <label>Image</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}" name="image" value="{{ old('image') }}">
+                                            <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}" name="image" value="{{ $homeitem->image }}">
                                             <label class="custom-file-label">Choose file</label>
                                         </div>
                                     </div>
                                     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
                                 </div>
+                                @if($homeitem->number==1)
+                                <p>dimension : 550*450</p>
+                                @elseif($homeitem->number==2)
+                                <p>dimension : 550*465</p>
+                                @elseif($homeitem->number==3)
+                                <p>dimension : 550*465</p>
+                                @elseif($homeitem->number==4)
+                                <p>dimension : 550*220</p>
+                                @endif
                             </div>
                     </div>
                 </div>
