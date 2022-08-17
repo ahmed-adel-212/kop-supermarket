@@ -31,6 +31,15 @@ class Order extends Model
         'points'
     ];
 
+    public $appends = [
+        'payment_type'
+    ];
+
+    public function getPaymentTypeAttribute()
+    {
+        return Payment::where('order_id', $this->id)->exists() ? 'online' : 'cash';
+    }
+
     public function customer()
     {
         return $this->belongsTo('App\Models\User', 'customer_id');
