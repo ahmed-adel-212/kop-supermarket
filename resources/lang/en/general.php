@@ -237,4 +237,5 @@ return [
     'loyality_earned' => 'Loyality Earned',
     'on' => 'On',
     'cart_empty' => 'your cart is empty, please add items to your cart first',
+    'cart_amount' => 'you can not exchange points more than what you have',
 ];

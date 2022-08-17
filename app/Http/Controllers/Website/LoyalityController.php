@@ -65,7 +65,7 @@ class LoyalityController extends Controller
 
     public function setValue($value, $points)
     {
-        session()->flash('loyality-points', compact('value', 'points'));
+        session(['loyality-points' => compact('value', 'points')]);
 
         return redirect()->route('get.cart');
     }

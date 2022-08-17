@@ -1,7 +1,7 @@
 @extends('layouts.profile')
 
 @section('title')
-    {{ __('general.loyality') }}
+    {{ __('general.Loyalty Program') }}
 @endsection
 
 @section('styles')
@@ -50,11 +50,14 @@
                         <div class="alert alert-danger alert-cart" role="alert" style="display: none">
                             {{ __('general.cart_empty') }}
                         </div>
+                        <div class="alert alert-danger alert-amount" role="alert" style="display: none">
+                            {{ __('general.cart_amount') }}
+                        </div>
                     </div>
                     <div class='row'>
                         @foreach ($pointValues as $val)
-                            <a href="{{ $cartHasItems ? route('loyalty.set', [$val->value, $val->for]) : 'javascript:void0' }}"
-                                class="col-4 point-value rounded @unless($cartHasItems) show-modal @endif">
+                            <a href="{{ ($cartHasItems && ($points['user_points'] >= $val->for)) ? route('loyalty.set', [$val->value, $val->for]) : 'javascript:void0' }}"
+                                class="col-4 point-value rounded @unless($cartHasItems) show-modal @endif @if($points['user_points'] < $val->for) show-amount @endif">
                                 <div class="card-body">
                                     <h4 class="d-inline">
                                         <span class="text-warning">{{ $val->value }}</span> {{ __('general.SR') }}
@@ -114,6 +117,14 @@
 
                     setTimeout(() => {
                         $('.alert-cart').fadeOut();
+                    }, 3000);
+                });
+
+                $('.show-amount').click(function() {
+                    $('.alert-amount').fadeIn();
+
+                    setTimeout(() => {
+                        $('.alert-amount').fadeOut();
                     }, 3000);
                 });
             });
