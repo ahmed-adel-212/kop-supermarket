@@ -322,7 +322,7 @@ class ItemController extends Controller
     public function Edit_Homeitem(Request $request ,HomeItem $homeitem)
     {
         $categories = Category::all();
-        $item->load('item','category');
+        $homeitem->load('item','category');
         return view('admin.homeitem.edit',compact('categories','homeitem'));
     }
     public function Update_Homeitem(Request $request ,HomeItem $homeitem)
