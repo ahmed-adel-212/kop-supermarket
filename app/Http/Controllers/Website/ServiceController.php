@@ -44,13 +44,15 @@ class ServiceController extends Controller
              }
             session()->forget('status');
             if (auth()->user()->carts()->get()->count() > 0) {
-                return redirect()->route('get.cart');
+                // return redirect()->route('get.cart');
+                return back();
             }
             return redirect()->intended();
         }
         session()->put(['err'=>$return['message']]);
         if (auth()->user()->carts()->get()->count() > 0) {
-            return redirect()->route('get.cart');
+            // return redirect()->route('get.cart');
+            return back();
         }
         return redirect()->intended();
     }
