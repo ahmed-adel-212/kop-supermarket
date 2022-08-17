@@ -22,4 +22,9 @@ class NotificationLog extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -16,7 +16,13 @@ class GetNotificationLogs extends BaseController
      */
     public function __invoke(Request $request)
     {
-        $logs = NotificationLog::where('user_id', auth()->id())->get();
+        $logs = NotificationLog::where('user_id', auth()->id());
+
+        if (auth()->user()->hasRole('cashier')) {
+            $logs = $logs->where('customer_id', '!=', null)->with('customer');
+        }
+
+        $logs = $logs->get();
 
         return $this->sendResponse($logs, 'notifications logs retrived successfully');
     }
