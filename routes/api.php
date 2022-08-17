@@ -163,6 +163,7 @@ Route::group(['prefix' => 'menu'], function () {
 
     Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 });
+Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
 
 // helper endpoints
 Route::get('/cities', "Api\HelperController@getCities");
@@ -189,7 +190,7 @@ Route::group(['prefix' => 'website'], function () {
 });
 Route::get('/payment/refund/{id}', 'Api\PaymentController@refund');
 Route::get('/payment/response', 'Api\PaymentController@paymentResponse');
-Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
+// Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
 Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paymentMobile');
 
 Route::get('/notifications/logs', 'Api\GetNotificationLogs')->name('notifications.logs');
