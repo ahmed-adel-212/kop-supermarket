@@ -395,6 +395,16 @@ class OfferController extends Controller
 
     public function setAsMain(Request $request, Offer $offer)
     {
+        // check if main offers more than two
+        $count = Offer::where('main', true)->count();
+
+        if ($count >= 2) {
+            return  redirect()->route('admin.offer.index')->with([
+                'type' => 'error',
+                'message' => 'you can not add more than 2 offers at homepage'
+            ]);
+        }
+
         $offer->main = true;
         $offer->save();
 
