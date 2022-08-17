@@ -518,4 +518,11 @@ class AuthController extends BaseController
 
         return $this->sendResponse($data, "User Loged in successfully");
     }
+
+    public function getUnAuth()
+    {
+        return response()->json([
+            'message' => "Unauthenticated.",
+        ]);
+    }
 }

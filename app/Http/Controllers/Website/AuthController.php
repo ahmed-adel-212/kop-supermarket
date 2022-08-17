@@ -44,7 +44,7 @@ class AuthController extends Controller
                 return redirect()->back()->withErrors(['errors' => 'Name Must Include  First Name And Last Name !'])->withInput();
             }
 
-            DB::beginTransaction();
+            // DB::beginTransaction();
 
             $request->merge([
                 'first_name' => $name[0],
@@ -65,7 +65,7 @@ class AuthController extends Controller
                 );
                 // return redirect()->back()->with(['success'=>__('auth.Sent SMS successfully.')]);
             } catch (\Exception $e) {
-                DB::rollBack();
+                // DB::rollBack();
 
                 return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
@@ -74,7 +74,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['errors' => 'Something Went Wrong!! please try again later']);
         }
-        DB::commit();
+        // DB::commit();
     }
 
     public function login(Request $request)

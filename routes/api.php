@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('unauthenticated', 'Api\AuthController@getUnAuth')->name('unauthenticated');
+
 Route::get('/home', 'Api\FrontController@getHomeSections')->name('home');
 
 // Authintication routes

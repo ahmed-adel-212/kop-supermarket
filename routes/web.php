@@ -65,7 +65,7 @@ Route::group([
 
 
         // reports
-        Route::group(['prefix' => 'reports', 'as' => 'report.' ,'middleware'=>'role:admin'], function () {
+        Route::group(['prefix' => 'reports', 'as' => 'report.', 'middleware' => 'role:admin'], function () {
             Route::get('customer', 'ReportController@getCustomer')->name('customer');
             Route::get('order', 'ReportController@getOrder')->name('order');
             Route::get('item', 'ReportController@getItem')->name('item');
@@ -77,7 +77,7 @@ Route::group([
         });
 
         //healthinfo
-        Route::group(['prefix' => 'healthinfo', 'as' => 'healthinfo.','middleware'=>'role:admin'], function () {
+        Route::group(['prefix' => 'healthinfo', 'as' => 'healthinfo.', 'middleware' => 'role:admin'], function () {
             Route::get('', 'HealthInfoController@index')->name('index');
             Route::get('create', 'HealthInfoController@create')->name('create');
             Route::post('store', 'HealthInfoController@store')->name('store');
@@ -85,11 +85,10 @@ Route::group([
             Route::get('edit/{id}', 'HealthInfoController@edit')->name('edit');
             Route::get('show/{id}', 'HealthInfoController@show')->name('show');
             Route::delete('delete/{id}', 'HealthInfoController@delete')->name('delete');
-
         });
 
         //news
-        Route::group(['prefix' => 'news', 'as' => 'news.','middleware'=>'role:admin'], function () {
+        Route::group(['prefix' => 'news', 'as' => 'news.', 'middleware' => 'role:admin'], function () {
             Route::get('', 'NewsController@index')->name('index');
             Route::get('create', 'NewsController@create')->name('create');
             Route::post('store', 'NewsController@store')->name('store');
@@ -97,11 +96,10 @@ Route::group([
             Route::get('edit/{id}', 'NewsController@edit')->name('edit');
             Route::get('show/{id}', 'NewsController@show')->name('show');
             Route::delete('delete/{id}', 'NewsController@delete')->name('delete');
-
         });
 
         //careers
-        Route::group(['prefix' => 'careers', 'as' => 'careers.','middleware'=>'role:admin'], function () {
+        Route::group(['prefix' => 'careers', 'as' => 'careers.', 'middleware' => 'role:admin'], function () {
             Route::get('', 'CareersController@index')->name('index');
             Route::get('create', 'CareersController@create')->name('create');
             Route::post('store', 'CareersController@store')->name('store');
@@ -111,7 +109,6 @@ Route::group([
             Route::get('{id}', 'CareersController@changestatus')->name('changestatus');
             Route::get('/{id}/applications', 'CareersController@GetApplications')->name('getapp');
             Route::delete('delete/{id}', 'CareersController@delete')->name('delete');
-
         });
 
         // AboutUS
@@ -124,8 +121,6 @@ Route::group([
         Route::resource('role', 'RoleController')->middleware('role:admin');
         Route::get('/permission/{id}', 'RoleController@permission')->middleware('role:admin')->name('get.permission');
         Route::patch('/permissions/{id}', 'RoleController@asignPermission')->middleware('role:admin')->name('asign.permission');
-
-
     });
 
 
@@ -168,13 +163,13 @@ Route::group([
         Route::get('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
 
         /*********** Auth Routes ***********/
-      
-      
+
+
         Route::group(['middleware' => ['auth']], function () {
             //for all ordering route needs branch_id
             Route::group(['middleware' => 'service'], function () {
                 // menu
-               Route::get('/item/{category_id}/{item_id}', 'MenuController@itemPage')->name('item.page');
+                Route::get('/item/{category_id}/{item_id}', 'MenuController@itemPage')->name('item.page');
 
                 //cart Route
                 Route::post('/cart', 'CartController@addCart')->name('add.cart');
@@ -201,7 +196,7 @@ Route::group([
                 Route::post('get-checkout/', [\App\Http\Controllers\Website\CartController::class, 'get_checkout'])->name('checkout');
                 Route::post('make-order/', [\App\Http\Controllers\Website\OrdersController::class, 'make_order'])->name('make_order');
                 /*****************End Checkout And Orders Routes ****************/
-           });
+            });
 
             //my orders
             Route::get('my-orders/', [\App\Http\Controllers\Website\OrdersController::class, 'my_orders'])->name('get.orders');
@@ -221,7 +216,9 @@ Route::group([
 
             //Loyalty Route
             Route::get('/loyalty/', [\App\Http\Controllers\Website\LoyalityController::class, 'get_loyalty'])->name('loyalty');
+            Route::get('/profile/loyality',  [\App\Http\Controllers\Website\LoyalityController::class, 'getPage'])->name('profile.loyality');
             Route::get('/exchange/', [\App\Http\Controllers\Website\LoyalityController::class, 'get_loyalty_exchange'])->name('exchange.points');
+            Route::get('/loyality/set/{value}/{points}', 'LoyalityController@setValue')->name('loyalty.set');
 
             //choose service delivery or take away
             Route::get('/takeaway', 'ServiceController@takeawayPage')->name('takeaway.page');
@@ -230,10 +227,7 @@ Route::group([
             // contactUS
             Route::get('/contact-us', 'ContactUSController@contactPage')->name('contact.page');
             Route::post('/contact', 'ContactUSController@store')->name('contact.store');
-
-
         });
-
     });
 
 
