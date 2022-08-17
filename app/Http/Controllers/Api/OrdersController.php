@@ -217,7 +217,7 @@ class OrdersController extends BaseController
         $cashiers = Branch::find($branch_id);
         if ($cashiers) {
             foreach ($cashiers->cashiers2 as $cashier) {
-                \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order");
+                \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order", null, null, $request->customer_id);
             }
         }
 
@@ -376,7 +376,7 @@ class OrdersController extends BaseController
             $cashiers = Branch::find($branch_id);
             if ($cashiers) {
                 foreach ($cashiers->cashiers2 as $cashier) {
-                    \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order");
+                    \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order", null, null, $request->customer_id);
                 }
             }
 

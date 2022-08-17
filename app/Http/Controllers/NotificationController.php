@@ -32,13 +32,13 @@ class NotificationController extends Controller
      * Push notifications to all users devices
      * @return void
      */
-    public static function pushNotifications($user_id, $message, $type = "Notification", $data_message = null, $chat_id = null)
+    public static function pushNotifications($user_id, $message, $type = "Notification", $data_message = null, $chat_id = null, $customer_id = null)
     {
         $tokens = NotiToken::where('user_id', $user_id)->get();
         $user = User::find($user_id);
         if ($user) {
             foreach($tokens as $token) {
-                self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true, $user_id);
+                self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true, $user_id, $customer_id);
             }
         }
     }
@@ -47,7 +47,7 @@ class NotificationController extends Controller
      * Push notifications to specific token
      * @return void
      */
-    public static function pushSingleNotification($token, $message, $type = "Notification", $data_message = null, $chat_id = null, $notification_sound = 1, $cashier_id)
+    public static function pushSingleNotification($token, $message, $type = "Notification", $data_message = null, $chat_id = null, $notification_sound = 1, $cashier_id, $customer_id = null)
     {
             $notification_sound = $notification_sound? true : false;
                 
@@ -75,7 +75,14 @@ class NotificationController extends Controller
                 'Content-Type: application/json'
             ];
             
-
+            NotificationLog::create([
+                'user_id' => $cashier_id,
+                'chat_id' => $chat_id,
+                'body' => $message,
+                'data' => $data_message,
+                'type' => $type,
+                'customer_id' => $customer_id,
+            ]);
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL,$fcmUrl);
@@ -88,16 +95,6 @@ class NotificationController extends Controller
             file_put_contents("test.txt", $result);
         
             curl_close($ch);
-
-            
-            NotificationLog::create([
-                'user_id' => FacadesAuth::check() ? auth()->id() : null,
-                'chat_id' => $chat_id,
-                'body' => $message,
-                'data' => $data_message,
-                'type' => $type,
-                'cashier_id' => $cashier_id,
-            ]);
     }
     
 }

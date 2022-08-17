@@ -411,7 +411,7 @@ class OrdersController extends Controller
             if ($cashiers->cashiers2) {
                 foreach ($cashiers->cashiers2 as $cashier) {
 
-                    \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order");
+                    \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order", null, null, $request->customer_id);
                 }
 
             }

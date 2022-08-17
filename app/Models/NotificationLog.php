@@ -16,6 +16,7 @@ class NotificationLog extends Model
         'body',
         'data',
         'type',
+        'customer_id',
     ];
 
     protected $casts = [

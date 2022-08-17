@@ -193,7 +193,7 @@ Route::get('/payment/response', 'Api\PaymentController@paymentResponse');
 // Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
 Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paymentMobile');
 
-Route::get('/notifications/logs', 'Api\GetNotificationLogs')->name('notifications.logs');
+Route::get('/notifications/logs/', 'Api\GetNotificationLogs')->name('notifications.logs');
 
 
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'favourites', 'as' => 'api.favourites.'], function () {
