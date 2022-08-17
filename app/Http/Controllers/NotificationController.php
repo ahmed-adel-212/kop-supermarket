@@ -38,8 +38,7 @@ class NotificationController extends Controller
         $user = User::find($user_id);
         if ($user) {
             foreach($tokens as $token) {
-                self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true);
-
+                self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true, $user_id);
             }
         }
     }
@@ -48,7 +47,7 @@ class NotificationController extends Controller
      * Push notifications to specific token
      * @return void
      */
-    public static function pushSingleNotification($token, $message, $type = "Notification", $data_message = null, $chat_id = null, $notification_sound = 1)
+    public static function pushSingleNotification($token, $message, $type = "Notification", $data_message = null, $chat_id = null, $notification_sound = 1, $cashier_id)
     {
             $notification_sound = $notification_sound? true : false;
                 
@@ -97,6 +96,7 @@ class NotificationController extends Controller
                 'body' => $message,
                 'data' => $data_message,
                 'type' => $type,
+                'cashier_id' => $cashier_id,
             ]);
     }
     
