@@ -463,7 +463,7 @@ class OrdersController extends BaseController
         {
             $message='item deleted';
             $validation=false;
-            return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+            return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>{}], '');
 
         }
 
@@ -476,12 +476,12 @@ class OrdersController extends BaseController
             {
                 $message='item price changed';
                 $validation=false;
-                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>{}], '');
             }
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] < now()) {
                 $message='offer expired';
                 $validation=false;
-                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>{}], '');
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
                 $final_item_price = ($item_price * $quantity);
@@ -509,7 +509,7 @@ class OrdersController extends BaseController
                 {
                 $message='offer deleted';
                 $validation=false;
-                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>{}], '');
                 }
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
@@ -606,7 +606,7 @@ class OrdersController extends BaseController
                    
                     $message='offer deleted';
                     $validation=false;
-                    return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>[]], '');
+                    return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>{}], '');
                     
                     $Offer_price = (Item::find($item->id)->price) * $item->pivot->quantity;
                     if ($item->pivot->item_extras) {
