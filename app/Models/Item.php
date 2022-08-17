@@ -18,7 +18,7 @@ class Item extends Model
     protected $fillable = ['name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image'];
 
     protected $hidden = ["branches"];
-    protected $appends = ['is_hidden', 'dough_type', 'favoured'];
+    protected $appends = ['is_hidden', 'dough_type', 'favoured', 'price_without_tax'];
 
     public $casts = ['main' => 'boolean'];
 
@@ -89,6 +89,11 @@ class Item extends Model
         }
 
         return DB::table('favourite_item')->where('user_id', Auth::id())->where('item_id', $this->id)->exists();
+    }
+
+    public function getPriceWithoutTaxAttribute()
+    {
+        return round($this->price / 1.15, 2);
     }
 
     public function isVisibleForAuthUser()
