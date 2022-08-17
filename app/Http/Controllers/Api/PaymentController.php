@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\ClientException;
 
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class PaymentController extends BaseController
 
     public function get_payment(Request $request)
     {
-
+        $amount=$request->amount;
         $validator_rules = [
             'source.name' => 'required',
             'source.cvc' => 'required|max:4|min:3',
@@ -66,14 +67,15 @@ class PaymentController extends BaseController
             if ($response->getStatusCode() == '200')
                 return redirect($redir[1]);
 
-        } catch (GuzzleException $exception) {
+        } catch (ClientException  $exception) {
             //$responseBody = $exception->getResponse()->getBody(true)->getContents();
             $response = json_decode($exception->getResponse()->getBody(true)->getContents(), true);
+            // dd($response);
             $errors = $response['errors'];
             if ($errors) {
                 session()->flash('err', $errors);
             }
-            return redirect(route('get.paymentMobile'))->withInput();
+            return redirect(route('get.paymentMobile',$amount))->withInput();
         }
 
     }
