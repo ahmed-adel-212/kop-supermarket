@@ -61,16 +61,16 @@
                 <div class="container">
                     <div class="row cart-header">
                         <div class="col-lg-6">
-                            {{__('general.Name')}}
+                            {{ __('general.Name') }}
                         </div>
                         <div class="col-lg-3">
-                            {{__('general.Quantity')}}
+                            {{ __('general.Quantity') }}
                         </div>
                         <div class="col-lg-1">
                             {{ __('menu.Calories') }}
                         </div>
                         <div class="col-lg-1">
-                            {{__('menu.Price')}}
+                            {{ __('menu.Price') }}
                         </div>
                         <div class="col-lg-1"></div>
                     </div>
@@ -91,13 +91,14 @@
                             <div class="col-4 col-lg-3">
                                 <div class="form-group stepper-type-2 quantity-up-{{ $item->id }}">
                                     <input style="width: 25%;" type="number"
-                                        class="form-control text-bold quantity_ch quantity_change{{ $item->id }}" value="1" readonly>
+                                        class="form-control text-bold quantity_ch quantity_change{{ $item->id }}"
+                                        value="1" readonly>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
                                     <p>{{ $item->calories }}
-                                        </p>
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
@@ -113,7 +114,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <form action="{{route('re.order', $order->id)}}" method="get">
+                    <form action="{{ route('re.order', $order->id) }}" method="get">
                         @csrf
                         <div class="row">
                             <div class="col-lg-6 offset-lg-6">
@@ -122,8 +123,7 @@
                                         {{ __('general.Sub Total') }}: </b> <span
                                             id="subtotal"style="font-size: smaller;">{{ $order['subtotal'] }}
                                             {{ __('general.SR') }}</span>
-                                        <input id="subtotalinput" hidden
-                                            name="subtotal"value="{{ $order['subtotal'] }}" />
+                                        <input id="subtotalinput" hidden name="subtotal"value="{{ $order['subtotal'] }}" />
                                     </li>
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Taxes') }}
                                             : </b>
@@ -148,15 +148,54 @@
                                         </li>
                                     @endif
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Total') }}
-                                            : </b> <span style="font-size: smaller;"
-                                            id="total">{{ $order['total'] }} {{ __('general.SR') }}</span>
+                                            : </b> <span style="font-size: smaller;" id="total">{{ $order['total'] }}
+                                            {{ __('general.SR') }}</span>
                                         <input id="totalinput" hidden name="total" value="{{ $order['total'] }}" />
                                     </li>
-                                    @if(strpos(request()->getUri(), 'reorder') > -1)
-                                    <li><p>{{__('general.continue')}}</p><button type="submit" class="default-btn"
-                                        style="border-radius: 5px;">
-                                    {{__('general.Checkout')}}<span></span></button></li>
+                                    @if (strpos(request()->getUri(), 'reorder') > -1)
+                                        <li>
+                                            <p>{{ __('general.continue') }}</p>
+                                            {{-- <button type="submit" class="default-btn"
+                                                style="border-radius: 5px;">
+                                                {{ __('general.Checkout') }}<span></span>
+                                            </button> --}}
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn default-btn rounded" data-bs-toggle="modal"
+                                                data-bs-target="#confirm-order">
+                                                {{ __('general.Checkout') }}
+                                                <span></span>
+                                            </button>
+                                        </li>
                                     @endif
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="confirm-order" tabindex="-1"
+                                        aria-labelledby="confirm-orderLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirm-orderLabel">
+                                                        {{ __('general.Confirm Order') }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{__('general.confirm_message')}}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary default-btn rounded"
+                                                        data-bs-dismiss="modal">
+                                                        {{ __('general.Cancel') }}
+                                                        <span></span>
+                                                    </button>
+                                                    <button type="submit" class="btn default-btn rounded">
+                                                        {{ __('general.Reorder') }}
+                                                        <span></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </ul>
                             </div>
                         </div>
@@ -164,7 +203,7 @@
                 </div>
                 </div>
             </section>
-            <!--/.cart-section-->            
+            <!--/.cart-section-->
         </main>
     @endsection
 
