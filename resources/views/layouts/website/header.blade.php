@@ -22,7 +22,7 @@
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="#">Pages</a>
 ======= --}}
-                        <li><a href="javascript:void0">{{ __('header.Menu') }}</a>
+                        <li><a href="javascript:void(0)">{{ __('header.Menu') }}</a>
                             {{-- >>>>>>> ahmed --}}
                             <ul>
                                 <li><a href="{{ route('menu.page') }}">{{ __('header.Menu') }}</a></li>
@@ -34,7 +34,7 @@
                             </ul>
                         </li>
                         {{-- <li><a href="{{ route('get.cart') }}">{{ __('header.Cart') }}</a></li> --}}
-                        <li><a href="javascript:void0">{{ __('general.contact_us') }}</a>
+                        <li><a href="javascript:void(0)">{{ __('general.contact_us') }}</a>
                             <ul>
                                 <li><a href="{{ route('aboutUS.page') }}">
                                         {{ __('general.about_us') }}</a></li>
@@ -45,13 +45,13 @@
                         </li>
 
 
-                        <li><a href="javascript:void0">{{ __('general.Gallery') }}</a>
+                        <li><a href="javascript:void(0)">{{ __('general.Gallery') }}</a>
                             <ul>
                                 <li><a href="{{ route('gallery.page') }}">{{ __('general.Gallery') }}</a></li>
                                 <li><a href="{{ route('video.page') }}">{{ __('general.Video Library') }}</a></li>
                             </ul>
                         </li>
-                        <li><a href="javascript:void0">
+                        <li><a href="javascript:void(0)">
                                 {{ __('general.blog') }}
                             </a>
                             <ul>
@@ -64,13 +64,13 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('careers.all') }}">{{ __('general.Careers') }}</a></li>
-                        <li><a href="javascript:void0">{{ __('general.language') }}</a>
+                        <li><a href="javascript:void(0)">{{ __('general.language') }}</a>
                             <ul>
                                 @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                     <li
                                         style="{{ strpos(url()->current(), "/$localeCode") > 0 ? 'background-color: #ff8e28;color: #fff' : '' }}">
                                         <a rel="alternate" hreflang="{{ $localeCode }}"
-                                            href="{{ strpos(url()->current(), "/$localeCode") > -1 ? 'javascript:void0' : LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                                            href="{{ strpos(url()->current(), "/$localeCode") > -1 ? 'javascript:void(0)' : LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
                                             class='w-full'>
                                             @if ($localeCode === 'ar')
                                                 <img src="{{ asset('/website2-assets/img/icons/sa.svg') }}"
@@ -88,7 +88,7 @@
                         </li>
                         @auth
                             <li>
-                                <a href="javascript:void0"><i class="fas fa-user"></i></a>
+                                <a href="javascript:void(0)"><i class="fas fa-user"></i></a>
                                 <ul>
                                     <li>
                                         <a href="{{ route('profile') }}">
@@ -110,7 +110,7 @@
                             <li>
                                 <a href="{{ route('get.cart') }}" class="cart">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <sup id="cart-count" class="badge default-bg">0</sup>
+                                    <sup class="cart-count badge default-bg">0</sup>
                                 </a>
                             </li>
                         @else

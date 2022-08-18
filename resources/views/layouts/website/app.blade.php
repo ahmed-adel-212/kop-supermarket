@@ -189,7 +189,7 @@
             url: '{{ route('get.cart-res') }}',
             success: function(response) {
 
-                $('#cart-count').text(response.data)
+                $('.cart-count').text(response.data)
             }
         });
     }
