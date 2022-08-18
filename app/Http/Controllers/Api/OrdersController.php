@@ -284,7 +284,7 @@ class OrdersController extends BaseController
                 'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                 'price' => $itemPrice,
-                'pure_price' => $item->price,
+                'pure_price' => $orderItem->price,
                 'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
                 'offer_id' => optional($offer)->id,
                 'offer_last_updated_at' => optional($offer)->updated_at,
@@ -444,7 +444,7 @@ class OrdersController extends BaseController
                     'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                     'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                     'price' => $itemPrice,
-                    'pure_price' => $item->price,
+                    'pure_price' => $orderItem->price,
                     'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
                     'offer_id' => optional($offer)->id,
                     'offer_last_updated_at' => optional($offer)->updated_at,
