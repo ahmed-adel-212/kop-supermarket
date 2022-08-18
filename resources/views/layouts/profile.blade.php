@@ -75,15 +75,6 @@
                                     </div>
                                 </a>
                             </li>
-                            <li
-                                class="list-group-item list-group-item-action {{ request()->routeIs('profile.loyality') ? 'default-bg text-white' : '' }}">
-                                <a class="nav-link" id="loyality-tab" href='{{ route('profile.loyality') }}'>
-                                    <h6 class="font-weight-bold mb-1">
-                                        {{ __('general.Loyalty Program') }}</h6>
-                                    <p class="small text-muted m-0">
-                                        {{ __('general.Loyalty Points') }}</p>
-                                </a>
-                            </li>
                         </ol>
                     </div>
                 </div>

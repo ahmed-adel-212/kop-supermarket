@@ -6,7 +6,7 @@
 @yield('pageName')
 
 <!-- Loader-->
-<div id="page-preloader"><span class="spinner border-t_second_b border-t_prim_a"></span></div>
+<!-- <div id="page-preloader"><span class="spinner border-t_second_b border-t_prim_a"></span></div> -->
 <!-- Loader end-->
 
 <div class="page-wrapper">
@@ -44,7 +44,7 @@
                             <div class="bg-success rounded shadow-sm w-100 h-100">
                                 <div class="w-100 text-center h-100">
                                     <a href="{{route('takeaway.page')}}"><h1 class="m-0 w-100 h-100 bg"
-                                                                             style="color: #fff;padding: 5%;">{{__('general.Take away')}}</h1>
+                                                                             style="color: #fff;padding: 5%;font-size: 38px;">{{__('general.Take away')}}</h1>
                                     </a>
                                 </div>
                             </div>
