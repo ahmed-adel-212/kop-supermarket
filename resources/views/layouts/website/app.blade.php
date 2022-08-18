@@ -180,15 +180,9 @@
 
     });
 
-<<<<<<< HEAD
     @if(session()->has('err'))
     alert("{{__('general.'.session()->get('err')['company'][0])}}");
     {{session()->forget('err')}}
-=======
-    @if (session()->has('err'))
-        alert("{{ __('general.' . session()->get('err')) }}");
-        {{ session()->forget('err') }}
->>>>>>> ahmed
     @endif
 
 
