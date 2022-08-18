@@ -67,10 +67,11 @@
                         <li><a href="javascript:void0">{{ __('general.language') }}</a>
                             <ul>
                                 @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                    <li style="{{ strpos(url()->current(), "/$localeCode") > 0 ? 'background-color: #ff8e28;color: #fff' : '' }}">
+                                    <li
+                                        style="{{ strpos(url()->current(), "/$localeCode") > 0 ? 'background-color: #ff8e28;color: #fff' : '' }}">
                                         <a rel="alternate" hreflang="{{ $localeCode }}"
                                             href="{{ strpos(url()->current(), "/$localeCode") > -1 ? 'javascript:void0' : LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
-                                             class='w-full'>
+                                            class='w-full'>
                                             @if ($localeCode === 'ar')
                                                 <img src="{{ asset('/website2-assets/img/icons/sa.svg') }}"
                                                     width="16" height="16" />
@@ -85,6 +86,45 @@
                                 @endforeach
                             </ul>
                         </li>
+                        @auth
+                            <li>
+                                <a href="javascript:void0"><i class="fas fa-user"></i></a>
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('profile') }}">
+                                            {{ __('general.profile') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <form action="{{ route('logout') }}" method='post'>
+                                                @csrf
+                                                <button class="" type="submit">
+                                                    {{ __('general.logout') }}
+                                                </button>
+                                            </form>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ route('get.cart') }}">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <sup>5</sup>
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ route('get.login') }}">
+                                    {{ __('auth.login') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('get.sign.up') }}">
+                                    {{ __('auth.signup') }}
+                                </a>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
 

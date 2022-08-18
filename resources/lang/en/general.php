@@ -243,4 +243,8 @@ return [
     'chef' => 'Chef',
     'Personal information' => 'Personal information',
     'language' => 'select Language',
+    'login' => 'Log in',
+    'signup' => 'sign up',
+    'logout' => 'Logout',
+    'profile' => 'My Profile',
 ];
