@@ -91,7 +91,7 @@ class CartController extends Controller
             $request->merge(['dough_type_en' => $dough_type[1]]);
         }
 
-      return  $request->merge(['withouts' => json_encode($request->withouts)]);
+        $request->merge(['withouts' => json_encode($request->withouts)]);
         $request->merge(['extras' => json_encode($request->extras)]);
         $request->merge(['offer_price' => $request->offer_price]);
 

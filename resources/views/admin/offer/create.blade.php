@@ -151,6 +151,22 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Website Image</label>
+                                    <div class="custom-file">
+                                        <input type="file"
+                                            class="custom-file-input {!! $errors->first('website_image', 'is-invalid') !!}"
+                                            id="exampleInputFile" name="website_image" value="{{old('website_image')}}">
+                                        @error('website_image')
+                                        <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="exampleInputOfferType">Offer Type</label>

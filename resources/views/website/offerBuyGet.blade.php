@@ -21,12 +21,21 @@
 @section('pageName') <body class="page-catalog dm-dark"> @endsection
 
 @section('content')
+<section class="page-header">
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                 
+                    <h2>{{__('general.Offer Menu')}}</h2>
+                  
+            </div>
+        </section><!--/.page-header-->
     <main class="page-main">
         <div class="page-content">
             <div class="uk-container">
                 <div>
                     <div class="py-2">
-                        <h2 class="mb-3 mt-0">{{__('general.Offer Menu')}}</h2>
+                        <!-- <h2 class="mb-3 mt-0">{{__('general.Offer Menu')}}</h2> -->
                         <div class="row">
                             <div class="product-full-card__tabs w-100 mt-0">
                                 <form id="addToCard" action="{{route('add.cart')}}" method="POST">
@@ -42,7 +51,7 @@
                                                         @foreach($offers['details']['buy_items'] as $buyItem)
                                                             <input type="hidden" name="offer_price[]" value="{{round($buyItem['price'], 2)}}">
                                                             <div class="gold-members p-3 border-bottom">
-                                                                <a class="btn btn-primary float-right buyBtnAdd" href="#">{{__('general.Buy')}}</a>
+                                                                <a class="default-btn float-right buyBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$buyItem['id']}}" name="buy_items[]" class="d-none checkItem">
                                                                         <img class="img-thumbnail rounded h-100 w-100" src="{{$buyItem->image}}" alt="">
@@ -66,7 +75,7 @@
                                                     <div class="rounded border" style="background-color: #f5f5f5!important;box-shadow: 0.1rem 0rem 1.5rem rgb(0 0 0 / 20%);">
                                                         @foreach($offers['details']['get_items'] as $getItem)
                                                             <div class="gold-members p-3 border-bottom">
-                                                                <a class="btn btn-primary float-right getBtnAdd" href="#">{{__('general.Buy')}}</a>
+                                                                <a class="default-btn float-right getBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$getItem['id']}}" name="get_items[]" class="d-none checkItem">
                                                                         <img class="img-thumbnail rounded h-100 w-100" src="{{$getItem->image}}" alt="">
@@ -84,7 +93,7 @@
                                             </div>
                                         @endif
                                             <div class="col-sm-3 mt-4 offset-9">
-                                                <button class="uk-button submitOffer" style="@if(app()->getLocale() == 'en') margin-left: 50px; @else margin-right: 115px; @endif" type="submit"> <span>{{__('general.Confirm Offer')}}</span></button>
+                                                <button class="default-btn submitOffer" style="@if(app()->getLocale() == 'en') margin-left: 50px; @else margin-right: 115px; @endif" type="submit"> {{__('general.Confirm Offer')}}<span></span></button>
                                             </div>
                                     </div>
                                 </form>
