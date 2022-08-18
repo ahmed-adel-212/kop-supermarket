@@ -251,4 +251,6 @@ return [
     'checkout_tilte' => 'Your Order',
     'payment_title' => 'Complete Payment',
     'offers_title' => 'Find The Best Offers',
+    'verification' => 'Verification Code',
+    'verification_title' => 'Enter Verification Code',
 ];

@@ -274,4 +274,6 @@ return [
 'checkout_tilte' => 'الطلب الخاص بك',
 'payment_title' => 'إستكمال عملية الدفع',
 'offers_title' => 'ابحث عن أفضل العروض',
+'verification' => 'رمز التحقق',
+'verification_title' => 'ادخل رمز التحقق',
 ];

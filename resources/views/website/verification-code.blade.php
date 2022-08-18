@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') Verification Account @endsection
+@section('title') {{__('general.verification')}} @endsection
 
 @section('styles')
     <style>
@@ -43,7 +43,25 @@
 
     @section('content')
         <main class="page-main">
-            @if(Session::has('success'))
+            <section class="page-header"
+            {{-- style="background-image: url({{ asset('website-assets/img/pages/contacts/bg-first-screen.jpg') }})" --}}
+            style="background-image: url('/website2-assets/img/page-header-theme.jpg')"
+            >
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                    <h4 class="text-">
+                        {{ __('general.verification') }}
+                    </h4>
+                    <h2 class="text-">
+                        {{ __('general.verification_title') }}
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <!--/.page-header-->
+            <div class="col-10 text-center mx-auto">
+                @if(Session::has('success'))
                  <div class="row mr-2 ml-2">
                     <button type="text" class="btn btn-lg btn-block btn-outline-success mb-2"
                             id="type-error">{{Session::get('success')}}
@@ -57,6 +75,7 @@
                     </button>
                 </div>
             @endif
+            </div>
                  <div class="container padding-bottom-3x mb-2">
                     <div class="row justify-content-center">
                         <div class="col-lg-8 col-md-10">
