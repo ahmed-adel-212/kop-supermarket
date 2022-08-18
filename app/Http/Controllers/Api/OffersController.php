@@ -418,6 +418,7 @@ class OffersController extends BaseController
                             'dough_type_ar' => $item->dough_type_ar,
                             'dough_type_en' => $item->dough_type_en,
                             'price' => $item->price,
+                            'pure_price' => $item->price,
                             'offer_price' => $item->offer_price + (Extra::whereIn('id', (array)$item->item_extras)->sum('price')),
                             'offer_id' =>  $offer['offer']->id, // TODO: Add offer_id
                             'offer_last_updated_at' =>  $offer['offer']->updated_at, // TODO: Add offer_last_updated_at
@@ -434,6 +435,7 @@ class OffersController extends BaseController
                             'dough_type_ar' => $item->dough_type_ar,
                             'dough_type_en' => $item->dough_type_en,
                             'price' => $item->price,
+                            'pure_price' => $item->price,
                             'offer_price' => null,
                             'offer_id' =>  null, // TODO: Add offer_id
                             'offer_last_updated_at' =>  $offer['offer']->updated_at, // TODO: Add offer_last_updated_at
@@ -453,6 +455,7 @@ class OffersController extends BaseController
                     'dough_type_ar' => $offer['order_items']->dough_type_ar,
                     'dough_type_en' => $offer['order_items']->dough_type_en,
                     'price' => $offer['order_items']->price,
+                    'pure_price' => $offer['order_items']->price,
                     'offer_price' => null,
                     'offer_id' => null, // TODO: Add offer_id
                     'offer_last_updated_at' => null, // TODO: Add offer_last_updated_at

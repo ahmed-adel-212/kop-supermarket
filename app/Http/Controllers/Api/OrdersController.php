@@ -260,6 +260,7 @@ class OrdersController extends BaseController
                 'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                 'price' => $itemPrice,
+                'pure_price' => $item->price,
                 'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
                 'offer_id' => optional($offer)->id,
                 'offer_last_updated_at' => optional($offer)->updated_at,
@@ -419,6 +420,7 @@ class OrdersController extends BaseController
                     'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                     'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                     'price' => $itemPrice,
+                    'pure_price' => $item->price,
                     'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
                     'offer_id' => optional($offer)->id,
                     'offer_last_updated_at' => optional($offer)->updated_at,
@@ -472,23 +474,9 @@ class OrdersController extends BaseController
             $is_valid = false;
             $hasOffer = 0;
 
-            $orderItem = OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->first();
-            $orderItemExtras = null;
-            if ($orderItem['extras']) {
-                $orderItemExtras = Extra::whereIn('id', $orderItem['extras'])->get();
-            }
+           
 
-            $orderItemWithouts = null;
-            if ($orderItem['withouts']) {
-                $orderItemWithouts = Without::whereIn('id', $orderItem['withouts'])->get();
-            }
-            $extras = $orderItemExtras ? $orderItemExtras->sum('price') : 0;
-            $withouts = $orderItemWithouts ? $orderItemWithouts->sum('price') : 0;
-            $itemPrice = $item->price + $extras + $withouts;
-
-            dd($itemPrice, $orderItem->price, $request->order_id, $item->id);
-
-            if($item->price != OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('price')->first())
+            if($item->price != OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('pure_price')->first())
             {
                 $message='item price changed';
                 $validation=false;

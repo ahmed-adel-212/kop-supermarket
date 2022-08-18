@@ -23,6 +23,7 @@ class OrderItem extends Model
         'offer_price',
         'offer_id',
         'offer_last_updated_at',
+        'pure_price',
     ];
 
     public function order()

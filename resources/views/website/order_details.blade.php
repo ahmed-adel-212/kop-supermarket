@@ -240,7 +240,7 @@
                                 return;
                             }
 
-                            
+                            window.location.href = "{{route('get.cart')}}";
                         },
                         error: function(err) {
                             // console.log(err);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrdersController as ApiOrdersController;
 use App\Models\Branch;
 use App\Models\Extra;
@@ -58,7 +59,6 @@ class OrdersController extends Controller
                 session()->forget('point_claim_value');
             }
             return redirect()->route('get.cart')->with(['success' => __('general.Your order been submitted successfully')]);
-
         }
     }
 
@@ -172,10 +172,8 @@ class OrdersController extends Controller
         });
         if ($reorder != null) {
             return view('website.order_details', compact('items', 'order', 'reorder'));
-
         } else {
             return view('website.order_details', compact('items', 'order'));
-
         }
     }
 
@@ -207,7 +205,7 @@ class OrdersController extends Controller
                     $final_item_price += $extras_price;
                 }
                 $deletedOfferPrice += $final_item_price;
-            } 
+            }
             if ($item->pivot->offer_id == null) {
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
@@ -247,9 +245,9 @@ class OrdersController extends Controller
             }
         }
 
-//        $branch_id = session()->get('branch_id');
-//        $address_id = session()->get('address_id');
-//        $service_type = session()->get('service_type');
+        //        $branch_id = session()->get('branch_id');
+        //        $address_id = session()->get('address_id');
+        //        $service_type = session()->get('service_type');
         $request = new \Illuminate\Http\Request();
         $request = $request->merge([
             'subtotal' => ($deletedOfferPrice != 0) ? $deletedOfferPrice : $order->subtotal,
@@ -257,25 +255,22 @@ class OrdersController extends Controller
         $request = $request->merge([
             'taxes' => round($request->subtotal * .15, 2),
         ]);
-        if($order->points_paid != 0){
-            if(session('point_claim_value'))
-            {
+        if ($order->points_paid != 0) {
+            if (session('point_claim_value')) {
                 $request = $request->merge([
                     'total' => ($deletedOfferPrice != 0) ? $deletedOfferPrice + $order->delivery_fees + $request->taxes - $request->points_paid : $order->total + $order->points_paid - session('point_claim_value'),
                 ]);
-            }else{
+            } else {
                 $request = $request->merge([
                     'total' => ($deletedOfferPrice != 0) ? $deletedOfferPrice + $order->delivery_fees + $request->taxes : $order->total + $order->points_paid,
                 ]);
             }
-        }
-        else{
-            if(session('point_claim_value'))
-            {
+        } else {
+            if (session('point_claim_value')) {
                 $request = $request->merge([
                     'total' => ($deletedOfferPrice != 0) ? $deletedOfferPrice + $order->delivery_fees + $request->taxes - session('point_claim_value') : $order->total - session('point_claim_value'),
                 ]);
-            }else{
+            } else {
                 $request = $request->merge([
                     'total' => ($deletedOfferPrice != 0) ? $deletedOfferPrice + $order->delivery_fees + $request->taxes : $order->total,
                 ]);
@@ -301,9 +296,7 @@ class OrdersController extends Controller
         }
         if ($return['success']) {
             return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
-
         }
-
     }
 
     protected function calcOfferItem($offer_id, $item_id)
@@ -336,7 +329,6 @@ class OrdersController extends Controller
             ]);
             if ($validator->fails()) {
                 return ['error' => $validator->errors()];
-
             }
             $customerAddress = $customer->addresses->where('id', $request->address_id)->first();
             // get the branch covers customer area and open
@@ -352,15 +344,12 @@ class OrdersController extends Controller
                         $branch_id = $branch->id;
                     } else {
                         return ['error' => 'sorry there is no branch cover this area'];
-
                     }
                 } else {
                     return ['error' => 'sorry there is no branch cover this area'];
-
                 }
             } else {
                 return ['error' => 'sorry there is no branch cover this area'];
-
             }
         }
 
@@ -378,7 +367,6 @@ class OrdersController extends Controller
 
             if (!$branch) {
                 return ['error' => 'there is no branch by this id'];
-
             }
 
             $branch_id = $branch->id;
@@ -404,7 +392,6 @@ class OrdersController extends Controller
         $order = Order::create($orderData);
         if (!$order) {
             return ['error' => 'Order not found'];
-
         }
         // send notification to all user_branches
         $cashiers = Branch::find($branch_id);
@@ -414,7 +401,6 @@ class OrdersController extends Controller
 
                     \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order", null, null, $request->customer_id);
                 }
-
             }
         }
 
@@ -457,15 +443,16 @@ class OrdersController extends Controller
                 'dough_type_ar' => ($item['dough_type_ar']) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => ($item['dough_type_en']) ? $item['dough_type_en'] : null,
                 'price' => $itemPrice,
+                'pure_price' => $item->price,
                 'offer_price' => ($item['offer_price'] && $item['offer_price'] != null) ? $itemOfferPrice : null, // TODO: Remove price
                 'offer_id' => optional($offer)->id,
-                'offer_last_updated_at' => optional($offer)->updated_at,//??
+                'offer_last_updated_at' => optional($offer)->updated_at, //??
                 'quantity' => ($item['quantity']) ? $item['quantity'] : 1
             ]);
         }
 
 
-        return ['success' => true, 'data' => $order];
+        return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
     }
 
     public function checkIfOrderIsDirty(Request $request, int $id)
@@ -474,7 +461,8 @@ class OrdersController extends Controller
         $request->merge([
             'order_id' => $id,
         ]);
-        $request->order_id = $id;
+
+        // $request->order_id = $id;
         $res = (app(ApiOrdersController::class)->re_order($request))->getOriginalContent();
 
         if (!isset($res['data'])) {
@@ -484,7 +472,25 @@ class OrdersController extends Controller
         $res = $res['data'];
 
         if ($res['validation'] === true) {
-            $this->re_order($id);
+            $order = Order::findOrFail($id);
+            foreach ($order->items as $item) {
+                $request->merge([
+                    'item_id' => $item->id,
+                    'extras' => $item->pivot->extras,
+                    'withouts' => $item->pivot->withouts,
+                    'dough_type_ar' =>  $item->pivot->dough_type_ar,
+                    'dough_type_en' =>  $item->pivot->dough_type_en,
+                    'quantity' =>  $item->pivot->quantity,
+                    'offer_id' =>  $item->pivot->offer_id,
+                    'offer_price' =>  $item->pivot->offer_price,
+                    'price' => $item->pivot->price,
+                ]);
+                $cart = (app(CartController::class)->addCart($request))->getOriginalContent();
+                if ($cart['success'] !== true) {
+                    break;
+                    return redirect()->route('menu.page');
+                }
+            }
         }
 
         return response()->json($res);
