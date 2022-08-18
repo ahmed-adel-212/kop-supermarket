@@ -247,4 +247,7 @@ return [
     'signup' => 'sign up',
     'logout' => 'Logout',
     'profile' => 'My Profile',
+    'branch_title' => 'Select Branch',
+    'checkout_tilte' => 'Your Order',
+    'payment_title' => 'Complete Payment',
 ];

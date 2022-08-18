@@ -15,7 +15,19 @@
     <body class="page-article dm-light"> @endsection
 
     @section('content')
-
+    <section class="page-header" style="background-image: url('/website2-assets/img/page-header-theme.jpg')">
+        <div class="bg-shape grey"></div>
+        <div class="container">
+            <div class="page-header-content">
+                <h4>
+                    {{__('general.Checkout')}}
+                </h4>
+                <h2>
+                    {{__('general.checkout_tilte')}}
+                </h2>
+            </div>
+        </div>
+    </section><!--/.page-header-->
     <section class="checkout-section bg-grey padding">
             <div class="container">
                 <div class="row">

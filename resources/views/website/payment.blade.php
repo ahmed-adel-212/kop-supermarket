@@ -10,6 +10,24 @@
     <body class="page-article dm-dark"> @endsection
 
     @section('content')
+    <section class="page-header"
+            {{-- style="background-image: url({{ asset('website-assets/img/pages/contacts/bg-first-screen.jpg') }})" --}}
+            style="background-image: url('/website2-assets/img/page-header-theme.jpg')"
+            >
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                    <h4 class="text-">
+                        {{ __('general.Payment') }}
+                    </h4>
+                    <h2 class="text-">
+                        {{ __('general.payment_title') }}
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <!--/.page-header-->
+
         <div class="card mr-auto ml-auto mt-3">
             <div class="card-body">
                 <div class="row">
@@ -102,7 +120,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <button type="submit" class="uk-button btn w-100">{{__('general.Purchase')}}</button>
+                                <button type="submit" class="default-btn btn rounded">{{__('general.Purchase')}}
+                                    <span></span>
+                                </button>
 
                             </form>
                         </div>

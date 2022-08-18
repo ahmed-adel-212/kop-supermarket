@@ -270,4 +270,7 @@ return [
 'signup' => 'مستخدم جديد',
 'logout' => 'تسجيل الخروج',
 'profile' => 'الملف الشخصى',
+'branch_title' => 'إختر الفرع',
+'checkout_tilte' => 'الطلب الخاص بك',
+'payment_title' => 'إستكمال عملية الدفع',
 ];
