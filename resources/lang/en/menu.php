@@ -20,6 +20,7 @@ return [
     'Price' => 'Price' ,
     'Offer Price' => 'Discount' ,
     'Our' => 'Our' ,
+    'title' => 'Experience The Taste of <br> Traditinal Food',
 
 
 ];

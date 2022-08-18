@@ -81,11 +81,8 @@
                             {{ __('general.about_us') }}
                         </h4>
                         <h2>
-                            {!! __('general.about.exp') !!}
+                            {!! __('menu.title') !!}
                         </h2>
-                        <p>
-                            {!! __('general.about.food') !!}
-                        </p>
                     </div>
                 </div>
             </section>

@@ -20,9 +20,12 @@
             <div class="bg-shape grey"></div>
             <div class="container">
                 <div class="page-header-content">
-                    <h4>Our Food Menu</h4>
-                    <h2>Experience The Taste <br>of Italian Food.</h2>
-                    <p>Food is any substance consumed to provide nutritional <br>support for an organism.</p>
+                    <h4>
+                        {{__('menu.Menu')}}
+                    </h4>
+                    <h2>
+                        {!! __('menu.title') !!}
+                    </h2>
                 </div>
             </div>
         </section><!--/.page-header-->

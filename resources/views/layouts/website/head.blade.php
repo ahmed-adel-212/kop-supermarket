@@ -188,7 +188,7 @@
             /* .uk-icon svg[data-svg="slidenav-previous"], .uk-icon svg[data-svg="slidenav-next"] {
                 transform: translate(-5px,10px);
             } */
-            .vbox-next, .vbox-prev {
+            .vbox-next, .vbox-prev, .post-card .la-long-arrow-alt-right {
                 transform: rotateY(180deg);
                 margin: 0;
             }

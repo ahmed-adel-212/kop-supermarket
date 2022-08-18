@@ -273,4 +273,5 @@ return [
 'branch_title' => 'إختر الفرع',
 'checkout_tilte' => 'الطلب الخاص بك',
 'payment_title' => 'إستكمال عملية الدفع',
+'offers_title' => 'ابحث عن أفضل العروض',
 ];

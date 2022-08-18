@@ -250,4 +250,5 @@ return [
     'branch_title' => 'Select Branch',
     'checkout_tilte' => 'Your Order',
     'payment_title' => 'Complete Payment',
+    'offers_title' => 'Find The Best Offers',
 ];
