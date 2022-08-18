@@ -265,4 +265,5 @@ return [
 'reorder_err' => 'فشل إعادة الطلب',
 'chef' => 'طاهى',
 'Personal information' => 'المعلومات الشخصية',
+'language' => 'إختر اللغة',
 ];

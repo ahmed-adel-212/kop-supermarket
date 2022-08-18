@@ -241,5 +241,6 @@ return [
     'Loyality Points' => 'Loyality Points',
     'reorder_err' => 'Reorder Failed',
     'chef' => 'Chef',
-    'Personal information' => 'Personal information'
+    'Personal information' => 'Personal information',
+    'language' => 'select Language',
 ];
