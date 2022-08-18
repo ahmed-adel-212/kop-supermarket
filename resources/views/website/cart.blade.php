@@ -1,9 +1,9 @@
 @extends('layouts.website.app')
 
-@section('title') Cart @endsection
+@section('title') {{__('general.cart')}} @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{asset('website2-assets/css/style2.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('website2-assets/css/style2.css')}}"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .page-header__top {
@@ -114,9 +114,9 @@
                                 class="inset-right-5 text-gray-light">{{__('general.Taxes')}}
                                 : </b>
                                 <span id="taxes"
-                                style="font-size: smaller;">{{$arr_check['taxes']}} {{__('general.SR')}}</span>
+                                style="font-size: smaller;">{{$arr_check['subtotal'] - ($arr_check['subtotal'] / 1.15)}} {{__('general.SR')}}</span>
                                 <input id="taxesinput" hidden name="taxes"
-                                value="{{$arr_check['taxes']}}"/></li>
+                                value="{{$arr_check['subtotal'] - ($arr_check['subtotal'] / 1.15)}}"/></li>
                             <li><b
                                     class="inset-right-5 text-gray-light">{{__('general.Delivery Fees')}}
                                     : </b> <span
@@ -157,8 +157,8 @@
         @endsection
 
 @section('scripts')
-    <script src="{{asset('website2-assets/js/core.min.js')}}"></script>
-    <script src="{{asset('website2-assets/js/script.js')}}"></script>
+    {{-- <script src="{{asset('website2-assets/js/core.min.js')}}"></script>
+    <script src="{{asset('website2-assets/js/script.js')}}"></script> --}}
     <script>
         $(document).ready(function (){
             $(document).on('click', '.delete_cart', function (e) {
@@ -185,7 +185,7 @@
                         $('#itemcount').text((parseInt($('#itemcount').text())) - data.carts.length);
 
                         $('#subtotal').text(data.arr_check.subtotal);
-                        $('#taxes').text(data.arr_check.taxes);
+                        $('#taxes').text((data.arr_check.subtotal - (data.arr_check.subtotal / 1.15)).toFixed(2));
                         $('#total').text(data.arr_check.total);
                         $('#delivery_fees').text(data.arr_check.delivery_fees);
                         @if(isset($arr_check['points']))
@@ -223,8 +223,8 @@
                         $('#subtotal').text((data.subtotal).toFixed(2) + ' {{__('general.SR')}}');
                         $('#subtotalinput').val(data.subtotal);
 
-                        $('#taxes').text((data.taxes).toFixed(2) + ' {{__('general.SR')}}');
-                        $('#taxesinput').val(data.taxes);
+                        $('#taxes').text((data.subtotal - (data.subtotal / 1.15)).toFixed(2) + ' {{__('general.SR')}}');
+                        $('#taxesinput').val(data.subtotal - (data.subtotal / 1.15));
 
                         $('#total').text((data.total).toFixed(2) + ' {{__('general.SR')}}');
                         $('#totalinput').val(data.total);

@@ -264,4 +264,5 @@ return [
 'Loyality Points' => 'نقاط الولاء',
 'reorder_err' => 'فشل إعادة الطلب',
 'chef' => 'طاهى',
+'Personal information' => 'المعلومات الشخصية',
 ];
