@@ -125,12 +125,12 @@ Route::middleware('api')->group(function () {
     Route::post('/payment/complete', 'Api\OrdersController@orderPayed');
 
 
-    Route::group(['prefix' => 'offers' ], function () {
+    Route::group(['prefix' => 'offers', 'middleware' => 'auth:api'], function () {
         Route::get('/', 'Api\OffersController@index')->name("offers.index");
         Route::get('/{offer}', 'Api\OffersController@get');
     });
     // offers routes
-    Route::group(['middleware' => ['auth:api'],'prefix' => 'offers' ], function () {
+    Route::group(['middleware' => ['auth:api'], 'prefix' => 'offers'], function () {
         Route::get('/check/{order_id}', 'Api\OffersController@check');
         Route::post('/delivery-offer/{address_id}', 'Api\OffersController@delivery_offer');
         Route::post('/takeway-offer/{branch_id}', 'Api\OffersController@takeway_offer');
@@ -165,7 +165,7 @@ Route::group(['prefix' => 'menu'], function () {
 
     Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 });
-Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
+Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile')->middleware('auth:api');
 
 // helper endpoints
 Route::get('/cities', "Api\HelperController@getCities");
@@ -190,10 +190,12 @@ Route::group(['prefix' => 'website'], function () {
     Route::get('/careers', 'Api\FrontController@getAllJobs');
     Route::post('/careers/{id}', 'Api\FrontController@jobRequest');
 });
-Route::get('/payment/refund/{id}', 'Api\PaymentController@refund');
-Route::get('/payment/response', 'Api\PaymentController@paymentResponse');
-// Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
-Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paymentMobile');
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::get('/payment/refund/{id}', 'Api\PaymentController@refund');
+    Route::get('/payment/response', 'Api\PaymentController@paymentResponse');
+    // Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
+    Route::post('payment/check', 'Api\PaymentController@get_payment')->name('do.paymentMobile');
+});
 
 Route::get('/notifications/logs/', 'Api\GetNotificationLogs')->name('notifications.logs')->middleware('auth:api');
 
