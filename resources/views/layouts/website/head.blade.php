@@ -26,10 +26,13 @@
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/fontawesome_rtl.min.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/line-awesome_rtl.min.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/food-icon_rtl.css')}}">
-        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/slider_rtl.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/slider_rtl.css')}}"> --}}
+        <link rel="stylesheet" href="{{asset('website2-assets/css/slider.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/venobox_rtl.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/slick_rtl.min.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('website2-assets/css/slick.min.css')}}"> --}}
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/swiper_rtl.min.css')}}"> 
+        {{-- <link rel="stylesheet" href="{{asset('website2-assets/css/swiper.min.css')}}">  --}}
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/splitting-cells_rtl.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/splitting_rtl.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/keyframe-animation.css')}}">
@@ -187,7 +190,16 @@
             } */
             .vbox-next, .vbox-prev {
                 transform: rotateY(180deg);
+                margin: 0;
             }
+            /* .main-slider .slick-arrow.slick-prev i {
+                margin-right: 0;
+                margin-left: 5px;
+            }
+            .main-slider .slick-arrow.slick-next i {
+                margin-right: 0;
+                margin-left: 5px;
+            } */
         </style>
     @else
         <style>
