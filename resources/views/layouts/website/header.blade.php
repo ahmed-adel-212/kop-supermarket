@@ -36,7 +36,7 @@
 ======= --}}
                         <li><a href="javascript:void(0)">{{ __('header.Menu') }}</a>
                             {{-- >>>>>>> ahmed --}}
->>>>>>> ahmed
+{{-- >>>>>>> ahmed --}}
                             <ul>
                                 <li><a href="{{ route('menu.page') }}">{{ __('header.Menu') }}</a></li>
                                 <li><a href="{{ route('takeaway.page') }}">{{ __('general.Branches') }}</a></li>
