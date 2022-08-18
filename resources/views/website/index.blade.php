@@ -2,6 +2,8 @@
 
 @section('title') Home @endsection
 @section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
       
         .line-clamp5 {
@@ -10,7 +12,19 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-      
+        .about-section .content-img-holder {
+    /* position: absolute !important;
+    top: 0 !important;
+    /* padding-top: 13% !important; 
+    margin-left: 5% !important; */
+
+}
+.about-info {
+    /* margin-left: 58% !important;
+    position: absolute !important;
+    top: 0 !important;
+    padding-top: 9% !important;*/} 
+   
     </style>
 @endsection
 
@@ -100,7 +114,7 @@
                 </div>
             </div><!--Slide-3-->
         </div><!-- slider-section -->
-
+          
         <section class="promo-section bg-grey padding">
             <div class="bg-shape white"></div>
             <div class="container">
@@ -134,52 +148,97 @@
               </div>
             </div>
         </section><!--/.promo-section-->
+        <div id="main-slider1">
+            @foreach($menu['main_offer'] as $main_offer)
+            <div>
 
-    
-        
-        <section class="about-section padding">
-            <div class="bg-shape grey"></div>
-            <div class="container">
-                <div class="row align-items-center">
-                   <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
-                       <div class="content-img-holder">
-                          <img src="{{$menu['main_offer'][0]->image}}" alt="img">
-                           <div class="sale">
-                           @if($menu['main_offer'][0]->discount)
-                               <div>
-                                   <h4>Get </h4>
-                                   @if($menu['main_offer'][0]->discount->discount_type==1)
-                                    <h2><span>{{$menu['main_offer'][0]->discount->discount_value}}%</span>Off Now</h2>
-                                    @else
-                                    <h2><span>{{$menu['main_offer'][0]->discount->discount_value}} @lang('general.SR')</span>Off Now</h2>
-                                    @endif
+            <section class="about-section padding">
+                <div class="bg-shape grey"></div>
+                <div class="container">
+                    <div class="row align-items-center">
+                    <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
+                        <div class="content-img-holder">
+                            <img src="{{$main_offer->image}}" alt="img">
+                            <div class="sale">
+                            @if($main_offer->discount)
+                                <div>
+                                    <h4>Get </h4>
+                                    @if($main_offer->discount->discount_type==1)
+                                        <h2><span>{{$main_offer->discount->discount_value}}%</span>Off Now</h2>
+                                        @else
+                                        <h2><span>{{$main_offer->discount->discount_value}} @lang('general.SR')</span>Off Now</h2>
+                                        @endif
+                                    </div>
+                                @else
+                                <div>
+                                <h4>buy & get</h4>
                                 </div>
-                            @else
-                            <div>
-                               <h4>buy & get</h4>
+                                @endif    
+                                </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
+                            <div class="about-info">
+                                <h2>{{(app()->getLocale() == 'ar') ?$main_offer->title_ar:$main_offer->title}}</h2>
+                                <p>{{(app()->getLocale() == 'ar') ?$main_offer->description_ar:$main_offer->description}}</p>
+                                <ul class="check-list">
+                                    <li><i class="fas fa-check"></i>Delicious &amp; Healthy Foods</li>
+                                    <li><i class="fas fa-check"></i>Spacific Family And Kids Zone</li>
+                                    <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
+                                    <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
+                                </ul>
+                            
+                                <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$main_offer->id)}}" class="default-btn cart">Order Now <span></span></a>
                             </div>
-                            @endif    
-                            </div>
-                       </div>
-                   </div>
-                    <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
-                        <div class="about-info">
-                            <h2>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][0]->title_ar:$menu['main_offer'][0]->title}}</h2>
-                            <p>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][0]->description_ar:$menu['main_offer'][0]->description}}</p>
-                            <ul class="check-list">
-                                <li><i class="fas fa-check"></i>Delicious &amp; Healthy Foods</li>
-                                <li><i class="fas fa-check"></i>Spacific Family And Kids Zone</li>
-                                <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
-                                <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
-                            </ul>
-                           
-                            <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn cart">Order Now <span></span></a>
                         </div>
                     </div>
                 </div>
+            </section><!--/.about-section--> 
+       
             </div>
-        </section><!--/.about-section--> 
-
+            @endforeach
+        </div>
+      
+        <!-- <section class="about-section">
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+             
+                <div class="carousel-item active" style="max-height: 500px !important; min-height: 500px !important;">
+                    <img src="{{asset('website2-assets/img/slider-shape-01.png')}}" class="d-block w-100" alt="...">
+                            <div class="content-img-holder" >
+                                    <img src="{{$menu['main_offer'][0]->image}}" alt="img">
+                            </div>
+                                    <div class="about-info">
+                                        <h2>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][0]->title_ar:$menu['main_offer'][0]->title}}</h2>
+                                        <p>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][0]->description_ar:$menu['main_offer'][0]->description}}</p>
+                                        <ul class="check-list">
+                                            <li><i class="fas fa-check"></i>Delicious &amp; Healthy Foods</li>
+                                            <li><i class="fas fa-check"></i>Spacific Family And Kids Zone</li>
+                                            <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
+                                            <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
+                                        </ul>
+                                    
+                                        <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn cart">Order Now <span></span></a>
+                                    </div>
+            
+                </div>
+            
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                </div>
+        </section> -->
+      
         <section class="food-menu bg-grey padding">
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
@@ -247,8 +306,7 @@
             </div>
         </section>
         <!--/.content-section-->
-
-       
+ 
         <section class="delivery-section padding">
            <div class="bg-shape grey"></div>
             <div class="container">
@@ -324,8 +382,7 @@
                 </div>
             </div>
         </section><!--/.banner-section-->
-   
-
+  
         <section class="blog-section bg-grey padding">
            <div class="bg-shape white"></div>
             <div class="container">
@@ -359,10 +416,25 @@
             </div>
         </section><!-- /.blog-section -->
 
-       
-
 		<div id="scrollup">
             <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
         </div>
+
+@endsection
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function(){
+        $('#main-slider1').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        adaptiveHeight: true
+        });
+    });
+
+</script>
 
 @endsection
