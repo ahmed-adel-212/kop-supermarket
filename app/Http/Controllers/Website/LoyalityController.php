@@ -66,6 +66,7 @@ class LoyalityController extends Controller
     public function setValue($value, $points)
     {
         session(['loyality-points' => compact('value', 'points')]);
+        session(['point_claim_value' => $value]);
 
         return redirect()->route('get.cart');
     }

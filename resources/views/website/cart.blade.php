@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') {{__('general.cart')}} @endsection
+@section('title') Cart @endsection
 
 @section('styles')
     <link rel="stylesheet" href="{{asset('website2-assets/css/style2.css')}}">

@@ -24,10 +24,10 @@
     @else
         <!-- <link href="{{asset('website2-assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
         <link href="{{asset('website2-assets/css/style.css')}}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{{asset('website2-assets/vendor/slick/slick.min.css')}}" />
-        <link rel="stylesheet" type="text/css" href="{{asset('website2-assets/vendor/slick/slick-theme.min.css')}}" /> -->
         <link rel="stylesheet" href="{{asset('website-assets/css/main.css')}}">
         <link rel="stylesheet" href="{{asset('website-assets/css/uikit.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('website2-assets/vendor/slick/slick.min.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('website2-assets/vendor/slick/slick-theme.min.css')}}" /> -->
         <link rel="stylesheet" href="{{asset('website2-assets/css/animate.min.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('website2-assets/css/fontawesome.min.css')}}">
