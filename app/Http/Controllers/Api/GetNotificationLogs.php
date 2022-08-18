@@ -22,7 +22,7 @@ class GetNotificationLogs extends BaseController
             $logs = $logs->where('customer_id', '!=', null)->with('customer');
         }
 
-        $logs = $logs->get();
+        $logs = $logs->orderBy('created_at', 'desc')->get();
 
         return $this->sendResponse($logs, 'notifications logs retrived successfully');
     }
