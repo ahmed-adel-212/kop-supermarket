@@ -181,29 +181,32 @@ class CartController extends Controller
                 }
             }
 
-            if (session()->has('loyality-points')) {
-                $loyality = session('loyality-points');
-                $value = $loyality['value'];
-                $points = $loyality['points'];
-                $arr_data['points'] = round($value, 2);
-                $arr_data['taxes'] = round($final_item_price * .15, 2);
-                $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
-                $arr_data['subtotal'] = round($final_item_price, 2);
-                $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
-                $arr_data['total'] = round($final_item_price, 2);
-                return $arr_data;
-            }
-            elseif (session()->has('point_claim_value')) {
+            // if (session()->has('loyality-points')) {
+                // $loyality = session('loyality-points');
+                // $value = $loyality['value'];
+                // $points = $loyality['points'];
+                // $arr_data['points'] = round($value, 2);
+                // $arr_data['taxes'] = round($final_item_price / 1.15, 2);
+                // $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
+                // $arr_data['subtotal'] = round($final_item_price, 2);
+                // $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
+                // $arr_data['total'] = round($final_item_price, 2);
+                // return $arr_data;
+            // }
+            if (session()->has('point_claim_value')) {
                 $arr_data['points'] = round(session()->get('point_claim_value'), 2);
-                $arr_data['taxes'] = round($final_item_price * .15, 2);
+                $arr_data['taxes'] = round($final_item_price / 1.15, 2);
                 $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
                 // $final_item_price += ($arr_data['taxes'] + $arr_data['delivery_fees']) - $arr_data['points'];
+                if ($arr_data['subtotal'] <= $arr_data['points']) {
+                    $arr_data['points'] = 0;
+                }
                 $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
                 $arr_data['total'] = round($final_item_price, 2);
                 return $arr_data;
             } else {
-                $arr_data['taxes'] = round($final_item_price * .15, 2);
+                $arr_data['taxes'] = round($final_item_price / 1.15, 2);
                 $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
                 // $final_item_price += $arr_data['taxes'] + $arr_data['delivery_fees'];

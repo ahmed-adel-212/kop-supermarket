@@ -321,7 +321,7 @@ class OrdersController extends Controller
     public function store_order(Request $request)
     {
         // get customer information
-        $customer = User::where('id', $request->customer_id)->whereHas('roles', function ($role) {
+        $customer = User::where('id', auth()->id())->whereHas('roles', function ($role) {
             $role->where('name', 'customer');
         })->first();
 
