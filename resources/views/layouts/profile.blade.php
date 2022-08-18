@@ -3,14 +3,16 @@
 @section('content')
     <main class="page-main">
         <section class="page-header"
-            style="background-image: url({{ asset('website-assets/img/pages/contacts/bg-first-screen.jpg') }})">
+            {{-- style="background-image: url({{ asset('website-assets/img/pages/contacts/bg-first-screen.jpg') }})" --}}
+            style="background-image: url('/website2-assets/img/page-header-theme.jpg')"
+            >
             <div class="bg-shape grey"></div>
             <div class="container">
                 <div class="page-header-content">
-                    <h4 class="text-white">
+                    <h4 class="text-">
                         {{ __('general.Account') }}
                     </h4>
-                    <h2 class="text-warning">
+                    <h2 class="text-">
                         {{ __('general.Manage account') }}
                     </h2>
                 </div>

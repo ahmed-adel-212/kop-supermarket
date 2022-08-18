@@ -22,4 +22,7 @@ return [
     'Try again later.' => 'Try again later.',
     'phone_number_error' => 'The phone number is not a valid phone number.',
     'token_mismatch' => 'This token is not valid',
+    'login' => 'Login',
+    'signup' => 'Sign Up',
+    'logout' => 'Log out',
 ];

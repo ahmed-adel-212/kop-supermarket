@@ -16,13 +16,16 @@
 
     @section('content')
 
-    <section class="page-header">
+    <section class="page-header" style="background-image: url('/website2-assets/img/page-header-theme.jpg')">
             <div class="bg-shape grey"></div>
             <div class="container">
                 <div class="page-header-content">
-                    <h4>Shop</h4>
-                    <h2>Online Food Shop</h2>
-                    <p>Food is any substance consumed to provide nutritional <br>support for an organism.</p>
+                    <h4>
+                    {{__('general.Offers')}}
+                    </h4>
+                    <h2>
+                        {{__('general.offers_title')}}
+                    </h2>
                 </div>
             </div>
         </section><!--/.page-header-->

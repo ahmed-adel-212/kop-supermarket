@@ -22,4 +22,7 @@ return [
     'Try again later.' => 'حاول فيما بعد.',
     'phone_number_error' => 'رقم الهاتف غير صحيح',
     'token_mismatch' => 'رقم التفعيل غير صحيح',
+    'login' => 'تسجيل الدخول',
+    'signup' => 'مستخدم جديد',
+    'logout' => 'تسجيل الخروج',
 ];

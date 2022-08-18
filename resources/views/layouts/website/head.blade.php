@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="{{asset('website-assets/img/faviconkop.png')}}" type="image/x-icon">
     
     @if(app()->getLocale() == 'ar')
-        <link
+        {{-- <link
             rel="stylesheet"
             href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
             integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe"
@@ -20,7 +20,26 @@
         <link rel="stylesheet" href="{{asset('website-assets/css-rtl/main-rtl.css')}}">
         <link rel="stylesheet" href="{{asset('website-assets/css-rtl/uikit-rtl.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('website-assets/css-rtl/slick-rtl.min.css')}}" />
-        <link rel="stylesheet" type="text/css" href="{{asset('website-assets/css-rtl/slick-theme-rtl.min.css')}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset('website-assets/css-rtl/slick-theme-rtl.min.css')}}" /> --}}
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/animate_rtl.min.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/bootstrap_rtl.min.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/fontawesome_rtl.min.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/line-awesome_rtl.min.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/food-icon_rtl.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/slider_rtl.css')}}"> --}}
+        <link rel="stylesheet" href="{{asset('website2-assets/css/slider.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/venobox_rtl.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/slick_rtl.min.css')}}">
+        {{-- <link rel="stylesheet" href="{{asset('website2-assets/css/slick.min.css')}}"> --}}
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/swiper_rtl.min.css')}}"> 
+        {{-- <link rel="stylesheet" href="{{asset('website2-assets/css/swiper.min.css')}}">  --}}
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/splitting-cells_rtl.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/splitting_rtl.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/keyframe-animation.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/header_rtl.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/blog_rtl.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/main_rtl.css')}}">
+        <link rel="stylesheet" href="{{asset('website2-assets/css-rtl/responsive_rtl.css')}}">
     @else
         <!-- <link href="{{asset('website2-assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
         <link href="{{asset('website2-assets/css/style.css')}}" rel="stylesheet">
@@ -166,15 +185,27 @@
     </style>
     @if(app()->getLocale() == 'ar')
         <style>
-            .uk-icon svg[data-svg="slidenav-previous"], .uk-icon svg[data-svg="slidenav-next"] {
+            /* .uk-icon svg[data-svg="slidenav-previous"], .uk-icon svg[data-svg="slidenav-next"] {
                 transform: translate(-5px,10px);
+            } */
+            .vbox-next, .vbox-prev, .post-card .la-long-arrow-alt-right {
+                transform: rotateY(180deg);
+                margin: 0;
             }
+            /* .main-slider .slick-arrow.slick-prev i {
+                margin-right: 0;
+                margin-left: 5px;
+            }
+            .main-slider .slick-arrow.slick-next i {
+                margin-right: 0;
+                margin-left: 5px;
+            } */
         </style>
     @else
         <style>
-            .uk-icon svg[data-svg="slidenav-previous"], .uk-icon svg[data-svg="slidenav-next"] {
+            /* .uk-icon svg[data-svg="slidenav-previous"], .uk-icon svg[data-svg="slidenav-next"] {
                 transform: translate(5px,10px);
-            }
+            } */
         </style>
     @endif
 </head>

@@ -135,7 +135,7 @@ class AuthController extends Controller
 
         $user = auth()->user();
 
-        if (!isset($req['token']) || $user->activation_token !== $req['token']) {
+        if (!$request->has('token') || $user->activation_token !== $request->token) {
             return redirect()->back()->with(['error' => __('auth.token_mismatch')]);
         }
 

@@ -50,6 +50,20 @@
 
     @section('content')
         <main class="page-main">
+            <section class="page-header" style="background-image: url('/website2-assets/img/page-header-theme.jpg')">
+                <div class="bg-shape grey"></div>
+                <div class="container">
+                    <div class="page-header-content">
+                        <h4>
+                            {{__('general.Branches')}}
+                        </h4>
+                        <h2>
+                            {{__('general.branch_title')}}
+                        </h2>
+                    </div>
+                </div>
+            </section><!--/.page-header-->
+
             <div class="page-content">
                 <div class="uk-container">
                     <div>

@@ -40,7 +40,7 @@
                                         <div class="post-content">
                                             <ul class="post-meta">
                                                 <li><i class="far fa-calendar-alt"></i><a href="javascript:void">
-                                                        {{ $article->updated_at->format('d M Y') }}
+                                                        {{ $article->updated_at->translatedFormat('d M Y') }}
                                                     </a></li>
                                             </ul>
                                             <h3><a href="javascript:void">

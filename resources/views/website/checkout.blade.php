@@ -15,7 +15,19 @@
     <body class="page-article dm-light"> @endsection
 
     @section('content')
-
+    <section class="page-header" style="background-image: url('/website2-assets/img/page-header-theme.jpg')">
+        <div class="bg-shape grey"></div>
+        <div class="container">
+            <div class="page-header-content">
+                <h4>
+                    {{__('general.Checkout')}}
+                </h4>
+                <h2>
+                    {{__('general.checkout_tilte')}}
+                </h2>
+            </div>
+        </div>
+    </section><!--/.page-header-->
     <section class="checkout-section bg-grey padding">
             <div class="container">
                 <div class="row">
@@ -58,10 +70,10 @@
                                                                             , {{(app()->getLocale() == 'ar') ?$address->area->name_ar:$address->area->name_en}}</p>
                                 </div>
                                 <div class="row">
-                                <p class="small text m-0">{{$address-> street}}
-                                                                            , {{__('general.BuildNo')}}: {{$address-> building_number}}
-                                                                            , {{__('general.FloorNo')}}: {{ $address-> floor_number}}
-                                                                            , {{__('general.Landmark')}}: {{$address-> landmark}}
+                                <p class="small text m-0">{{$address->street}}
+                                                                            , {{__('general.BuildNo')}}: {{$address->building_number}}
+                                                                            , {{__('general.FloorNo')}}: {{ $address->floor_number}}
+                                                                            , {{__('general.Landmark')}}: {{$address->landmark}}
                                                                         </p>
                                 </div>
 
@@ -111,7 +123,7 @@
                                 <ul class="mb-20">
                             <input id="subtotalinput" hidden name="subtotal" value="{{$request->subtotal}} "/>
 
-                            <input id="taxesinput" hidden name="taxes" value="{{$request->taxes}}"/>
+                            <input id="taxesinput" hidden name="taxes" value="{{round($request->taxes, 2)}}"/>
 
                             <input id="delivery_feesnput" hidden name="delivery_fees" value="{{$request->delivery_fees}}"/>
                             
@@ -154,7 +166,7 @@
                         <ul class="cart-total">
                             <li><span>{{__('general.Sub Total')}}:</span>{{$request->subtotal}} {{__('general.SR')}}</li>
 
-                            <li><span>Tax :</span>{{$request->taxes}} {{__('general.SR')}}</li>
+                            <li><span>{{__('general.Taxes')}} :</span>{{round($request->taxes, 2)}} {{__('general.SR')}}</li>
 
                             <li><span>{{__('general.Delivery Fees')}} :</span>{{$request->delivery_fees}} {{__('general.SR')}}</li>
                             

@@ -81,11 +81,8 @@
                             {{ __('general.about_us') }}
                         </h4>
                         <h2>
-                            {!! __('general.about.exp') !!}
+                            {!! __('menu.title') !!}
                         </h2>
-                        <p>
-                            {!! __('general.about.food') !!}
-                        </p>
                     </div>
                 </div>
             </section>
@@ -142,7 +139,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="content-img">
-                                        <img src="/website2-assets/img/about03.png" width='600' height="400" alt="img">
+                                        <img src="{{$sec->image}}" width='600' height="400" alt="img">
                                         {{-- <img src="{{$sec->image}}" alt="img"> --}}
                                     </div>
                                 </div>
@@ -169,8 +166,8 @@
                                 <div class="col-lg-3 col-sm-6 sm-padding">
                                     <div class="team-item">
                                         <div class="team-thumb">
-                                            <img src="/website2-assets/img/team-0{{ $loop->index+1 }}.jpg"
-                                                alt="team" width='800' height="600">
+                                            <img src="{{$emp->image}}"
+                                                alt="team">
                                             <ul class="team-social">
                                                 @foreach ($emp->links as $link)
                                                     @if($loop->index === 0 && $link)
@@ -192,7 +189,7 @@
                                                     {{$emp['title_'. app()->getLocale()]}}
                                                 </h3>
                                                 <h4>
-                                                    {{is_null($emp['description_' . app()->getLocale()]) ? 'Chef' : $emp['description_' . app()->getLocale()]}}
+                                                    {{is_null($emp['description_' . app()->getLocale()]) ? __('general.chef') : $emp['description_' . app()->getLocale()]}}
                                                 </h4>
                                             </div>
                                         </div>
@@ -212,8 +209,8 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-6">
                                     <div class="content-img">
-                                        <img src="/website2-assets/img/about03.png" width="600" height="400" alt="img">
-                                        {{-- <img src="{{$sec->image}}" alt="img"> --}}
+                                        {{-- <img src="/website2-assets/img/about03.png" width="600" height="400" alt="img"> --}}
+                                        <img src="{{$sec->image}}" width="600" height="400" alt="img">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
