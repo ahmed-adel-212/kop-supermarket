@@ -3,9 +3,10 @@
         <div class="container">
             <div class="primary-header-inner">
                 <div class="header-logo">
-                    <a href="#">
-                        <img class="light" src="{{ asset('website-assets/img/logokop.bmp') }}" alt="Logo" />
-                        <img class="dark" src="{{ asset('website-assets/img/logokop.bmp') }}" alt="Logo" />
+
+                    <a href="{{route('home.page')}}">
+                        <img class="light"  src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
+                        <img class="dark"  src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
                     </a>
                 </div><!-- /.header-logo -->
                 <div class="header-menu-wrap">
@@ -15,15 +16,8 @@
                                 <li><a href="{{ route('home.page') }}">{{ __('header.Home') }}</a></li>
                             </ul> -->
                         </li>
-{{-- <<<<<<< HEAD
-                        <li><a href="{{route('menu.page')}}">{{ __('header.Menu')}}</a></li>
-                        <li><a class="cart" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offers')}}">{{ __('header.Offers')}}</a></li>
-                        <li><a href="{{route('get.cart')}}">{{ __('header.Cart')}}</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="#">Pages</a>
-======= --}}
+
                         <li><a href="javascript:void0">{{ __('header.Menu') }}</a>
-{{-- >>>>>>> ahmed --}}
                             <ul>
                                 <li><a href="{{ route('menu.page') }}">{{ __('header.Menu') }}</a></li>
                                 <li><a href="{{ route('takeaway.page') }}">{{ __('general.Branches') }}</a></li>

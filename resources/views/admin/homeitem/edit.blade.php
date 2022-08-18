@@ -22,15 +22,15 @@
                     <h3 class="card-title">homeitem Details</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.homeitem.update',$homeitem->id) }}" method="PUT" enctype="multipart/form-data">
+                    <form action="{{ route('admin.homeitem.update',$homeitem->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Choose Category</label>
-                                    <select class="form-control categories " id="categories" name="category_id">
-                                        <option value="">Select Category</option>
+                                    <select class="form-control categories select2" id="categories" name="category_id">
+                                        <option value="" disabled>Select Category</option>
                                         @foreach ($categories as $item)
                                             <option value="{{ $item->id }}" {{@if($item->id==$homeitem->category_id) selected @endif}}>
                                                 {{ $item['name_'.app()->getLocale()] }}
@@ -44,9 +44,12 @@
                             <div class="form-group">
                                     <label>Choose Item</label>
                                     <select class="form-control select2" id="items" name="item_id">
-                                        <option value="{{ $homeitem->item_id }}" >
+                                    <option value="" disabled>Select Items</option>
+                                    @if($homeitem->item_id)
+                                        <option value="{{ $homeitem->item_id }}" selected>
                                                 {{ $homeitem->item['name_'.app()->getLocale()] }}
                                             </option>
+                                    @endif        
                                     </select>
                                     {!! $errors->first('item_id', '<p class="help-block">:message</p>') !!}
                                 </div>

@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Items</h1>
+                        <h1>Home Items</h1>
                     </div>
                     @if(count($homeitems) < 4)
                     <div class="col-sm-6">
@@ -42,7 +42,7 @@
                                     <td> @if ($homeitem->category){{ $homeitem->category['name_' . app()->getLocale()] }} @endif</td>
                                     <td>{{ $homeitem->description_ar }}</td>
                                     <td>{{ $homeitem->description_en }}</td>
-                                    <td>{{ $homeitem->item->name_en }}</td>
+                                    <td>@if($homeitem->item){{ $homeitem->item->name_en }}@endif</td>
                                     <td>{{ $homeitem->number }}</td>
                                     <td><img src="{{ $homeitem->image }}" style="max-width: 75px" /></td>
                                     <td>

@@ -36,10 +36,10 @@
 
         <div id="main-slider" class="main-slider">
             <div class="single-slide">
-                <div class="bg-img kenburns-top" style="background-image: url(assets/img/slider-bg-01.jpg);"></div>
-                <div class="slider-shape" style="background-image: url(assets/img/slider-shape-01.png);" data-animation="fade-in-right" data-delay="0.5s"></div>
-                <div class="food-img" style="background-image: url(assets/img/food-img-01.png);" data-animation="fade-in-right" data-delay="1s"></div>
-                <div class="food-design" style="background-image: url(assets/img/slider-elements.png);" data-animation="zoomIn" data-delay="1.3s"></div>
+                <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-01.jpg')}});"></div>
+                <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});" data-animation="fade-in-right" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});" data-animation="zoomIn" data-delay="1.3s"></div>
                 <div class="slider-content-wrap d-flex align-items-center">
                     <div class="container">
                         <div class="slider-content">
@@ -57,11 +57,11 @@
                 </div>
             </div><!--Slide-1-->
             <div class="single-slide center">
-                <div class="bg-img kenburns-top" style="background-image: url(assets/img/slider-bg-02.jpg);"></div>
-                <div class="slider-shape" style="background-image: url(assets/img/slider-shape-01.png);" data-animation="fade-in-right" data-delay="0.5s"></div>
-                <div class="slider-shape left" style="background-image: url(assets/img/slider-shape-02.png);" data-animation="fade-in-left" data-delay="0.5s"></div>
-                <div class="food-img" style="background-image: url(assets/img/food-img-02.png);" data-animation="fade-in-bottom" data-delay="1s"></div>
-                <div class="food-design" style="background-image: url(assets/img/slider-elements-center.png);" data-animation="zoomIn" data-delay="1.3s"></div>
+                <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-02.jpg')}});"></div>
+                <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
+                <div class="slider-shape left" style="background-image: url({{asset('website2-assets/img/slider-shape-02.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-02.png')}});" data-animation="fade-in-bottom" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements-center.png')}});" data-animation="zoomIn" data-delay="1.3s"></div>
                 <div class="slider-content-wrap d-flex align-items-center text-center">
                     <div class="container">
                         <div class="slider-content">
@@ -79,10 +79,10 @@
                 </div>
             </div><!--Slide-2-->
             <div class="single-slide right">
-                <div class="bg-img kenburns-top" style="background-image: url(assets/img/slider-bg-03.jpg);"></div>
-                <div class="slider-shape left" style="background-image: url(assets/img/slider-shape-02.png);" data-animation="fade-in-left" data-delay="0.5s"></div>
-                <div class="food-img" style="background-image: url(assets/img/food-img-03.png);" data-animation="fade-in-top" data-delay="1s"></div>
-                <div class="food-design" style="background-image: url(assets/img/slider-elements.png);" data-animation="zoomIn" data-delay="1.3s"></div>
+                <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-03.jpg')}});"></div>
+                <div class="slider-shape left" style="background-image: url({{asset('website2-assets/img/slider-shape-02.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-03.png')}});" data-animation="fade-in-top" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});" data-animation="zoomIn" data-delay="1.3s"></div>
                 <div class="slider-content-wrap d-flex align-items-center text-right">
                     <div class="container">
                         <div class="slider-content">
@@ -118,7 +118,7 @@
                                         <p>{{(app()->getLocale() == 'ar') ?$recommended->description_ar:$recommended->description_en}}</p>
                                     </div>
                                     <div class="food-thumb">
-                                        <img src="{{$recommended->image}}" alt="img">
+                                        <img src="{{$recommended->website_image}}" alt="img">
                                     </div>
                                 </div>
                            </div>
@@ -135,6 +135,8 @@
             </div>
         </section><!--/.promo-section-->
 
+    
+        
         <section class="about-section padding">
             <div class="bg-shape grey"></div>
             <div class="container">
@@ -176,7 +178,7 @@
                     </div>
                 </div>
             </div>
-        </section><!--/.about-section-->
+        </section><!--/.about-section--> 
 
         <section class="food-menu bg-grey padding">
             <div class="container">
@@ -198,7 +200,7 @@
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
                            <!-- <div class="sale"></div> -->
                             <div class="product-thumb">
-                                <img src="{{$dealItem->image}}" alt="food">
+                                <img src="{{$dealItem->website_image}}" alt="food">
                                 <div>
                                 @auth @if(!session()->has('branch_id'))
                                     <a data-toggle="modal" data-target="#service-modal" href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
@@ -209,11 +211,7 @@
                             <div class="food-info">
                                <ul class="ratting">
                                    <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
-                                   <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
+                                 
                                </ul>
                                 <h3>{{$dealItem['description_'.app()->getLocale()]}}</h3>
                                 <div class="price">
@@ -234,35 +232,15 @@
                 <div class="row align-items-center">
                     <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
                         <div class="content-info">
-                        <h2>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][1]->title_ar:$menu['main_offer'][1]->title}}</h2>
-                            <p>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][1]->description_ar:$menu['main_offer'][1]->description}}</p>
-                            @auth @if(!session()->has('branch_id'))
-                            <a  data-toggle="modal" data-target="#service-modal"  href="{{route('offer.item',$menu['main_offer'][1]->id)}}"  class="default-btn cart">Order Now <span></span></a>
-                            @else
-                            <a href="{{route('offer.item',$menu['main_offer'][1]->id)}}"  class="default-btn">Order Now <span></span></a>
-                            @endif
-                            @endauth
+                        <h2>{{(app()->getLocale() == 'ar') ?$menu['anoucement'][0]->name_ar:$menu['anoucement'][0]->name_en}}</h2>
+                            <p>{{(app()->getLocale() == 'ar') ?$menu['anoucement'][0]->description_ar:$menu['anoucement'][0]->description_en}}</p>
+                           
                         </div>
                     </div>
                     <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
                         <div class="content-img-holder">
-                            <img src="{{$menu['main_offer'][1]->image}}" alt="img">
-                            <div class="sale">
-                            @if($menu['main_offer'][1]->discount)
-                               <div>
-                                   <h4>Get </h4>
-                                   @if($menu['main_offer'][1]->discount->discount_type==1)
-                                    <h2><span>{{$menu['main_offer'][1]->discount->discount_value}}%</span>Off Now</h2>
-                                    @else
-                                    <h2><span>{{$menu['main_offer'][1]->discount->discount_value}} @lang('general.SR')</span>Off Now</h2>
-                                    @endif
-                                </div>
-                            @else
-                            <div>
-                               <h4>buy & get</h4>
-                            </div>
-                            @endif    
-                            </div>
+                            <img src="{{$menu['anoucement'][0]->image}}" alt="img">
+                            
                         </div>
                     </div>
                 </div>
@@ -301,80 +279,52 @@
                 <div class="row banner-wrapper">
                    <div class="col-md-6 wow fadeInUp" data-wow-delay="200ms">
                        <div class="banner-item">
-                            <img src="assets/img/banner01.jpg" alt="banner">
+                            <img src="{{$menu['homeitem'][0]->image}}" alt="banner">
                             <div class="banner-content">
-                                <h3>-50% Off Now!</h3>
-                                <h2>Discount For Delicious <br>Tasty Burgers!</h2>
+                                <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][0]->description_ar:$menu['homeitem'][0]->description_en}}</h2>
                                 <p>Sale off 50% only this week</p>
-                                <a href="shop.html" class="order-btn">Order Now</a>
+                                <a href="{{url('item/'.$menu['homeitem'][0]->category_id.'/'.$menu['homeitem'][0]->id)}}"@auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
                             </div>
                         </div>
                    </div>
                     <div class="col-md-6">
                        <div class="row">
                            <div class="col-md-6 wow fadeInUp" data-wow-delay="400ms">
-                               <div class="banner-item">
-                                    <img src="assets/img/banner02.jpg" alt="banner">
-                                    <div class="banner-content">
-                                        <h3>Delicious <br> Pizza</h3>
-                                        <p>50% off Now</p>
-                                        <a href="shop.html" class="order-btn">Order Now</a>
-                                    </div>
-                                </div>
+                           <div class="banner-item">
+                            <img src="{{$menu['homeitem'][1]->image}}" alt="banner">
+                            <div class="banner-content">
+                                <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][1]->description_ar:$menu['homeitem'][1]->description_en}}</h2>
+                                <p>Sale off 50% only this week</p>
+                                <a href="{{url('item/'.$menu['homeitem'][1]->category_id.'/'.$menu['homeitem'][1]->id)}}"  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                            </div>
+                        </div>
                            </div>
                            <div class="col-md-6 wow fadeInUp" data-wow-delay="600ms">
-                               <div class="banner-item">
-                                    <img src="assets/img/banner03.jpg" alt="banner">
-                                    <div class="banner-content">
-                                        <h3>American <br>Burgers</h3>
-                                        <p>50% off Now</p>
-                                        <a href="shop.html" class="order-btn">Order Now</a>
-                                    </div>
-                                </div>
+                           <div class="banner-item">
+                            <img src="{{$menu['homeitem'][2]->image}}" alt="banner">
+                            <div class="banner-content">
+                                <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][2]->description_ar:$menu['homeitem'][2]->description_en}}</h2>
+                                <p>Sale off 50% only this week</p>
+                                <a href="{{url('item/'.$menu['homeitem'][2]->category_id.'/'.$menu['homeitem'][2]->id)}}" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                            </div>
+                        </div>
                            </div>
                            <div class="col-md-12 wow fadeInUp" data-wow-delay="800ms">
-                               <div class="banner-item">
-                                    <img src="assets/img/banner04.jpg" alt="banner">
-                                    <div class="banner-content">
-                                        <h3>Tasty Buzzed <br>Pizza</h3>
-                                        <p>Sale off 50% only this week</p>
-                                        <a href="shop.html" class="order-btn">Order Now</a>
-                                    </div>
-                                </div>
+                           <div class="banner-item">
+                            <img src="{{$menu['homeitem'][3]->image}}" alt="banner">
+                            <div class="banner-content">
+                                <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][3]->description_ar:$menu['homeitem'][3]->description_en}}</h2>
+                                <p>Sale off 50% only this week</p>
+                                <a href="{{url('item/'.$menu['homeitem'][3]->category_id.'/'.$menu['homeitem'][3]->id)}}" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                            </div>
+                        </div>
                            </div>
                        </div>
                     </div>
                 </div>
             </div>
         </section><!--/.banner-section-->
-<!-- 
-       
- @if(isset($menu['offers']))
-        <section class="banner-section padding">
-           <div class="bg-shape grey"></div>
-            <div class="container">
-                <div class="row banner-wrapper">
-                 <div class="row" >       
-                @foreach($menu['offers'] as $offer)
-                
-                   
-                           <div class="col-md-3 wow fadeInUp" data-wow-delay="400ms" style="margin-bottom:2%;">
-                               <div class="banner-item">
-                                    <img src="{{asset($offer->image)}}" alt="banner">
-                                    <div class="banner-content">
-                                        <h3>Delicious <br> Pizza</h3>
-                                        <p>50% off Now</p>
-                                        <a href="{{route('offer.item',$offer->id)}}" class="order-btn">Order Now</a>
-                                    </div>
-                                </div>
-                           </div>
-                     
-                    @endforeach
-                 </div> 
-                </div>
-            </div>
-        </section>
-@endif -->
+   
 
         <section class="blog-section bg-grey padding">
            <div class="bg-shape white"></div>

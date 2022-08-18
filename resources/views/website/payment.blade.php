@@ -1,21 +1,27 @@
 @extends('layouts.website.app')
 
 @section('title') Payment @endsection
-
 @section('styles')
     <link href="{{asset('website-assets/css/payment.css')}}" rel="stylesheet"/>
 @endsection
 
-@section('pageName')
-    <body class="page-article dm-dark"> @endsection
 
     @section('content')
+    <section class="page-header">
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                 
+                    <h2>ONLINE PAYMENT</h2>
+                  
+            </div>
+        </section><!--/.page-header-->
         <div class="card mr-auto ml-auto mt-3">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="left border">
-                            <div class="row"><span class="header">{{__('general.Payment')}}</span>
+                            <div class="row"><span class="header" style="display: contents !important;">{{__('general.Payment')}}</span>
                                 <div class="icons"><img src="https://img.icons8.com/color/48/000000/visa.png"/> <img
                                         src="https://img.icons8.com/color/48/000000/mastercard-logo.png"/> <img
                                         src="https://img.icons8.com/color/48/000000/maestro.png"/></div>
@@ -102,7 +108,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <button type="submit" class="uk-button btn w-100">{{__('general.Purchase')}}</button>
+                                <button type="submit" class="default-btn w-100">{{__('general.Purchase')}}<span style="width: 200% !important;"></span></button>
 
                             </form>
                         </div>

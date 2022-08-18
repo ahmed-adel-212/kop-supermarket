@@ -55,6 +55,19 @@
             font-size: 35px;
             line-height: 7px;
         }
+           
+      label.btn.btn-outline-primary
+        {border: none!important;
+        color:black!important;}
+        label.btn.btn-outline-primary:hover
+        {color: #6dc405 !important;
+         background-color: white !important;}
+        .btn-check:checked+.btn
+        {
+            background-color: #6dc405 !important;
+            border-radius: 10px!important;
+            border-color: #6dc405 !important;
+        }
     </style>
 @endsection
 
@@ -132,10 +145,7 @@
     @endsection
 
     @section('content')
-        <div class="site-preloader-wrap">
-            <div class="spinner"></div>
-        </div><!-- /.site-preloader-wrap -->
-
+    
         <section class="page-header">
             <div class="bg-shape grey"></div>
             <div class="container">
@@ -184,7 +194,7 @@
                                                 style="font-size: 26px;color:#6dc405;text-decoration: none">{{ round($item['offer']['offer_price'], 2) }}
                                             </span>
                                         @endif
-                                        @lang('general.SR')
+                                       <span></span> @lang('general.SR')
                                     </h4>
                                    
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 75%;">
@@ -197,7 +207,8 @@
                                         @endforeach
                                     </div>
 
-                                    <p>{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}
+                                    <p><br>
+                                    {{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}
                                     </p>
 
                                     <div class="product-btn">
@@ -327,8 +338,7 @@
                                                                         {{ $without['calories'] }}
                                                                     </span>
                                                                     <span>
-                                                                        ({{ round($without['price'], 2) }}
-                                                                        {{ __('general.SR') }})
+                                                                        ({{ round($without['price'], 2) }} {{ __('general.SR') }})
                                                                     </span>
 
                                                                 </td>
@@ -478,19 +488,3 @@
             <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
         </div>
     @endsection
-    <style>
-      
-      label.btn.btn-outline-primary
-        {border: none;
-        color:black;}
-        label.btn.btn-outline-primary:hover
-        {color: #6dc405 !important;
-         background-color: white !important;}
-        .btn-check:checked+.btn
-        {
-            background-color: #6dc405 !important;
-            border-radius: 10px!important;
-            border-color: #6dc405 !important;
-        }
-    
-                    </style>

@@ -7,12 +7,20 @@
 @section('pageName') <body class="page-catalog dm-dark"> @endsection
 
 @section('content')
+<section class="page-header">
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                 
+                    <h2>{{__('general.Offer Menu')}}</h2>
+                  
+            </div>
+        </section><!--/.page-header-->
     <main class="page-main">
         <div class="page-content">
             <div class="uk-container">
                 <div>
-                    <div class="py-2">
-                        <h2 class="mb-3 mt-0">{{__('general.Offer Menu')}}</h2>
+                    <div class="py-2"> 
                         <div class="row">
                             <div class="product-full-card__tabs w-100 mt-0">
 
@@ -29,7 +37,7 @@
                                                             <input type="hidden" name="offer_id" value="{{$offers['details']['offer_id']}}">
                                                             <input type="hidden" name="offer_price" value="{{round($item['offer_price'], 2)}}">
                                                             <div class="gold-members p-3 border-bottom">
-                                                                <button type="submit" class="btn btn-outline-secondary btn-sm float-right btnAdd">Add to cart</button>
+                                                                <button type="submit" class="default-btn btn-sm float-right btnAdd">Add to cart<span></span></button>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px">
                                                                         <img class="img-thumbnail rounded w-100 h-100" src="{{$item->image}}" alt="">

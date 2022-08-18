@@ -68,6 +68,7 @@ class OfferController extends Controller
             'description' => 'nullable',
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'offer_type' => 'required',
         ]);
 
@@ -128,6 +129,16 @@ class OfferController extends Controller
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('offers'), $image_new_name);
             $offer->image = '/offers/' . $image_new_name;
+            $offer->save();
+        } else {
+            $image = '';
+        }
+
+        if ($request->hasFile('website_image')) {
+            $image = $request->website_image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('offers'), $image_new_name);
+            $offer->website_image = '/offers/' . $image_new_name;
             $offer->save();
         } else {
             $image = '';
@@ -277,6 +288,7 @@ class OfferController extends Controller
             'description' => 'nullable',
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'offer_type' => 'required',
         ]);
         // $branches = implode(",", $request->get('branches'));
@@ -290,6 +302,13 @@ class OfferController extends Controller
             $offer->save();
         }
 
+        if ($request->hasFile('website_image')) {
+            $image = $request->website_image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('offers'), $image_new_name);
+            $offer->website_image = '/offers/' . $image_new_name;
+            $offer->save();
+        }
 
         $offer->update([
             'title' => $request->title,
