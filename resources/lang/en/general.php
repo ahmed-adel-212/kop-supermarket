@@ -240,4 +240,5 @@ return [
     'cart_amount' => 'you can not exchange points more than what you have',
     'Loyality Points' => 'Loyality Points',
     'reorder_err' => 'Reorder Failed',
+    'chef' => 'Chef',
 ];

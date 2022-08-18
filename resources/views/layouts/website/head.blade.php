@@ -185,6 +185,9 @@
             /* .uk-icon svg[data-svg="slidenav-previous"], .uk-icon svg[data-svg="slidenav-next"] {
                 transform: translate(-5px,10px);
             } */
+            .vbox-next, .vbox-prev {
+                transform: rotateY(180deg);
+            }
         </style>
     @else
         <style>

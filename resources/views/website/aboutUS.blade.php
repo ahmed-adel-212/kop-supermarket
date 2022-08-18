@@ -192,7 +192,7 @@
                                                     {{$emp['title_'. app()->getLocale()]}}
                                                 </h3>
                                                 <h4>
-                                                    {{is_null($emp['description_' . app()->getLocale()]) ? 'Chef' : $emp['description_' . app()->getLocale()]}}
+                                                    {{is_null($emp['description_' . app()->getLocale()]) ? __('general.chef') : $emp['description_' . app()->getLocale()]}}
                                                 </h4>
                                             </div>
                                         </div>

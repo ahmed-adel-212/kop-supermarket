@@ -53,7 +53,7 @@
                                             <div class="post-content">
                                                 <ul class="post-meta">
                                                     <li><i class="far fa-calendar-alt"></i><a href="#">
-                                                            {{ $info->updated_at->format('d M Y') }}
+                                                            {{ $info->updated_at->translatedFormat('d M Y') }}
                                                         </a></li>
                                                     {{-- <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li> --}}
                                                 </ul>
