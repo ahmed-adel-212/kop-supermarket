@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <form action="{{ route('re.order', $order->id) }}" method="get">
+                    <form action="" method="get">
                         @csrf
                         <div class="row">
                             <div class="col-lg-6 offset-lg-6">
@@ -160,38 +160,35 @@
                                                 {{ __('general.Checkout') }}<span></span>
                                             </button> --}}
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn default-btn rounded" data-bs-toggle="modal"
-                                                data-bs-target="#confirm-order">
+                                            <button type="button" class="btn default-btn rounded checkout-btn">
+                                                <i class="fas fa-spinner fa-spin" style="display: none"></i>
                                                 {{ __('general.Checkout') }}
                                                 <span></span>
                                             </button>
                                         </li>
                                     @endif
                                     <!-- Modal -->
-                                    <div class="modal fade" id="confirm-order" tabindex="-1"
-                                        aria-labelledby="confirm-orderLabel" aria-hidden="true">
+                                    <div class="modal fade" id="reorder-error" tabindex="-1"
+                                        aria-labelledby="reorder-errorLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
+                                            <div class="modal-content"
+                                                style="color: #842029;
+                                            background-color: #f8d7da;
+                                            border-color: #f5c2c7;">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="confirm-orderLabel">
-                                                        {{ __('general.Confirm Order') }}
+                                                    <h5 class="modal-title" id="reorder-errorLabel">
+                                                        {{ __('general.reorder_err') }}
                                                     </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                    <button type="button" class="btn-close" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {{__('general.confirm_message')}}
+                                                    <span id="message"></span>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary default-btn rounded"
-                                                        data-bs-dismiss="modal">
-                                                        {{ __('general.Cancel') }}
+                                                    <a href="{{ route('menu.page') }}" class="btn default-btn rounded">
+                                                        {{ __('menu.Menu') }}
                                                         <span></span>
-                                                    </button>
-                                                    <button type="submit" class="btn default-btn rounded">
-                                                        {{ __('general.Reorder') }}
-                                                        <span></span>
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,6 +205,52 @@
     @endsection
 
     @section('scripts')
-        <script src="{{ asset('website2-assets/js/core.min.js') }}"></script>
-        <script src="{{ asset('website2-assets/js/script.js') }}"></script>
+        {{-- <script src="{{ asset('website2-assets/js/core.min.js') }}"></script>
+        <script src="{{ asset('website2-assets/js/script.js') }}"></script> --}}
+        <script>
+            $(document).ready(function() {
+                let busy = false;
+                const reorderErrorModal = new bootstrap.Modal('#reorder-error', {
+                    backdrop: 'static',
+                    keyboard: false,
+                });
+                $('.checkout-btn').click(function() {
+                    if (busy) return false;
+                    busy = true;
+
+                    $('.fa-spin').css('display', 'inline-block');
+
+                    $.ajax({
+                        url: "{{ route('re-order-check', $order->id) }}",
+                        method: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        },
+                        data: {
+                            points_paid: {{ $order['points'] === null ? 0 : $order['points'] }},
+                        },
+                        success: function(res) {
+                            if (!res.validation) {
+                                // show alert with message
+                                $('span#message').text(res.message);
+                                // $('#confirm-modal').addClass('');
+                                reorderErrorModal.show();
+                                // hide reorder button
+                                $('.checkout-btn').css('display', 'none');
+                                return;
+                            }
+
+                            
+                        },
+                        error: function(err) {
+                            // console.log(err);
+                        },
+                        complete: function() {
+                            busy = false;
+                            $('.fa-spin').css('display', 'none');
+                        }
+                    });
+                })
+            });
+        </script>
     @endsection

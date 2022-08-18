@@ -471,7 +471,23 @@ class OrdersController extends BaseController
             $extras_price = 0;
             $is_valid = false;
             $hasOffer = 0;
-            
+
+            $orderItem = OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->first();
+            $orderItemExtras = null;
+            if ($orderItem['extras']) {
+                $orderItemExtras = Extra::whereIn('id', $orderItem['extras'])->get();
+            }
+
+            $orderItemWithouts = null;
+            if ($orderItem['withouts']) {
+                $orderItemWithouts = Without::whereIn('id', $orderItem['withouts'])->get();
+            }
+            $extras = $orderItemExtras ? $orderItemExtras->sum('price') : 0;
+            $withouts = $orderItemWithouts ? $orderItemWithouts->sum('price') : 0;
+            $itemPrice = $item->price + $extras + $withouts;
+
+            dd($itemPrice, $orderItem->price, $request->order_id, $item->id);
+
             if($item->price != OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('price')->first())
             {
                 $message='item price changed';

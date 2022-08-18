@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Controllers\Api\OrdersController as ApiOrdersController;
 use App\Models\Branch;
 use App\Models\Extra;
 use App\Models\Item;
@@ -467,5 +468,25 @@ class OrdersController extends Controller
         return ['success' => true, 'data' => $order];
     }
 
+    public function checkIfOrderIsDirty(Request $request, int $id)
+    {
+        // $order = Order::findOrFail($id);
+        $request->merge([
+            'order_id' => $id,
+        ]);
+        $request->order_id = $id;
+        $res = (app(ApiOrdersController::class)->re_order($request))->getOriginalContent();
 
+        if (!isset($res['data'])) {
+            return response()->status(404);
+        }
+
+        $res = $res['data'];
+
+        if ($res['validation'] === true) {
+            $this->re_order($id);
+        }
+
+        return response()->json($res);
+    }
 }

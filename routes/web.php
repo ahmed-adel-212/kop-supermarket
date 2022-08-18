@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Website\OrdersController;
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
@@ -202,6 +204,7 @@ Route::group([
             Route::get('my-orders/', [\App\Http\Controllers\Website\OrdersController::class, 'my_orders'])->name('get.orders');
             Route::get('order-details/{id}/{order?}', [\App\Http\Controllers\Website\OrdersController::class, 'my_orders_details'])->name('order.details');
             Route::get('re-order/{id}', [\App\Http\Controllers\Website\OrdersController::class, 're_order'])->name('re.order');
+            Route::post('re-order/{id}/check', [OrdersController::class, 'checkIfOrderIsDirty'])->name('re-order-check');
 
             //profile
             Route::get('/profile/', [\App\Http\Controllers\Website\AddressController::class, 'get_address'])->name('profile');

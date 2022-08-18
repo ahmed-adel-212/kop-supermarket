@@ -214,21 +214,21 @@
                                                                 {{ __('general.Total') }}
                                                                 :
                                                                 <span
-                                                                    class="text-dark font-weight-bold">{{ $co->total - $co->points_paid }}
+                                                                    class="text-dark font-weight-bold">{{ $pe->total - $pe->points_paid }}
                                                                     {{ __('general.SR') }}</span>
                                                             </div>
                                                             <div class="text-right">
                                                                 @if (app()->getLocale() == 'en')
-                                                                    <a href="{{ route('order.details', [$co->id, 'reorder']) }}"
+                                                                    <a href="{{ route('order.details', [$pe->id, 'reorder']) }}"
                                                                         class="btn bg-danger px-3 default-btn rounded">{{ __('general.Reorder') }}<span></span></a>
-                                                                    <a href="{{ route('order.details', $co->id) }}"
+                                                                    <a href="{{ route('order.details', $pe->id) }}"
                                                                         class="btn px-3 default-btn rounded">{{ __('general.Details') }}
                                                                         <span></span>
                                                                     </a>
                                                                 @else
-                                                                    <a href="{{ route('order.details', $co->id) }}"
+                                                                    <a href="{{ route('order.details', $pe->id) }}"
                                                                         class="btn px-3 default-btn">{{ __('general.Details') }}</a>
-                                                                    <a href="{{ route('order.details', [$co->id, 'reorder']) }}"
+                                                                    <a href="{{ route('order.details', [$pe->id, 'reorder']) }}"
                                                                         class="btn btn-outline-primary text-white px-3 default-btn">{{ __('general.Reorder') }}</a>
                                                                 @endif
                                                             </div>
@@ -281,21 +281,21 @@
                                                                 {{ __('general.Total') }}
                                                                 :
                                                                 <span
-                                                                    class="text-dark font-weight-bold">{{ $co->total - $co->points_paid }}
+                                                                    class="text-dark font-weight-bold">{{ $ca->total - $ca->points_paid }}
                                                                     {{ __('general.SR') }}</span>
                                                             </div>
                                                             <div class="text-right">
                                                                 @if (app()->getLocale() == 'en')
-                                                                    <a href="{{ route('order.details', [$co->id, 'reorder']) }}"
+                                                                    <a href="{{ route('order.details', [$ca->id, 'reorder']) }}"
                                                                         class="btn bg-danger px-3 default-btn rounded">{{ __('general.Reorder') }}<span></span></a>
-                                                                    <a href="{{ route('order.details', $co->id) }}"
+                                                                    <a href="{{ route('order.details', $ca->id) }}"
                                                                         class="btn px-3 default-btn rounded">{{ __('general.Details') }}
                                                                         <span></span>
                                                                     </a>
                                                                 @else
-                                                                    <a href="{{ route('order.details', $co->id) }}"
+                                                                    <a href="{{ route('order.details', $ca->id) }}"
                                                                         class="btn px-3 default-btn">{{ __('general.Details') }}</a>
-                                                                    <a href="{{ route('order.details', [$co->id, 'reorder']) }}"
+                                                                    <a href="{{ route('order.details', [$ca->id, 'reorder']) }}"
                                                                         class="btn btn-outline-primary text-white px-3 default-btn">{{ __('general.Reorder') }}</a>
                                                                 @endif
                                                             </div>
