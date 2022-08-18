@@ -43,8 +43,7 @@
                         <div class="col-md-6 m-auto">
                             <div class="bg-success rounded shadow-sm w-100 h-100">
                                 <div class="w-100 text-center h-100">
-                                    <a href="{{route('takeaway.page')}}"><h1 class="m-0 w-100 h-100 bg"
-                                                                             style="color: #fff;padding: 5%;font-size: 38px;">{{__('general.Take away')}}</h1>
+                                    <a href="{{route('takeaway.page')}}"><h1 class="m-0 w-100 h-100 bg" style="color: #fff;padding: 5%;font-size: 38px;">{{__('general.Take away')}}</h1>
                                     </a>
                                 </div>
                             </div>
@@ -164,7 +163,7 @@
     });
 
     @if(session()->has('err'))
-    alert("{{__('general.'.session()->get('err'))}}");
+    alert("{{__('general.'.session()->get('err')['company'][0])}}");
     {{session()->forget('err')}}
     @endif
 

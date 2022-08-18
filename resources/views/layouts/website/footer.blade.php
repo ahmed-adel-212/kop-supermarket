@@ -16,17 +16,17 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-2 col-sm-6 sm-padding">
+                <div class="col-lg-4 col-sm-6 sm-padding">
                     <div class="footer-widget">
                         <h3>{{__('footer.Contact us')}}<span></span></h3>
                         <ul class="contact-info-list">
                             <li><a href="tel:920001939">920001939</a></li>
                             <li> <a href="mailto:Admin@gulfinvestment.net">Admin@gulfinvestment.net</a></li>
-                            <li>الأحساء - المبرز - شارع الستين<br>برج الملحم الأداري - الدور الثالث<br>المملكة العربية السعودية</li>
+                            <li>الأحساء - المبرز - شارع الستين برج الملحم الأداري - الدور الثالث المملكة العربية السعودية</li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6 sm-padding">
+                <div class="col-lg-4 col-sm-6 sm-padding">
                     <div class="footer-widget ml-25">
                         <h3>{{__('footer.Opening Hours')}}<span></span></h3>
                         <ul class="opening-hours-list">

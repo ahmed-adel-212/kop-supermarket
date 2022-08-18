@@ -46,7 +46,7 @@ Route::group([
         Route::get('homeitem/create', 'ItemController@Create_Homeitem')->name('homeitem.create');
         Route::post('homeitem/store', 'ItemController@Store_Homeitem')->name('homeitem.store');
         Route::get('homeitem/edit/{homeitem}', 'ItemController@Edit_Homeitem')->name('homeitem.edit');
-        Route::put('homeitem/update/{homeitem}', 'ItemController@Update_Homeitem')->name('homeitem.update');
+        Route::post('homeitem/update/{homeitem}', 'ItemController@Update_Homeitem')->name('homeitem.update');
         Route::delete('homeitem/destroy/{homeitem}', 'ItemController@Destroy_Homeitem')->name('homeitem.destroy');
         //=======================================================================
 

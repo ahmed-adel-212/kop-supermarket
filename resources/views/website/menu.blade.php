@@ -42,19 +42,19 @@
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
                            <!-- <div class="sale"></div> -->
                             <div class="product-thumb">
-                                <img src="{{$dealItem->image}}" alt="food">
+                                <img src="{{$dealItem->website_image}}" alt="food">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>
                             <div class="food-info">
                                <ul class="ratting">
-                                   <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
+                                   <li>{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
                                    <li><i class="las la-star"></i></li>
                                     <li><i class="las la-star"></i></li>
                                     <li><i class="las la-star"></i></li>
                                     <li><i class="las la-star"></i></li>
                                     <li><i class="las la-star"></i></li>
                                </ul>
-                                <h3>{{$dealItem['description_'.app()->getLocale()]}}</h3>
+                                <h3>{{$dealItem['name_'.app()->getLocale()]}}</h3>
                                 <div class="price">
                                     <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
                                 </div>

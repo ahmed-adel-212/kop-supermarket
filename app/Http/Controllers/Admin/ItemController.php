@@ -59,6 +59,7 @@ class ItemController extends Controller
             "price" => 'required|numeric',
             "calories" => 'required|numeric',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             "category_id" => 'required|exists:categories,id',
         ]);
 
@@ -69,7 +70,12 @@ class ItemController extends Controller
             $image->move(public_path('items'), $image_new_name);
             $validatedData['image'] = '/items/' . $image_new_name;
         }
-        
+        if ($request->hasFile('website_image')) {
+            $image = $request->website_image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('items'), $image_new_name);
+            $validatedData['website_image'] = '/items/' . $image_new_name;
+        }
         $item = Item::create($validatedData);
         $this->Make_Log('App\Models\Item','create',$item->id);
         if (!$item)
@@ -169,6 +175,7 @@ class ItemController extends Controller
             "price" => 'required|numeric',
             "calories" => 'required|numeric',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             "category_id" => 'required|exists:categories,id',
         ]);
 
@@ -178,6 +185,12 @@ class ItemController extends Controller
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('items'), $image_new_name);
             $validatedData['image'] = '/items/' . $image_new_name;
+        }
+        if ($request->hasFile('website_image')) {
+            $image = $request->website_image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('items'), $image_new_name);
+            $validatedData['website_image'] = '/items/' . $image_new_name;
         }
         
         if (!$item->update($validatedData))
@@ -362,7 +375,13 @@ class ItemController extends Controller
 
     public function Destroy_Homeitem(Request $request, HomeItem $homeitem)
     {
-        $homeitem->delete();
+        $homeitem->update([
+            "description_ar" => null,
+            "description_en" => null,
+            "category_id" => null,
+            "item_id" => null,
+            'image' => null,
+        ]);
         $this->Make_Log('App\Models\HomeItem','delete',$homeitem->id);
         return redirect()->back()->with([
             'type' => 'error', 'message' => 'homeitem deleted successfuly'

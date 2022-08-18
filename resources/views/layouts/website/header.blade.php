@@ -3,9 +3,9 @@
         <div class="container">
             <div class="primary-header-inner">
                 <div class="header-logo">
-                    <a href="#">
-                        <img class="light" src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
-                        <img class="dark" src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
+                    <a href="{{route('home.page')}}">
+                        <img class="light"  src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
+                        <img class="dark"  src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
                     </a>
                 </div><!-- /.header-logo -->
                 <div class="header-menu-wrap">

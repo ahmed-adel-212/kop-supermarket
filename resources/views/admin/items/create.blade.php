@@ -109,6 +109,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Website Image</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input {!! $errors->first('website_image', 'is-invalid') !!}" name="website_image" value="{{ old('website_image') }}">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
+                                    </div>
+                                    {!! $errors->first('website_image', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">

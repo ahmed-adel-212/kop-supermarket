@@ -543,8 +543,8 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     font-size: 60px;
 }
 .food-content {
-    min-height: 230px;
-    max-height: 230px;
+    min-height: 188px;
+    max-height: 188px;
 }
 .food-content h3{
     letter-spacing: -0.8px;
@@ -669,10 +669,12 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     Food Menu Section
 =======================================================*/
 .food-menu{ position: relative; }
-.product-item{
+.product-item {
     background-color: #fff;
     padding: 70px 40px 40px;
     position: relative;
+    min-height: 490px;
+    max-height: 490px;
 }
 .product-item .sale{
     background-color: #f43127;
@@ -687,8 +689,11 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     left: 40px;
     top: 40px;
 }
-.product-thumb{
+.product-thumb {
     position: relative;
+    max-height: 250px;
+    min-height: 250px;
+
 }
 .product-thumb img{width: 100%;}
 .product-thumb .order-btn{
@@ -723,6 +728,10 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     font-size: 22px;
     font-weight: 600;
     letter-spacing: -1px;
+    min-height: 60px;
+    max-height: 60px;
+
+
 }
 .food-carousel .product-item h3{
     font-size: 18px;
@@ -762,10 +771,10 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     text-align: center;
     margin-bottom: 20px;
 }
-.food-menu-filter li{
+.food-menu-filter li {
     background-color: #fff;
     font-family: "Rubik",sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     color: #0e1318;
     display: inline-block;
@@ -773,6 +782,9 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     padding: 5px 20px;
     border: 1px solid #eee;
     cursor: pointer;
+    width: 18%;
+    max-height: 15%;
+    min-height: 15%;
 }
 .food-menu-filter li.active{
     background-color: #ff9d2d;
@@ -781,7 +793,7 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
 /*======================================================
     Product Details Section
 =======================================================*/
-.food-details{position: relative; }
+.food-details{position: relative;padding-bottom: 40px;min-height:600px;max-height:600px}
 .product-details{ margin-top: 10px; }
 .food-details-thumb{
     position: relative;
@@ -832,7 +844,7 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     align-items: center;
 }
 .product-details .price span {
-    font-size: 16px;
+    font-size: 22px;
     text-decoration: none;
     color: #5dce53;
     margin-left: 10px;
@@ -1187,6 +1199,9 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     background-size: cover;
     position: relative;
     overflow: hidden;
+    min-height: 500px;
+    max-height: 500px;
+
 }
 .content-section .bg-shape.grey{
     bottom: auto;
@@ -1679,7 +1694,7 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
 .footer-section .col-lg-3:nth-child(2) .footer-widget{ padding-left: 30px; }
 .footer-top{
     position: relative;
-    padding: 100px 0;
+    padding: 30px 0;
     border-bottom: 1.5px solid #3f3d5650;
 }
 .footer-widget{}
