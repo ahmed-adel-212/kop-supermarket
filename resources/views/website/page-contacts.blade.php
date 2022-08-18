@@ -135,22 +135,22 @@
                                     </p>
                                 </div>
                                 <ul class="contact-details">
-                                    <li><i class="fas fa-map-marker-alt mx-1"></i>الأحساء - المبرز - شارع البستان - برج الملحم
+                                    <li><i class="fas fa-map-marker-alt"></i>الأحساء - المبرز - شارع البستان - برج الملحم
                                         الأداري - الدور الثالث<br> المملكة العربية السعودية</li>
-                                    <li><i class="fas fa-envelope mx-1"></i>
+                                    <li><i class="fas fa-envelope"></i>
                                         <a style="color: inherit;"
                                             href="mailto:Admin@gulfinvestment.net">Admin@gulfinvestment.net</a>
                                     </li>
-                                    <li><i class="fas fa-phone mx-1"></i>
+                                    <li><i class="fas fa-phone"></i>
                                         <a style="color: inherit;" href="tel:920001939">920001939</a>
                                     </li>
-                                    <li><i class="fas fa-truck mx-1"></i>
+                                    <li><i class="fas fa-truck"></i>
                                         <div><span>{{ __('general.For Delivery, Call us') }}&nbsp;&nbsp;</span><a
                                                 href="tel:920001939" style="color:inherit">920001939</a>
                                         </div>
                                     </li>
                                     <li>
-                                        <i class="fas fa-clock mx-1 fa-2x"></i>
+                                        <i class="fas fa-clock"></i>
                                         <div class="block-with-phone">
                                             <div><b>{{ __('general.Delivery Hours') }}</b>
                                                 <div>@lang('footer.Sat') – @lang('footer.Thur'): 05:00 @lang('footer.AM') – 12:00

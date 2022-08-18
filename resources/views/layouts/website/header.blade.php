@@ -4,72 +4,57 @@
             <div class="primary-header-inner">
                 <div class="header-logo">
                     <a href="#">
-                        <img class="light" src="{{ asset('website-assets/img/logokop.bmp') }}" alt="Logo" />
-                        <img class="dark" src="{{ asset('website-assets/img/logokop.bmp') }}" alt="Logo" />
+                        <img class="light" src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
+                        <img class="dark" src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
                     </a>
                 </div><!-- /.header-logo -->
                 <div class="header-menu-wrap">
                     <ul class="slider-menu">
-                        <li><a href="{{ route('home.page') }}">{{ __('header.Home') }}</a>
+                        <li><a href="{{route('home.page')}}">{{ __('header.Home')}}</a>
                             <!-- <ul>
-                                <li><a href="{{ route('home.page') }}">{{ __('header.Home') }}</a></li>
+                                <li><a href="{{route('home.page')}}">{{ __('header.Home')}}</a></li>
                             </ul> -->
                         </li>
-{{-- <<<<<<< HEAD
                         <li><a href="{{route('menu.page')}}">{{ __('header.Menu')}}</a></li>
                         <li><a class="cart" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offers')}}">{{ __('header.Offers')}}</a></li>
                         <li><a href="{{route('get.cart')}}">{{ __('header.Cart')}}</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="#">Pages</a>
-======= --}}
-                        <li><a href="javascript:void0">{{ __('header.Menu') }}</a>
-{{-- >>>>>>> ahmed --}}
                             <ul>
-                                <li><a href="{{ route('menu.page') }}">{{ __('header.Menu') }}</a></li>
-                                <li><a href="{{ route('takeaway.page') }}">{{ __('general.Branches') }}</a></li>
-                                <li><a href="{{ route('offers') }}">{{ __('header.Offers') }}</a></li>
+                                <li><a href="gallery.html">Food Gallery</a></li>
+                                <li><a href="reviews.html">Reviews</a></li>
+                                <li><a href="team.html">Our Chef</a></li>
+                                <li><a href="food-menu.html">Food Menu</a></li>
+                                <li><a href="reservation.html">Reservation</a></li>
+                                <li><a href="faqs.html">Help &amp; Faq's</a></li>
+                                <li><a href="404.html">404 Error</a></li>
                             </ul>
                         </li>
-                        {{-- <li><a href="{{ route('get.cart') }}">{{ __('header.Cart') }}</a></li> --}}
-                        <li><a href="javascript:void0">{{ __('general.contact_us') }}</a>
+                        <li><a href="shop.html">Shop</a>
                             <ul>
-                                <li><a href="{{ route('aboutUS.page') }}">
-                                        {{ __('general.about_us') }}</a></li>
-                                <li><a href="{{ route('contact.page') }}">
-                                        {{ __('general.contact_us') }}
-                                    </a></li>
+                                <li><a href="shop.html">Shop Grid</a></li>
+                                <li><a href="shop-details.html">Shop Details</a></li>
+                                <li><a href="cart.html">Cart Page</a></li>
+                                <li><a href="checkout.html">Checkout Page</a></li>
+                                
                             </ul>
                         </li>
-
-
-                        <li><a href="javascript:void0">{{ __('general.Gallery') }}</a>
+                        <li><a href="blog-grid.html">Blog</a>
                             <ul>
-                                <li><a href="{{ route('gallery.page') }}">{{ __('general.Gallery') }}</a></li>
-                                <li><a href="{{ route('video.page') }}">{{ __('general.Video Library') }}</a></li>
+                                <li><a href="blog-grid.html">Grid Layout</a></li>
+                                <li><a href="blog-classic.html">Classic Layout</a></li>
+                                <li><a href="blog-details.html">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="javascript:void0">
-                                {{ __('general.blog') }}
-                            </a>
-                            <ul>
-                                <li><a href="{{ route('news.all') }}">
-                                        {{ __('general.blog') }}
-                                    </a></li>
-                                <li><a href="{{ route('health-infos.all') }}">
-                                        {{ __('general.Health Information') }}
-                                    </a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{{ route('careers.all') }}">{{ __('general.Careers') }}</a></li>
-
+                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
-
+                
                 <!-- /.header-menu-wrap -->
                 <!-- <div class="header-right">
                     <div class="search-icon dl-search-icon"><i class="las la-search"></i></div>
                     <a class="header-btn" href="reservation.html">Reservation<span></span></a>
-                  Burger menu
+                  Burger menu 
                     <div class="mobile-menu-icon">
                         <div class="burger-menu">
                             <div class="line-menu line-half first-line"></div>
