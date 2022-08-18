@@ -108,9 +108,9 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ route('get.cart') }}">
+                                <a href="{{ route('get.cart') }}" class="cart">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <sup>5</sup>
+                                    <sup id="cart-count" class="badge default-bg">0</sup>
                                 </a>
                             </li>
                         @else
