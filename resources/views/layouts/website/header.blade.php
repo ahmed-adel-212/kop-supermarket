@@ -3,80 +3,50 @@
         <div class="container">
             <div class="primary-header-inner">
                 <div class="header-logo">
-{{-- <<<<<<< HEAD
-
-                    <a href="{{route('home.page')}}">
-                        <img class="light"  src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
-                        <img class="dark"  src="{{asset('website-assets/img/logokop.bmp')}}" alt="Logo"/>
-======= --}}
                     <a href="{{ route('home.page') }}">
                         <img class="light" src="{{ asset('website-assets/img/logokop.bmp') }}" alt="Logo" />
-                        {{-- <img class="dark" src="{{ asset('website-assets/img/logokop.bmp') }}" alt="Logo" /> --}}
-{{-- >>>>>>> ahmed --}}
                     </a>
                 </div><!-- /.header-logo -->
                 <div class="header-menu-wrap">
                     <ul class="slider-menu">
-                        {{-- <li><a href="{{ route('home.page') }}">{{ __('header.Home') }}</a>
-                            <!-- <ul>
-                                <li><a href="{{ route('home.page') }}">{{ __('header.Home') }}</a></li>
-                            </ul> -->
-<<<<<<< HEAD
-                        </li>
-
-                        <li><a href="javascript:void0">{{ __('header.Menu') }}</a>
-=======
-                        </li> --}}
-                        {{-- <<<<<<< HEAD
-                        <li><a href="{{route('menu.page')}}">{{ __('header.Menu')}}</a></li>
-                        <li><a class="cart" @auth @if (!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offers')}}">{{ __('header.Offers')}}</a></li>
-                        <li><a href="{{route('get.cart')}}">{{ __('header.Cart')}}</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="#">Pages</a>
-======= --}}
                         <li><a href="javascript:void(0)">{{ __('header.Menu') }}</a>
-                            {{-- >>>>>>> ahmed --}}
-{{-- >>>>>>> ahmed --}}
                             <ul>
-                                <li><a href="{{ route('menu.page') }}">{{ __('header.Menu') }}</a></li>
-                                <li><a href="{{ route('takeaway.page') }}">{{ __('general.Branches') }}</a></li>
-                                {{-- <li><a href="{{ route('offers') }}">{{ __('header.Offers') }}</a></li> --}}
+                                <li class="{{request()->routeIs('menu.page') ? 'active' : ''}}"><a href="{{ route('menu.page') }}">{{ __('header.Menu') }}</a></li>
+                                <li class="{{request()->routeIs('takeaway.page') ? 'active' : ''}}"><a href="{{ route('takeaway.page') }}">{{ __('general.Branches') }}</a></li>
                                 <li><a class="cart" @auth
                                             @if (!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif
                                         @endauth href="{{ route('offers') }}">{{ __('header.Offers') }}</a></li>
                             </ul>
                         </li>
-                        {{-- <li><a href="{{ route('get.cart') }}">{{ __('header.Cart') }}</a></li> --}}
                         <li><a href="javascript:void(0)">{{ __('general.contact_us') }}</a>
                             <ul>
-                                <li><a href="{{ route('aboutUS.page') }}">
+                                <li class="{{request()->routeIs('aboutUS.page') ? 'active' : ''}}"><a href="{{ route('aboutUS.page') }}">
                                         {{ __('general.about_us') }}</a></li>
-                                <li><a href="{{ route('contact.page') }}">
+                                <li class="{{request()->routeIs('contact.page') ? 'active' : ''}}"><a href="{{ route('contact.page') }}">
                                         {{ __('general.contact_us') }}
                                     </a></li>
                             </ul>
                         </li>
 
-
                         <li><a href="javascript:void(0)">{{ __('general.Gallery') }}</a>
                             <ul>
-                                <li><a href="{{ route('gallery.page') }}">{{ __('general.Gallery') }}</a></li>
-                                <li><a href="{{ route('video.page') }}">{{ __('general.Video Library') }}</a></li>
+                                <li class="{{request()->routeIs('gallery.page') ? 'active' : ''}}"><a href="{{ route('gallery.page') }}">{{ __('general.Gallery') }}</a></li>
+                                <li class="{{request()->routeIs('video.page') ? 'active' : ''}}"><a href="{{ route('video.page') }}">{{ __('general.Video Library') }}</a></li>
                             </ul>
                         </li>
                         <li><a href="javascript:void(0)">
                                 {{ __('general.blog') }}
                             </a>
                             <ul>
-                                <li><a href="{{ route('news.all') }}">
+                                <li class="{{request()->routeIs('news.all') ? 'active' : ''}}"><a href="{{ route('news.all') }}">
                                         {{ __('general.blog') }}
                                     </a></li>
-                                <li><a href="{{ route('health-infos.all') }}">
+                                <li class="{{request()->routeIs('health-infos.all') ? 'active' : ''}}"><a href="{{ route('health-infos.all') }}">
                                         {{ __('general.Health Information') }}
                                     </a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ route('careers.all') }}">{{ __('general.Careers') }}</a></li>
+                        <li class="{{request()->routeIs('careers.all') ? 'active' : ''}}"><a href="{{ route('careers.all') }}">{{ __('general.Careers') }}</a></li>
                         <li><a href="javascript:void(0)">{{ __('general.language') }}</a>
                             <ul>
                                 @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
@@ -103,7 +73,7 @@
                             <li>
                                 <a href="javascript:void(0)"><i class="fas fa-user"></i></a>
                                 <ul>
-                                    <li>
+                                    <li class="{{request()->routeIs('profile') ? 'active' : ''}}">
                                         <a href="{{ route('profile') }}">
                                             {{ __('general.profile') }}
                                         </a>
@@ -120,19 +90,19 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
+                            <li class="{{request()->routeIs('get.cart') ? 'active' : ''}}">
                                 <a href="{{ route('get.cart') }}" class="cart">
                                     <i class="fas fa-shopping-cart"></i>
                                     <sup class="cart-count badge default-bg">0</sup>
                                 </a>
                             </li>
                         @else
-                            <li>
+                            <li class="{{request()->routeIs('get.login') ? 'active' : ''}}">
                                 <a href="{{ route('get.login') }}">
                                     {{ __('auth.login') }}
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{request()->routeIs('get.sign.up') ? 'active' : ''}}">
                                 <a href="{{ route('get.sign.up') }}">
                                     {{ __('auth.signup') }}
                                 </a>
@@ -142,10 +112,10 @@
                 </div>
 
                 <!-- /.header-menu-wrap -->
-                <!-- <div class="header-right">
-                    <div class="search-icon dl-search-icon"><i class="las la-search"></i></div>
-                    <a class="header-btn" href="reservation.html">Reservation<span></span></a>
-                  Burger menu
+                <div class="header-right">
+                    {{-- <div class="search-icon dl-search-icon"><i class="las la-search"></i></div> --}}
+                    {{-- <a class="header-btn" href="reservation.html">Reservation<span></span></a> --}}
+                    <span class="sr-only">Burger menu</span>
                     <div class="mobile-menu-icon">
                         <div class="burger-menu">
                             <div class="line-menu line-half first-line"></div>
@@ -153,7 +123,7 @@
                             <div class="line-menu line-half last-line"></div>
                         </div>
                     </div>
-                </div>/.header-right -->
+                </div>
             </div><!-- /.primary-header-one-inner -->
         </div>
     </div><!-- /.primary-header-one -->
