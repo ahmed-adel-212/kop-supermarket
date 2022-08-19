@@ -15,9 +15,9 @@ class Item extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
+    protected $fillable = ['branches','name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
 
-    protected $hidden = ["branches"];
+    // protected $hidden = ["branches"];
     protected $appends = ['is_hidden', 'dough_type', 'favoured', 'price_without_tax'];
 
     public $casts = ['main' => 'boolean'];

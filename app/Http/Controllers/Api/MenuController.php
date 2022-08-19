@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Address;
 use App\Http\Controllers\Api\BaseController;
 use DB;
 use App\Models\OfferDiscount;
@@ -23,21 +24,38 @@ class MenuController extends BaseController
     public function getAllCategories(Request $request)
     {
         $categories = Category::with('items')->get();
+        $categories->first()->load('items');
         // load first category items
 
-        if($request->service_type =='takeaway')
+        if(isset($request->service_type))
         {
-            $categories->first()->load('items')->where('items.branches', $request->id);
-        }
-        elseif($request->service_type =='delivery')
-        {
-            $address = Address::find($request->id);
-            $branch=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
-            if (!empty($branch)) {
-                $categories->first()->load('items')->whereIn('items.branches', $branch);
+            if($request->service_type =='takeaway')
+            {
+                $branch=$request->id;
             }
+            elseif($request->service_type =='delivery')
+            {
+                $address = Address::find($request->id);
+                $branch=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
+            }
+            foreach($categories as $category)
+                {
+                    $items=[];
+                    foreach($category->items as $item)
+                    {
+                        $branches= explode(',', $item->branches);
+                        if(in_array($branch, $branches))
+                        {
+                            $items[]=$item;
+                        }
+                        
+                    }
+                    unset($category->items);
+                    $category->items=$items;
+                    $temp[]=$category;
+                }
+                return $this->sendResponse($temp, 'All Categories retrieved successfully.');
         }
-        
         
         return $this->sendResponse($categories, 'All Categories retrieved successfully.');
     }
