@@ -11,11 +11,33 @@ use App\Models\OfferDiscount;
 
 class MenuController extends BaseController
 {
-    public function getAllCategories()
+    public function getAllCategories2()
     {
         $categories = Category::with('items')->get();
         // load first category items
         $categories->first()->load('items');
+        
+        return $this->sendResponse($categories, 'All Categories retrieved successfully.');
+    }
+
+    public function getAllCategories(Request $request)
+    {
+        $categories = Category::with('items')->get();
+        // load first category items
+
+        if($request->service_type =='takeaway')
+        {
+            $categories->first()->load('items')->where('items.branches', $request->id);
+        }
+        elseif($request->service_type =='delivery')
+        {
+            $address = Address::find($request->id);
+            $branch=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
+            if (!empty($branch)) {
+                $categories->first()->load('items')->whereIn('items.branches', $branch);
+            }
+        }
+        
         
         return $this->sendResponse($categories, 'All Categories retrieved successfully.');
     }

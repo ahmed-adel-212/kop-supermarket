@@ -15,7 +15,7 @@ class MenuController extends Controller
     public function menuPage(){
         $menu = [];
 
-        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
+        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories2())->getOriginalContent();
         
         if($return['success'] == 'success'){
             $menu['categories'] = $return['data'];

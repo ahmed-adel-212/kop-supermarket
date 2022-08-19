@@ -146,7 +146,7 @@ Route::middleware('api')->group(function () {
 // Menu routes
 Route::group(['prefix' => 'menu'], function () {
 
-    // categories
+    // categories 
     Route::get('/categories', 'Api\MenuController@getAllCategories');
     Route::post('/categories/{category}', 'Api\MenuController@getCategory');
 
