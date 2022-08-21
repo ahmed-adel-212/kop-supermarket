@@ -24,14 +24,14 @@ class FrontController extends BaseController
     public function getAboutUS()
     {
         $aboutUS = AboutUs::all();
-        return $this->sendResponse($aboutUS, 'AboutUS retrieved successfully.');
+        return $this->sendResponse($aboutUS, __('general.about_ret'));
     }
 
     //gallery
     public function getGallery()
     {
         $gallery = Gallery::paginate(12);
-        return $this->sendResponse($gallery, 'All Gallery retrieved successfully.');
+        return $this->sendResponse($gallery, __('general.gallery_ret'));
     }
 
     //media Video
@@ -50,7 +50,7 @@ class FrontController extends BaseController
             //$media['allRemain'] = Media::all()->except($videoID);
             $media['allRemain'] = Media::all();
         }
-        return $this->sendResponse($media, 'All Media retrieved successfully.');
+        return $this->sendResponse($media, __('general.media_ret'));
     }
 
     //News

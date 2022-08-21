@@ -279,4 +279,8 @@ return [
     'app_not_sent' => 'Application Not Sent',
     'app_sent' => 'Application Sent Successfully',
     'gift_enogh' => 'You Don\'t have enough points',
+    'banner_ret' => 'Banner Images Retrieved Successfully',
+    'about_ret' => 'AboutUS Sections Retrieved Successfully.',
+    'gallery_ret' => 'All Gallery Images Retrieved Successfully.',
+    'media_ret' => 'All Media Retrieved Successfully.',
 ];
