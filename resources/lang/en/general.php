@@ -270,4 +270,9 @@ return [
         'area_not_found' => 'Area Not Found',
         'updated' => 'Your Address Updated Successfuly',
     ],
+    'branch_ret' => 'Branch retreived successfully!',
+    'branch_no_cover' => "sorry there is no branch cover this area",
+    'invalid_address' => "Please Enter Valid Address or Branch",
+    'cart_ret' => 'User Cart Retrieved Successfully',
+    'cart_item' => 'User Cart Item',
 ];

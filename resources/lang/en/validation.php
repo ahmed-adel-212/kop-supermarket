@@ -156,6 +156,9 @@ return [
         'last_name' => 'Last Name',
         'image' => 'Image',
         'first_offer_available' => 'First Offer Available',
+        'item_id' => 'Item ID',
+        'quantity' => 'Quantity',
+        'cart_id' => 'Cart ID',
     ],
 
 ];

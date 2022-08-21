@@ -29,7 +29,7 @@ class BranchesController extends BaseController
             $branch->working_hours = $currentDay;
         }
 
-        return $this->sendResponse($branches, 'Branches Resource');
+        return $this->sendResponse($branches, __('general.Branches'));
     }
 
     /**
@@ -44,7 +44,7 @@ class BranchesController extends BaseController
             $day->where('day', strtolower(now()->englishDayOfWeek))->first();
         }])->first();
 
-        return $this->sendResponse($branch, 'Branch retreived successfully!');
+        return $this->sendResponse($branch, __('general.branch_ret'));
     }
 
     public function getBranchWorkingHours(Request $request) {
@@ -66,24 +66,24 @@ class BranchesController extends BaseController
 
                     if ($branch) {
                         $branch->workingDays;
-                        return $this->sendResponse($branch, 'Branch Retrieved successfuly!');
+                        return $this->sendResponse($branch, __('general.branch_ret'));
                     } else {
-                        return $this->sendError("sorry there is no branch cover this area");
+                        return $this->sendError(__('general.branch_no_cover'));
                     }
                 } else {
-                    return $this->sendError("sorry there is no branch cover this area");
+                    return $this->sendError(__('general.branch_no_cover'));
                 }
             } else {
-                return $this->sendError("sorry there is no branch cover this area");
+                return $this->sendError(__('general.branch_no_cover'));
             }
         } else if ($request->branch_id) {
             $branch = Branch::find($request->branch_id);
             if ($branch) {
                 $branch->workingDays;
-                return $this->sendResponse($branch, 'Branch Retrieved successfuly!');
+                return $this->sendResponse($branch, __('general.branch_ret'));
             }
         }
 
-        return $this->sendError("Please Enter Valid Address or branch");
+        return $this->sendError(__('general.invalid_address'));
     }
 }
