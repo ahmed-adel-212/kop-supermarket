@@ -206,6 +206,9 @@
         .header-menu-wrap li li.active {
             background-color: #ff8e28;
         }
+        .contact-info-list li a:hover {
+            color: #585353;
+        }
     </style>
     @if (app()->getLocale() == 'ar')
         <style>
