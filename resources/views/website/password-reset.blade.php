@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') Forget Password @endsection
+@section('title') {{__('general.Forgot your password?')}} @endsection
 
 @section('styles')
     <style>
@@ -43,6 +43,23 @@
 
     @section('content')
         <main class="page-main">
+            <section class="page-header"
+            {{-- style="background-image: url({{ asset('website-assets/img/pages/contacts/bg-first-screen.jpg') }})" --}}
+            style="background-image: url('/website2-assets/img/page-header-theme.jpg')"
+            >
+            <div class="bg-shape grey"></div>
+            <div class="container">
+                <div class="page-header-content">
+                    <h4 class="text-">
+                        {{ __('general.Forgot your password?') }}
+                    </h4>
+                    <h2 class="text-">
+                        {{ __('general.Enter Password') }}
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <!--/.page-header-->
 
             <div class="container padding-bottom-3x mb-2">
                 <div class="row justify-content-center">
