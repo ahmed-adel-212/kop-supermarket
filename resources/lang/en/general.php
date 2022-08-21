@@ -259,4 +259,8 @@ return [
     'back_to_home' => 'Back to Homepage',
     'no_orders' => 'You do not have any :type Orders Currently',
     'info' => 'Please Note',
+    'error' => 'an Error occured, Please try again later',
+    'address' => [
+        'created' => 'Your Address Created Successfuly'
+    ]
 ];

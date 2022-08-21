@@ -74,11 +74,11 @@ class AddressesController extends BaseController
         $address = Address::firstOrCreate($request->all());
 
         if (!$address) {
-            return $this->sendError("Address not created!", 400);
+            return $this->sendError(__('general.error'), 400);
         }
 
 
-        return $this->sendResponse($address, 'The address created successfuly');
+        return $this->sendResponse($address, __('general.address.created'));
     }
 
     public function sotreWithMaps(Request $request)
