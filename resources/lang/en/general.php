@@ -316,4 +316,7 @@ return [
     'about_ret' => 'AboutUS Sections Retrieved Successfully.',
     'gallery_ret' => 'All Gallery Images Retrieved Successfully.',
     'media_ret' => 'All Media Retrieved Successfully.',
+    'Information is Missed' => 'Information is Missed',
+    'User Not Exist' => 'User Not Exist',
+    'Token Updated Successfully' => 'Token Updated Successfully',
 ];

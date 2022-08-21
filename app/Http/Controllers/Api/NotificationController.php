@@ -17,14 +17,14 @@ class NotificationController extends BaseController
     public function setPushToken(Request $request)
     {
         if ($request->user_id == null || $request->platform == null) {
-            return $this->sendError('Information is Missed', [], 404);
+            return $this->sendError(__('general.Information is Missed'), [], 404);
         }
         
         try {
             $user = User::findorFail($request->user_id);
             
         } catch (\Exception $e) {
-            return $this->sendError('User Not Exist', [], 404);
+            return $this->sendError(__('general.User Not Exist'), [], 404);
         }
         
         $tokens = NotiToken::where('user_id', $request->user_id)->where('platform', $request->platform)->get();
@@ -41,7 +41,7 @@ class NotificationController extends BaseController
         
         
         $token = NotiToken::where('user_id', $request->user_id)->where('platform', $request->platform)->first();
-        return $this->sendResponse($token, 'Token Updated Successfully');
+        return $this->sendResponse($token, __('general.Token Updated Successfully'));
         
     }
     

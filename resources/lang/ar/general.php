@@ -337,4 +337,7 @@ return [
 'app_not_sent' => 'لم يتم إرسال الطلب',
 'app_sent' => 'تم إرسال الطلب بنجاح',
 'gift_enogh' => 'ليس لديك ما يكفي من النقاط',
+'Information is Missed' => 'المعلومات مفقودة',
+'User Not Exist' => 'المستخدم غير موجود',
+'Token Updated Successfully' => 'تم تحديث الرمز بنجاح',
 ];
