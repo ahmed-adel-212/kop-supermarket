@@ -16,7 +16,7 @@ class MenuController extends BaseController
     {
         $categories = Category::with('items')->get();
         // load first category items
-        $categories->first()->load('items');
+        $categories->first()->loadMissing('items');
         
         return $this->sendResponse($categories, 'All Categories retrieved successfully.');
     }
@@ -24,7 +24,7 @@ class MenuController extends BaseController
     public function getAllCategories(Request $request)
     {
         $categories = Category::with('items')->get();
-        $categories->first()->load('items');
+        $categories->first()->loadMissing('items');
         // load first category items
 
         if(isset($request->service_type))
