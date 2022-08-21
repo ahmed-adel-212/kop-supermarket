@@ -50,7 +50,7 @@
 
     @section('content')
         <main class="page-main">
-            <section class="page-header" style="background-image: url('/website2-assets/img/page-header-theme.jpg')">
+            <section class="page-header" style="background-image: url({{asset('/website2-assets/img/page-header-theme.jpg')}})">
                 <div class="bg-shape grey"></div>
                 <div class="container">
                     <div class="page-header-content">
