@@ -260,7 +260,14 @@ return [
     'no_orders' => 'You do not have any :type Orders Currently',
     'info' => 'Please Note',
     'error' => 'an Error occured, Please try again later',
+    'validation_errors' => 'Validation Errors!',
+    'created' => ":key Created Successfuly",
+    'updated' => ":key Updated Successfuly",
+    'deleted' => ":key Deleted Successfuly",
     'address' => [
-        'created' => 'Your Address Created Successfuly'
+        'created' => 'Your Address Created Successfuly',
+        'city_not_found' => 'City Not Found',
+        'area_not_found' => 'Area Not Found',
+        'updated' => 'Your Address Updated Successfuly',
     ]
 ];
