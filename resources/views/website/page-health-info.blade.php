@@ -45,7 +45,7 @@
                         <div class="col-lg-8 col-md-12 sm-padding">
                             <div class="row classic-layout">
                                 @foreach ($infos as $info)
-                                    <div class="col-lg-12 sm-padding">
+                                    <div class="col-lg-12 sm-padding my-4">
                                         <div class="post-card">
                                             <div class="post-thumb">
                                                 <img src="{{ $info->image }}" alt="img">
