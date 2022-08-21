@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\activateSMS;
 use App\Notifications\SignupActivate;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
@@ -154,6 +155,8 @@ class AuthController extends Controller
 
     public function resendVerificationCode()
     {
+        auth()->user()->notify(new SignupActivate);
+        
         try {
             $this->sendMessage(
                 auth()->user()->first_phone,
