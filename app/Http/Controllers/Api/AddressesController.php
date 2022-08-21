@@ -33,13 +33,13 @@ class AddressesController extends BaseController
      */
     public function index(Request $request)
     {
-         if ($request->user()) {
+        if ($request->user()) {
 
             $user = $request->user();
         } else {
             $user = auth('web')->user();
         }
-         $address = Address::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->get();
+        $address = Address::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->get();
         return $this->sendResponse($address, 'The addresses returned successfully');
     }
 
@@ -52,7 +52,7 @@ class AddressesController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->validationRules);
-        
+
         if ($validator->fails()) {
             return $this->sendError('Validation Error!', $validator->errors(), 400);
         }
@@ -60,7 +60,7 @@ class AddressesController extends BaseController
         // attach customer reference
         if ($request->user()) {
             if ($request->user()->hasRole('customer')) {
-              return  $request->merge(['customer_id' => $request->user()->id]);
+                $request->merge(['customer_id' => $request->user()->id]);
             }
         } else {
             if (auth('web')->user()->hasRole('customer')) {
@@ -71,7 +71,7 @@ class AddressesController extends BaseController
         if ($request->has('_token')) {
             unset($request['_token']);
         }
-          $address = Address::firstOrCreate($request->all());
+        $address = Address::firstOrCreate($request->all());
 
         if (!$address) {
             return $this->sendError("Address not created!", 400);
@@ -178,14 +178,13 @@ class AddressesController extends BaseController
                 if ($address->delete())
                     return $this->sendResponse(null, 'The address deleted successfully!');
             }
-        }
-        else {
-            $order=Order::where('address_id',$address->id)->get();
-             if ($order->count() <= 0) {
-                 if ($address->customer->id == auth('web')->user()->id) {
-                     if ($address->delete())
-                         return $this->sendResponse(null, 'The c deleted successfully!');
-                 }
+        } else {
+            $order = Order::where('address_id', $address->id)->get();
+            if ($order->count() <= 0) {
+                if ($address->customer->id == auth('web')->user()->id) {
+                    if ($address->delete())
+                        return $this->sendResponse(null, 'The c deleted successfully!');
+                }
             }
             return $this->sendError('This address cannot be deleted');
         }
