@@ -159,6 +159,9 @@ return [
         'item_id' => 'Item ID',
         'quantity' => 'Quantity',
         'cart_id' => 'Cart ID',
+        'body' => 'Message',
+        'subject' => 'Subject',
+        
     ],
 
 ];

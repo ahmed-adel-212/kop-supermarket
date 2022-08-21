@@ -24,7 +24,7 @@ class ContactController extends BaseController
             'subject' => 'required'
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Errors!', $validator->errors());
+            return $this->sendError(__('general.validation_errors'), $validator->errors());
         }
         $user = auth()->user();
         $contact = new Contact;
@@ -36,6 +36,6 @@ class ContactController extends BaseController
         Mail::to("kop@wahfyservices.com")
             ->send(new Contacts($contact));
 
-        return $this->sendResponse($contact, 'Contact Message Sent');
+        return $this->sendResponse($contact, __('general.Contact Message Sent'));
     }
 }
