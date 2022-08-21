@@ -66,7 +66,7 @@ class AuthController extends Controller
 
             // Mail::to($user->email)->send();
             try {
-                $user->notify(new SignupActivate);
+                // $user->notify(new SignupActivate);
             } catch (\Exception $e) {
 
             }
@@ -161,7 +161,7 @@ class AuthController extends Controller
     public function resendVerificationCode()
     {        
         try {
-            auth()->user()->notify(new SignupActivate);
+            // auth()->user()->notify(new SignupActivate);
             
             $this->sendMessage(
                 auth()->user()->first_phone,

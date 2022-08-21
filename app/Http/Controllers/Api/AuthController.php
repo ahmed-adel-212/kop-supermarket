@@ -136,7 +136,7 @@ class AuthController extends BaseController
 
         try {
             // send mail to user
-            $user->notify(new SignupActivate);
+            // $user->notify(new SignupActivate);
 
             $this->sendMessage(
                 $user->first_phone,
@@ -288,7 +288,7 @@ class AuthController extends BaseController
             return $this->sendError(__('auth.activated'), 400);
         }
 
-        $user->notify(new SignupActivate($user));
+        // $user->notify(new SignupActivate($user));
         // wael remove comment
         $user->notify(new activateSMS($user));
 
