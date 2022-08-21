@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\SignupActivate;
+use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,8 @@ use Twilio\Rest\Client;
 
 class AuthController extends Controller
 {
+    use GeneralTrait;
+
     public function get_login()
     {
         return view('website.login');
@@ -66,13 +69,14 @@ class AuthController extends Controller
             try {
                 $this->sendMessage(
                     $user->first_phone,
-                    'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
+                    "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
                 );
                 // return redirect()->back()->with(['success'=>__('auth.Sent SMS successfully.')]);
             } catch (\Exception $e) {
                 // DB::rollBack();
+                dd($e->getMessage());
 
-                // return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
+                return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
 
             return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully', 'email' => $user->email]);
@@ -153,7 +157,7 @@ class AuthController extends Controller
         try {
             $this->sendMessage(
                 auth()->user()->first_phone,
-                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . auth()->user()->activation_token
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . auth()->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . auth()->user()->activation_token
             );
             return redirect()->back()->with(['success' => __('auth.Sent SMS successfully.')]);
         } catch (\Exception $e) {

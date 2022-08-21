@@ -20,7 +20,6 @@ class PasswordResetController extends Controller
     public function index()
     {
         return view('website.password-reset');
-
     }
 
     public function create(Request $request)
@@ -46,7 +45,10 @@ class PasswordResetController extends Controller
 
         if ($user && $passwordReset) {
             try {
-                $this->sendMessage($user->first_phone, 'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $data['token']);
+                $this->sendMessage(
+                    $user->first_phone,
+                    "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $data['token'] . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $data['token']
+                );
             } catch (\Exception $e) {
                 // return redirect()->back()->with(['error' => __('general.Something Went Wrong')])->withInput();
             }
@@ -56,7 +58,6 @@ class PasswordResetController extends Controller
             return view('website.password-get-code', compact('email'))->with(['success' => __('general.We have e-mailed your password reset Code!')]);
         }
         return redirect()->back()->with(['error' => __('general.You are not a user')])->withInput();
-
     }
 
     public function get_code()
@@ -75,7 +76,6 @@ class PasswordResetController extends Controller
         if (Carbon::parse($passwordReset->created_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
             return redirect()->back()->with(['error' => __('general.This password reset token is invalid.')])->withInput();
-
         }
 
         $email = $passwordReset->email;
@@ -102,8 +102,7 @@ class PasswordResetController extends Controller
 
         DB::table('password_resets')->where([['token', $request->token], ['email', $request->email]])->delete();
 
-//        $user->notify(new PasswordResetSuccess($passwordReset));
+        //        $user->notify(new PasswordResetSuccess($passwordReset));
         return redirect(route('get.login'))->with(['success' => __('general.Your Password Changed Successfully')]);
     }
-
 }
