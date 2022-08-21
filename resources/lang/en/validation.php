@@ -161,7 +161,8 @@ return [
         'cart_id' => 'Cart ID',
         'body' => 'Message',
         'subject' => 'Subject',
-        
+        'description' => 'Description',
+        'cv_file' => 'CV file',
     ],
 
 ];

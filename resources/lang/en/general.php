@@ -275,4 +275,8 @@ return [
     'invalid_address' => "Please Enter Valid Address or Branch",
     'cart_ret' => 'User Cart Retrieved Successfully',
     'cart_item' => 'User Cart Item',
+    'carrer_already' => 'You have already sent an application for this job before',
+    'app_not_sent' => 'Application Not Sent',
+    'app_sent' => 'Application Sent Successfully',
+    
 ];
