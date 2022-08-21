@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\SignupActivate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
@@ -58,6 +60,9 @@ class AuthController extends Controller
             $user = User::create($request->all());
             $user->attachRole(3);
 
+            // Mail::to($user->email)->send();
+            $user->notify(new SignupActivate);
+
             try {
                 $this->sendMessage(
                     $user->first_phone,
@@ -67,10 +72,10 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 // DB::rollBack();
 
-                return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
+                // return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
 
-            return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully']);
+            return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully', 'email' => $user->email]);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['errors' => 'Something Went Wrong!! please try again later']);
         }
@@ -109,10 +114,9 @@ class AuthController extends Controller
 
     public function logout()
     {
-
         auth()->logout();
         session()->flush();
-        return redirect()->route('get.login')->with(['success' => __('session_messages.Successfully logged out')]);
+        return redirect()->route('home.page');
     }
 
     /* for verification */

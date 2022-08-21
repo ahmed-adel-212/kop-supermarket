@@ -215,7 +215,7 @@ Route::group([
             Route::get('/update/{address}', [\App\Http\Controllers\Website\AddressController::class, 'update'])->name('update_address');
 
             //log out
-            Route::get('/sign-out', [\App\Http\Controllers\Website\AuthController::class, 'logout'])->name('signout');
+            Route::post('/sign-out', [\App\Http\Controllers\Website\AuthController::class, 'logout'])->name('signout');
 
             //Loyalty Route
             Route::get('/loyalty/', [\App\Http\Controllers\Website\LoyalityController::class, 'get_loyalty'])->name('loyalty');

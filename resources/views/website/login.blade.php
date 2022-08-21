@@ -85,7 +85,7 @@
                                     @csrf
                                     <div class="form-group my-2">
                                         <label for="exampleInputEmail1" class="text-dark">{{ __('general.Email') }}</label>
-                                        <input type="email" value="{{ old('email') }}" name="email"
+                                        <input type="email" value="{{ Session::has('email') ? Session::get('email') : old('email') }}" name="email"
                                             placeholder="{{ __('general.Enter Your E-mail') }}" class="form-control"
                                             id="exampleInputEmail1" aria-describedby="emailHelp">
                                         @error('email')
