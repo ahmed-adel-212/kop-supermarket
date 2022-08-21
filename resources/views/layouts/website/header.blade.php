@@ -80,7 +80,7 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <form action="{{ route('logout') }}" method='post'>
+                                            <form action="{{ route('signout') }}" method='post'>
                                                 @csrf
                                                 <button class="" type="submit">
                                                     {{ __('general.logout') }}

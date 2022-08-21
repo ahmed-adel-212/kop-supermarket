@@ -4,14 +4,20 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\activateSMS;
+use App\Notifications\SignupActivate;
+use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
 class AuthController extends Controller
 {
+    use GeneralTrait;
+
     public function get_login()
     {
         return view('website.login');
@@ -58,19 +64,23 @@ class AuthController extends Controller
             $user = User::create($request->all());
             $user->attachRole(3);
 
+            // Mail::to($user->email)->send();
+            $user->notify(new SignupActivate);
+
             try {
                 $this->sendMessage(
                     $user->first_phone,
-                    'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
+                    "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
                 );
                 // return redirect()->back()->with(['success'=>__('auth.Sent SMS successfully.')]);
             } catch (\Exception $e) {
                 // DB::rollBack();
+                dd($e->getMessage());
 
                 return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
 
-            return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully']);
+            return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully', 'email' => $user->email]);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['errors' => 'Something Went Wrong!! please try again later']);
         }
@@ -110,10 +120,9 @@ class AuthController extends Controller
 
     public function logout()
     {
-
         auth()->logout();
         session()->flush();
-        return redirect()->route('get.login')->with(['success' => __('session_messages.Successfully logged out')]);
+        return redirect()->route('home.page');
     }
 
     /* for verification */
@@ -147,10 +156,12 @@ class AuthController extends Controller
 
     public function resendVerificationCode()
     {
+        auth()->user()->notify(new SignupActivate);
+        
         try {
             $this->sendMessage(
                 auth()->user()->first_phone,
-                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . auth()->user()->activation_token
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . auth()->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . auth()->user()->activation_token
             );
             return redirect()->back()->with(['success' => __('auth.Sent SMS successfully.')]);
         } catch (\Exception $e) {

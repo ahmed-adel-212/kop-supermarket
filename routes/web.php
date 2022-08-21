@@ -160,9 +160,11 @@ Route::group([
         Route::post('/get-sign-up', [\App\Http\Controllers\Website\AuthController::class, 'sign_up'])->name('sign.up'); //auth routes
 
         /* for verification */
-        Route::get('/verification-code', 'AuthController@get_code')->name('verifyCode.page');
-        Route::get('resend-verification-code', 'AuthController@resendVerificationCode')->name('verifyCode.resend');
-        Route::get('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
+        Route::group(['middleware' => ['auth']], function() {
+            Route::get('/verification-code', 'AuthController@get_code')->name('verifyCode.page');
+            Route::get('resend-verification-code', 'AuthController@resendVerificationCode')->name('verifyCode.resend');
+            Route::get('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
+        });
 
         /*********** Auth Routes ***********/
 
@@ -215,7 +217,7 @@ Route::group([
             Route::get('/update/{address}', [\App\Http\Controllers\Website\AddressController::class, 'update'])->name('update_address');
 
             //log out
-            Route::get('/sign-out', [\App\Http\Controllers\Website\AuthController::class, 'logout'])->name('signout');
+            Route::post('/sign-out', [\App\Http\Controllers\Website\AuthController::class, 'logout'])->name('signout');
 
             //Loyalty Route
             Route::get('/loyalty/', [\App\Http\Controllers\Website\LoyalityController::class, 'get_loyalty'])->name('loyalty');

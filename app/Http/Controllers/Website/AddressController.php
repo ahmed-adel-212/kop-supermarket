@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Controllers\Api\FrontController;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;

@@ -16,9 +16,11 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    public function homePage(){
+    public function homePage(Request $request){
         $menu = [];
+
         $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories2())->getOriginalContent();
+
         if($return['success'] == 'success'){
             $menu['categories'] = $return['data'];
         }

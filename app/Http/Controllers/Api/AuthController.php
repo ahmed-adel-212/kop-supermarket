@@ -138,7 +138,7 @@ class AuthController extends BaseController
             
             $this->sendMessage(
                 $user->first_phone,
-                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $user->activation_token
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
             );
 
             // return $this->sendResponse($user, 'Successfully created user!');
@@ -242,7 +242,7 @@ class AuthController extends BaseController
         try {
             $this->sendMessage(
                 $request->user()->first_phone, 
-                'KOP:Thanks for signup! Please before you begin, you must confirm your account. Your Code is:' . $request->user()->activation_token
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $request->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $request->user()->activation_token
             );
             return $this->sendResponse($request->user(), 'Sent SMS successfully');
         } catch (\Exception $e) {
