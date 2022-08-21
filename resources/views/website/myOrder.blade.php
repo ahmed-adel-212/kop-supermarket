@@ -35,6 +35,73 @@
         .uk-lightbox {
             background: rgba(0, 0, 0, 0.60);
         }
+
+        /*Pen styling*/
+        .container {
+            margin-top: 50px;
+        }
+
+        .alert-info {
+            border-color: #e6e6e6;
+            border-left: 5px solid #00b3c8;
+            background-color: #fff;
+            color: #888;
+        }
+
+        @media (min-width: 768px) {
+            .alert {
+                border-radius: 6px;
+                display: table;
+                width: 100%;
+                padding-left: 78px;
+                position: relative;
+                padding-right: 78px;
+                border: 1px solid #e6e6e6;
+            }
+
+            .alert .icon {
+                text-align: center;
+                width: 58px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border: 1px solid #bdbdbd;
+                padding-top: 15px;
+                border-radius: 6px 0 0 6px;
+            }
+
+            [dir="rtl"] .alert .icon {
+                right: 0;
+                border-radius: 0 6px 6px 0;
+            }
+
+            .alert .icon i {
+                font-size: 20px;
+                color: #fff;
+                left: 21px;
+                margin-top: -10px;
+                position: absolute;
+                top: 50%;
+            }
+
+            .alert .icon img {
+                font-size: 20px;
+                color: #fff;
+                left: 18px;
+                margin-top: -10px;
+                position: absolute;
+                top: 50%;
+            }
+
+            /*============ colors ========*/
+         
+            .alert.alert-info .icon,
+            .alert.alert-info .icon:after {
+                border-color: none;
+                background: #00b3c8;
+            }
+        }
     </style>
 @endsection
 
@@ -114,7 +181,7 @@
                                 <div class="tab-pane fade show active" id="completed" role="tabpanel"
                                     aria-labelledby="completed-tab">
                                     @if (isset($completed_orders))
-                                        @foreach ($completed_orders as $index => $co)
+                                        @forelse ($completed_orders as $index => $co)
                                             <div class="order-body">
 
                                                 <div class="pb-3">
@@ -169,9 +236,21 @@
 
                                                     </div>
                                                 </div>
-
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <div class="alert alert-info">
+                                                <div class="icon hidden-xs text-white">
+                                                    <i class="fa fa-exclamation-circle"></i>
+                                                </div>
+                                                <p class="text-info">
+                                                    <strong>{{ __('general.info') }}</strong>
+                                                    <Br />
+                                                    {{ __('general.no_orders', [
+                                                        'type' => __('general.Completed'),
+                                                    ]) }}
+                                                </p>
+                                            </div>
+                                        @endforelse
                                         {{ $completed_orders->appends(['canceled' => $canceled_orders->currentPage(), 'pending' => $pending_orders->currentPage(), 'completed' => $completed_orders->currentPage(), 'id' => 'completed'])->links() }}
                                     @endif
                                 </div>
@@ -179,7 +258,7 @@
 
                                 <div class="tab-pane fade" id="progress" role="tabpanel" aria-labelledby="progress-tab">
                                     @if (isset($pending_orders))
-                                        @foreach ($pending_orders as $index => $pe)
+                                        @forelse ($pending_orders as $index => $pe)
                                             <div class="order-body">
 
                                                 <div class="pb-3">
@@ -188,7 +267,8 @@
                                                         style=";box-shadow: 0 .125rem 0.25rem rgba(0,0,0,.25)!important;">
 
                                                         <div class="d-flex border-bottom pb-3">
-                                                            <div class="text-muted mr-3" style="width: 110px;height: 110px">
+                                                            <div class="text-muted mr-3"
+                                                                style="width: 110px;height: 110px">
                                                                 <img alt="#"
                                                                     src="{{ asset('website2-assets/img/order.png') }}"
                                                                     class="w-100 h-100 img-fluid order_img rounded">
@@ -238,7 +318,20 @@
                                                 </div>
 
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <div class="alert alert-info">
+                                                <div class="icon hidden-xs text-white">
+                                                    <i class="fa fa-exclamation-circle"></i>
+                                                </div>
+                                                <p class="text-info">
+                                                    <strong>{{ __('general.info') }}</strong>
+                                                    <Br />
+                                                    {{ __('general.no_orders', [
+                                                        'type' => __('general.Pending'),
+                                                    ]) }}
+                                                </p>
+                                            </div>
+                                        @endforelse
                                         {{ $pending_orders->appends(['canceled' => $canceled_orders->currentPage(), 'pending' => $pending_orders->currentPage(), 'completed' => $completed_orders->currentPage(), 'id' => 'progress'])->links() }}
                                     @endif
                                 </div>
@@ -247,7 +340,7 @@
                                     aria-labelledby="canceled-tab">
 
                                     @if (isset($canceled_orders))
-                                        @foreach ($canceled_orders as $index => $ca)
+                                        @forelse ($canceled_orders as $index => $ca)
                                             <div class="order-body">
 
                                                 <div class="pb-3">
@@ -304,7 +397,20 @@
                                                 </div>
 
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <div class="alert alert-info">
+                                                <div class="icon hidden-xs text-white">
+                                                    <i class="fa fa-exclamation-circle"></i>
+                                                </div>
+                                                <p class="text-info">
+                                                    <strong>{{ __('general.info') }}</strong>
+                                                    <Br />
+                                                    {{ __('general.no_orders', [
+                                                        'type' => __('general.Canceled'),
+                                                    ]) }}
+                                                </p>
+                                            </div>
+                                        @endforelse
                                         {{ $canceled_orders->appends(['canceled' => $canceled_orders->currentPage(), 'pending' => $pending_orders->currentPage(), 'completed' => $completed_orders->currentPage(), 'id' => 'canceled'])->links() }}
                                     @endif
                                 </div>

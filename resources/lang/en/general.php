@@ -257,4 +257,6 @@ return [
     'oops' => 'Oops! Where are we?',
     'not_found_title' => 'Page not Found! The page you are looking for was moved, <br> removed, renamed or might never existed.',
     'back_to_home' => 'Back to Homepage',
+    'no_orders' => 'You do not have any :type Orders Currently',
+    'info' => 'Please Note',
 ];
