@@ -24,14 +24,14 @@ class FrontController extends BaseController
     public function getAboutUS()
     {
         $aboutUS = AboutUs::all();
-        return $this->sendResponse($aboutUS, __('general.about_ret'));
+        return $this->sendResponse($aboutUS, __('general.ret', ['key' => __('general.about_ret')]));
     }
 
     //gallery
     public function getGallery()
     {
         $gallery = Gallery::paginate(12);
-        return $this->sendResponse($gallery, __('general.gallery_ret'));
+        return $this->sendResponse($gallery, __('general.ret', ['key' => __('general.gallery_ret')]));
     }
 
     //media Video
@@ -50,26 +50,26 @@ class FrontController extends BaseController
             //$media['allRemain'] = Media::all()->except($videoID);
             $media['allRemain'] = Media::all();
         }
-        return $this->sendResponse($media, __('general.media_ret'));
+        return $this->sendResponse($media, __('general.ret', ['key' => __('general.media_ret')]));
     }
 
     //News
     public function getAllNews()
     {
         $news = News::paginate(6);
-        return $this->sendResponse($news, 'All News retrieved successfully.');
+        return $this->sendResponse($news, __('general.ret', ['key' => __('general.news_ret')]));
     }
     public function getAllNewsNoPaginate()
     {
         $news = News::all();
-        return $this->sendResponse($news, 'All News retrieved successfully.');
+        return $this->sendResponse($news, __('general.ret', ['key' => __('general.news_ret')]));
     }
 
     public function getNew($newID)
     {
         $new = News::find($newID);
         if ($new) {
-            return $this->sendResponse($new, 'News retrieved successfully.');
+            return $this->sendResponse($new, __('general.ret', ['key' => __('general.new_ret')]));
         }
         return $this->sendError(__('general.error'));
     }
@@ -78,21 +78,21 @@ class FrontController extends BaseController
     public function getAllHealthInfo()
     {
         $healthInfo = HealthInfo::all();
-        return $this->sendResponse($healthInfo, 'All Health Info retrieved successfully.');
+        return $this->sendResponse($healthInfo,  __('general.ret', ['key' => __('general.health_ret')]));
     }
 
     //Jobs
     public function getAllJobs()
     {
         $careers = Careers::where('status', true)->get();
-        return $this->sendResponse($careers, 'All Careers Info retrieved successfully.');
+        return $this->sendResponse($careers,  __('general.ret', ['key' => __('general.carrers_ret')]));
     }
 
     public function GetJob($id)
     {
         $careers = Careers::find($id);
 
-        return $this->sendResponse($careers, 'All Careers Info retrieved successfully.');
+        return $this->sendResponse($careers,  __('general.ret', ['key' => __('general.carrer_ret')]));
     }
 
     public function jobRequest(Request $request, $id)

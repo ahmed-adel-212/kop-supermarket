@@ -20,7 +20,7 @@ class GiftsController extends BaseController
     public function getGifts(Request $request)
     {
         
-        return $this->sendResponse(Gift::all(), 'Gifts Retrieved Successfully');
+        return $this->sendResponse(Gift::all(), __('general.ret', ['key' => __('general.gifts')]));
     }
     
     public function BuyGifts(Request $request)
@@ -61,7 +61,7 @@ class GiftsController extends BaseController
     public function getUserGiftsOrders(Request $request)
     {
         
-        return $this->sendResponse(Auth::user()->gifts_orders()->with('gifts')->get(), 'user gifts retrived Successfully');
+        return $this->sendResponse(Auth::user()->gifts_orders()->with('gifts')->get(), __('general.ret', ['key' => __('general.gifts')]));
     }
 
 }
