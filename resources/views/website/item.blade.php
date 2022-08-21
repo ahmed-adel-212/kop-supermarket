@@ -212,10 +212,10 @@
                                     </p>
 
                                     <div class="product-btn">
-                                        <span class="counter"><span class="minus" x-data
-                                                x-on:click="$dispatch('remove-last-item')">-</span><input type="text"
-                                                name="quantity" x-bind:value="items.length" id="quantity"><span
-                                                class="plus" x-data x-on:click="$dispatch('add-item')">+</span></span>
+                                        <span class="counter" style="display: flex;"><span class="minus" x-data
+                                                x-on:click="$dispatch('remove-last-item')"style="font-size: 60px;">-</span><input type="text"
+                                                name="quantity" x-bind:value="items.length" id="quantity" style="width: 20%;margin-left: 5px; margin-right: 5px;"><span
+                                                class="plus" x-data x-on:click="$dispatch('add-item')" style="font-size: 37px;">+</span></span>
                                         <div> <button @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="purchase-btn cart" 
                                                 type="submit">{{ __('home.Add to Cart') }}</button></div>
                                     </div>
