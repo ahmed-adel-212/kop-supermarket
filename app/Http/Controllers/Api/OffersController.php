@@ -824,8 +824,8 @@ class OffersController extends BaseController
     protected function takeway_offer(Request $request, OfferFilters $filters ,$branch_id)
     {
        
-            $offer_id = DB::table("branch_offer")->where('branch_id',  $branch_id)->where('service_type','takeaway')->pluck('offer_id');
-            $offers = Offer::whereIn('id',$offer_id);
+            $offer_id = DB::table("branch_offer")->where('branch_id',  $branch_id)->pluck('offer_id');
+            $offers = Offer::whereIn('id',$offer_id)->where('service_type','takeaway');
         
 
         $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
@@ -836,10 +836,10 @@ class OffersController extends BaseController
     protected function delivery_offer(Request $request, OfferFilters $filters , $address_id)
     {
          $address = Address::find($address_id);
-        $branches=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->where('service_type','delivery')->pluck('branch_id');
+        $branches=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
         if (!empty($branches)) {
             $offer_id = DB::table("branch_offer")->whereIn('branch_id', $branches)->pluck('offer_id');
-            $offers = Offer::whereIn('id',$offer_id);
+            $offers = Offer::whereIn('id',$offer_id)->where('service_type','delivery');
         }
 
         $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
