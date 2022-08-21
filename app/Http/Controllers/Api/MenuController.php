@@ -18,7 +18,7 @@ class MenuController extends BaseController
         // load first category items
         $categories->first()->loadMissing('items');
         
-        return $this->sendResponse($categories, 'All Categories retrieved successfully.');
+        return $this->sendResponse($categories, __('general.ret', ['key' => __('general.cat_ret')]));
     }
 
     public function getAllCategories(Request $request)
@@ -54,10 +54,10 @@ class MenuController extends BaseController
                     $category->items=$items;
                     $temp[]=$category;
                 }
-                return $this->sendResponse($temp, 'All Categories retrieved successfully.');
+                return $this->sendResponse($temp, __('general.ret', ['key' => __('general.cat_ret')]));
         }
         
-        return $this->sendResponse($categories, 'All Categories retrieved successfully.');
+        return $this->sendResponse($categories, __('general.ret', ['key' => __('general.cat_ret')]));
     }
 
     public function getCategory(Request $request, int $category)
@@ -103,7 +103,7 @@ class MenuController extends BaseController
             }
         }
 
-        return $this->sendResponse($category, 'Categories retrieved successfully.');
+        return $this->sendResponse($category, __('general.ret', ['key' => __('general.cat_ret')]));
     }
 
     public function getItems(Request $request,$category)
@@ -147,7 +147,7 @@ class MenuController extends BaseController
             }
         }
 
-        return $this->sendResponse($items, 'items retrieved successfully.');
+        return $this->sendResponse($items, __('general.ret', ['key' => __('general.items_ret')]));
     }
 
 
@@ -195,7 +195,7 @@ class MenuController extends BaseController
             unset($item->category);
         }
         
-        return $this->sendResponse($items, 'items retrieved successfully.');
+        return $this->sendResponse($items, __('general.ret', ['key' => __('general.items_ret')]));
     }
 
 
@@ -234,7 +234,7 @@ class MenuController extends BaseController
         }
 
         }
-        return $this->sendResponse($item, 'item retrieved successfully.');
+        return $this->sendResponse($item,  __('general.ret', ['key' => __('general.item_ret')]));
      
     }
 
@@ -242,14 +242,14 @@ class MenuController extends BaseController
     {
         $category = Category::findOrFail($category);
 
-        return $this->sendResponse($category->extras, 'Extras retrieved successfully.');
+        return $this->sendResponse($category->extras,  __('general.ret', ['key' => __('general.extras_ret')]));
     }
 
     public function getWithouts(Request $request, int $category)
     {
         $category = Category::findOrFail($category);
 
-        return $this->sendResponse($category->withouts, 'Withouts retrieved successfully.');
+        return $this->sendResponse($category->withouts,  __('general.ret', ['key' => __('general.withouts_ret')]));
     }
 
     public function getExtra(Request $request, Extra $extra)
@@ -270,6 +270,6 @@ class MenuController extends BaseController
     {
         $items = Item::where('recommended', true)->simplePaginate();
 
-        return $this->sendResponse($items, 'recommended items retrieved successfully.');
+        return $this->sendResponse($items, __('general.ret', ['key' => __('general.recomended_ret')]));
     }
 }
