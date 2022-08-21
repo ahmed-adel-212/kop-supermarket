@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') Page 404 @endsection
+@section('title') {{__('general.not_found')}} @endsection
 
 @section('styles')@endsection
 
@@ -8,7 +8,7 @@
 
 @section('content')
 <main class="page-main">
-    <div class="section-first-screen">
+    {{-- <div class="section-first-screen">
         <div class="first-screen__bg" style="background-image: url({{asset('website-assets/img/pages/contacts/bg-first-screen.jpg')}})"></div>
         <div class="first-screen__content">
             <div class="uk-container">
@@ -22,8 +22,23 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="page-content">
+    </div> --}}
+    <section class="page-header" style="padding-top: 5rem;">
+        <div class="bg-shape grey"></div>
+         <div class="container">
+             <div class="page-header-content">
+                 <h4>
+                    {{__('general.oops')}}
+                 </h4>
+                 <h2>404 {{__('general.not_found')}}</h2>
+                 <p>
+                    {!! __('general.not_found_title') !!}
+                 </p>
+                 <a href="{{route('home.page')}}" class="default-btn mt-20"><i class="las la-hand-point-left"></i>{{__('general.back_to_home')}} <span></span></a>
+             </div>
+         </div>
+     </section><!--/.page-header-->
+    {{-- <div class="page-content">
         <div class="uk-section uk-container uk-container-small">
             <div class="page-404-error"> <img class="page-404-error__img" src="{{asset('website-assets/img/pages/404/404.svg')}}" alt="">
                 <div class="page-404-error__form">
@@ -37,7 +52,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </main>
 @endsection
 

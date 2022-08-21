@@ -253,4 +253,8 @@ return [
     'offers_title' => 'Find The Best Offers',
     'verification' => 'Verification Code',
     'verification_title' => 'Enter Verification Code',
+    'not_found' => 'Page Not Found!',
+    'oops' => 'Oops! Where are we?',
+    'not_found_title' => 'Page not Found! The page you are looking for was moved, <br> removed, renamed or might never existed.',
+    'back_to_home' => 'Back to Homepage',
 ];
