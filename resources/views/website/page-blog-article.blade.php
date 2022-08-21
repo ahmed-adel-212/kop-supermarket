@@ -35,7 +35,7 @@
                                 <div class="col-lg-12 sm-padding">
                                     <div class="post-card">
                                         <div class="post-thumb">
-                                            <img src="{{ $article->image }}" alt="img">
+                                            <img src="{{ asset($article->image) }}" alt="img">
                                         </div>
                                         <div class="post-content">
                                             <ul class="post-meta">
@@ -53,7 +53,7 @@
                                             <div class="post-navigation">
                                                 @if ($prev)
                                                     <div class="nav prev"
-                                                        style="background-image: url('{{$prev->image}}');">
+                                                        style="background-image: url('{{asset($prev->image)}}');">
                                                         <h4><a href="{{route('get.new', $prev->id)}}"><span><i class="las la-arrow-left"></i>
                                                                     {{ __('general.prev') }}
                                                                 </span>
@@ -63,7 +63,7 @@
                                                 @endif
                                                 @if ($next)
                                                     <div class="nav next"
-                                                        style="background-image: url('{{$next->image}}');">
+                                                        style="background-image: url('{{asset($next->image)}}');">
                                                         <h4><a href="{{route('get.new', $next->id)}}"><span>
                                                                     {{ __('general.next') }}
                                                                     <i

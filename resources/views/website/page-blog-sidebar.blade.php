@@ -12,7 +12,7 @@
             @foreach ($latest as $lat)
                 <li>
                     <div class="thumb">
-                        <img src="{{ $lat->image }}" alt="thumb">
+                        <img src="{{ asset($lat->image) }}" alt="thumb">
                     </div>
                     <div class="recent-post-meta">
                         <h3><a href="{{ route('get.new', $lat->id) }}">

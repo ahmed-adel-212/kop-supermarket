@@ -204,9 +204,9 @@
                         @foreach ($galleries as $ga)
                             <div class="col-lg-4 col-sm-6 padding-15">
                                 <div class="gallery-item">
-                                    <img src="{{ $ga->url }}" width='500' height='300' alt="img">
+                                    <img src="{{asset($ga->url)}}" width='500' height='300' alt="img">
                                     <a class="img-popup" data-gall="gallery01"
-                                        href="{{ $ga->url }}" title="{{$ga['title_'. app()->getLocale()]}}"><i class="fas fa-expand"></i></a>
+                                        href="{{asset($ga->url)}}" title="{{$ga['title_'. app()->getLocale()]}}"><i class="fas fa-expand"></i></a>
                                 </div>
                             </div>
                         @endforeach

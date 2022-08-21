@@ -1,7 +1,7 @@
 @extends('layouts.website.app')
 
 @section('title')
-    About us
+    {{__('general.about_us')}}
 @endsection
 
 @section('styles')
@@ -95,7 +95,7 @@
                         <div class="row align-items-center">
                            <div class="col-md-6">
                                <div id="gallery-videos-demo" class="content-img-holder position-relative">
-                                <img src="{{$sec->image}}" width="700" height="500" alt="img" id="image{{$loop->index}}">
+                                <img src="{{asset( $sec->image)}}" width="700" height="500" alt="img" id="image{{$loop->index}}">
                                 <div class="position-absolute top-0 w-100 h-100">
                                     <video controls width="100%" height="100%" id="video{{$loop->index}}" style="opacity: 0;: hidden;">                                        
                                         <source src="{{$sec->video}}"
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="content-img">
-                                        <img src="{{$sec->image}}" width='600' height="400" alt="img">
+                                        <img src="{{asset( $sec->image)}}" width='600' height="400" alt="img">
                                         {{-- <img src="{{$sec->image}}" alt="img"> --}}
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
                                 <div class="col-lg-3 col-sm-6 sm-padding">
                                     <div class="team-item">
                                         <div class="team-thumb">
-                                            <img src="{{$emp->image}}"
+                                            <img src="{{asset( $emp->image)}}"
                                                 alt="team">
                                             <ul class="team-social">
                                                 @foreach ($emp->links as $link)
@@ -210,7 +210,7 @@
                                 <div class="col-lg-6">
                                     <div class="content-img">
                                         {{-- <img src="/website2-assets/img/about03.png" width="600" height="400" alt="img"> --}}
-                                        <img src="{{$sec->image}}" width="600" height="400" alt="img">
+                                        <img src="{{asset( $sec->image)}}" width="600" height="400" alt="img">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -230,7 +230,7 @@
                 @endif
 
                 @if ($sec->type === 'with-bg')
-                <section class="content-section delivery position-relative" style="background-image: url({{$sec->image}});">
+                <section class="content-section delivery position-relative" style="background-image: url({{asset( $sec->image)}});">
                     <div class="bg-shape white"></div>
                     <div class="bg-shape grey"></div>
                     <div class="position-absolute top-0 left-0 right-0 w-100 h-100" style="background: rgba(0, 0, 0, .3)"></div>

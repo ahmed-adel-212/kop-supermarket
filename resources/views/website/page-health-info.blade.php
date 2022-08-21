@@ -48,7 +48,7 @@
                                     <div class="col-lg-12 sm-padding my-4">
                                         <div class="post-card">
                                             <div class="post-thumb">
-                                                <img src="{{ $info->image }}" alt="img">
+                                                <img src="{{ asset($info->image) }}" alt="img">
                                             </div>
                                             <div class="post-content">
                                                 <ul class="post-meta">

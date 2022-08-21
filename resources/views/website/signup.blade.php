@@ -13,7 +13,9 @@
             left: 0;
             height: 100%;
         }
-
+        [dir="rtl"] .login-page video {
+            right: 0;
+        }
         .header {
             background-color: #fff;
         }
