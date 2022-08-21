@@ -91,17 +91,18 @@ class AuthController extends Controller
             'password' => request('password')
         ];
 
-        if (Auth::attempt($credentials)) {
+        $user=User::where('email',request('email'))->first();
+        if($user){
+        if ($user->hasRole('customer')) {
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                    $user->branches; //??
 
-            $user = Auth::user();
-            if ($user->hasRole('customer')) {
-
-                $user->branches; //??
-
-                if (auth()->user()->email_verified_at == null) {
-                    return redirect()->route('verifyCode.page');
+                    if (auth()->user()->email_verified_at == null) {
+                        return redirect()->route('verifyCode.page');
+                    }
+                    return redirect()->route('home.page');
                 }
-                return redirect()->route('home.page');
             }
         }
         return redirect()->back()->with(['error' => __('session_messages.Unauthorized! Please Check Your Credentials')]);

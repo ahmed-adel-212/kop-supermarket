@@ -18,7 +18,7 @@ class HomeController extends Controller
 {
     public function homePage(){
         $menu = [];
-        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories())->getOriginalContent();
+        $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories2())->getOriginalContent();
         if($return['success'] == 'success'){
             $menu['categories'] = $return['data'];
         }

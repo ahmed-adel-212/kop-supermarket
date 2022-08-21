@@ -561,7 +561,9 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
 /*======================================================
     About Section
 =======================================================*/
-.about-section{ position: relative; }
+.about-section{ position: relative;
+max-height: 600px;
+    min-height: 600px; }
 .about-section.inner{ margin-top: -40px; }
 .about-section .content-img-holder{ position: relative; }
 .about-section .content-img-holder > img {

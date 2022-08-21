@@ -46,22 +46,12 @@
                         </div>
                         <div class="col-md-12 text-center mt-3 mb-3"> {{ __('general.OR') }} </div>
                         <div class="col-md-6 m-auto">
-{{-- <<<<<<< HEAD
-                            <div class="bg-success rounded shadow-sm w-100 h-100">
-                                <div class="w-100 text-center h-100">
-
-                                    <a href="{{route('takeaway.page')}}"><h1 class="m-0 w-100 h-100 bg" style="color: #fff;padding: 5%;font-size: 38px;">{{__('general.Take away')}}</h1>
-                                    </a>
-                                </div>
-                            </div>
-======= --}}
+                        
                             <a href="{{ route('takeaway.page') }}"
                                 class="w-100 text-center h-100 default-btn bg-success rounded p-2 shadow-sm">
-                                <h1 class="text-white">{{ __('general.Take away') }}</h1>
+                                <h1 class="text-white" style="font-size:36px">{{ __('general.Take away') }}</h1>
                                 <span></span>
                             </a>
-{{-- >>>>>>> ahmed --}}
-                        </div>
                     </div>
                 </div>
             </div>

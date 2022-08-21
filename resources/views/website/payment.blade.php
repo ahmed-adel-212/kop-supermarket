@@ -118,13 +118,8 @@
                                         @enderror
                                     </div>
                                 </div>
-<<<<<<< HEAD
                                 <button type="submit" class="default-btn w-100">{{__('general.Purchase')}}<span style="width: 200% !important;"></span></button>
-=======
-                                <button type="submit" class="default-btn btn rounded">{{__('general.Purchase')}}
-                                    <span></span>
-                                </button>
->>>>>>> ahmed
+ 
 
                             </form>
                         </div>

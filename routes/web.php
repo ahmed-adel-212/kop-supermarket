@@ -24,8 +24,8 @@ Route::group([
         Route::resource('roles', 'RoleController')->middleware('role:admin');
 
         // Branches
-        Route::resource('branch', 'BranchController')->middleware('role:admin');;
-
+        Route::resource('branch', 'BranchController')->middleware('role:admin');
+        Route::resource('Anoucement', 'AnoucementController')->middleware('role:admin');
         Route::get('/show-gifts-orders', 'GiftController@showGiftsOrders')->name('showGiftsOrders')->middleware('role:admin');
         Route::get('/show-points-transactions', 'GiftController@showPointsTransactions')->name('showPointsTransactions')->middleware('role:admin');;
         Route::resource('gift', 'GiftController')->middleware('role:admin');;

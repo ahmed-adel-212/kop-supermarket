@@ -152,7 +152,12 @@
                                             <p>Home Item</p>
                                         </a>
                                 </li>
-
+                                <li class="nav-item">
+                                        <a href="{{route('admin.Anoucement.index')}}" class="nav-link"><i
+                                                class="fab fa-first-order nav-icon"></i>
+                                            <p>Anoucement</p>
+                                        </a>
+                                </li>
                                     <li class="nav-item">
                                         <a href="{{route('admin.hero.index')}}" class="nav-link"><i
                                                 class="fab fa-first-order nav-icon"></i>

@@ -5,7 +5,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-      
+      .slick-next:before{
+        content:none!important;
+      }
+      .slick-prev:before{
+        content:none!important;
+      }
+      .slick-track:before, .slick-track:after {
+            display: table;
+            content: '';
+            content: "\f30b";
+            }
         .line-clamp5 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -148,10 +158,10 @@
               </div>
             </div>
         </section><!--/.promo-section-->
+        
         <div id="main-slider1">
             @foreach($menu['main_offer'] as $main_offer)
             <div>
-
             <section class="about-section padding">
                 <div class="bg-shape grey"></div>
                 <div class="container">
@@ -194,51 +204,10 @@
                     </div>
                 </div>
             </section><!--/.about-section--> 
-       
             </div>
             @endforeach
         </div>
-      
-        <!-- <section class="about-section">
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-             
-                <div class="carousel-item active" style="max-height: 500px !important; min-height: 500px !important;">
-                    <img src="{{asset('website2-assets/img/slider-shape-01.png')}}" class="d-block w-100" alt="...">
-                            <div class="content-img-holder" >
-                                    <img src="{{$menu['main_offer'][0]->image}}" alt="img">
-                            </div>
-                                    <div class="about-info">
-                                        <h2>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][0]->title_ar:$menu['main_offer'][0]->title}}</h2>
-                                        <p>{{(app()->getLocale() == 'ar') ?$menu['main_offer'][0]->description_ar:$menu['main_offer'][0]->description}}</p>
-                                        <ul class="check-list">
-                                            <li><i class="fas fa-check"></i>Delicious &amp; Healthy Foods</li>
-                                            <li><i class="fas fa-check"></i>Spacific Family And Kids Zone</li>
-                                            <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
-                                            <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
-                                        </ul>
-                                    
-                                        <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$menu['main_offer'][0]->id)}}" class="default-btn cart">Order Now <span></span></a>
-                                    </div>
-            
-                </div>
-            
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-                </div>
-        </section> -->
-      
+        
         <section class="food-menu bg-grey padding">
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
@@ -252,21 +221,20 @@
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
                     @endforeach
                 </ul>
-                @if(count($menu['dealItems']) > 0)
+              
                 <div class="row product-items">
                     @foreach($menu['dealItems'] as $dealItem)
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}">
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
-                           <!-- <div class="sale"></div> -->
+                           <div class="sale">-15%</div>
                             <div class="product-thumb">
-                                <img src="{{$dealItem->website_image}}" alt="food">
-                                <div>
-                                @auth @if(!session()->has('branch_id'))
+                            <img src="{{$dealItem->website_image}}" alt="food">
+                                <div> @auth @if(!session()->has('branch_id'))
                                     <a data-toggle="modal" data-target="#service-modal" href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                                     @else
                                     <a  href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
                                   @endif  @endauth
-                                </div>
+                            </div>
                             <div class="food-info">
                                <ul class="ratting">
                                    <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
@@ -279,9 +247,9 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-            @endif
         </section><!--/.food-menu-->
 
         <section class="content-section" style="height: 400px;">
@@ -317,7 +285,8 @@
                             <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
                             <div class="order-content">
                                <a href="{{route('menu.page')}}" class="default-btn">{{ __('header.Menu')}}<span></span></a>
-                                <h3><span>Order Number</span>012-345-6789</h3>
+                                <h3><span>Order Number</span> <a href="tel:920001939" style="color: #f99839;">
+                                920001939</a></h3>
                             </div>
                         </div>
                     </div>

@@ -28,27 +28,29 @@ class AuthController extends BaseController
             'email' => request('email'),
             'password' => request('password')
         ];
+        $user=User::where('email',request('email'))->first();
+        if($user){
+        if ($user->hasRole('customer')) {
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+                
+                    if ($request->has('device_token')) {
+                        $user->device_token = $request->device_token;
+                        $user->save();
+                    }
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->hasRole('customer')) {
-                if ($request->has('device_token')) {
-                    $user->device_token = $request->device_token;
-                    $user->save();
+                    $user->branches; //??
+
+                    $data = [
+                        'userData' => $user,
+                        'token' => $user->createToken('AppName')->accessToken
+                    ];
+                    if (auth()->user()->email_verified_at == null) {
+                        return $this->sendResponse($data, 'Must verify account');
+                    }
+                    return $this->sendResponse($data, 'User logged in successfuly');
                 }
-
-                $user->branches; //??
-
-                $data = [
-                    'userData' => $user,
-                    'token' => $user->createToken('AppName')->accessToken
-                ];
-                if (auth()->user()->email_verified_at == null) {
-                    return $this->sendResponse($data, 'Must verify account');
-                }
-                return $this->sendResponse($data, 'User logged in successfuly');
-            }
-        }
+        }}
         return $this->sendError('Unauthorised!', $credentials);
     }
 
@@ -59,29 +61,31 @@ class AuthController extends BaseController
             'email' => request('email'),
             'password' => request('password')
         ];
-        if (Auth::attempt($credentials)) {
-             $user = Auth::user();
+        $user=User::where('email',request('email'))->first();
+        if($user){
+        if ($user->hasRole('cashier')) {
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user();
+            
+                    if ($request->has('device_token')) {
+                        $user->device_token = $request->device_token;
+                        $user->save();
+                    }
+                    $user->branches;
 
-            if ($user->hasRole('cashier')) {
-                if ($request->has('device_token')) {
-                    $user->device_token = $request->device_token;
-                    $user->save();
+
+                    $data = [
+                        'userData' => $user,
+                        'token' => $user->createToken('AppName')->accessToken
+                    ];
+
+                    if (auth()->user()->email_verified_at == null) {
+
+                        return $this->sendResponse($data, 'Must verify account');
+                    }
+                    return $this->sendResponse($data, 'User logged in successfuly');
                 }
-                $user->branches;
-
-
-                $data = [
-                    'userData' => $user,
-                    'token' => $user->createToken('AppName')->accessToken
-                ];
-
-                if (auth()->user()->email_verified_at == null) {
-
-                    return $this->sendResponse($data, 'Must verify account');
-                }
-                return $this->sendResponse($data, 'User logged in successfuly');
-            }
-        }
+        }}
         return $this->sendError('Unauthorised!', 401);
     }
 

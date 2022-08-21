@@ -315,9 +315,7 @@ class OrdersController extends Controller
     public function store_order(Request $request)
     {
         // get customer information
-        $customer = User::where('id', auth()->id())->whereHas('roles', function ($role) {
-            $role->where('name', 'customer');
-        })->first();
+        $customer = User::where('id', auth()->id())->first();
 
         $branch_id = 0;
         if ($request->service_type == 'delivery') {
@@ -450,9 +448,9 @@ class OrdersController extends Controller
                 'quantity' => ($item['quantity']) ? $item['quantity'] : 1
             ]);
         }
-
-
-        return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
+       return (app(ApiOrdersController::class)->sendResponse($order, 'Order created successfuly!'))->getOriginalContent();
+         
+        // return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
     }
 
     public function checkIfOrderIsDirty(Request $request, int $id)
