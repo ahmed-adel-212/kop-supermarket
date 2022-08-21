@@ -30,16 +30,16 @@ class PaymentController extends BaseController
             'source.year' => 'required|digits:4|integer|min:' . (date('Y')),
         ];
         $validator_rules_messages = [
-            'source.name.required' => 'The name is required',
-            'source.cvc.required' => 'The cvc is required',
-            'source.cvc.max' => 'The cvc is too long max is 4 numbers',
-            'source.cvc.min' => 'The cvc is too short min is 3 numbers',
-            'source.number.digits' => 'The cart number must be 16 digits',
-            'source.number.required' => 'The cart number is required',
-            'source.month.required' => 'The month is required',
-            'source.month.in' => 'The month is not valid',
-            'source.year.required' => 'The year is required',
-            'source.year.min' => 'The year is Not Valid',
+            'source.name.required' => __('general.The name is required'),
+            'source.cvc.required' => __('general.The cvc is required'),
+            'source.cvc.max' =>__('general.The cvc is too long max is 4 numbers'),
+            'source.cvc.min' => __('general.The cvc is too short min is 3 numbers'),
+            'source.number.digits' => __('general.The cart number must be 16 digits'),
+            'source.number.required' => __('general.The cart number is required'),
+            'source.month.required' => __('general.The month is required'),
+            'source.month.in' => __('general.The month is not valid'),
+            'source.year.required' => __('general.The year is required'),
+            'source.year.min' => __('general.The year is Not Valid'),
         ];
 
 
@@ -100,11 +100,11 @@ class PaymentController extends BaseController
                 $payment->update([
                     'status' => 'refunded'
                 ]);
-                return $this->sendResponse($payment, 'This payment has been refunded');
+                return $this->sendResponse($payment,__('general.This payment has been refunded'));
 
             }
             if ($payment->status == 'refunded') {
-                return $this->sendResponse($payment, 'This payment is already refunded');
+                return $this->sendResponse($payment,__('general.This payment is already refunded'));
             }
 
 

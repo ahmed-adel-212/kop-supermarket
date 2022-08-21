@@ -65,7 +65,7 @@ class OrdersController extends BaseController
             }
         }
 
-        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully.');
+        return $this->sendResponse($orders->toArray(), __('general.Orders retrieved successfully.'));
     }
 
     public function getUserOrders(Request $request)
@@ -98,7 +98,7 @@ class OrdersController extends BaseController
                 // $item->withouts = $all_withouts;
             }
         }
-        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully.');
+        return $this->sendResponse($orders->toArray(),  __('general.Orders retrieved successfully.'));
     }
 
     /**
@@ -292,7 +292,7 @@ class OrdersController extends BaseController
             ]);
         }
 
-        return $this->sendResponse($order, 'Order created successfuly!');
+        return $this->sendResponse($order,  __('general.Order created successfully!'));
     }
 
     public function orderPayed(Request $request)
@@ -462,19 +462,19 @@ class OrdersController extends BaseController
                 'total_paid' => $request->amount / 100
             ]);
 
-            return $this->sendResponse($order, 'Order created successfuly!');
+            return $this->sendResponse($order,  __('general.Order created successfully!'));
         }
-        return $this->sendError('Order did not placed');
+        return $this->sendError( __('general.Order did not placed'));
     }
 
     public function re_order(Request $request)
     {
-        $message='success';
+        $message=__('general.success');
         $validation=true;
         $order = Order::find($request->order_id);
         // check if order exists in DB
         if (!$order) {
-            return $this->sendError("Order not found");
+            return $this->sendError(__('general.Order not found'));
         }
 
         $items = [];
@@ -487,7 +487,7 @@ class OrdersController extends BaseController
 
         if( $order->items->count() != OrderItem::where('order_id',$request->order_id)->count())
         {
-            $message='item deleted';
+            $message=__('general.item deleted');
             $validation=false;
             return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
 
@@ -502,12 +502,12 @@ class OrdersController extends BaseController
 
             if($item->price != OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('pure_price')->first())
             {
-                $message='item price changed';
+                $message=__('general.item price changed');
                 $validation=false;
                 return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
             }
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] < now()) {
-                $message='offer expired';
+                $message=__('general.offer expired');
                 $validation=false;
                 return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
                 $quantity = $item->pivot->quantity;
@@ -535,7 +535,7 @@ class OrdersController extends BaseController
             if ($item->pivot->offer_id == null) {
                 if(OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('offer_id')->first())
                 {
-                $message='offer deleted';
+                $message=__('general.offer deleted');
                 $validation=false;
                 return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
                 }
@@ -632,7 +632,7 @@ class OrdersController extends BaseController
                     }
                 } else {
                    
-                    $message='offer deleted';
+                    $message=__('general.offer deleted');
                     $validation=false;
                     return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
                     
@@ -743,14 +743,14 @@ class OrdersController extends BaseController
         $order->update(['state' => 'in-progress']);
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Accepted, لقد تم قبول طلبك", "Order");
-        return $this->sendResponse($order->toArray(), 'Order has been accepted');
+        return $this->sendResponse($order->toArray(),__('general.Order has been accepted'));
     }
 
     public function rejectOrder(Request $request, Order $order)
     {
 
         if ($order->state != 'pending') {
-            return $this->sendError("You cannot reject this order!", 400);
+            return $this->sendError(__('general.You cannot reject this order!'), 400);
         }
 
         $order->update(['state' => 'rejected', 'cancellation_reason' => $request->cancellation_reason]);
@@ -767,14 +767,14 @@ class OrdersController extends BaseController
 
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Rejected, لقد تم رفض طلبك", "Order");
-        return $this->sendResponse($order->toArray(), 'Order has been rejected');
+        return $this->sendResponse($order->toArray(), __('general.Order has been rejected'));
     }
 
     public function completeOrder(Request $request, Order $order)
     {
 
         if ($order->state != 'in-progress') {
-            return $this->sendError('You cannot complete this order');
+            return $this->sendError(__('general.You cannot complete this order'));
         }
 
         $order->update(['state' => 'completed']);
@@ -788,12 +788,12 @@ class OrdersController extends BaseController
 
         if ($order->service_type == 'delivery') {
             \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order is on the way, الطلب في الطريق إليك", "Order");
-            return $this->sendResponse($order->toArray(), 'Order is on the way');
+            return $this->sendResponse($order->toArray(), __('general.Order is on the way'));
         }
 
         if ($order->service_type == 'takeaway') {
             \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been completed, تم تجهيز الطلب", "Order");
-            return $this->sendResponse($order->toArray(), 'Order has been completed');
+            return $this->sendResponse($order->toArray(),__('general.Order has been completed'));
         }
     }
 
@@ -801,7 +801,7 @@ class OrdersController extends BaseController
     {
 
         if ($order->state == 'completed' or $order->state == 'rejected') {
-            return $this->sendError('You cannot cancel this order');
+            return $this->sendError(__('general.You cannot cancel this order'));
         }
 
         $order->update(['state' => 'canceled', 'cancellation_reason' => $request->cancellation_reason]);
@@ -817,7 +817,7 @@ class OrdersController extends BaseController
         }
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Cancelled, لقد تم إلغاء طلبك", "Order");
-        return $this->sendResponse($order->toArray(), 'Order has been canceled');
+        return $this->sendResponse($order->toArray(),__('general.Order has been canceled'));
     }
 
     public function getBranch(Request $request)
@@ -840,13 +840,13 @@ class OrdersController extends BaseController
                     $branch_id = $branch->id;
                     return $this->sendResponse($branch_id, 'Related Branch');
                 } else {
-                    return $this->sendError("sorry there is no branch cover this area");
+                    return $this->sendError(__('general.sorry there is no branch cover this area'));
                 }
             } else {
-                return $this->sendError("sorry there is no branch cover this area");
+                return $this->sendError(__('general.sorry there is no branch cover this area'));
             }
         } else {
-            return $this->sendError("sorry there is no branch cover this area");
+            return $this->sendError(__('general.sorry there is no branch cover this area'));
         }
     }
 

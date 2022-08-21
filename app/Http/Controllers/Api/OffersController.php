@@ -127,7 +127,7 @@ class OffersController extends BaseController
 
         // check if order exists in DB
         if (!$order) {
-            return $this->sendError("Order not found");
+            return $this->sendError(__('general.Order not found'));
         }
 
         // Get address or branch based on service_type

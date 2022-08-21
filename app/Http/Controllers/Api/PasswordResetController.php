@@ -32,7 +32,7 @@ class PasswordResetController extends BaseController
         $user = User::where('email', $request->email)->first();
 
         if (!$user)
-            return $this->sendError("We can't find a user with that e-mail address.");
+            return $this->sendError(__('general.We can\'t find a user with that e-mail address.'));
 
         $data = [
             'email' => $user->email,
@@ -43,10 +43,10 @@ class PasswordResetController extends BaseController
 
         if ($user && $passwordReset) {
             $user->notify(new PasswordResetRequest($data['token']));
-            return $this->sendResponse(null, "We have e-mailed your password reset link!");
+            return $this->sendResponse(null,__('general.We have e-mailed your password reset link!') );
         }
 
-        return $this->sendError("You are not a user");
+        return $this->sendError(__('general.You are not a user'));
     }
 
     /**
@@ -61,12 +61,12 @@ class PasswordResetController extends BaseController
         $passwordReset = DB::table('password_resets')->where('token', $token)->first();
 
         if (!$passwordReset)
-            return $this->sendError('This password reset token is invalid.');
+            return $this->sendError(__('general.This password reset token is invalid.'));
 
 
         if (Carbon::parse($passwordReset->created_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
-            return $this->sendError('This password reset token is invalid.');
+            return $this->sendError(__('general.This password reset token is invalid.'));
         }
 
         return $this->sendResponse($passwordReset, 'success message');
@@ -98,17 +98,17 @@ class PasswordResetController extends BaseController
         $passwordReset = DB::table('password_resets')->where([['token', $request->token],['email', $request->email]])->first();
 
         if (!$passwordReset)
-            return $this->sendError("This password reset token is invalid.");
+            return $this->sendError(__('general.This password reset token is invalid.'));
 
         $user = User::where('email', $passwordReset->email)->first();
 
         if (!$user)
-            return $this->sendError("We can't find a user with that e-mail address.");
+            return $this->sendError(__('general.We can\'t find a user with that e-mail address.'));
 
         $user->update(['password' => bcrypt($request->password)]);
         DB::table('password_resets')->where([['token', $request->token],['email', $request->email]])->delete();
 
         $user->notify(new PasswordResetSuccess($passwordReset));
-        return $this->sendresponse($user, 'successfult message');
+        return $this->sendresponse($user, 'successful message');
     }
 }
