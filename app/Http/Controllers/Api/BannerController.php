@@ -18,6 +18,6 @@ class BannerController extends BaseController
 
         $banner = Banner::all();
 
-        return $this->sendResponse($banner, 'Banner Images');
+        return $this->sendResponse($banner, __('general.banner_ret'));
     }
 }

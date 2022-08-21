@@ -24,14 +24,14 @@ class FrontController extends BaseController
     public function getAboutUS()
     {
         $aboutUS = AboutUs::all();
-        return $this->sendResponse($aboutUS, 'AboutUS retrieved successfully.');
+        return $this->sendResponse($aboutUS, __('general.about_ret'));
     }
 
     //gallery
     public function getGallery()
     {
         $gallery = Gallery::paginate(12);
-        return $this->sendResponse($gallery, 'All Gallery retrieved successfully.');
+        return $this->sendResponse($gallery, __('general.gallery_ret'));
     }
 
     //media Video
@@ -50,7 +50,7 @@ class FrontController extends BaseController
             //$media['allRemain'] = Media::all()->except($videoID);
             $media['allRemain'] = Media::all();
         }
-        return $this->sendResponse($media, 'All Media retrieved successfully.');
+        return $this->sendResponse($media, __('general.media_ret'));
     }
 
     //News
@@ -71,7 +71,7 @@ class FrontController extends BaseController
         if ($new) {
             return $this->sendResponse($new, 'News retrieved successfully.');
         }
-        return $this->sendError('There is something');
+        return $this->sendError(__('general.error'));
     }
 
     //Health Info
@@ -106,7 +106,7 @@ class FrontController extends BaseController
 
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Errors!', $validator->errors());
+            return $this->sendError(__('general.validation_errors'), $validator->errors());
         }
         //check if application exist
         $countExist = JobRequest::where('id', $id)
@@ -115,7 +115,7 @@ class FrontController extends BaseController
                     ->orWhere('phone', $request->phone);
             })->get()->count();
         if ($countExist > 0) {
-            return $this->sendError('You have already sent an application for this job before', 'Application Not Sent');
+            return $this->sendError(__('general.carrer_already'), __('general.app_not_sent'));
         }
 
         try {
@@ -134,9 +134,9 @@ class FrontController extends BaseController
             }
             $jobRequest->save();
 
-            return $this->sendResponse($jobRequest, 'Application Sent');
+            return $this->sendResponse($jobRequest, __('general.app_sent'));
         } catch (\Exception $ex) {
-            return $this->sendError('There is something', $validator->errors());
+            return $this->sendError(__('general.validation_errors'), $validator->errors());
         }
     }
 
