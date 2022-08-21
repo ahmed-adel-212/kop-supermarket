@@ -269,5 +269,5 @@ return [
         'city_not_found' => 'City Not Found',
         'area_not_found' => 'Area Not Found',
         'updated' => 'Your Address Updated Successfuly',
-    ]
+    ],
 ];

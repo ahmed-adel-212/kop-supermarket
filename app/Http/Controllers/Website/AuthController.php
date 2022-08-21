@@ -65,7 +65,11 @@ class AuthController extends Controller
             $user->attachRole(3);
 
             // Mail::to($user->email)->send();
-            $user->notify(new SignupActivate);
+            try {
+                $user->notify(new SignupActivate);
+            } catch (\Exception $e) {
+
+            }
 
             try {
                 $this->sendMessage(
@@ -75,9 +79,9 @@ class AuthController extends Controller
                 // return redirect()->back()->with(['success'=>__('auth.Sent SMS successfully.')]);
             } catch (\Exception $e) {
                 // DB::rollBack();
-                dd($e->getMessage());
+                // dd($e->getMessage());
 
-                return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
+                // return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
 
             return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully', 'email' => $user->email]);
@@ -155,10 +159,10 @@ class AuthController extends Controller
     }
 
     public function resendVerificationCode()
-    {
-        auth()->user()->notify(new SignupActivate);
-        
+    {        
         try {
+            auth()->user()->notify(new SignupActivate);
+            
             $this->sendMessage(
                 auth()->user()->first_phone,
                 "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . auth()->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . auth()->user()->activation_token
