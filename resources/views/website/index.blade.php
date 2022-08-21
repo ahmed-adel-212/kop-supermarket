@@ -11,7 +11,7 @@
       .slick-prev:before{
         content:none!important;
       }
- 
+
         .line-clamp5 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
