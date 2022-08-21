@@ -46,12 +46,12 @@ class AuthController extends BaseController
                         'token' => $user->createToken('AppName')->accessToken
                     ];
                     if (auth()->user()->email_verified_at == null) {
-                        return $this->sendResponse($data, 'Must verify account');
+                        return $this->sendResponse($data, __('auth.verify'));
                     }
-                    return $this->sendResponse($data, 'User logged in successfuly');
+                    return $this->sendResponse($data, __('auth.logged'));
                 }
         }}
-        return $this->sendError('Unauthorised!', $credentials);
+        return $this->sendError(__('auth.unauthorised!'), $credentials, 401);
     }
 
     public function loginCashier(Request $request)
@@ -81,12 +81,12 @@ class AuthController extends BaseController
 
                     if (auth()->user()->email_verified_at == null) {
 
-                        return $this->sendResponse($data, 'Must verify account');
+                        return $this->sendResponse($data, __('auth.verify'));
                     }
-                    return $this->sendResponse($data, 'User logged in successfuly');
+                    return $this->sendResponse($data, __('auth.logged'));
                 }
         }}
-        return $this->sendError('Unauthorised!', 401);
+        return $this->sendError(__('auth.unauthorised'), $credentials, 401);
     }
 
     public function register(Request $request)
@@ -114,7 +114,7 @@ class AuthController extends BaseController
             if (count($name) < 2) {
                 return response()->json([
                     "success" => false,
-                    "message" => 'last_name_not_included',
+                    "message" => __('auth.last_name_not_included'),
                 ], 400);
             }
 
@@ -135,7 +135,9 @@ class AuthController extends BaseController
             $token = $user->createToken('AppName')->accessToken;
 
         try {
-            
+            // send mail to user
+            // $user->notify(new SignupActivate);
+
             $this->sendMessage(
                 $user->first_phone,
                 "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
@@ -149,7 +151,7 @@ class AuthController extends BaseController
                 'data' => $user,
                 'token' => $token,
                 'message_sent'=> true,
-                "message" => 'Successfully created user!',
+                "message" => __('general.created', ['key' => __('auth.user_account')]),
             ], 200);
 
             //            return $this->sendResponse($user, 'Successfully created user!');
@@ -163,7 +165,7 @@ class AuthController extends BaseController
                 'user' => $user,
                 'token' => $token,
                 'message_sent'=> false,
-                "message" => $e->getMessage()
+                "message" => __('auth.twillo_err')
             ], 200);
 
             //echo "Error: " . $e->getMessage();
@@ -213,7 +215,7 @@ class AuthController extends BaseController
         // } catch (\Exception $e) {
         //     return response()->json([
         //         "success" => false,
-        //         "message" => $e->getMessage()
+        //         "message" => __('auth.twillo_err')
         //     ], 400);
 
             //echo "Error: " . $e->getMessage();
@@ -228,14 +230,14 @@ class AuthController extends BaseController
         $user = $request->user();
 
         if ($user->activation_token !== $token) {
-            return $this->sendError('invalid token');
+            return $this->sendError(__('auth.invalid_otp'));
         }
         
         $user->active = true;
         $user->email_verified_at = now();
         $user->save();
 
-        return $this->sendResponse($user, 'Successfully customer verified.');
+        return $this->sendResponse($user, __('auth.verified'));
     }
     public function resendVerificationCode(Request $request)
     {
@@ -244,11 +246,11 @@ class AuthController extends BaseController
                 $request->user()->first_phone, 
                 "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $request->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $request->user()->activation_token
             );
-            return $this->sendResponse($request->user(), 'Sent SMS successfully');
+            return $this->sendResponse($request->user(), __('auth.sent_sms'));
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
-                "message" => $e->getMessage()
+                "message" => __('auth.twillo_err')
             ], 400);
 
             //echo "Error: " . $e->getMessage();
@@ -259,7 +261,8 @@ class AuthController extends BaseController
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return $this->sendResponse(null, 'Successfully logged out');
+        auth()->logout();
+        return $this->sendResponse(null, __('auth.logged_out'));
     }
 
     public function getUser(Request $request)
@@ -282,14 +285,14 @@ class AuthController extends BaseController
         $user = User::find($request->user_id);
 
         if ($user->activation_token == '') {
-            return $this->sendError('Account is already activated', 400);
+            return $this->sendError(__('auth.activated'), 400);
         }
 
-        $user->notify(new SignupActivate($user));
+        // $user->notify(new SignupActivate($user));
         // wael remove comment
         $user->notify(new activateSMS($user));
 
-        return $this->sendResponse($user, 'Code Resent Successfully');
+        return $this->sendResponse($user, __('auth.code_resent'));
     }
 
     public function getUserPoints(Request $request)
@@ -324,7 +327,10 @@ class AuthController extends BaseController
         $userPoints = $validRefundedPoints - $consumedCanceledPoints;
 
         if ($request->points > $userPoints) {
-            return response()->json(['error' => 'user points is less than ' . $request->points], 400);
+            return response()->json(['error' => __('validation.lte.numeric', [
+                'attribute' => __('auth.points'),
+                'value' => $request->points
+            ]) ], 400);
         }
 
         if ($validator->fails()) {
@@ -336,7 +342,7 @@ class AuthController extends BaseController
             'user_id' => Auth::user()->id,
             'status' => 2
         ]);
-        return $this->sendResponse($transaction, 'Points Changed Successfully');
+        return $this->sendResponse($transaction, __('auth.points_success'));
     }
 
     public function updateUser(Request $request)
@@ -371,7 +377,7 @@ class AuthController extends BaseController
             $user->save();
         }
 
-        return $this->sendResponse($user, 'Successfuly customer updated.');
+        return $this->sendResponse($user, __('general.updated', ['key' => __('auth.user_account')]));
     }
     public function setFirstOfferFlag(Request $request)
     {
@@ -384,7 +390,7 @@ class AuthController extends BaseController
         $user = $request->user();
 
         $user = $user->update($request->all());
-        return $this->sendResponse($user, 'Successfully customer updated.');
+        return $this->sendResponse($user, __('general.updated', ['key' => __('auth.user_account')]));
     }
 
     public function signupActivate($token)
@@ -392,7 +398,7 @@ class AuthController extends BaseController
         $user = User::where('activation_token', $token)->first();
 
         if (!$user) {
-            return $this->sendError('token_mismatch');
+            return $this->sendError(__('auth.invalid_otp'));
         }
 
         $user->active = true;
@@ -406,7 +412,7 @@ class AuthController extends BaseController
             'token' => $user->createToken('AppName')->accessToken
         ];
 
-        return $this->sendResponse($data, "User Loged in successfully");
+        return $this->sendResponse($data, __('auth.logged'));
     }
 
     public function LoginWithGoogle(Request $request)
@@ -526,7 +532,7 @@ class AuthController extends BaseController
     public function getUnAuth()
     {
         return response()->json([
-            'message' => "Unauthenticated.",
+            'message' => __('auth.unauthenticated'),
         ]);
     }
 }

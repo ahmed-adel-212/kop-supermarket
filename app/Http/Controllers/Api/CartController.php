@@ -18,7 +18,7 @@ class CartController extends BaseController
      */
     public function getCart()
     {
-        return $this->sendResponse(Auth::user()->carts()->with('item')->get(), 'User Cart Retrieved');
+        return $this->sendResponse(Auth::user()->carts()->with('item')->get(), __('general.cart_ret'));
     }
 
     public function addCart(Request $request)
@@ -55,7 +55,7 @@ class CartController extends BaseController
         // $cart->offer_price = $request->offer_price;
         // $cart->save();
 
-        return $this->sendResponse($cart, 'Cart Created Successfully');
+        return $this->sendResponse($cart, __('general.created', ['key' => __('general.cart')]));
     }
 
     public function deleteCart(Request $request)
@@ -81,11 +81,11 @@ class CartController extends BaseController
                 Auth::user()->carts()->where('offer_id', $cart->offer_id)
                     ->where('created_at', $cart->created_at)
                     ->delete();
-                return $this->sendResponse($deletedID, 'User Cart Item Deleted');
+                return $this->sendResponse($deletedID, __('general.deleted', ['key' => __('general.cart_item')]));
             }
         }
         $cart->delete();
-        return $this->sendResponse($deletedID, 'User Cart Item Deleted');
+        return $this->sendResponse($deletedID, __('general.deleted', ['key' => __('general.cart_item')]));
     }
 
     public function updateQuantity(Request $request)
@@ -101,7 +101,7 @@ class CartController extends BaseController
 
         Auth::user()->carts()->findOrFail($request->cart_id)->update(['quantity' => $request->quantity]);
 
-        return $this->sendResponse(Auth::user()->carts()->with('item')->get(), 'User Cart Updated');
+        return $this->sendResponse(Auth::user()->carts()->with('item')->get(), __('general.updated', ['key' => __('general.cart')]));
     }
 
 }

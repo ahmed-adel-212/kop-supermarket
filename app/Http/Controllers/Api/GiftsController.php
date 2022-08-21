@@ -39,7 +39,7 @@ class GiftsController extends BaseController
         $gifts = Gift::whereIn('id', $gifts)->get();
         
         if ($gifts->sum('points') > $available_points) {
-            return response()->json(['error' => 'You Don\'t have enough points'], 400);
+            return response()->json(['error' => __('general.gift_enogh')], 400);
         }
         
         $order = GiftsOrder::create([
@@ -55,13 +55,13 @@ class GiftsController extends BaseController
                 'points'  => 0 - $gifts->sum('points')
             ]);
         
-        return $this->sendResponse($order, 'Order Done Successfully');
+        return $this->sendResponse($order, __('general.Order Payed Successfully'));
     }
     
     public function getUserGiftsOrders(Request $request)
     {
         
-        return $this->sendResponse(Auth::user()->gifts_orders()->with('gifts')->get(), 'Code Resent Successfully');
+        return $this->sendResponse(Auth::user()->gifts_orders()->with('gifts')->get(), 'user gifts retrived Successfully');
     }
 
 }
