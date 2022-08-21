@@ -163,6 +163,7 @@ return [
         'subject' => 'Subject',
         'description' => 'Description',
         'cv_file' => 'CV file',
+        'gifts_id' => 'Gift ID',
     ],
 
 ];

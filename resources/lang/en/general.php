@@ -278,5 +278,5 @@ return [
     'carrer_already' => 'You have already sent an application for this job before',
     'app_not_sent' => 'Application Not Sent',
     'app_sent' => 'Application Sent Successfully',
-    
+    'gift_enogh' => 'You Don\'t have enough points',
 ];
