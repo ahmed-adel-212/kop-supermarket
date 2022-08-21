@@ -18,7 +18,7 @@ Route::group([
     // Admin Panel
     Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], function () {
         // employees managment
-        Route::resource('user', 'UserController');
+        Route::resource('user', 'UserController')->middleware('role:admin');
 
         // roles and permision managment
         Route::resource('roles', 'RoleController')->middleware('role:admin');
@@ -27,43 +27,42 @@ Route::group([
         Route::resource('branch', 'BranchController')->middleware('role:admin');
         Route::resource('Anoucement', 'AnoucementController')->middleware('role:admin');
         Route::get('/show-gifts-orders', 'GiftController@showGiftsOrders')->name('showGiftsOrders')->middleware('role:admin');
-        Route::get('/show-points-transactions', 'GiftController@showPointsTransactions')->name('showPointsTransactions')->middleware('role:admin');;
-        Route::resource('gift', 'GiftController')->middleware('role:admin');;
+        Route::get('/show-points-transactions', 'GiftController@showPointsTransactions')->name('showPointsTransactions')->middleware('role:admin');
+        Route::resource('gift', 'GiftController')->middleware('role:admin');
 
-        Route::get('/points-value', 'GiftController@pointsValue')->name('pointsValue');
-        Route::post('/points-value-post', 'GiftController@pointsValuePost')->name('pointsValuePost');
-        Route::resource('/points', 'PointController');
-
+        Route::get('/points-value', 'GiftController@pointsValue')->name('pointsValue')->middleware('role:admin,cashier');
+        Route::post('/points-value-post', 'GiftController@pointsValuePost')->name('pointsValuePost')->middleware('role:admin,cashier');
+        Route::resource('/points', 'PointController')->middleware('role:admin,cashier');
         // Admin Dashboard
-        Route::get('/home', 'HomeController@index')->name('home');
-        Route::get('/', 'HomeController@index')->name('dashboard');
+        Route::get('/home', 'HomeController@index')->name('home')->middleware('role:admin,cashier');
+        Route::get('/', 'HomeController@index')->name('dashboard')->middleware('role:admin,cashier');
 
         Route::resource('hero', 'HeroController');
 
-        Route::resource('customer', 'CustomerController');
-        Route::resource('category', 'CategoryController');
+        Route::resource('customer', 'CustomerController')->middleware('role:admin,cashier');
+        Route::resource('category', 'CategoryController')->middleware('role:admin,cashier');
 
         //homeitem
-        Route::get('homeitem', 'ItemController@Homeitem')->name('homeitem.index');
-        Route::get('homeitem/create', 'ItemController@Create_Homeitem')->name('homeitem.create');
-        Route::post('homeitem/store', 'ItemController@Store_Homeitem')->name('homeitem.store');
-        Route::get('homeitem/edit/{homeitem}', 'ItemController@Edit_Homeitem')->name('homeitem.edit');
-        Route::post('homeitem/update/{homeitem}', 'ItemController@Update_Homeitem')->name('homeitem.update');
-        Route::delete('homeitem/destroy/{homeitem}', 'ItemController@Destroy_Homeitem')->name('homeitem.destroy');
+        Route::get('homeitem', 'ItemController@Homeitem')->name('homeitem.index')->middleware('role:admin');
+        Route::get('homeitem/create', 'ItemController@Create_Homeitem')->name('homeitem.create')->middleware('role:admin');
+        Route::post('homeitem/store', 'ItemController@Store_Homeitem')->name('homeitem.store')->middleware('role:admin');
+        Route::get('homeitem/edit/{homeitem}', 'ItemController@Edit_Homeitem')->name('homeitem.edit')->middleware('role:admin');
+        Route::post('homeitem/update/{homeitem}', 'ItemController@Update_Homeitem')->name('homeitem.update')->middleware('role:admin');
+        Route::delete('homeitem/destroy/{homeitem}', 'ItemController@Destroy_Homeitem')->name('homeitem.destroy')->middleware('role:admin');
         //=======================================================================
 
         // item
-        Route::resource('item', 'ItemController');
-        Route::put('item/{item}/recommended', 'ItemController@recommend')->name('item.recommend');
-        Route::delete('item/{item}/recommended', 'ItemController@unRecommend')->name('item.unrecommend');
-        Route::resource('extra', 'ExtraController');
-        Route::resource('without', 'WithoutController');
-        Route::resource('order', 'OrderController');
-        Route::resource('offer', 'OfferController');
-        Route::put('offer/main/{offer}', 'OfferController@setAsMain')->name('offer.main');
-        Route::delete('offer/main/{offer}', 'OfferController@removeFromMain')->name('offer.unmain');
-        Route::resource('banner', 'BannerController');
-        Route::resource('contact', 'ContactController');
+        Route::resource('item', 'ItemController')->middleware('role:admin');
+        Route::put('item/{item}/recommended', 'ItemController@recommend')->name('item.recommend')->middleware('role:admin');
+        Route::delete('item/{item}/recommended', 'ItemController@unRecommend')->name('item.unrecommend')->middleware('role:admin');
+        Route::resource('extra', 'ExtraController')->middleware('role:admin');
+        Route::resource('without', 'WithoutController')->middleware('role:admin');
+        Route::resource('order', 'OrderController')->middleware('role:admin');
+        Route::resource('offer', 'OfferController')->middleware('role:admin');
+        Route::put('offer/main/{offer}', 'OfferController@setAsMain')->name('offer.main')->middleware('role:admin');
+        Route::delete('offer/main/{offer}', 'OfferController@removeFromMain')->name('offer.unmain')->middleware('role:admin');
+        Route::resource('banner', 'BannerController')->middleware('role:admin');
+        Route::resource('contact', 'ContactController')->middleware('role:admin');
 
 
         // reports
