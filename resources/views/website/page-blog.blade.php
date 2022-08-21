@@ -33,6 +33,9 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        .post-navigation {
+            align-items: unset;
+        }
     </style>
 @endsection
 @section('pageName')

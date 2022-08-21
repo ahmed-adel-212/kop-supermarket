@@ -1,10 +1,15 @@
 @extends('layouts.website.app')
 
 @section('title')
-    Page article
+{{ $article['title_' . app()->getLocale()] }} - {{__('general.Latest News')}}
 @endsection
 
 @section('styles')
+    <style>
+        .post-navigation {
+            align-items: unset;
+        }
+    </style>
 @endsection
 
 @section('pageName')
@@ -53,8 +58,9 @@
                                             <div class="post-navigation">
                                                 @if ($prev)
                                                     <div class="nav prev"
-                                                        style="background-image: url('{{asset($prev->image)}}');">
-                                                        <h4><a href="{{route('get.new', $prev->id)}}"><span><i class="las la-arrow-left"></i>
+                                                        style="background-image: url('{{ asset($prev->image) }}');">
+                                                        <h4><a href="{{ route('get.new', $prev->id) }}"><span><i
+                                                                        class="las la-arrow-left"></i>
                                                                     {{ __('general.prev') }}
                                                                 </span>
                                                                 {{ $prev['title_' . app()->getLocale()] }}
@@ -63,8 +69,8 @@
                                                 @endif
                                                 @if ($next)
                                                     <div class="nav next"
-                                                        style="background-image: url('{{asset($next->image)}}');">
-                                                        <h4><a href="{{route('get.new', $next->id)}}"><span>
+                                                        style="background-image: url('{{ asset($next->image) }}');">
+                                                        <h4><a href="{{ route('get.new', $next->id) }}"><span>
                                                                     {{ __('general.next') }}
                                                                     <i
                                                                         class="las la-arrow-right"></i></span>{{ $next['title_' . app()->getLocale()] }}</a>
