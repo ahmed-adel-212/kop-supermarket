@@ -11,11 +11,7 @@
       .slick-prev:before{
         content:none!important;
       }
-      .slick-track:before, .slick-track:after {
-            display: table;
-            content: '';
-            content: "\f30b";
-            }
+ 
         .line-clamp5 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -221,19 +217,14 @@
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
                     @endforeach
                 </ul>
-              
                 <div class="row product-items">
                     @foreach($menu['dealItems'] as $dealItem)
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}">
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
                            <div class="sale">-15%</div>
-                            <div class="product-thumb">
-                            <img src="{{$dealItem->website_image}}" alt="food">
-                                <div> @auth @if(!session()->has('branch_id'))
-                                    <a data-toggle="modal" data-target="#service-modal" href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
-                                    @else
-                                    <a  href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn">Order Now</a></div>
-                                  @endif  @endauth
+                           <div class="product-thumb">
+                                <img src="{{$dealItem->website_image}}" alt="food">
+                                <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>
                             <div class="food-info">
                                <ul class="ratting">
