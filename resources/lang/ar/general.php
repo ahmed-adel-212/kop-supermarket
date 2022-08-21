@@ -360,4 +360,5 @@ return [
 'extras_ret' => 'الإضافات',
 'withouts_ret' => 'الممكن إزالته',
 'recomended_ret' => 'المنتجات الموصى بها',
+'address_title' => 'عناوينى',
 ];

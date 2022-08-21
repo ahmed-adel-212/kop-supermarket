@@ -338,4 +338,5 @@ return [
     'extras_ret' => 'Extras',
     'withouts_ret' => 'Withouts',
     'recomended_ret' => 'Recommended Items',
+    'address_title' => 'My Address'
 ];
