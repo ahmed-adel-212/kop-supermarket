@@ -11,11 +11,7 @@
       .slick-prev:before{
         content:none!important;
       }
-      .slick-track:before, .slick-track:after {
-            display: table;
-            content: '';
-            content: "\f30b";
-            }
+      
         .line-clamp5 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
