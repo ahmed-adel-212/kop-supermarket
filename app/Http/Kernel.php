@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ChooseService;
+use App\Http\Middleware\GetUserIfTokenPreset;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -78,6 +79,7 @@ class Kernel extends HttpKernel
         /*service*/
         'service'    => ChooseService::class,
         'verifyTwilio' => \App\Http\Middleware\verificationAccount::class,
+        'authIfTokenFound' => GetUserIfTokenPreset::class,
     ];
 
     /**
