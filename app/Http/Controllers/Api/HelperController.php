@@ -11,7 +11,7 @@ class HelperController extends BaseController
     public function getCities() 
     {
         $cities = City::all();
-        return $this->sendResponse($cities, 'get all cities');
+        return $this->sendResponse($cities, __('general.ret', ['key' => __('general.city_ret')]));
     }
 
     public function getAreas(Request $request, int $city) 

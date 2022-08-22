@@ -1,7 +1,7 @@
 @extends('layouts.profile')
 
 @section('title')
-    {{ __('general.address') }}
+    {{ __('general.address_title') }}
 @endsection
 
 @section('styles')

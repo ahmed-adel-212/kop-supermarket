@@ -25,7 +25,7 @@
                 <div class="col-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center"><img
                             class="rounded-circle mt-5 p-1 border" width="150px" height="150px"
-                            src="{{ auth()->user()->image }}"><span class="font-weight-bold">
+                            src="{{ asset(auth()->user()->image) }}"><span class="font-weight-bold">
                             @if (auth()->user()->active)
                                 <i class="fas fa-check-circle text-success mx-1"></i>
                             @endif

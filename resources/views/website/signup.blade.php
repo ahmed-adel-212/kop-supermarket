@@ -13,7 +13,12 @@
             left: 0;
             height: 100%;
         }
-
+        [dir="rtl"] .login-page video {
+            right: 0;
+        }
+        [dir="rtl"] .login-page input:not(#exampleInputName1):focus {
+            direction: ltr;
+        }
         .header {
             background-color: #fff;
         }

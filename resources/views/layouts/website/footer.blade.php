@@ -7,13 +7,13 @@
                 <div class="col-lg-4 col-sm-6 sm-padding">
                     <div class="footer-widget">
                         <a class="logo" href="#"><img src="{{asset('website-assets/img/logokop.bmp')}}" alt="img"></a>
-                        <p>Financial experts support or help you to to find out which way you can raise your funds more.</p>
                         <ul class="footer-social">
                             <li><a href="#"><i class="fab fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fab fa-instagram"></i></a></li>
                             <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
                         </ul>
+                        <p class="pb-4">Financial experts support or help you to to find out which way you can raise your funds more.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 sm-padding">

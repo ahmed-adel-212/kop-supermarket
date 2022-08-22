@@ -16,9 +16,9 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
             'phone' => ['numeric', 'min:10'],
-            'second_phone' => 'sometimes|numeric|min:10',
+            'second_phone' => 'nullable|numeric|min:10',
             'age' => 'required|integer|min:7',
-            'image' => 'image|mimes:png,jpg,jpeg,gif|max:5000'
+            'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:5000'
         ]);
 
         $user = Auth::user();
@@ -33,14 +33,15 @@ class UserController extends Controller
 
         $img = null;
         if ($request->hasFile('image')) {
-            $oldImage = $user->image;
+            $oldImage = substr($user->image, strlen(url('/')));
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('customers'), $image_new_name);
             $img = '/customers/' . $image_new_name;
 
-            if (File::exists(public_path('customers') . $oldImage)) {
-                File::delete(public_path('customers') . $oldImage);
+
+            if (File::exists(public_path($oldImage))) {
+                File::delete(public_path($oldImage));
             }
         }
         $user->image = $img;

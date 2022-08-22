@@ -66,7 +66,7 @@
                                     <div class="col-md-6 padding-15 d-flex">
                                         <div class="post-card">
                                             <div class="post-thumb">
-                                                <img src="{{ $ar->image }}" alt="img">
+                                                <img src="{{ asset($ar->image) }}" alt="img">
                                             </div>
                                             <div class="post-content">
                                                 <ul class="post-meta">

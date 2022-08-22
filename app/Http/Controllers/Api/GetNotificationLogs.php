@@ -24,6 +24,6 @@ class GetNotificationLogs extends BaseController
 
         $logs = $logs->orderBy('created_at', 'desc')->get();
 
-        return $this->sendResponse($logs, 'notifications logs retrived successfully');
+        return $this->sendResponse($logs, __('general.ret', ['key' => __('general.logs')]));
     }
 }
