@@ -45,7 +45,7 @@
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
                            <!-- <div class="sale"></div> -->
                             <div class="product-thumb">
-                                <img src="{{$dealItem->website_image}}" alt="food">
+                                <img src="{{asset($dealItem->website_image)}}" alt="food">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>
                             <div class="food-info">
@@ -134,7 +134,7 @@
                                     '<div class="product-item__media">'+
                                     '<a href="{{url('/item/')}}'+ '/' + item.category_id + '/' + item.id + '">'+
                                     '<div class="uk-inline-clip p-4 uk-transition-toggle uk-light" style="background-color: #d6d6d6;">'+
-                                    '<img class="w-100 h-100" src="' + item.image + '" alt="Image"/>'+
+                                    '<img class="w-100 h-100" src="' + asset(item.image) + '" alt="Image"/>'+
                                     '</div>'+
                                     '</a>'+
                                     '</div>'+
