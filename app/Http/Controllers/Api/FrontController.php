@@ -148,11 +148,11 @@ class FrontController extends BaseController
         $recommended = Item::where('recommended', true)->get();
 
         // categories with items
-        $categories = Category::with('items')->get();
+        $categories = Category::with('items','extras','withouts')->get();
 
         // offers
         $offers = Offer::with('buyGet', 'discount')->where('main', true)->get();
 
         return $this->sendResponse(compact('banner', 'recommended', 'categories', 'offers'), 'Get all menu items');
     }
-}
+} 
