@@ -91,18 +91,27 @@ class AuthController extends BaseController
 
     public function register(Request $request)
     {
+        $message = str_replace('characters', 'numbers', __('validation.size.string'));
+        if (app()->getLocale() === 'ar') {
+            $message = preg_replace("/حروفٍ\/حرفًا/", "رقماُ", __('validation.size.string'));
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => ['required', 'min:11', 'unique:users,first_phone']
+            'phone' => ['required', 'string', 'size:12', 'unique:users,first_phone']
+        ], [
+            'size' => [
+                'string' => $message,
+            ]
         ]);
         //, 'unique:users,first_phone'
         if ($validator->fails()) {
             return response()->json(
                 [
                     "success" => false,
-                    'error' => $validator->errors()
+                    'error' => $validator->errors(),
                 ],
                 401
             );
