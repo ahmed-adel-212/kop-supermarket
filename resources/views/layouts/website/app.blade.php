@@ -183,7 +183,8 @@
             $('#formSearch').submit();
         }
     });
-    window.onload = function() {
+   @auth
+   window.onload = function() {
         $.ajax({
             type: "GET",
             url: '{{ route('get.cart-res') }}',
@@ -193,6 +194,7 @@
             }
         });
     }
+   @endauth
 </script>
 
 </body>

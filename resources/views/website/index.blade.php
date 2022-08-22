@@ -11,6 +11,18 @@
       .slick-prev:before{
         content:none!important;
       }
+      [dir=rtl] .slick-prev {
+        right: auto;
+        left: -15px;
+      }
+      [dir=rtl] .slick-prev i {
+        margin-right: -20px;
+      }
+      [dir=rtl] .dl-slider-button-prev i, [dir=rtl] .dl-slider-button-next i {
+        transform: rotateY(180deg);
+      }
+
+      
 
         .line-clamp5 {
             display: -webkit-box;
@@ -54,7 +66,7 @@
             </div>
         </div>/#popup-search-box -->
 
-        <div id="main-slider" class="main-slider" dir="ltr">
+        <div id="main-slider" class="main-slider" >
             <div class="single-slide">
                 <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-01.jpg')}});"></div>
                 <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
@@ -86,7 +98,7 @@
                     <div class="container">
                         <div class="slider-content">
                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
-                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splitting>Tasty Pizza</div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splittin>Tasty Pizza</div></div>
                             </div>
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="1.5s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-center">
@@ -107,7 +119,7 @@
                     <div class="container">
                         <div class="slider-content">
                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">ewewEat Sleep And</div></div></div>
-                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splitting>Fried masala <br>in town!</div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splittin>Fried masala <br>in town!</div></div>
                             </div>
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">wwwwwwFood is any suwwwewebstance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-left">
@@ -138,7 +150,7 @@
                                         <p>{{(app()->getLocale() == 'ar') ?$recommended->description_ar:$recommended->description_en}}</p>
                                     </div>
                                     <div class="food-thumb">
-                                        <img src="{{$recommended->website_image}}" alt="img">
+                                        <img src="{{asset($recommended->website_image)}}" alt="img">
                                     </div>
                                 </div>
                            </div>
@@ -155,16 +167,16 @@
             </div>
         </section><!--/.promo-section-->
         
-        <div id="main-slider1">
+        <div id="main-slider1" dir="ltr">
             @foreach($menu['main_offer'] as $main_offer)
             <div>
             <section class="about-section padding">
                 <div class="bg-shape grey"></div>
-                <div class="container">
+                <div class="container" dir="{{app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
                     <div class="row align-items-center">
                     <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
                         <div class="content-img-holder">
-                            <img src="{{$main_offer->image}}" alt="img">
+                            <img src="{{asset($main_offer->image)}}" alt="img">
                             <div class="sale">
                             @if($main_offer->discount)
                                 <div>
@@ -223,7 +235,7 @@
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
                            <div class="sale">-15%</div>
                            <div class="product-thumb">
-                                <img src="{{$dealItem->website_image}}" alt="food">
+                                <img src="{{asset($dealItem->website_image)}}" alt="food">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>
                             <div class="food-info">
@@ -257,7 +269,7 @@
                     </div>
                     <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
                         <div class="content-img-holder">
-                            <img src="{{$menu['anoucement'][0]->image}}" alt="img">
+                            <img src="{{asset($menu['anoucement'][0]->image)}}" alt="img">
                             
                         </div>
                     </div>
@@ -297,7 +309,7 @@
                 <div class="row banner-wrapper">
                    <div class="col-md-6 wow fadeInUp" data-wow-delay="200ms">
                        <div class="banner-item">
-                            <img src="{{$menu['homeitem'][0]->image}}" alt="banner">
+                            <img src="{{asset($menu['homeitem'][0]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][0]->description_ar:$menu['homeitem'][0]->description_en}}</h2>
                                 <p>Sale off 50% only this week</p>
@@ -309,7 +321,7 @@
                        <div class="row">
                            <div class="col-md-6 wow fadeInUp" data-wow-delay="400ms">
                            <div class="banner-item">
-                            <img src="{{$menu['homeitem'][1]->image}}" alt="banner">
+                            <img src="{{asset($menu['homeitem'][1]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][1]->description_ar:$menu['homeitem'][1]->description_en}}</h2>
                                 <p>Sale off 50% only this week</p>
@@ -319,7 +331,7 @@
                            </div>
                            <div class="col-md-6 wow fadeInUp" data-wow-delay="600ms">
                            <div class="banner-item">
-                            <img src="{{$menu['homeitem'][2]->image}}" alt="banner">
+                            <img src="{{asset($menu['homeitem'][2]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][2]->description_ar:$menu['homeitem'][2]->description_en}}</h2>
                                 <p>Sale off 50% only this week</p>
@@ -329,7 +341,7 @@
                            </div>
                            <div class="col-md-12 wow fadeInUp" data-wow-delay="800ms">
                            <div class="banner-item">
-                            <img src="{{$menu['homeitem'][3]->image}}" alt="banner">
+                            <img src="{{asset($menu['homeitem'][3]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][3]->description_ar:$menu['homeitem'][3]->description_en}}</h2>
                                 <p>Sale off 50% only this week</p>
@@ -357,7 +369,7 @@
                     <div class="col-lg-4 col-md-6 sm-padding wow fadeInUp" style="margin-bottom: 2%;" data-wow-delay="200ms">
                         <div class="post-card">
                             <div class="post-thumb">
-                                <img src="{{$new->image}}" alt="img">
+                                <img src="{{asset($new->image)}}" alt="img">
                                 <div class="category"><a href="{{route('get.new',$new->id)}}">{{$new['title_'.app()->getLocale()]}}</a></div>
                             </div>
                             <div class="post-content">
@@ -393,7 +405,8 @@
         infinite: true,
         speed: 300,
         slidesToShow: 1,
-        adaptiveHeight: true
+        adaptiveHeight: true,
+        rtl: false
         });
     });
 

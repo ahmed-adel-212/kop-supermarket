@@ -113,9 +113,13 @@
            autoplaySpeed: 10000,
            dots: true,
            fade: true,
+           rtl: isRtl(),
            prevArrow: '<div class="slick-prev"><i class="las la-long-arrow-alt-left"></i></div>',
                 nextArrow: '<div class="slick-next"><i class="las la-long-arrow-alt-right"></i></div>'
         });
+        function isRtl() {
+            return document.documentElement.dir === 'rtl';
+        }
         function doAnimations(elements) {
             var animationEndEvents = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
             elements.each(function() {
