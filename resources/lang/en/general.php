@@ -338,5 +338,11 @@ return [
     'extras_ret' => 'Extras',
     'withouts_ret' => 'Withouts',
     'recomended_ret' => 'Recommended Items',
-    'address_title' => 'My Address'
+    'address_title' => 'My Address',
+    'favourite' => [
+        'already' => 'You have already Favoured this Item',
+        'added' => 'Item Added to Favourites Successfully',
+        'removed' => 'Item Removed from Favourites Successfully',
+        'cleared' => 'Favourite Items list Cleared Successfully',
+    ],
 ];

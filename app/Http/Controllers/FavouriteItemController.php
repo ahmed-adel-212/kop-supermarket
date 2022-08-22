@@ -23,6 +23,12 @@ class FavouriteItemController extends Controller
     {
         $item = Item::findOrFail($item);
 
+        if ($item->isFavouredBy(Auth::user())) {
+            return response()->json([
+                'message' => __('general.favourite.already'),
+            ]);
+        }
+
         Auth::user()->addToFavourites($item);
 
         return response()->json([
