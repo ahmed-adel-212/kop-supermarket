@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::get('unauthenticated', 'Api\AuthController@getUnAuth')->name('unauthenticated');
 
-Route::get('/home', 'Api\FrontController@getHomeSections')->name('home');
+Route::get('/home', 'Api\FrontController@getHomeSections')->middleware('authIfTokenFound')->name('home');
 
 // Authintication routes
 Route::group(['prefix' => 'auth'], function () {
@@ -144,7 +144,7 @@ Route::middleware('api')->group(function () {
 });
 
 // Menu routes
-Route::group(['prefix' => 'menu'], function () {
+Route::group(['prefix' => 'menu', 'middleware' => ['authIfTokenFound']], function () {
 
     // categories 
     Route::get('/categories', 'Api\MenuController@getAllCategories');
