@@ -52,6 +52,7 @@
                                 <h1 class="text-white" style="font-size:36px">{{ __('general.Take away') }}</h1>
                                 <span></span>
                             </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,23 +121,24 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="text-center w-100">
+                                   <div class="text-center w-100">
 
-                                @if ($addresses->count() <= 0)
+                                @if($addresses->count() <= 0)
                                     <div class="col-md-12 text-danger text-center">
-                                        {{ __('general.no_address') }}
+                                        {{__('general.no_address')}}
 
                                     </div>
                                 @endif
                                 <div class="text-center">
-                                    <a href="{{ route('profile') }}" type="button" class="btn btn-primary btn-floating"
-                                        style="margin: 20px">
-                                        {{ __('general.New Address') }} <i class="fas fa-map-marked-alt"></i>
+                                    <a href="{{route('profile')}}" type="button" class="btn btn-primary btn-floating"
+                                       style="margin: 20px">
+                                        {{__('general.New Address')}} <i class="fas fa-map-marked-alt"></i>
                                     </a>
                                 </div>
                             </div>
                         @endif
                     </div>
+
 
                 </div>
             </div>
@@ -148,15 +150,16 @@
 @yield('scripts')
 
 <script>
-    @if (session('status'))
-        $('#service-modal').modal('toggle');
-        {{ session()->forget('status') }}
+
+    @if (session('status') )
+    $('#service-modal').modal('toggle');
+    {{session()->forget('status')}}
     @endif
     @auth
-    $('.cart').click(function(e) {
+    $('.cart').click(function (e) {
         @if (session('status') || !session()->has('branch_id'))
-            $('#service-modal').modal('toggle');
-            return false;
+        $('#service-modal').modal('toggle');
+        return false;
         @endif
         $(this).removeAttr('data-target');
         $(this).removeAttr('data-toggle');
@@ -164,36 +167,38 @@
 
     });
     @endauth
-    $('#address-mod').click(function(e) {
+    $('#address-mod').click(function (e) {
         $("#service-modal").modal("hide");
         $('#address-modal').modal('toggle');
 
     });
 
     @if(session()->has('err'))
-    alert("{{__('general.'.session()->get('err')['company'][0])}}");
+    alert("{{__('general.'.session()->get('err'))}}");
     {{session()->forget('err')}}
     @endif
 
 
-    $('#searchInput').keypress(function(e) {
+    $('#searchInput').keypress(function (e) {
         var key = e.which;
-        if (key == 13) // the enter key code
+        if(key == 13)  // the enter key code
         {
             $('#formSearch').submit();
         }
     });
-    window.onload = function() {
+    window.onload = function () {
         $.ajax({
             type: "GET",
-            url: '{{ route('get.cart-res') }}',
-            success: function(response) {
+            url: '{{route('get.cart-res')}}',
+            success: function(response){
 
-                $('.cart-count').text(response.data)
-            }
+                 $('#lblCartCount').text(response.data)
+             }
         });
-    }
+      }
+
 </script>
+
 
 </body>
 
