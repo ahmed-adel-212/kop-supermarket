@@ -54,7 +54,7 @@
                                                                 <a class="default-btn float-right buyBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$buyItem['id']}}" name="buy_items[]" class="d-none checkItem">
-                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{$buyItem->image}}" alt="">
+                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{asset($buyItem->image)}}" alt="">
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $buyItem['name_ar'] : $buyItem['name_en'] }}</h4>
@@ -78,7 +78,7 @@
                                                                 <a class="default-btn float-right getBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$getItem['id']}}" name="get_items[]" class="d-none checkItem">
-                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{$getItem->image}}" alt="">
+                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{asset($getItem->image)}}" alt="">
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $getItem['name_ar'] : $getItem['name_en'] }}</h4>

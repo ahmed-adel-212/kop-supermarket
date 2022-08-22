@@ -40,7 +40,7 @@
                                                                 <button type="submit" class="default-btn btn-sm float-right btnAdd">Add to cart<span></span></button>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px">
-                                                                        <img class="img-thumbnail rounded w-100 h-100" src="{{$item->image}}" alt="">
+                                                                        <img class="img-thumbnail rounded w-100 h-100" src="{{asset($item->image)}}" alt="">
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <h6 class="m-0" style="font-size: 14px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $item['name_ar'] : $item['name_en'] }}</h6>
