@@ -123,7 +123,7 @@ trait KopAuthenticateUserTrait
     {
         if ($user->hasRole('customer') || $user->hasRole('cashier')) {
             auth()->logout();
-            return redirect('/login');
+            return redirect()->route('get.login');
         }
     }
 
