@@ -40,4 +40,5 @@ return [
     'points' => 'نقاط المستخدم',
     'points_success' => 'تم تغيير النقاط بنجاح',
     'unauthenticated' => 'لم يتم تسجيل دخول المستخدم',
+    'unauthorised' => 'هذا المستخدم غير مصرح له',
 ];
