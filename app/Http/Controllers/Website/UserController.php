@@ -15,8 +15,8 @@ class UserController extends Controller
         $req = (object) $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
-            'phone' => ['numeric', 'min:10'],
-            'second_phone' => 'nullable|numeric|min:10',
+            'phone' => ['numeric', 'min:11', 'unique:users,first_phone,' . Auth::user()->id],
+            // 'second_phone' => 'nullable|numeric|min:10',
             'age' => 'required|integer|min:7',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:5000'
         ]);
@@ -27,7 +27,7 @@ class UserController extends Controller
         $user->first_name = $names[0];
         $user->last_name = isset($names[1]) ? $names[1] : null;
         $user->first_phone = $req->phone;
-        $user->second_phone = $req->second_phone;
+        // $user->second_phone = $req->second_phone;
         $user->age = $req->age;
         $user->email = $req->email;
 

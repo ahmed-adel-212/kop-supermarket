@@ -55,7 +55,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group has-validation mb-3">
+                                    {{-- <div class="form-group has-validation mb-3">
                                         <div class="form-floating">
                                             <input type="tel"
                                                 class="form-control @error('second_phone') is-invalid @enderror"
@@ -70,7 +70,7 @@
                                                 {{ $message }}
                                             </div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group has-validation mb-3">
                                         <div class="form-floating">
