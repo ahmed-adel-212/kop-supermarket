@@ -129,15 +129,15 @@ class OrdersController extends Controller
                     case 'Unable to process the purchase transaction':
                         return redirect(route('get.payment'))->with(['error' => __('general.Unable to process the purchase transaction')]);
                     case 'Insufficient Funds':
-                        return redirect(route('get.payment'))->with(['error' => __('Insufficient Funds')]);
+                        return redirect(route('get.payment'))->with(['error' => __('general.Insufficient Funds')]);
                     case 'Declined':
-                        return redirect(route('get.payment'))->with(['error' => __('Declined')]);
+                        return redirect(route('get.payment'))->with(['error' => __('general.Declined')]);
                     default:
                         return redirect(route('get.payment'))->with(['error' => $request->message]);
                 }
                 return redirect(route('get.payment'))->with(['error' => $request->message]);
             }
-            session()->flash('error', 'Order Failed ! , Please Try again later');
+            session()->flash('error', __('general.error'));
             return redirect()->route('get.payment');
         }
     }
@@ -341,13 +341,13 @@ class OrdersController extends Controller
                     if ($branch) {
                         $branch_id = $branch->id;
                     } else {
-                        return ['error' => 'sorry there is no branch cover this area'];
+                        return ['error' => __('general.branch_no_cover')];
                     }
                 } else {
-                    return ['error' => 'sorry there is no branch cover this area'];
+                    return ['error' => __('general.branch_no_cover')];
                 }
             } else {
-                return ['error' => 'sorry there is no branch cover this area'];
+                return ['error' => __('general.branch_no_cover')];
             }
         }
 
@@ -364,7 +364,7 @@ class OrdersController extends Controller
             $branch = Branch::find($request->branch_id);
 
             if (!$branch) {
-                return ['error' => 'there is no branch by this id'];
+                return ['error' =>  __('general.Branches').' ' . __('general.not_found')];
             }
 
             $branch_id = $branch->id;
@@ -448,7 +448,7 @@ class OrdersController extends Controller
                 'quantity' => ($item['quantity']) ? $item['quantity'] : 1
             ]);
         }
-       return (app(ApiOrdersController::class)->sendResponse($order, 'Order created successfuly!'))->getOriginalContent();
+       return (app(ApiOrdersController::class)->sendResponse($order,  __('general.Order created successfully!')))->getOriginalContent();
          
         // return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
     }

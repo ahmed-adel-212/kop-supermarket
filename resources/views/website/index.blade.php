@@ -11,6 +11,18 @@
       .slick-prev:before{
         content:none!important;
       }
+      [dir=rtl] .slick-prev {
+        right: auto;
+        left: -15px;
+      }
+      [dir=rtl] .slick-prev i {
+        margin-right: -20px;
+      }
+      [dir=rtl] .dl-slider-button-prev i, [dir=rtl] .dl-slider-button-next i {
+        transform: rotateY(180deg);
+      }
+
+      
 
         .line-clamp5 {
             display: -webkit-box;
@@ -54,7 +66,7 @@
             </div>
         </div>/#popup-search-box -->
 
-        <div id="main-slider" class="main-slider" dir="ltr">
+        <div id="main-slider" class="main-slider" >
             <div class="single-slide">
                 <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-01.jpg')}});"></div>
                 <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
@@ -86,7 +98,7 @@
                     <div class="container">
                         <div class="slider-content">
                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
-                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splitting>Tasty Pizza</div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splittin>Tasty Pizza</div></div>
                             </div>
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="1.5s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-center">
@@ -107,7 +119,7 @@
                     <div class="container">
                         <div class="slider-content">
                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">ewewEat Sleep And</div></div></div>
-                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splitting>Fried masala <br>in town!</div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splittin>Fried masala <br>in town!</div></div>
                             </div>
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">wwwwwwFood is any suwwwewebstance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-left">
@@ -155,12 +167,12 @@
             </div>
         </section><!--/.promo-section-->
         
-        <div id="main-slider1">
+        <div id="main-slider1" dir="ltr">
             @foreach($menu['main_offer'] as $main_offer)
             <div>
             <section class="about-section padding">
                 <div class="bg-shape grey"></div>
-                <div class="container">
+                <div class="container" dir="{{app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
                     <div class="row align-items-center">
                     <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
                         <div class="content-img-holder">
@@ -393,7 +405,8 @@
         infinite: true,
         speed: 300,
         slidesToShow: 1,
-        adaptiveHeight: true
+        adaptiveHeight: true,
+        rtl: false
         });
     });
 

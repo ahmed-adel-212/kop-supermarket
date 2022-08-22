@@ -47,7 +47,7 @@ class AuthController extends Controller
         try {
             $name = explode(" ", $request->name);
             if (count($name) < 2) {
-                return redirect()->back()->withErrors(['errors' => 'Name Must Include  First Name And Last Name !'])->withInput();
+                return redirect()->back()->withErrors(['errors' => __('auth.last_name_not_included')])->withInput();
             }
 
             // DB::beginTransaction();
@@ -84,9 +84,9 @@ class AuthController extends Controller
                 // return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
 
-            return redirect(route('get.login'))->with(['success' => 'Your Account Created Successfully', 'email' => $user->email]);
+            return redirect(route('get.login'))->with(['success' => __('general.created', ['key' => __('auth.user_account')]), 'email' => $user->email]);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['errors' => 'Something Went Wrong!! please try again later']);
+            return redirect()->back()->withErrors(['errors' => __('general.error')]);
         }
         // DB::commit();
     }

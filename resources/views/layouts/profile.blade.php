@@ -22,7 +22,7 @@
 
         <div class="page-content">
             <div class="row">
-                <div class="col-3 border-right">
+                <div class="col-12 col-sm-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center"><img
                             class="rounded-circle mt-5 p-1 border" width="150px" height="150px"
                             src="{{ asset(auth()->user()->image) }}"><span class="font-weight-bold">
@@ -89,7 +89,7 @@
                         </ol>
                     </div>
                 </div>
-                <div class="col-9 position-relative mt-4">
+                <div class="col-12 col-sm-9 position-relative mt-4">
                     <div class="row px-5">
                         <div class="col-12 align-items-center justify-content-center">
                             @if (Session::has('success'))

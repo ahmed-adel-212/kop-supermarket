@@ -51,11 +51,11 @@ class AddressController extends Controller
     {
         $return = (app(\App\Http\Controllers\Api\AddressesController::class)->store($request))->getOriginalContent();
         if ($return['success'] == true) {
-            return back()->with(['success' => __('general.Address been Add!')]);
+            return back()->with(['success' => __('general.address.created')]);
 
         } else {
 
-            return back()->with(['error' => __('general.Address Can Not be Add!')]);
+            return back()->with(['error' => __('general.error')]);
         }
     }
 
@@ -65,7 +65,7 @@ class AddressController extends Controller
 
         $return = (app(\App\Http\Controllers\Api\AddressesController::class)->update($request, $address))->getOriginalContent();
         if ($return['success'] == true) {
-            session()->put(['success' => __('general.Address been Add!')]);
+            session()->put(['success' => __('general.address.created')]);
 
             return back();
         }
@@ -73,7 +73,7 @@ class AddressController extends Controller
 
         if ($return['success'] == false) {
             $errorarray = [];
-            session()->put(['error' => __('general.Address Can Not be Add!')]);
+            session()->put(['error' => __('general.error')]);
 
             if (array_key_exists('message', $return)) {
                 $errorarray['message'] = "Update Addresses Failed";

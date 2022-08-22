@@ -73,7 +73,7 @@ class PaymentController extends Controller
                 return $statusCode = $response->getStatusCode();
 
             } else {
-                session()->flash('error', 'Something went wrong !, please try again later');
+                session()->flash('error', __('general.error'));
                 return redirect()->route('get_cart');
             }
 
