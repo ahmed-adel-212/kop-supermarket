@@ -412,6 +412,11 @@ button{
     .nav-outside .swiper-container{
         width: 100%;
     }
+    .food-menu-filter li {
+        width: fit-content !important;
+        font-size:12px !important;
+
+    }
 }
 /* Bullets */
 .dl-swiper-pagination {
