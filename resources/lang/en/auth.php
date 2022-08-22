@@ -40,4 +40,5 @@ return [
     'points' => 'User Points',
     'points_success' => 'Points Changed Successfully',
     'unauthenticated' => 'User is not Logged In',
+    'unauthorised' => 'User is not Authorised',
 ];
