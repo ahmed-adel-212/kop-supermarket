@@ -12,13 +12,21 @@ class UserController extends Controller
 {
     public function update_user(Request $request)
     {
+        $message = str_replace('characters', 'numbers', __('validation.size.string'));
+        if (app()->getLocale() === 'ar') {
+            $message = preg_replace("/حروفٍ\/حرفًا/", "رقماُ", __('validation.size.string'));
+        }
         $req = (object) $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
-            'phone' => ['numeric', 'min:11', 'unique:users,first_phone,' . Auth::user()->id],
+            'phone' => ['required', 'string', 'size:12',, 'unique:users,first_phone,' . Auth::user()->id],
             // 'second_phone' => 'nullable|numeric|min:10',
             'age' => 'required|integer|min:7',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:5000'
+        ], [
+            'size' => [
+                'string' => $message,
+            ]
         ]);
 
         $user = Auth::user();

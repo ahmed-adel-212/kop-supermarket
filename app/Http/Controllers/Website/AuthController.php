@@ -38,11 +38,20 @@ class AuthController extends Controller
     //         return redirect()->back()->withErrors($validator->getMessageBag())->withInput();
     //     }
 
+    $message = str_replace('characters', 'numbers', __('validation.size.string'));
+    if (app()->getLocale() === 'ar') {
+        $message = preg_replace("/حروفٍ\/حرفًا/", "رقماُ", __('validation.size.string'));
+    }
+
         $req = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => ['required', 'min:11', 'unique:users,first_phone']
+            'phone' => ['required', 'string', 'size:12', 'unique:users,first_phone']
+        ], [
+            'size' => [
+                'string' => $message,
+            ]
         ]);
         try {
             $name = explode(" ", $request->name);
