@@ -16,7 +16,7 @@ class GetUserIfTokenPreset
      */
     public function handle($request, Closure $next)
     {
-        if ($request->hasHeader('Authorization')) {
+        if ($request->hasHeader('authorization')) {
             $bearertoken = $request->bearerToken();
             $token = $request->header('authorization');
             if (!empty($bearertoken)) {
