@@ -7,6 +7,18 @@
    h6,h5,h4,h3,h2{
         font-family: inherit;
     }
+    .line-clamp5 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 20px;     /* fallback */
+        max-height: 32px;      /* fallback */
+        -webkit-line-clamp: 3; /* number of lines to show */
+        -webkit-box-orient: vertical;
+    }
+    .food-carousel .product-item h3 {
+        line-height: 20px;
+    }
 </style>
 
 @endsection
@@ -67,7 +79,7 @@
                                             <li><i class="las la-star"></i></li>
                                             <li><i class="las la-star"></i></li>
                                        </ul>
-                                        <h3>{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}
+                                        <h3 class="line-clamp5">{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}
                                             <br>
                                          
                                         </h3>
