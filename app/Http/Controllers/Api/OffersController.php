@@ -825,10 +825,10 @@ class OffersController extends BaseController
     {
        
             $offer_id = DB::table("branch_offer")->where('branch_id',  $branch_id)->pluck('offer_id');
-            $offers = Offer::whereIn('id',$offer_id)->where('service_type','takeaway');
+            $offers = Offer::whereIn('id',$offer_id)->where('service_type','takeaway')->with('buyGet', 'discount')->filter($filters)->get();
         
 
-        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
+        // $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
 
         return $this->sendResponse($offers, 'Offers retreived successfully');
     }
@@ -839,10 +839,9 @@ class OffersController extends BaseController
         $branches=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
         if (!empty($branches)) {
             $offer_id = DB::table("branch_offer")->whereIn('branch_id', $branches)->pluck('offer_id');
-            $offers = Offer::whereIn('id',$offer_id)->where('service_type','delivery');
+            $offers = Offer::whereIn('id',$offer_id)->where('service_type','delivery')->with('buyGet', 'discount')->filter($filters)->get();
         }
 
-        $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
 
         return $this->sendResponse($offers, 'Offers retreived successfully');
 
