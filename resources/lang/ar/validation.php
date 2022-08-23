@@ -113,7 +113,7 @@ return [
         'array' => 'يجب أن يحتوي :attribute على :size عنصرٍ/عناصر بالضبط.',
         'file' => 'يجب أن يكون حجم الملف :attribute :size كيلوبايت.',
         'numeric' => 'يجب أن تكون قيمة :attribute مساوية لـ :size.',
-        'string' => 'يجب أن يحتوي النص :attribute على :size حروفٍ/حرفًا بالضبط.',
+        'string' => 'يجب أن يحتوي  :attribute على :size حروفٍ/حرفًا بالضبط.',
     ],
     'starts_with' => 'يجب أن يبدأ :attribute بأحد القيم التالية: :values',
     'string' => 'يجب أن يكون :attribute نصًا.',

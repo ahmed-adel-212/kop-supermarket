@@ -357,13 +357,21 @@ class AuthController extends BaseController
     public function updateUser(Request $request)
     {
 
+        $message = str_replace('characters', 'numbers', __('validation.size.string'));
+        if (app()->getLocale() === 'ar') {
+            $message = preg_replace("/حروفٍ\/حرفًا/", "رقماُ", __('validation.size.string'));
+        }
         $validator = Validator::make($request->all(), [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
             'password' => ['string', 'min:8'],
-            'phone' => ['min:2'],
+            'phone' => ['required', 'string', 'size:12',, 'unique:users,first_phone,' . Auth::user()->id],
             'image' => 'image|max:5000'
+        ], [
+            'size' => [
+                'string' => $message,
+            ]
         ]);
         $request->merge(['first_phone' => $request->phone]);
         if ($request->password) {
