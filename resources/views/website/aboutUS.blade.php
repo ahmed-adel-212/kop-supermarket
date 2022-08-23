@@ -98,7 +98,7 @@
                                 <img src="{{asset( $sec->image)}}" width="700" height="500" alt="img" id="image{{$loop->index}}">
                                 <div class="position-absolute top-0 w-100 h-100">
                                     <video controls width="100%" height="100%" id="video{{$loop->index}}" style="opacity: 0;: hidden;">                                        
-                                        <source src="{{$sec->video}}"
+                                        <source src="{{asset($sec->video)}}"
                                                 type="video/mp4">
                                         Sorry, your browser doesn't support embedded videos.
                                     </video>
