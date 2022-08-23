@@ -209,6 +209,9 @@
         .contact-info-list li a:hover {
             color: #585353;
         }
+        [dir=rtl] .dl-slider-button-prev i, [dir=rtl] .dl-slider-button-next i, .las.la-arrow-left i, .las.la-arrow-right i {
+        transform: rotateY(180deg);
+      }
     </style>
     @if (app()->getLocale() == 'ar')
         <style>

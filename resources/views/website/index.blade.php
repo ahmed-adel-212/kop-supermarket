@@ -18,9 +18,7 @@
       [dir=rtl] .slick-prev i {
         margin-right: -20px;
       }
-      [dir=rtl] .dl-slider-button-prev i, [dir=rtl] .dl-slider-button-next i {
-        transform: rotateY(180deg);
-      }
+     
 
       
 
