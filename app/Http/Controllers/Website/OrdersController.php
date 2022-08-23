@@ -58,7 +58,8 @@ class OrdersController extends Controller
             if (session()->has('point_claim_value')) {
                 session()->forget('point_claim_value');
             }
-            return redirect()->route('get.cart')->with(['success' => __('general.Your order been submitted successfully')]);
+            // return redirect()->route('get.cart')->with(['success' => __('general.Your order been submitted successfully')]);
+            return redirect()->route('get.orders');
         }
     }
 
