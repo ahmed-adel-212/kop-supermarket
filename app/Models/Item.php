@@ -45,7 +45,7 @@ class Item extends Model
     public function getIsHiddenAttribute()
     {
         if (!request()->has('branch_id')) {
-            return false;
+            return true;
         }
 
         return $this->isHiddenByBranch(request('branch_id', 0));
@@ -54,19 +54,19 @@ class Item extends Model
     public function isHiddenByBranch($branchId)
     {
         if (empty($this->branches)) {
-            return false;
+            return true;
         }
         $branches = explode(',', $this->branches);
         $target_branch = Branch::find($branchId);
         if ($target_branch) {
             foreach ($branches as $branch_id) {
                 if ($target_branch->id == $branch_id) {
-                    return true;
+                    return false;
                 }
             }
         }
 
-        return false;
+        return true;
     }
 
     public function getDoughTypeAttribute()

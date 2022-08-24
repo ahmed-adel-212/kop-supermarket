@@ -23,39 +23,23 @@ class MenuController extends BaseController
 
     public function getAllCategories(Request $request)
     {
-        $categories = Category::with('items')->get();
-        $categories->first()->loadMissing('items');
+      
         // load first category items
-
+     
+        
         if(isset($request->service_type))
         {
             if($request->service_type =='takeaway')
             {
-                $branch=$request->id;
+                $request->request->add(['branch_id' =>$request->id]);
             }
             elseif($request->service_type =='delivery')
             {
                 $address = Address::find($request->id);
-                $branch=DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id');
-            }
-            foreach($categories as $category)
-                {
-                    $items=[];
-                    foreach($category->items as $item)
-                    {
-                        $branches= explode(',', $item->branches);
-                        if(in_array($branch, $branches))
-                        {
-                            $items[]=$item;
-                        }
-                        
-                    }
-                    unset($category->items);
-                    $category->items=$items;
-                    $temp[]=$category;
-                }
-                return $this->sendResponse($temp, __('general.ret', ['key' => __('general.cat_ret')]));
-        }
+                $request->request->add(['branch_id' => DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id')->first()]);
+            }}
+            $categories = Category::with('items')->get();
+            $categories->first()->loadMissing('items');
         
         return $this->sendResponse($categories, __('general.ret', ['key' => __('general.cat_ret')]));
     }
