@@ -128,13 +128,13 @@
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ $cart->offer_id ? $cart->offer_price : $cart->item->price }}
+                                    <p>{{ $cart->price }}
                                         {{ __('general.SR') }}</p>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ ($cart->offer_id ? $cart->offer_price : $cart->item->price) * $cart->quantity }}
+                                    <p>{{ ($cart->price) * $cart->quantity }}
                                         {{ __('general.SR') }}</p>
                                 </div>
                             </div>

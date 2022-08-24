@@ -18,7 +18,9 @@ class CartController extends BaseController
      */
     public function getCart()
     {
-        return $this->sendResponse(Auth::user()->carts()->with('item')->get(), __('general.cart_ret'));
+        $carts = Auth::user()->carts()->with('item')->get();
+
+        return $this->sendResponse($carts, __('general.cart_ret'));
     }
 
     public function addCart(Request $request)
