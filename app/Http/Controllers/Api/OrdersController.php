@@ -986,7 +986,7 @@ class OrdersController extends BaseController
 
         $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
-        }])->orderBy('id', 'DESC')->get();
+        }])->whereRaw('Date(created_at) < CURDATE()')->orderBy('id', 'DESC')->get();
 
  
         foreach ($orders as $order) {
@@ -994,15 +994,25 @@ class OrdersController extends BaseController
                 $extras = $item->pivot->item_extras;
                 $extras = $extras ? explode(", ", $extras) : [];
 
+                $withouts = $item->pivot->item_withouts;
+                $withouts = $withouts ? explode(", ", $withouts) : [];
+
+                
+
                 $all_extras = [];
                 foreach ($extras as $extra) {
                     $all_extras[] = Extra::find($extra);
                 }
 
+                $all_withouts = [];
+                foreach ($withouts as $without) {
+                    $all_withouts[] = Without::find($without);
+                }
+
                 $item->extras = $all_extras;
+                $item->withouts = $all_withouts;
             }
         }
-
         return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully.');
     }
 }
