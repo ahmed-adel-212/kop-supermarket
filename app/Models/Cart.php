@@ -63,6 +63,15 @@ class Cart extends Model
 
     public function getPriceAttribute()
     {
-        return ($this->offer_id ? $this->offer_price : $this->item->price) + collect($this->extras_objects)->sum('price');
+        $itemPrice = $this->offer_id ? $this->offer_price : 0;
+        if (isset($this->item)) {
+            $itemPrice = $this->offer_id ? $this->offer_price : $this->item->price;
+        }
+
+        if (isset($this->extras_objects)) {
+            return $itemPrice + collect($this->extras_objects)->sum('price');
+        }
+
+        return $itemPrice;
     }
 }

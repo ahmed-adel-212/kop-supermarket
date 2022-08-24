@@ -121,7 +121,7 @@
                                     <input style="width: 25%;" type="number"
                                         @if ($cart->offer_id && !$cart->dough_type_ar) disabled @endif data-zeros="true"
                                         value="{{ $cart->quantity }}" min="1" max="20" readonl
-                                        data-id="{{ $cart->id }}" data-price="{{ $cart->price }}" data-prev="{{$cart->quantity}}"
+                                        data-id="{{ $cart->id }}" data-price="{{ $cart->price }}" data-prev="{{$cart->quantity}}" data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
                                         class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}">
                                 </div>
                             </div>
@@ -215,8 +215,7 @@
                         {{ __('general.add_item_confirm') }}
                     </div>
                     <div class="modal-footer">
-                        <a class="btn default-btn rounded shadow-sm bg-danger"
-                            href="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}">
+                        <a class="btn default-btn rounded shadow-sm bg-danger item-link">
                             {{ __('general.open_item') }}
                             <span></span>
                         </a>
@@ -294,8 +293,10 @@
                     var quantity = $(this).val();
                     var id = $(this).attr('data-id');
                     var price = $(this).attr('data-price');
+                    var href = $(this).attr('data-url');
 
                     $('.confirm').attr('data-id', id).attr('data-price', price).attr('quantity', parseInt(quantity));
+                    $('.item-link').attr('href', href);
 
                     var val = parseInt(elem.val(), 10);
                     var prev = parseInt(elem.attr('data-prev'), 10);
