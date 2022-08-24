@@ -24,10 +24,12 @@ class Cart extends Model
 
     public $appends = [
         'extras_objects',
-        'withouts_objects'
+        'withouts_objects',
+        'price',
     ];
 
-    public function item(){
+    public function item()
+    {
         return $this->belongsTo('App\Models\Item');
     }
 
@@ -57,5 +59,19 @@ class Cart extends Model
         }
 
         return $objects;
+    }
+
+    public function getPriceAttribute()
+    {
+        $itemPrice = $this->offer_id ? $this->offer_price : 0;
+        if (isset($this->item)) {
+            $itemPrice = $this->offer_id ? $this->offer_price : $this->item->price;
+        }
+
+        if (isset($this->extras_objects)) {
+            return $itemPrice + collect($this->extras_objects)->sum('price');
+        }
+
+        return $itemPrice;
     }
 }

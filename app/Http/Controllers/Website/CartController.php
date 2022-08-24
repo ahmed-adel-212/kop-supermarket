@@ -119,6 +119,7 @@ class CartController extends Controller
     {
         $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
         $request = new \Illuminate\Http\Request();
+        
         if ($return['success'] == 'success') {
             $carts = $return['data'];
             $arr_check = $this->get_check();

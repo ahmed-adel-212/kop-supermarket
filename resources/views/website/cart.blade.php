@@ -32,6 +32,15 @@
         td {
             border: 0 !important;
         }
+
+        .list-group-item {
+            background-color: transparent;
+            padding: 2px;
+        }
+
+        .small * {
+            font-size: 14px;
+        }
     </style>
 @endsection
 
@@ -75,8 +84,35 @@
                                         <h3><a
                                                 href="{{ url('item/' . $cart->item->category_id . '/' . $cart->item->id) }}">{{ app()->getLocale() == 'ar' ? $cart->item->name_ar : $cart->item->name_en }}</a>
                                         </h3>
-                                        <p> {{ app()->getLocale() == 'ar' ? $cart->item->description_ar : $cart->item->description_en }}
-                                        </p>
+                                        {{-- <p> {{ app()->getLocale() == 'ar' ? $cart->item->description_ar : $cart->item->description_en }}
+                                        </p> --}}
+                                        <div style="font-size: 10px" class="small">
+                                            @if (count($cart->extras_objects))
+                                                <p>
+                                                    <b class="text-primary">{{ __('general.Extra') }}:</b>
+                                                <ul class="list-group list-group-horizontal">
+                                                    @foreach ($cart->extras_objects as $extra)
+                                                        <li class="list-group-item px-1">
+                                                            {{ $extra['name_' . app()->getLocale()] }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                                </p>
+                                            @endif
+                                            @if (count($cart->withouts_objects))
+                                                <p>
+                                                    <b class="text-danger">{{ __('general.Without') }}:</b>
+                                                <ol class="list-group list-group-horizontal list-group-numbered">
+                                                    @foreach ($cart->withouts_objects as $without)
+                                                        <li class='list-group-item px-1'>
+                                                            {{ $without['name_' . app()->getLocale()] }}
+                                                        </li>
+                                                    @endforeach
+
+                                                </ol>
+                                                </p>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -85,20 +121,19 @@
                                     <input style="width: 25%;" type="number"
                                         @if ($cart->offer_id && !$cart->dough_type_ar) disabled @endif data-zeros="true"
                                         value="{{ $cart->quantity }}" min="1" max="20" readonl
-                                        data-id="{{ $cart->id }}"
-                                        data-price="{{ $cart->offer_id ? $cart->offer_price : $cart->item->price }}"
+                                        data-id="{{ $cart->id }}" data-price="{{ $cart->price }}" data-prev="{{$cart->quantity}}" data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
                                         class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}">
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ $cart->offer_id ? $cart->offer_price : $cart->item->price }}
+                                    <p>{{ $cart->price }}
                                         {{ __('general.SR') }}</p>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ (($cart->offer_id ? $cart->offer_price : $cart->item->price)) * $cart->quantity }}
+                                    <p> <span id="total{{ $cart->id }}">{{ $cart->price * $cart->quantity }}</span>
                                         {{ __('general.SR') }}</p>
                                 </div>
                             </div>
@@ -165,6 +200,34 @@
         </section>
         <!--/.cart-section-->
 
+        <!-- Modal -->
+        <div class="modal fade" id="incressItemQuantity" tabindex="-1" aria-labelledby="incressItemQuantityLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="incressItemQuantityLabel">
+                            {{ __('general.confirm') }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ __('general.add_item_confirm') }}
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn default-btn rounded shadow-sm bg-danger item-link">
+                            {{ __('general.open_item') }}
+                            <span></span>
+                        </a>
+                        <button type="button" class="btn default-btn rounded shadow-sm bg-primary confirm">
+                            {{ __('general.confirm_txt') }}
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- <div id="scrollup">
             <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
         </div> --}}
@@ -175,6 +238,10 @@
     <script src="{{asset('website2-assets/js/script.js')}}"></script> --}}
         <script>
             $(document).ready(function() {
+                const quantityConfirm = new bootstrap.Modal('#incressItemQuantity', {
+                    keyboard: false,
+                    backdrop: 'static',
+                });
                 $(document).on('click', '.delete_cart', function(e) {
                     e.preventDefault();
                     var id = $(this).attr('data-id');
@@ -192,7 +259,7 @@
                             'cart_id': id,
                         },
                         success: function(data) {
-                            $.each(data.carts, function (index, deletedCart) {
+                            $.each(data.carts, function(index, deletedCart) {
                                 $(`.cart1${deletedCart.id}`).hide();
                                 $(`.cart2${deletedCart.id}`).hide();
                                 $(`.cart3${deletedCart.id}`).hide();
@@ -218,12 +285,50 @@
                         }
                     });
                 });
-                $(".quantity_ch").change(function() {
 
+                $(document).on('change', '.quantity_ch',function(ev) {
+                    ev.preventDefault();
+
+                    var elem = $(this);
                     var quantity = $(this).val();
                     var id = $(this).attr('data-id');
                     var price = $(this).attr('data-price');
-                    var elem = $(this);
+                    var href = $(this).attr('data-url');
+
+                    $('.confirm').attr('data-id', id).attr('data-price', price).attr('quantity', parseInt(quantity));
+                    $('.item-link').attr('href', href);
+
+                    var val = parseInt(elem.val(), 10);
+                    var prev = parseInt(elem.attr('data-prev'), 10);
+                    if (val <= 0) {return;}
+
+                    // console.log(val, prev);
+
+                    if (val === prev - 1) {
+                        // console.log(quantity);
+                        elem.attr('data-prev', val);
+                        elem.val(val);
+                        $('.confirm').click();
+                        return;
+                    }
+
+
+
+
+                    quantityConfirm.show();
+                    elem.val(parseInt(elem.val() - 1));
+
+                    // add these attrs to confirm button
+                    // $('.confirm').attr('quantity', parseInt(
+                    //     quantity));
+                });
+
+                $('.confirm').click(function() {
+                    var quantity = $(this).attr('quantity');
+                    var id = $(this).attr('data-id');
+                    var price = $(this).attr('data-price');
+                    $(".cart2" + id + ' .quantity_ch').attr('readonly', true);
+
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -253,21 +358,29 @@
                                 ' {{ __('general.SR') }}');
                             $('#delivery_feesinput').val(data.delivery_fees);
 
-                            elem.parent().parent().parent().next().next().find('.price-item')
-                            .first().html('{{ __('home.Price') }}: ' + (quantity * price)
-                                .toFixed(2) + ' {{ __('general.SR') }}');
+                            $(".cart2" + id + ' .quantity_ch').val(quantity);
+                            $(".cart2" + id + ' .quantity_ch').attr('data-prev', quantity);
+                            // $('.quantity_ch').parent().parent().parent().next().next().find('.price-item')
+                            //     .first().html('{{ __('home.Price') }}: ' + (quantity * price)
+                            //         .toFixed(2) + ' {{ __('general.SR') }}');
+                            $('#total' + id).text((quantity * price).toFixed(2));
 
                             @if (isset($arr_check['points']))
                                 $('#points').text(data.points);
                                 $('#pointsnput').val(data.points);
                             @endif
 
+                            quantityConfirm.hide();
+                            $(".cart2" + id + ' .quantity_ch').attr('readonly', false);
+
                         },
                         error: function(reject) {
+                            quantityConfirm.hide();
+                            $(".cart2" + id + ' .quantity_ch').attr('readonly', false);
+                            // $(".cart2" + id + ' .quantity_ch').data('prev', quantity);
                             console.log(reject);
                         }
-                    })
-
+                    });
                 });
             });
         </script>
