@@ -32,6 +32,15 @@
         td {
             border: 0 !important;
         }
+
+        .list-group-item {
+            background-color: transparent;
+            padding: 2px;
+        }
+
+        .small * {
+            font-size: 14px;
+        }
     </style>
 @endsection
 
@@ -75,8 +84,35 @@
                                         <h3><a
                                                 href="{{ url('item/' . $cart->item->category_id . '/' . $cart->item->id) }}">{{ app()->getLocale() == 'ar' ? $cart->item->name_ar : $cart->item->name_en }}</a>
                                         </h3>
-                                        <p> {{ app()->getLocale() == 'ar' ? $cart->item->description_ar : $cart->item->description_en }}
-                                        </p>
+                                        {{-- <p> {{ app()->getLocale() == 'ar' ? $cart->item->description_ar : $cart->item->description_en }}
+                                        </p> --}}
+                                        <div style="font-size: 10px" class="small">
+                                            @if (count($cart->extras_objects))
+                                                <p>
+                                                    <b class="text-primary">{{ __('general.Extra') }}:</b>
+                                                <ul class="list-group list-group-horizontal">
+                                                    @foreach ($cart->extras_objects as $extra)
+                                                        <li class="list-group-item px-1">
+                                                            {{ $extra['name_' . app()->getLocale()] }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                                </p>
+                                            @endif
+                                            @if (count($cart->withouts_objects))
+                                                <p>
+                                                    <b class="text-danger">{{ __('general.Without') }}:</b>
+                                                <ol class="list-group list-group-horizontal list-group-numbered">
+                                                    @foreach ($cart->withouts_objects as $without)
+                                                        <li class='list-group-item px-1'>
+                                                            {{ $without['name_' . app()->getLocale()] }}
+                                                        </li>
+                                                    @endforeach
+
+                                                </ol>
+                                                </p>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +134,7 @@
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ (($cart->offer_id ? $cart->offer_price : $cart->item->price)) * $cart->quantity }}
+                                    <p>{{ ($cart->offer_id ? $cart->offer_price : $cart->item->price) * $cart->quantity }}
                                         {{ __('general.SR') }}</p>
                                 </div>
                             </div>
@@ -192,7 +228,7 @@
                             'cart_id': id,
                         },
                         success: function(data) {
-                            $.each(data.carts, function (index, deletedCart) {
+                            $.each(data.carts, function(index, deletedCart) {
                                 $(`.cart1${deletedCart.id}`).hide();
                                 $(`.cart2${deletedCart.id}`).hide();
                                 $(`.cart3${deletedCart.id}`).hide();
@@ -254,8 +290,8 @@
                             $('#delivery_feesinput').val(data.delivery_fees);
 
                             elem.parent().parent().parent().next().next().find('.price-item')
-                            .first().html('{{ __('home.Price') }}: ' + (quantity * price)
-                                .toFixed(2) + ' {{ __('general.SR') }}');
+                                .first().html('{{ __('home.Price') }}: ' + (quantity * price)
+                                    .toFixed(2) + ' {{ __('general.SR') }}');
 
                             @if (isset($arr_check['points']))
                                 $('#points').text(data.points);
