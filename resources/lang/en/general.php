@@ -345,4 +345,8 @@ return [
         'removed' => 'Item Removed from Favourites Successfully',
         'cleared' => 'Favourite Items list Cleared Successfully',
     ],
+    'confirm' => 'Please Confirm',
+    'add_item_confirm' => 'Add Item with the Same Extras and Withouts',
+    'open_item' => 'Open Item Details Page',
+    'confirm_txt' => 'Confirm',
 ];
