@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Image <span style="color: #0f7ae5">hint: dimensional 270*260</span> </label>
+                                    <label>Image <span style="color: #0f7ae5">hint: dimensional 600*600</span> </label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" value="{{old('url')}}" class="custom-file-input {!! $errors->first('url', 'is-invalid') !!}" name="url" >

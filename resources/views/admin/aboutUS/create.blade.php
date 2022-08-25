@@ -107,7 +107,7 @@
                                             Image
                                         </label>
                                             <div class="help-block text-info">
-                                                <b>Note</b> Image Size: <span class="img-size">600*400</span>
+                                                <b>hint:</b> dimensional: <span class="img-size">600*400</span>
                                             </div>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}"

@@ -46,7 +46,7 @@ class GalleryController extends Controller
         $validatedData = $request->validate([
             'title_ar' => ['required','unique:galleries,title_ar'],
             'title_en' => ['required','unique:galleries,title_en'],
-            "url" => 'required|mimes:jpeg,png,jpg,gif,svg,tif,bmp,ico,psd,webp|dimensions:width=270,height=260',
+            "url" => 'required|mimes:jpeg,png,jpg,gif,svg,tif,bmp,ico,psd,webp|dimensions:width=600,height=600',
 
         ]);
          try {
@@ -110,7 +110,7 @@ class GalleryController extends Controller
         $validatedData = $request->validate([
             'title_ar' => ['required','unique:galleries,title_ar,'.$request->id],
             'title_en' => ['required','unique:galleries,title_en,'.$request->id],
-            "url" => 'nullable|mimes:jpeg,png,jpg,gif,svg,tif,bmp,ico,psd,webp',
+            "url" => 'required|mimes:jpeg,png,jpg,gif,svg,tif,bmp,ico,psd,webp|dimensions:width=600,height=600',
         ]);
         try {
             $gallery = Gallery::findOrFail($id);
