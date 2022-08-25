@@ -49,6 +49,7 @@ class MessageController extends BaseController
             'subject' => $request->subject,
             'description' => $request->description,
             'push_notification' => $request->push_notification,
+            'user_id'           =>auth()->id()
           ]);
           $this->Make_Log('App\Models\Messages','create',$Messages->id);
           if(isset($request->push_notification))
