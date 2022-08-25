@@ -19,7 +19,7 @@ class HelperController extends BaseController
         $city = City::findOrFail($city);
         $city->loadMissing('areas');
         $areas = $city->areas;
-        return $areas;
+        return $this->sendResponse($areas, 'area');
     }
     
     public function search(Request $request)
