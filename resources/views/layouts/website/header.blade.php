@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" @if(request()->routeIs('get.login') || request()->routeIs('get.sign.up')) style="background-image: url('{{asset('/website2-assets/img/page-header-theme.jpg')}}');" @endif>
     <div class="primary-header-one primary-header">
         <div class="container">
             <div class="primary-header-inner">
@@ -97,7 +97,7 @@
                                 </a>
                             </li>
                         @else
-                            <li class="{{request()->routeIs('get.login') ? 'active' : ''}}">
+                            <li class="{{request()->routeIs('get.get.login') ? 'active' : ''}}">
                                 <a href="{{ route('get.login') }}">
                                     {{ __('auth.login') }}
                                 </a>
@@ -127,4 +127,7 @@
             </div><!-- /.primary-header-one-inner -->
         </div>
     </div><!-- /.primary-header-one -->
+    @if(request()->routeIs('get.login') || request()->routeIs('get.sign.up'))
+    <div class="bg-shape white"></div>
+    @endif
 </header><!-- /.header-one -->

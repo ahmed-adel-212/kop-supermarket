@@ -11,8 +11,8 @@
 @section('styles')
     <style>
         .login-page video {
-            width: 50%;
-            position: fixed;
+            width: 100%;
+            /* position: fixed; */
             bottom: 0;
             left: 0;
             height: 100%;
@@ -35,9 +35,6 @@
         }
 
         @media (max-width: 992px) {
-            .login-page video {
-                width: 30%;
-            }
         }
 
         @media (max-width: 736px) {
@@ -54,16 +51,15 @@
 
     @section('content')
         <div class="page-wrapper">
-
-            <div class="login-page row position-relative" style="padding-top: 100px;">
-                <div class="col-0 col-md-4 col-lg-6">
+            <div class="login-page row position-relative" style="padding: 100px 0;">
+                <div class="col-0 col-md-6 col-lg-8">
                     <video loop autoplay muted id="video" style="object-fit: fill;height: 100%;">
                         <source src="{{ asset('website2-assets/img/bg.mp4') }}" type="video/mp4">
                         <source src="{{ asset('website2-assets/img/bg.mp4') }}" type="video/ogg">
                         Your browser does not support the video tag.
                     </video>
                 </div>
-                <div class="col-12 col-md-8 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="d-flex justify-content-center">
                         <div class="ml-auto w-100">
                             <div class="px-2 col-12 mx-auto">
