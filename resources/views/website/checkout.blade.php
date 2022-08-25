@@ -124,7 +124,9 @@
                                         </div>
                                     </div> -->
                             <div class="payment-method">
-                                <h2>Payment Method</h2>
+                                <h2>
+                                    {{__('general.Payment')}}
+                                </h2>
                                 <div class="mb-20">
                                     <button class="btn btn-success btn-block btn-lg" type="submit"
                                         formaction="{{ route('make_order') }}">
