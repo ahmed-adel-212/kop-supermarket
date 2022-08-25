@@ -35,7 +35,7 @@ class Cart extends Model
 
     public function getExtrasObjectsAttribute()
     {
-        if (is_array($this->attributes['extras'])) {
+        if (in_array('extras', $this->attributes) && is_array($this->attributes['extras'])) {
             return $this->attributes['extras'];
         }
 
@@ -53,7 +53,7 @@ class Cart extends Model
 
     public function getWithoutsObjectsAttribute()
     {
-        if (is_array($this->attributes['withouts'])) {
+        if (in_array('withouts', $this->attributes) && is_array($this->attributes['withouts'])) {
             return $this->attributes['withouts'];
         }
 
