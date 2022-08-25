@@ -93,7 +93,7 @@ class Item extends Model
 
     public function getPriceWithoutTaxAttribute()
     {
-        return round($this->price / 1.15, 2);
+        return (string)round($this->price / 1.15, 2);
     }
 
     public function isVisibleForAuthUser()
