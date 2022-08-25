@@ -63,6 +63,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Image</label>
+                                        <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 1000 * 650
+                                        </div>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}" name="image" value="{{ old('image') }}">
