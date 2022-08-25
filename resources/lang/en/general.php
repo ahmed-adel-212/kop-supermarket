@@ -351,4 +351,5 @@ return [
     'confirm_txt' => 'Confirm',
     'desc_label' => 'Add More Description To Order',
     'media_cen' => 'Media Center',
+    'menu' => 'Menu',
 ];

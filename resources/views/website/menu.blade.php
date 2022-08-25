@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') Menu @endsection
+@section('title') {{__('general.menu')}} @endsection
 
 @section('styles')
     <style>
