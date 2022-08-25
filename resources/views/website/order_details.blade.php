@@ -117,7 +117,19 @@
                     <form action="" method="get">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 offset-lg-6">
+                            <div class="col-lg-6">
+                                <div class="card-header mt-30">
+                                    <h5 class='card-title'>
+                                        {{__('general.Description')}}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        {{$order->description_box}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 ">
                                 <ul class="cart-total mt-30">
                                     <li>
                                         {{ __('general.Sub Total') }}: </b> <span
