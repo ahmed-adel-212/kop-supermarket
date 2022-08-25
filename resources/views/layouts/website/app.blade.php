@@ -194,8 +194,8 @@
             url: '{{route('get.cart-res')}}',
             success: function(response){
 
-                 $('#lblCartCount').text(response.data)
-             }
+                $('.cart-count').text(response.data);
+            }
         });
     }
    @endauth
