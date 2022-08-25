@@ -60,6 +60,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="author">Author</label>
+                                            <div class="help-block text-info">
+                                                .
+                                            </div>
                                             <input type="text"
                                                    class="form-control"
                                                    id="author" placeholder="Enter Author Name" value="{{$media->author}}" name="author" >
@@ -71,6 +74,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Video</label>
+                                            <div class="help-block text-info">
+                                                <b>Note</b> Video Minimum dimensions: 800 * 600
+                                            </div>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input id="fileimage" type="file" class="custom-file-input {!! $errors->first('url', 'is-invalid') !!}" name="url">
@@ -87,6 +93,9 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Image</label>
+                                            <div class="help-block text-info">
+                                                <b>Note</b> Image dimensions: 150 * 150
+                                            </div>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input {!! $errors->first('img', 'is-invalid') !!}"

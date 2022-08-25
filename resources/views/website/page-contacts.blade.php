@@ -111,7 +111,11 @@
         </main> --}}
 
         <main class="page-main contactus-page">
-            <div class="map-wrapper pt-90">
+            <section class="page-header" style="background-image: url('{{asset('/website2-assets/img/page-header-theme.jpg')}}');height: 130px;">
+                <div class="bg-shape white"></div>
+            </section>
+            <!--/.page-header-->
+            <div class="map-wrapper pt-5">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27624.661995750994!2d31.32658535!3d30.06316245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e4cfbd1592d%3A0xc90510d48ee6cca4!2z2LPYqtin2K8g2KfZhNmC2KfZh9ix2Kkg2KfZhNiv2YjZhNmK!5e0!3m2!1sar!2seg!4v1660551431152!5m2!1sar!2seg"
                     width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"

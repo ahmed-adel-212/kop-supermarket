@@ -69,6 +69,25 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">Image</label>
+                                        <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 1000 * 650
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}"
+                                                id="exampleInputFile" name="image" value="{{old('image')}}">
+                                            @error('image')
+                                            <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                          </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right">Submit</button>

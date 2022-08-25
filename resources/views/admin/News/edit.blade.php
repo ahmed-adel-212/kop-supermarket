@@ -67,6 +67,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Image</label>
+                                        <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 1000 * 650
+                                        </div>
                                         <img src="{{ $blog->image }}" class="img-thumbnail" style="widht: 77px;" />
                                         <div class="input-group">
                                             <div class="custom-file">

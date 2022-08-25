@@ -51,7 +51,7 @@
                                     <div class="form-group">
                                         <label for="title_ar">Type</label>
                                         <select name="type" id="type" class="form-control">
-                                            @foreach (['first', 'bg-st', 'feat', 'bg-nd', 'emp', 'with-bg'] as $ty)
+                                            @foreach (['first', 'bg-st', 'bg-nd', 'emp', 'with-bg'] as $ty)
                                                 <option value="{{ $ty }}"
                                                     @if (old('type') === $ty) checked @endif>
                                                     {{ __('general.' . $ty) }}
@@ -103,7 +103,12 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="exampleInputFile">Image</label>
+                                        <label for="exampleInputFile">
+                                            Image
+                                        </label>
+                                            <div class="help-block text-info">
+                                                <b>hint:</b> dimensional: <span class="img-size">600*400</span>
+                                            </div>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}"
                                                 id="exampleInputFile" name="image" value="{{ old('image') }}">
@@ -185,9 +190,11 @@
 
             if (val === 'emp') {
                 $('#links').css('display', 'block');
+                $('.img-size').text('800*1142');
                 // $('#desc').css('display', 'none');
             } else {
                 $('#links').css('display', 'none');
+                $('.img-size').text('600*400');
                 // $('#desc').css('display', 'block');
             }
 
@@ -195,6 +202,12 @@
                 $('#wvideo').css('display', 'block');
             } else {
                 $('#wvideo').css('display', 'none');
+            }
+
+            if (val === 'with-bg') {
+                $('.img-size').text('1920*1080');
+            } else {
+                $('.img-size').text('600*400');
             }
         });
     });

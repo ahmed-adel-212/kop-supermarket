@@ -46,7 +46,7 @@ class MediaController extends Controller
             'title_en' => ['required', 'string', 'unique:media,title_en'],
             'author' => ['required', 'string'],
             "url" => 'required|mimes:mp4,ogx,oga,ogv,ogg,webm,flv,wmv',
-            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=150,height=150',
         ]);
         try {
             $media = new Media();
@@ -120,7 +120,7 @@ class MediaController extends Controller
             'title_en' => ['required', 'unique:media,title_en,' . $request->id],
             'author' => ['required'],
             "url" => 'mimes:mp4,ogx,oga,ogv,ogg,webm,flv,wmv',
-            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=150,height=150',
         ]);
         try {
             $media = Media::findOrFail($id);
@@ -134,7 +134,7 @@ class MediaController extends Controller
                 $video->move(public_path('media'), $video_new_name);
                 $media->url = '/media/' . $video_new_name;
             }
-            $img = null;
+            $img = $media->img;
             if ($request->hasFile('img')) {
                 $oldImage = $media->img;
                 $img = $request->img;

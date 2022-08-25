@@ -28,7 +28,8 @@ class Order extends Model
         'offer_type',
         'offer_value',
         'order_from',
-        'points'
+        'points',
+        'description_box'
     ];
 
     public $appends = [

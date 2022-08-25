@@ -158,12 +158,12 @@
                                             <p>Anoucement</p>
                                         </a>
                                 </li>
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{route('admin.hero.index')}}" class="nav-link"><i
                                                 class="fab fa-first-order nav-icon"></i>
                                             <p>Hero Backgrounds</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{route('admin.itemDealOfWeek')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>

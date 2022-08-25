@@ -49,7 +49,7 @@ class NewsController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
-            "image" => 'required',
+            "image" => 'required|mimes:jpeg,png,jpg,gif,svg|dimensions:width=1000,height=650',
 
         ];
 
@@ -116,7 +116,7 @@ class NewsController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
-            "image" => 'required',
+            "image" => 'required|mimes:jpeg,png,jpg,gif,svg|dimensions:width=1000,height=650',
          ]);
 
 
@@ -133,13 +133,12 @@ class NewsController extends Controller
             $NewImageName = time() . $image->getClientOriginalName();
             $image->move(public_path('blogs'), $NewImageName);
             $blog->image = '/blogs/' . $NewImageName;
-        }
-        $blog->save();
-        if ($request->hasFile('image')) {
+
             if (file_exists(public_path($oldImage))) {
                 unlink(public_path($oldImage));
             }
         }
+        $blog->save();
 
         $this->Make_Log('App\Models\News','update',$id);
         return redirect()->route('admin.news.index')->with([
@@ -156,7 +155,7 @@ class NewsController extends Controller
      */
     public function delete($id)
     {
-        $blog = News::find($id);
+        $blog = News::findOrFail($id);
 
         if(file_exists(public_path($blog->image))){
             unlink(public_path($blog->image));
