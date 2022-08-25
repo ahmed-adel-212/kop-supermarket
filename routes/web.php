@@ -5,7 +5,7 @@ use App\Http\Controllers\Website\OrdersController;
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
-], function () {
+], function () { 
 
     // Authentication Routes
     Route::group(['prefix' => 'admin'], function () {
@@ -26,6 +26,7 @@ Route::group([
         // Branches
         Route::resource('branch', 'BranchController')->middleware('role:admin');
         Route::resource('Anoucement', 'AnoucementController')->middleware('role:admin');
+        Route::resource('notification', 'MessageController')->middleware('role:admin');
         Route::get('/show-gifts-orders', 'GiftController@showGiftsOrders')->name('showGiftsOrders')->middleware('role:admin');
         Route::get('/show-points-transactions', 'GiftController@showPointsTransactions')->name('showPointsTransactions')->middleware('role:admin');
         Route::resource('gift', 'GiftController')->middleware('role:admin');

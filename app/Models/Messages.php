@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Messages extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes; 
     protected $table ='message';
     protected $fillable = [
         'id',

@@ -99,9 +99,11 @@ class NotificationController extends Controller
     
     public static function pushAllNotification($message, $type = "Notification", $data_message = null, $chat_id = null, $customer_id = null)
     {
-            $tokens = NotiToken::join('users','users.id','noti_tokens.user_id')->all();
+            $tokens = User::join('noti_tokens','noti_tokens.user_id','users.id')->whereHas('roles', function ($role) {
+                $role->where('name', 'customer')->orWhere('name', 'cashier');
+            })->get();
                 foreach($tokens as $token) {
-                    self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true, $user_id, $customer_id);
+                    self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true, auth()->id(),$token->user_id);
                 }
     }
     

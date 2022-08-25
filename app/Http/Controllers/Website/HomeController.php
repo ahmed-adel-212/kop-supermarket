@@ -50,6 +50,7 @@ class HomeController extends Controller
         $menu['offers'] = $offers;
         $menu['main_offer']=Offer::with('buyGet', 'discount')->where('main',1)->get();
         $dealItems = Item::where('best_seller', 'activate')->get();
+        $menu['categoryof_dealitems']=$dealItems->pluck('category_id')->toArray();
         $menu['dealItems'] = ($dealItems->count() > 0)? $dealItems : [];
         $menu['recommended']=Item::where('recommended', true)->get();
         $menu['homeitem']=HomeItem::all();

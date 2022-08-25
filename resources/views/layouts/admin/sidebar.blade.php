@@ -31,6 +31,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('admin.notification.index')}}" class="nav-link"><i
+                                        class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>Notification</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.customer.index')}}" class="nav-link"><i
                                         class="fas fa-users nav-icon"></i>
                                     <p>Customers</p>
@@ -146,6 +152,7 @@
                                     <p>Website<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
+                                    
                                 <li class="nav-item">
                                         <a href="{{route('admin.homeitem.index')}}" class="nav-link"><i
                                                 class="fab fa-first-order nav-icon"></i>
