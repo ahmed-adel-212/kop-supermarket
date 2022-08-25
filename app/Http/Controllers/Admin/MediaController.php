@@ -134,7 +134,7 @@ class MediaController extends Controller
                 $video->move(public_path('media'), $video_new_name);
                 $media->url = '/media/' . $video_new_name;
             }
-            $img = null;
+            $img = $media->img;
             if ($request->hasFile('img')) {
                 $oldImage = $media->img;
                 $img = $request->img;

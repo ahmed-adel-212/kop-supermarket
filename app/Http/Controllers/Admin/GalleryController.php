@@ -20,7 +20,7 @@ class GalleryController extends Controller
     public function index(Request $request)
     {
         $galleries = Gallery::orderBy('id', 'DESC')->get();
-        $this->Make_Log('App\Models\Gallery','view',0);
+        $this->Make_Log('App\Models\Gallery', 'view', 0);
         return view('admin.gallery.index', compact('galleries'));
     }
 
@@ -44,30 +44,29 @@ class GalleryController extends Controller
     {
 
         $validatedData = $request->validate([
-            'title_ar' => ['required','unique:galleries,title_ar'],
-            'title_en' => ['required','unique:galleries,title_en'],
+            'title_ar' => ['required', 'unique:galleries,title_ar'],
+            'title_en' => ['required', 'unique:galleries,title_en'],
             "url" => 'required|mimes:jpeg,png,jpg,gif,svg,tif,bmp,ico,psd,webp|dimensions:width=600,height=600',
 
         ]);
-         try {
+        try {
             $gallery = new Gallery();
             $gallery->title_ar = $request->title_ar;
             $gallery->title_en = $request->title_en;
-            if ($request->hasFile('url'))
-            {
+            if ($request->hasFile('url')) {
                 $image = $request->url;
-                $image_new_name = time(). $image->getClientOriginalName();
+                $image_new_name = time() . $image->getClientOriginalName();
                 $image->move(public_path('gallery'), $image_new_name);
                 $gallery->url = '/gallery/' . $image_new_name;
             }
             $gallery->save();
-            $this->Make_Log('App\Models\Gallery','create',$gallery->id);
+            $this->Make_Log('App\Models\Gallery', 'create', $gallery->id);
 
             return redirect()->route('admin.gallery.index')->with([
                 'type' => 'success',
                 'message' => 'New gallery Created successfuly'
             ]);
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('admin.gallery.index')->with([
                 'type' => 'error',
                 'message' => 'There is something'
@@ -108,35 +107,32 @@ class GalleryController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'title_ar' => ['required','unique:galleries,title_ar,'.$request->id],
-            'title_en' => ['required','unique:galleries,title_en,'.$request->id],
+            'title_ar' => ['required', 'unique:galleries,title_ar,' . $request->id],
+            'title_en' => ['required', 'unique:galleries,title_en,' . $request->id],
             "url" => 'required|mimes:jpeg,png,jpg,gif,svg,tif,bmp,ico,psd,webp|dimensions:width=600,height=600',
         ]);
         try {
             $gallery = Gallery::findOrFail($id);
             $gallery->title_ar = $request->title_ar;
             $gallery->title_en = $request->title_en;
-            if ($request->hasFile('url'))
-            {
+            if ($request->hasFile('url')) {
                 $oldImage = $gallery->url;
                 $image = $request->url;
-                $image_new_name = time(). $image->getClientOriginalName();
+                $image_new_name = time() . $image->getClientOriginalName();
                 $image->move(public_path('gallery'), $image_new_name);
                 $gallery->url = '/gallery/' . $image_new_name;
-            }
-            $gallery->save();
-            $this->Make_Log('App\Models\Gallery','update',$gallery->id);
-            if ($request->hasFile('url')){
-                if(file_exists(public_path($oldImage))){
+
+                if (file_exists(public_path($oldImage))) {
                     unlink(public_path($oldImage));
                 }
             }
-
+            $gallery->save();
+            $this->Make_Log('App\Models\Gallery', 'update', $gallery->id);
             return redirect()->route('admin.gallery.index')->with([
                 'type' => 'success',
                 'message' => 'New gallery updated successfuly'
             ]);
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             return redirect()->route('admin.gallery.index')->with([
                 'type' => 'error',
                 'message' => 'There is something'
@@ -153,11 +149,11 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
-        if(file_exists(public_path($gallery->url))){
+        if (file_exists(public_path($gallery->url))) {
             unlink(public_path($gallery->url));
         }
         $gallery->delete();
-        $this->Make_Log('App\Models\Gallery','delete',$gallery->id);
+        $this->Make_Log('App\Models\Gallery', 'delete', $gallery->id);
         return back();
     }
 }

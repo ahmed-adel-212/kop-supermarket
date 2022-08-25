@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Traits\LogfileTrait;
+
 class HealthInfoController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class HealthInfoController extends Controller
     public function index()
     {
         $infos = HealthInfo::orderBy('id', 'DESC')->get();
-        $this->Make_Log('App\Models\HealthInfo','view',0);
+        $this->Make_Log('App\Models\HealthInfo', 'view', 0);
         return view('admin.health.index', compact('infos'));
     }
 
@@ -50,7 +51,7 @@ class HealthInfoController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=1000,height=650',
         ];
 
 
@@ -72,7 +73,7 @@ class HealthInfoController extends Controller
             'image' => $img,
             'created_at' => Carbon::now(),
         ]);
-        $this->Make_Log('App\Models\HealthInfo','create',$job->id);
+        $this->Make_Log('App\Models\HealthInfo', 'create', $job->id);
 
         return redirect()->route('admin.healthinfo.index')->with([
             'type' => 'success',
@@ -118,17 +119,34 @@ class HealthInfoController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=1000,height=650',
 
         ]);
-        HealthInfo::where('id', $id)
-            ->update([
-                'title_ar' => $request->title_ar,
-                'title_en' => $request->title_en,
-                'description_ar' => $request->description_ar,
-                'description_en' => $request->description_en,
 
-            ]);
-        $this->Make_Log('App\Models\HealthInfo','update',$id);
+        $hinfo = HealthInfo::findOrFail($id);
+
+        $img = $hinfo->image;
+        if ($request->hasFile('image')) {
+            $oldImage = $hinfo->image;
+            $image = $request->image;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move(public_path('health_infos'), $image_new_name);
+            $img = '/health_infos/' . $image_new_name;
+
+            if (file_exists(public_path($oldImage))) {
+                unlink(public_path($oldImage));
+            }
+        }
+
+        $hinfo->fill([
+            'title_ar' => $request->title_ar,
+            'title_en' => $request->title_en,
+            'description_ar' => $request->description_ar,
+            'description_en' => $request->description_en,
+            'image' => $img,
+        ]);
+        $hinfo->save();
+        $this->Make_Log('App\Models\HealthInfo', 'update', $id);
         return redirect()->route('admin.healthinfo.index')->with([
             'type' => 'success',
             'message' => 'Blog Update successfuly'
@@ -143,8 +161,12 @@ class HealthInfoController extends Controller
      */
     public function delete($id)
     {
-        HealthInfo::find($id)->delete();
-        $this->Make_Log('App\Models\HealthInfo','delete',$id);
+        $hinfo = HealthInfo::findOrFail($id);
+        if (file_exists(public_path($hinfo->image))) {
+            unlink(public_path($hinfo->image));
+        }
+        $hinfo->delete();
+        $this->Make_Log('App\Models\HealthInfo', 'delete', $id);
         return redirect()->route('admin.healthinfo.index')->with([
             'type' => 'success', 'message' => 'Blog deleted successfuly'
         ]);

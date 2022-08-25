@@ -148,7 +148,7 @@ class AboutUsController extends Controller
         $about = AboutUs::findOrFail($id);
         
 
-        $img = null;
+        $img = $about->image;
         if ($request->hasFile('image')) {
             $width = 600;
             $height = 400;
@@ -169,7 +169,7 @@ class AboutUsController extends Controller
             $img = '/aboutus/' . $image_new_name;
         }
 
-        $vd = null;
+        $vd = $about->video;
         if ($request->hasFile('video')) {
             $oldVideo = $about->video;
             $video = $request->video;
