@@ -49,6 +49,11 @@
                                         <div class="post-card">
                                             <div class="post-thumb">
                                                 <img src="{{ asset($info->image) }}" alt="img">
+                                                <div class="category">
+                                                    <a href="javascript:void">
+                                                        {{ $info['title_' . app()->getLocale()] }}
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div class="post-content">
                                                 <ul class="post-meta">
@@ -57,9 +62,9 @@
                                                         </a></li>
                                                     {{-- <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li> --}}
                                                 </ul>
-                                                <h3><a href="javascript:void">
+                                                {{-- <h3><a href="javascript:void">
                                                         {{ $info['title_' . app()->getLocale()] }}
-                                                    </a></h3>
+                                                    </a></h3> --}}
                                                 <p>
                                                     {{ $info['description_' . app()->getLocale()] }}
                                                 </p>

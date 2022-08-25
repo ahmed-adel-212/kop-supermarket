@@ -1,7 +1,7 @@
 @extends('layouts.website.app')
 
 @section('title')
-    Page blog
+    {{__('general.Blog')}}
 @endsection
 
 @section('styles')
@@ -70,6 +70,11 @@
                                         <div class="post-card">
                                             <div class="post-thumb">
                                                 <img src="{{ asset($ar->image) }}" alt="img">
+                                                <div class="category">
+                                                    <a href="{{ route('get.new', $ar->id) }}">
+                                                        {{ $ar['title_' . app()->getLocale()] }}
+                                                    </a>
+                                                </div>
                                             </div>
                                             <div class="post-content">
                                                 <ul class="post-meta">
@@ -78,9 +83,9 @@
                                                         </a></li>
                                                     {{-- <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li> --}}
                                                 </ul>
-                                                <h3><a href="{{ route('get.new', $ar->id) }}">
+                                                {{-- <h3><a href="{{ route('get.new', $ar->id) }}">
                                                         {{ $ar['title_' . app()->getLocale()] }}
-                                                    </a></h3>
+                                                    </a></h3> --}}
                                                 <p>
                                                     {{ Str::limit($ar['description_' . app()->getLocale()], 60) }}
                                                 </p>

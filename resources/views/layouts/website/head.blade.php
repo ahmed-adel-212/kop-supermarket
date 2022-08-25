@@ -77,6 +77,9 @@
         .default-bg:hover {
             background: #fe9d2d;
         }
+        .header-menu-wrap ul li > a {
+            padding: 0 5px;
+        }
     </style>
 
 
