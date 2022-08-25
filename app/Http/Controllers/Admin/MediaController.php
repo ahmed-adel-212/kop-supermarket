@@ -46,7 +46,7 @@ class MediaController extends Controller
             'title_en' => ['required', 'string', 'unique:media,title_en'],
             'author' => ['required', 'string'],
             "url" => 'required|mimes:mp4,ogx,oga,ogv,ogg,webm,flv,wmv',
-            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=150,height=150',
         ]);
         try {
             $media = new Media();
@@ -120,7 +120,7 @@ class MediaController extends Controller
             'title_en' => ['required', 'unique:media,title_en,' . $request->id],
             'author' => ['required'],
             "url" => 'mimes:mp4,ogx,oga,ogv,ogg,webm,flv,wmv',
-            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=150,height=150',
         ]);
         try {
             $media = Media::findOrFail($id);
