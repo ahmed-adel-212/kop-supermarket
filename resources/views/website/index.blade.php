@@ -5,6 +5,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+    .product-item .ratting {
+    min-height: 30px;
+    max-height: 30px;
+    font-size: 15px;}
+
+    .food-info h4 {
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 50px;
+    max-height: 50px;
+    }
       .slick-next:before{
         content:none!important;
       }
@@ -19,18 +33,15 @@
         margin-right: -20px;
       }
      
-
-      
-
-        .line-clamp5 {
-            display: -webkit-box;
-            -webkit-line-clamp: 7;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            min-height: 180px;
-            max-height: 180px;
-        }
-        .about-section .content-img-holder {
+    .line-clamp5 {
+        display: -webkit-box;
+        -webkit-line-clamp: 7;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 180px;
+        max-height: 180px;
+    }
+    .about-section .content-img-holder {
     /* position: absolute !important;
     top: 0 !important;
     /* padding-top: 13% !important; 
@@ -239,7 +250,7 @@
                     @foreach($menu['dealItems'] as $dealItem)
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}">
                         <div class="product-item wow fadeInUp" data-wow-delay="200ms">
-                           <div class="sale">-15%</div>
+                          
                            <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
@@ -249,7 +260,7 @@
                                    <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
                                  
                                </ul>
-                                <h3>{{$dealItem['description_'.app()->getLocale()]}}</h3>
+                                <h4>{{$dealItem['description_'.app()->getLocale()]}}</h4>
                                 <div class="price">
                                     <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
                                 </div>
@@ -394,11 +405,6 @@
             </div>
         </section><!-- /.blog-section -->
 
-
-		<div id="scrollup">
-
-            <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
-        </div> 
 
 @endsection
 

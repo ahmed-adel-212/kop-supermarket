@@ -143,4 +143,54 @@
                 // $('.sticky-header').addClass('sticky-fixed-top');
             });
         </script>
+         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     Firebase App (the core Firebase SDK) is always required and must be listed first 
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "API_KEY",
+            authDomain: "PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://PROJECT_ID.firebaseio.com",
+            projectId: "PROJECT_ID",
+            storageBucket: "PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            render();
+        };
+        function render() {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+            recaptchaVerifier.render();
+        }
+        function sendOTP() {
+            var number = $("#number").val();
+            firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                coderesult = confirmationResult;
+                console.log(coderesult);
+                $("#successAuth").text("Message sent");
+                $("#successAuth").show();
+            }).catch(function (error) {
+                $("#error").text(error.message);
+                $("#error").show();
+            });
+        }
+        function verify() {
+            var code = $("#verification").val();
+            coderesult.confirm(code).then(function (result) {
+                var user = result.user;
+                console.log(user);
+                $("#successOtpAuth").text("Auth is successful");
+                $("#successOtpAuth").show();
+            }).catch(function (error) {
+                $("#error").text(error.message);
+                $("#error").show();
+            });
+        }
+    </script> -->
     @endsection

@@ -36,14 +36,16 @@
                 <ul class="food-menu-filter">
                     <li class="active" data-filter="*">All</li>
                     @foreach($menu['categories'] as $index => $category)
+                    @if($category->items!=[])
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
+                    @endif
                     @endforeach
                 </ul>
                 <div class="row product-items">
                 @foreach($menu['categories'] as $index => $category)    
                     @foreach($category->items as $dealItem)
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category->id}}">
-                        <div class="product-item wow fadeInUp" data-wow-delay="200ms">
+                        <div class="product-item" >
                            <!-- <div class="sale"></div> -->
                             <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food">
@@ -52,13 +54,8 @@
                             <div class="food-info">
                                <ul class="ratting">
                                    <li>{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
-                                   <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
-                                    <li><i class="las la-star"></i></li>
                                </ul>
-                                <h3>{{$dealItem['name_'.app()->getLocale()]}}</h3>
+                                <h4>{{$dealItem['name_'.app()->getLocale()]}}</h4>
                                 <div class="price">
                                     <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
                                 </div>
