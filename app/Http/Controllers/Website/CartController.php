@@ -24,7 +24,7 @@ class CartController extends Controller
                 $newRequest = new Request();
                 $newRequest->merge(['item_id' => $request->item_id]);
                 $newRequest->merge(['offer_id' => $request->offer_id]);
-                $newRequest->merge(['offer_price' => $request->offer_price?$request->offer_price[$index]:null]);
+                $newRequest->merge(['offer_price' => $request->offer_price?$request->offer_price:null]);
                 $newRequest->merge(['quantity' => 1]);
                 
                 $dough = explode(',', $item->dough);
