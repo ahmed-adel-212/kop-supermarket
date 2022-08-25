@@ -97,4 +97,12 @@ class NotificationController extends Controller
             curl_close($ch);
     }
     
+    public static function pushAllNotification($message, $type = "Notification", $data_message = null, $chat_id = null, $customer_id = null)
+    {
+            $tokens = NotiToken::join('users','users.id','noti_tokens.user_id')->all();
+                foreach($tokens as $token) {
+                    self::pushSingleNotification($token->token, $message, $type, $data_message, $chat_id, true, $user_id, $customer_id);
+                }
+    }
+    
 }

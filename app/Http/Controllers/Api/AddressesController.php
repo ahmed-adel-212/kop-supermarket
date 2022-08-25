@@ -91,7 +91,7 @@ class AddressesController extends BaseController
             'landmark' => ['nullable'],
             'city' => ['nullable', 'string'],
             'area' => ['nullable', 'string'],
-            'customer_id' => ['exists:customer,id'],
+            'customer_id' => ['exists:users,id'],
         ]);
 
         if ($validator->fails())
