@@ -35,9 +35,13 @@ class Cart extends Model
 
     public function getExtrasObjectsAttribute()
     {
+        if (is_array($this->attributes['extras'])) {
+            return $this->attributes['extras'];
+        }
+
         $objects = [];
         //return $objects= json_decode($this->attributes['extras']);
-        if (isset($this->attributes['extras']) && $this->attributes['extras'] != 'null') {
+        if (isset($this->attributes['extras']) && $this->attributes['extras'] != 'null' && is_string($this->attributes['extras'])) {
             foreach (json_decode($this->attributes['extras']) as $extra) {
                 $extra = Extra::find($extra);
                 if ($extra) $objects[] = $extra;
@@ -49,9 +53,13 @@ class Cart extends Model
 
     public function getWithoutsObjectsAttribute()
     {
+        if (is_array($this->attributes['withouts'])) {
+            return $this->attributes['withouts'];
+        }
+
         $objects = [];
         //return $objects = json_decode($this->attributes['withouts']);
-        if (isset($this->attributes['withouts']) && $this->attributes['withouts'] != 'null') {
+        if (isset($this->attributes['withouts']) && $this->attributes['withouts'] != 'null' && is_string($this->attributes['withouts'])) {
             foreach (json_decode($this->attributes['withouts']) as $without) {
                 $without = Without::find($without);
                 if ($without) $objects[] = $without;

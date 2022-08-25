@@ -325,6 +325,7 @@ class OrdersController extends Controller
             $validator = Validator::make($request->all(), [
                 'address_id' => 'required|exists:addresses,id',
                 'service_type' => 'required',
+                'description' => 'nullable|string',
             ]);
             if ($validator->fails()) {
                 return ['error' => $validator->errors()];
@@ -385,7 +386,8 @@ class OrdersController extends Controller
             "delivery_fees" => $request->delivery_fees,
             "total" => round($request->total, 2),
             "points_paid" => $request->points_paid,
-            'order_from' => 'website'
+            'order_from' => 'website',
+            'description_box' => $request->description,
         ];
 
         $order = Order::create($orderData);

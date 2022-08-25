@@ -174,7 +174,7 @@ class OrdersController extends BaseController
             $customerAddress = $customer->addresses->where('id', $request->address_id)->first();
 
             // get the branch covers customer area and open
-            $area = $customerAddress->area;
+            $area = isset($customerAddress->area) ? $customerAddress->area : null;
 
             if ($area) {
                 $branch = DB::table('branch_delivery_areas')->where('area_id', $area->id . "")->first();
@@ -230,7 +230,8 @@ class OrdersController extends BaseController
             "points_paid" => $request->points_paid,
             'points' => $request->points,
             'offer_value' =>$request->offer_value,
-            'order_from' => 'mobile'
+            'order_from' => 'mobile',
+            'description_box' => $request->description,
         ];
 
         try{
@@ -278,9 +279,17 @@ class OrdersController extends BaseController
 
             // $subtotal = $subtotal + $itemPrice;
             $offer = Offer::find(isset($item['offerId']) ? $item['offerId'] : 0);
+            $extras = array_key_exists('extras', $item) ? $item['extras'] : null;
+            if (is_array($extras)) {
+                $extras = collect($extras)->pluck('id');
+            }
+            $withouts = array_key_exists('withouts', $item) ? $item['withouts'] : null;
+            if (is_array($withouts)) {
+                $withouts = collect($withouts)->pluck('id');
+            }
             $order->items()->attach($item['item_id'], [
-                'item_extras' => array_key_exists('extras', $item) ? implode(', ', $item['extras']) : null,
-                'item_withouts' => array_key_exists('withouts', $item) ? implode(', ', $item['withouts']) : null,
+                'item_extras' =>  $extras,
+                'item_withouts' =>  $withouts,
                 'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                 'price' => $itemPrice,

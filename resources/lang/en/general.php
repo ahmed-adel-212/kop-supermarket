@@ -349,4 +349,5 @@ return [
     'add_item_confirm' => 'Add Item with the Same Extras and Withouts',
     'open_item' => 'Open Item Details Page',
     'confirm_txt' => 'Confirm',
+    'desc_label' => 'Add More Description To Order',
 ];
