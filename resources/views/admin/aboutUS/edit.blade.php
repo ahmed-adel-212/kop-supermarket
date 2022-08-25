@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <label for="title_ar">Type</label>
                                         <select name="type" class="form-control">
-                                            @foreach (['first', 'bg-st', 'feat', 'bg-nd', 'emp', 'with-bg'] as $ty)
+                                            @foreach (['first', 'bg-st', 'bg-nd', 'emp', 'with-bg'] as $ty)
                                                 <option value="{{$ty}}" @if(old('type') === $ty) selected @endif @if($about->type === $ty) selected @endif>
                                                     {{__('general.'. $ty)}}
                                                 </option>
@@ -85,7 +85,7 @@
                                 </div>
                                 @endif
                             </div>
-                            @if ($about->type !== 'emp')
+                            
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -107,6 +107,52 @@
                                         @error('description_ar')
                                         <div class="help-block">{{ $message }}</div>
                                         @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">
+                                            Image
+                                        </label>
+                                            <div class="help-block text-info">
+                                                <b>Note</b> Image Size: <span class="img-size">
+                                                    @if ($about->type === 'emp')
+                                                    800*1142
+                                                    @elseif ($about->type === 'with-bg')
+                                                    1920*1080
+                                                    @else
+                                                    600*400
+                                                    @endif
+                                                </span>
+                                            </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}"
+                                                id="exampleInputFile" name="image" value="{{ old('image') }}">
+                                            @error('image')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                            <label class="custom-file-label" for="exampleInputFile">Choose image</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            @if ($about->type === 'first')
+                            <div class="row" id="wvideo">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="video-file">Video</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input {!! $errors->first('video', 'is-invalid') !!}"
+                                                id="video-file" name="video" value="{{ old('video') }}">
+                                            @error('video')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                            <label class="custom-file-label" for="video-file">Choose video</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
