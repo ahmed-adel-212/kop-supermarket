@@ -350,4 +350,5 @@ return [
     'open_item' => 'Open Item Details Page',
     'confirm_txt' => 'Confirm',
     'desc_label' => 'Add More Description To Order',
+    'media_cen' => 'Media Center',
 ];

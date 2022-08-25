@@ -28,7 +28,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="javascript:void(0)">{{ __('general.Gallery') }}</a>
+                        <li><a href="javascript:void(0)">{{ __('general.media_cen') }}</a>
                             <ul>
                                 <li class="{{request()->routeIs('gallery.page') ? 'active' : ''}}"><a href="{{ route('gallery.page') }}">{{ __('general.Gallery') }}</a></li>
                                 <li class="{{request()->routeIs('video.page') ? 'active' : ''}}"><a href="{{ route('video.page') }}">{{ __('general.Video Library') }}</a></li>
