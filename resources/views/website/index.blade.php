@@ -406,6 +406,12 @@
         </section><!-- /.blog-section -->
 
 
+
+		{{-- <div id="scrollup">
+
+            <button id="scroll-top" class="scroll-to-top"><i class="las la-arrow-up"></i></button>
+        </div>  --}}
+
 @endsection
 
 @section('scripts')

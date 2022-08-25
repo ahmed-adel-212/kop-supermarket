@@ -62,7 +62,7 @@
                                     <div class="form-group">
                                         <label>Video</label>
                                         <div class="help-block text-info">
-                                            <b>Note</b> Video Minimum dimensions: 800 * 600
+                                            <b>Note</b> Video Minimum dimensions: 720 * 650
                                         </div>
                                         <div class="input-group">
                                             <div class="custom-file">
