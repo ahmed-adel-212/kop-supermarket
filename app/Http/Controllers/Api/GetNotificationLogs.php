@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\NotificationLog;
+use App\Models\Messages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,5 +26,11 @@ class GetNotificationLogs extends BaseController
         $logs = $logs->orderBy('created_at', 'desc')->get();
 
         return $this->sendResponse($logs, __('general.ret', ['key' => __('general.logs')]));
+    }
+
+    public function getAllNotification(Request $request)
+    {
+        $notifications=Messages::with('user')->get();
+        return $this->sendResponse($notifications, __('general.ret', ['key' => __('general.logs')]));
     }
 }

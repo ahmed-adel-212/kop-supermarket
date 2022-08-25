@@ -198,6 +198,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 });
 
 Route::get('/notifications/logs/', 'Api\GetNotificationLogs')->name('notifications.logs')->middleware('auth:api');
+Route::get('/notifications', 'Api\GetNotificationLogs@getAllNotification')->name('notifications.all')->middleware('auth:api');
 
 
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'favourites', 'as' => 'api.favourites.'], function () {

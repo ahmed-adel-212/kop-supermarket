@@ -48,9 +48,9 @@ class AuthController extends BaseController
                     if (auth()->user()->email_verified_at == null) {
                         return $this->sendResponse($data, __('auth.verify'));
                     }
-                    $pushNotifications=new NotificationController();
+                    $setPushToken=new NotificationController();
                     $request->request->add(['user_id' =>$user->id]);
-                    $pushNotifications->pushNotifications($request);
+                    $setPushToken->setPushToken($request);
                     return $this->sendResponse($data, __('auth.logged'));
                     
                 }
@@ -88,9 +88,9 @@ class AuthController extends BaseController
 
                         return $this->sendResponse($data, __('auth.verify'));
                     }
-                    $pushNotifications=new NotificationController();
+                    $setPushToken=new NotificationController();
                     $request->request->add(['user_id' =>$user->id]);
-                    $pushNotifications->pushNotifications($request);
+                    $setPushToken->setPushToken($request);
                     return $this->sendResponse($data, __('auth.logged'));
                 }
         }}
@@ -161,9 +161,9 @@ class AuthController extends BaseController
             );
 
             // return $this->sendResponse($user, 'Successfully created user!');
-            $pushNotifications=new NotificationController();
+            $setPushToken=new NotificationController();
             $request->request->add(['user_id' =>$user->id]);
-            $pushNotifications->pushNotifications($request);
+            $setPushToken->setPushToken($request);
             return response()->json([
                 "success" => true,
                 'user_created' => true,
