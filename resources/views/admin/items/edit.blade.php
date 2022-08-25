@@ -127,6 +127,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Website Image</label>
+                                    <img src="{{ asset($item->image) }}" class="img-thumbnail" style="widht: 77px;" />
+
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input {!! $errors->first('website_image', 'is-invalid') !!}" name="website_image" value="{{ old('website_image') }}">

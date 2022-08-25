@@ -8,7 +8,22 @@
             border-color: #6dc405;
             background-color: #6dc405;
         }
+        .product-item .ratting {
+    min-height: 30px;
+    max-height: 30px;
+    font-size: 15px;}
+
+    .food-info h4 {
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 50px;
+    max-height: 50px;
+    }
     </style>
+    
 @endsection
 
 @section('pageName')
