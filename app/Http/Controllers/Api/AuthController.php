@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +48,14 @@ class AuthController extends BaseController
                     if (auth()->user()->email_verified_at == null) {
                         return $this->sendResponse($data, __('auth.verify'));
                     }
+                    $pushNotifications=new NotificationController();
+                    $request->request->add(['user_id' =>$user->id]);
+                    $pushNotifications->pushNotifications($request);
                     return $this->sendResponse($data, __('auth.logged'));
+                    
                 }
         }}
+      
         return $this->sendError(__('auth.unauthorised!'), $credentials, 401);
     }
 
@@ -83,6 +88,9 @@ class AuthController extends BaseController
 
                         return $this->sendResponse($data, __('auth.verify'));
                     }
+                    $pushNotifications=new NotificationController();
+                    $request->request->add(['user_id' =>$user->id]);
+                    $pushNotifications->pushNotifications($request);
                     return $this->sendResponse($data, __('auth.logged'));
                 }
         }}
@@ -153,6 +161,9 @@ class AuthController extends BaseController
             );
 
             // return $this->sendResponse($user, 'Successfully created user!');
+            $pushNotifications=new NotificationController();
+            $request->request->add(['user_id' =>$user->id]);
+            $pushNotifications->pushNotifications($request);
             return response()->json([
                 "success" => true,
                 'user_created' => true,

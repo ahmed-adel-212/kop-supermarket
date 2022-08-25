@@ -24,9 +24,11 @@
 
         .line-clamp5 {
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 7;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            min-height: 180px;
+            max-height: 180px;
         }
         .about-section .content-img-holder {
     /* position: absolute !important;
@@ -134,6 +136,10 @@
         <section class="promo-section bg-grey padding">
             <div class="bg-shape white"></div>
             <div class="container">
+            <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
+                    <h4>recommended Dishes</h4>
+                    <h2>Our Delicious <span>Foods</span></h2>
+                </div>
                 <div class="nav-outside">
                   <div class="food-carousel swiper-container nav-visible"> 
                        <div class="swiper-wrapper">
@@ -217,14 +223,16 @@
         <section class="food-menu bg-grey padding">
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
-                    <h4>Popular Dishes</h4>
+                    <h4>BEST SELLER ITEMS</h4>
                     <h2>Our Delicious <span>Foods</span></h2>
                     <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
                 </div>
                 <ul class="food-menu-filter">
                     <li class="active" data-filter="*">All</li>
                     @foreach($menu['categories'] as $index => $category)
+                    @if(in_array($category->id,$menu['categoryof_dealitems']))
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
+                    @endif
                     @endforeach
                 </ul>
                 <div class="row product-items">
