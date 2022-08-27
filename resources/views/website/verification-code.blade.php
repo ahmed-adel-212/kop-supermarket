@@ -148,7 +148,7 @@
         }
     
         $(function(){
-            $('#verification').on('submit', function{
+            $('#verification').on('submit', function(){
                 var code = $("#token-for-pass").val();
             coderesult.confirm(code).then(function (result) {
                 var user = result.user;
