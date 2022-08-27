@@ -155,22 +155,20 @@
         $(function(){
             $('#verification').on('submit', function(event){
                 event.preventDefault();
-
                 var code = $("#token-for-pass").val();
-            coderesult.confirm(code).then(function (result) {
-                var user = result.user;
-                console.log(user);
-                $('#verify').val(1);
-                $('#verification').submit();
-                // $("#successOtpAuth").text("Auth is successful");
-                // $("#successOtpAuth").show();
-            }).catch(function (error) {
-                $("#error").text(error.message);
-                $("#error").show();
-                $('#verify').val(0);
-                 
+                coderesult.confirm(code).then(function (result) {
+                    var user = result.user;
+                    console.log(user);
+                    $('#verify').val(1);
+                    $('#verification').submit();
+                    // $("#successOtpAuth").text("Auth is successful");
+                    // $("#successOtpAuth").show();
+                }).catch(function (error) {
+                    $("#error").text(error.message);
+                    $("#error").show();
+                    $('#verify').val(0);
+                });
                 return false;
-            });
             });
         });
     </script>
