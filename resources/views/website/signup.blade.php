@@ -47,7 +47,7 @@
     @section('content')
         <div class="page-wrapper">
 
-            <div class="login-page row position-relative" style="padding: 100px 0;">
+            <div class="login-page row position-relative" style="padding-top: 125px;height: 1024px;">
                 <div class="col-0 col-md-6 col-lg-8">
                     <video loop autoplay muted id="video" style="object-fit: fill;height: 100%;">
                         <source src="{{ asset('website2-assets/img/bg.mp4') }}" type="video/mp4">
@@ -67,13 +67,22 @@
                                 <p class="text-50">{{ __('general.Sign up to continue') }}</p>
 
 
-                                @error('errors')
-                                    <div class="row mr-2 ml-2">
-                                        <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
-                                            id="type-error">{{ $message }}
-                                        </button>
-                                    </div>
-                                @enderror
+                                <div class="row">
+                                    @if (Session::has('success'))
+                                        <div class="col-12 mr-2 ml-2">
+                                            <button type="text" class="btn btn-lg btn-block btn-outline-success mb-2"
+                                                id="type-error">{{ Session::get('success') }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                    @if (Session::has('error'))
+                                        <div class="col-12 mr-2 ml-2">
+                                            <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
+                                                id="type-error">{{ Session::get('error') }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
                                 <form class="mt-5 mb-4" method="POSt" action="{{ route('sign.up') }}">
                                     @CSRF
                                     <div class="form-group my-2">

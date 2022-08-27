@@ -249,12 +249,34 @@ class OrdersController extends BaseController
 
         // $subtotal = 0;
 
+        $items = [];
         foreach ($request->items as $item) {
+            if (gettype($item) == 'object') {
+                $item = $item->toArray();
+            }
+            if ($item['quantity'] > 1) {
+                for ($i = 0;$i < $item['quantity'];$i++) {
+                    $items[] = [
+                        'item_id' => $item['item_id'],
+                        'quantity' => 1,
+                        'offer_price' => $item['offer_price'],
+                        'price' => $item['price'],
+                        'offerId' => $item['offerId'],
+                        'extras' => $item['extras'][$i],
+                        'withouts' => $item['withouts'][$i],
+                        'dough_type_ar' => $item['dough_type_ar'][$i],
+                        'dough_type_en' => $item['dough_type_en'][$i],
+                    ];
+                }
+            } else {
+                $items[] = $item;
+            }  
+        }
+
+        foreach ($items as $item) {
             $orderItem = Item::where('id', $item['item_id'])->first();
             $orderItemExtras = null;
-            if (gettype($item) == 'object') {
-                $item = $item->toArray();;
-            }
+
             if (array_key_exists('extras', $item)) {
                 $orderItemExtras = Extra::whereIn('id', $item['extras'])->get();
             }

@@ -154,6 +154,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Website Image</label>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                    </div>
                                     <div class="custom-file">
                                         <input type="file"
                                             class="custom-file-input {!! $errors->first('website_image', 'is-invalid') !!}"

@@ -155,6 +155,10 @@
                                             <input id="pointsinput" hidden
                                                 name="points_paid"value="{{ $request->points_paid }}" />
                                         @endif
+                                        @if ($request->has('points_value'))
+                                            <input id="pointsinput55" hidden
+                                                name="points_value"value="{{ $request->points_value }}" />
+                                        @endif
                                         @if ($request->has('branch_id'))
                                             <input hidden name="branch_id" value="{{ $request->branch_id }}" />
                                         @endif

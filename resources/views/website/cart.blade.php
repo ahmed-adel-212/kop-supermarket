@@ -179,8 +179,7 @@
                                             {{ round($arr_check['points'], 2) }} {{ __('general.SR') }}</span>
                                         <input id="pointsinput" hidden name="points_paid"
                                             value="{{ $arr_check['points'] }}" />
-
-                                    </li>
+                                        <input id="pointsValue" hidden name="points_value" value="{{$arr_check['points_value']}}" />                                    </li>
                                 @endif
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Total') }}
                                         : </b> <span style="font-size: smaller;" id="total">{{ $arr_check['total'] }}
