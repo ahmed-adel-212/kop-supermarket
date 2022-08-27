@@ -152,6 +152,8 @@ Route::group([
         Route::get('/whats-new/{year}/{month}', [\App\Http\Controllers\Website\NewsController::class, 'blogsArchive'])->name('news.archive');
         Route::get('/whats-new/{id}', [\App\Http\Controllers\Website\NewsController::class, 'Blog'])->name('get.new');
         Route::get('/health-infos/', [\App\Http\Controllers\Website\HealthInfo::class, 'Infos'])->name('health-infos.all');
+        Route::get('/health-infos/{id}', [\App\Http\Controllers\Website\HealthInfo::class, 'show'])->name('health-infos.show');
+        Route::get('/health-infos/{year}/{month}', [\App\Http\Controllers\Website\HealthInfo::class, 'infosArchive'])->name('health-infos.archive');
 
         Route::get('/get-sign-in', [\App\Http\Controllers\Website\AuthController::class, 'get_login'])->name('get.login');
         Route::post('/signin', [\App\Http\Controllers\Website\AuthController::class, 'login'])->name('sign.in');
