@@ -9,27 +9,28 @@
             background-color: #6dc405;
         }
         .product-item .ratting {
-    min-height: 30px;
-    max-height: 30px;
-    font-size: 15px;}
+            min-height: 30px;
+            max-height: 30px;
+            font-size: 15px;}
 
-    .food-info h4 {
-    font-size: 16px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 50px;
-    max-height: 50px;
-    }
+            .food-info h4 {
+            font-size: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 50px;
+            max-height: 50px;
+        }
     </style>
     
 @endsection
 
 @section('pageName')
-    <body class="page-catalog dm-dark"> @endsection
+    <body class="page-catalog dm-dark"> 
+@endsection
 
-    @section('content')
+@section('content')
 
 <section class="page-header" style="background-image: url({{asset('website2-assets/img/page-header-theme.jpg')}})">
 

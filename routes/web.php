@@ -160,11 +160,11 @@ Route::group([
         Route::post('/get-sign-up', [\App\Http\Controllers\Website\AuthController::class, 'sign_up'])->name('sign.up'); //auth routes
 
         /* for verification */
-        Route::group(['middleware' => ['auth']], function() {
+        // Route::group(['middleware' => ['auth']], function() {
             Route::get('/verification-code', 'AuthController@get_code')->name('verifyCode.page');
             Route::get('resend-verification-code', 'AuthController@resendVerificationCode')->name('verifyCode.resend');
             Route::get('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
-        });
+        // });
 
         /*********** Auth Routes ***********/
 

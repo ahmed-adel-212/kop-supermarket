@@ -81,18 +81,22 @@
                         <div class="col-lg-8 col-md-10">
                             <form class="card mt-4" id="verification"  method="get">
                                 @csrf
+                                    <input hidden type="text" id="number" name="phone" value="{{$phone}}">
+                                    <input hidden  type="text" id="number" name="user_id" value="{{$user_id}}">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="email-for-pass">{{__('auth.Enter Your Verification Code')}}</label>
                                         <input class="form-control" type="email" id="email-for-pass"
                                                value="@if(isset($email)){{$email}}@else{{old('email')}}@endif" name="email" hidden>
-                                        <input class="form-control" type="text" id="token-for-pass" value="{{old('token')}}" placeholder="- - - - -" name="token">
+                                        <input class="form-control" type="text" id="token-for-pass"  placeholder="- - - - -" name="token">
+                                        <div id="recaptcha-container"></div>
+                                        <button  id="otp_token" type="button" class="btn btn-primary mt-3" onclick="sendOTP()">Send OTP</button>
                                         <div class="help-block" style="display: none"></div>
                                     </div>
                                 </div>
-                                <div class="card-footer">
+                                <div class="card-footer" id='submit_form' style="display:none;">
                                     <button class="btn btn-primary" id="save" type="submit" formaction="{{route('verifyCode.save')}}">{{__('general.Send')}}</button>
-                                    <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" formaction="{{route('verifyCode.resend')}}">{{__('auth.resend code')}}</button>
+                                    <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" onclick="sendOTP()">{{__('auth.resend code')}}</button>
                                 </div>
                             </form>
                         </div>
@@ -102,29 +106,58 @@
 @endsection
 
 @section('scripts')
-    <script>
-        window.onload = function () {
-            $('#verification').keypress(function (e) {
-                var key = e.which;
-                if(key == 13)  // the enter key code
-                {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-            $('#save').click(function (e) {
-                if($('#token-for-pass').val() == '{{auth()->user()->activation_token}}'){
-                    $(this).submit();
-                }
-                else {
-                    e.preventDefault();
-                    $('.help-block').show();
-                    $('.help-block').text('{{__('auth.verification code is wrong.')}}');
-                    return false;
-                }
-            });
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
 
+    <script>
+        var firebaseConfig = {
+            apiKey: "API_KEY",
+            authDomain: "PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://PROJECT_ID.firebaseio.com",
+            projectId: "PROJECT_ID",
+            storageBucket: "PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
         };
+        firebase.initializeApp(firebaseConfig);
     </script>
-@endsection
+    <script type="text/javascript">
+        window.onload = function () {
+            render();
+        };
+        function render() {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+            recaptchaVerifier.render();
+        }
+        function sendOTP() {
+            var number = $("#number").val();
+            firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                coderesult = confirmationResult;
+                console.log(coderesult);
+                $("#successAuth").text("Message sent");
+                $("#successAuth").show();
+                document.getElementById('otp_token').style.display = 'none';
+                document.getElementById('submit_form').style.display = 'block';
+            }).catch(function (error) {
+                $("#error").text(error.message);
+                $("#error").show();
+            });
+        }
+        function verify() {
+            var code = $("#verification").val();
+            coderesult.confirm(code).then(function (result) {
+                var user = result.user;
+                console.log(user);
+                $("#successOtpAuth").text("Auth is successful");
+                $("#successOtpAuth").show();
+            }).catch(function (error) {
+                $("#error").text(error.message);
+                $("#error").show();
+            });
+        }
+    </script>
+@endsection 
 
