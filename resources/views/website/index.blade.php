@@ -132,7 +132,7 @@
                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">ewewEat Sleep And</div></div></div>
                             <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splittin>Fried masala <br>in town!</div></div>
                             </div>
-                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">wwwwwwFood is any suwwwewebstance consumed to provide nutritional <br>support for an organism.</div></div></div>
+                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">Food is any suwwwewebstance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-left">
                                 <div class="inner-layer">
                                 <a href="{{route('menu.page')}}" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">{{__('footer.Our Menu')}}</a>
@@ -239,9 +239,15 @@
                     <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
                 </div>
                 <ul class="food-menu-filter">
-                    <li class="active" data-filter="*">All</li>
+                    <!-- <li class="active" data-filter="*">All</li> -->
+                    <?php $c=0; ?>
                     @foreach($menu['categories'] as $index => $category)
+                    @if($c==0)
+                    <?php $c++ ;?>
+                    <li  class="active" data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
+                    @else
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
+                    @endif
                     @endforeach
                 </ul>
                 <div class="row product-items">
