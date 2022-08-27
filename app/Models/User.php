@@ -32,11 +32,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'activation_token',
         'device_token',
         'first_offer_available',
-        'image'
+        'image',
+        'token',
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'activation_token'
+        'password', 'remember_token', 'activation_token', 'token'
     ];
 
     protected $casts = [

@@ -44,9 +44,11 @@ class AuthController extends BaseController
 
                     $data = [
                         'userData' => $user,
-                        'token' => $user->createToken('AppName')->accessToken
+                        // 'token' => $user->createToken('AppName')->accessToken,
+                        'token' => $user->token,
                     ];
                     if (auth()->user()->email_verified_at == null) {
+                        $data['token'] = null;
                         return $this->sendResponse($data, __('auth.verify'));
                     }
                     $pushNotifications = new NotificationController();
@@ -82,11 +84,12 @@ class AuthController extends BaseController
 
                     $data = [
                         'userData' => $user,
-                        'token' => $user->createToken('AppName')->accessToken
+                        // 'token' => $user->createToken('AppName')->accessToken,
+                        'token' => $user->token,
                     ];
 
                     if (auth()->user()->email_verified_at == null) {
-
+                        $data['token'] = null;
                         return $this->sendResponse($data, __('auth.verify'));
                     }
                     $pushNotifications = new NotificationController();
@@ -599,15 +602,14 @@ class AuthController extends BaseController
             }
 
             $user->email_verified_at = now();
+            $user->token = $user->createToken('AppName')->accessToken;
             $user->save();
-
-            $token = $user->createToken('AppName')->accessToken;
 
             Auth::login($user);
 
             return $this->sendResponse([
                 // 'user_verified' => true,
-                'token' => $token,
+                'token' => $user->token,
             ], __('auth.verified'));
         }
 
