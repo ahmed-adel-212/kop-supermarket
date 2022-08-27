@@ -142,6 +142,7 @@ Route::middleware('api')->group(function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::resource('/address', 'Api\AddressesController');
         Route::post('/addressmaps', 'Api\AddressesController@sotreWithMaps');
+        Route::post('/add-address', 'Api\AddressesController@sotre');
     });
 });
 

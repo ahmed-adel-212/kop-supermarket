@@ -81,6 +81,63 @@ class AddressesController extends BaseController
         return $this->sendResponse($address, __('general.address.created'));
     }
 
+    public function sotre(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string',],
+            'street' => ['nullable', 'string'],
+            'building_number' => ['nullable', 'string'],
+            'floor_number' => ['nullable', 'string'],
+            'landmark' => ['nullable'],
+            'city_id' => ['required', 'exists:cities,id'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'customer_id' => ['exists:users,id'],
+        ]);
+
+        if ($validator->fails())
+            return $this->sendError(__('general.validation_errors'), $validator->errors(), 400);
+
+        // $city = City::where('name_en', "LIKE", "%$request->city%")->orWhere('name_ar', "LIKE", "%$request->city%")->first();
+        // if (!$city) {
+        //     return $this->sendError(__('general.address.city_not_found'));
+        // }
+        // $area = Area::where('name_en', "LIKE", "%$request->area%")->orWhere('name_ar', "LIKE", "%$request->area%")->first();
+        // if (!$area) {
+        //     return $this->sendError(__('general.address.area_not_found'));
+        // }
+
+        // TODO: handle errors
+        // if (!$city or !$area)
+        //     return $this->sendError('Some information not correct');
+
+        // attach customer reference
+        if ($request->user()) {
+            if ($request->user()->hasRole('customer')) {
+                $request->merge([
+                    'customer_id' => $request->user()->id,
+                    'city_id' => $request->city_id,
+                    'area_id' => $request->area_id
+                ]);
+            }
+        } else {
+            if (auth('web')->user()->hasRole('customer')) {
+                $request->merge([
+                    'customer_id' => auth('web')->user()->id,
+                    'city_id' => $request->city_id,
+                    'area_id' => $request->area_id
+                ]);
+            }
+        }
+
+        $address = Address::firstOrCreate($request->all());
+
+        if (!$address)
+            return $this->sendError(__('general.error'), 400);
+
+        return $this->sendResponse($address, __('general.address.created'));
+    }
+
+
     public function sotreWithMaps(Request $request)
     {
         $validator = Validator::make($request->all(), [
