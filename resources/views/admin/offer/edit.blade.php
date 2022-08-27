@@ -148,6 +148,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Website Image</label>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                    </div>
                                     @if($offer->website_image)
                                     <img src="{{ $offer->website_image }}" alt="..." class="img-thumbnail">
                                     @endif
