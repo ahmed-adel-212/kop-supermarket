@@ -114,7 +114,7 @@
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="1.5s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-center">
                                 <div class="inner-layer">
-                                    <a href="reservation.html" class="slider-btn" data-animation="fade-in-bottom" data-delay="2s">Book A Table</a>
+                                <a href="{{route('menu.page')}}" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">{{__('footer.Our Menu')}}</a>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">wwwwwwFood is any suwwwewebstance consumed to provide nutritional <br>support for an organism.</div></div></div>
                             <div class="slider-btn-group justify-content-left">
                                 <div class="inner-layer">
-                                    <a href="reservation.html" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">Book A Table</a>
+                                <a href="{{route('menu.page')}}" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">{{__('footer.Our Menu')}}</a>
                                 </div>
                             </div>
                         </div>

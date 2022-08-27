@@ -8,7 +8,7 @@ use App\Notifications\activateSMS;
 use App\Notifications\SignupActivate;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -31,6 +31,7 @@ class AuthController extends Controller
 
     public function sign_up(Request $request)
     {
+        // return $request;
         
     //    return $validator = Validator::make($request->all(), );
     //     //, 'unique:users,first_phone'
@@ -117,13 +118,15 @@ class AuthController extends Controller
         $user=User::where('email',request('email'))->first();
         if($user){
         if ($user->hasRole('customer')) {
+            if ($user->email_verified_at == null) {
+                // return $user->id;
+                $phone=$user->first_phone;
+                $user_id=$user->id;
+                        return view('website.verification-code',compact('phone','user_id'));
+                    }
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
-                    $user->branches; //??
-
-                    if (auth()->user()->email_verified_at == null) {
-                        return redirect()->route('verifyCode.page');
-                    }
+                    $user->branches; //??                    
                     return redirect()->route('home.page');
                 }
             }
