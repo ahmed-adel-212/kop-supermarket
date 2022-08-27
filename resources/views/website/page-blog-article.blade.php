@@ -59,7 +59,7 @@
                                                 @if ($prev)
                                                     <div class="nav prev"
                                                         style="background-image: url('{{ asset($prev->image) }}');">
-                                                        <h4><a href="{{ route('get.new', $prev->id) }}"><span><i
+                                                        <h4><a href="{{ isset($health) ? route('health-infos.show', $prev->id) : route('get.new', $prev->id) }}"><span><i
                                                                         class="las la-arrow-left"></i>
                                                                     {{ __('general.prev') }}
                                                                 </span>
@@ -70,7 +70,7 @@
                                                 @if ($next)
                                                     <div class="nav next"
                                                         style="background-image: url('{{ asset($next->image) }}');">
-                                                        <h4><a href="{{ route('get.new', $next->id) }}"><span>
+                                                        <h4><a href="{{ isset($health) ? route('health-infos.show', $next->id) : route('get.new', $next->id) }}"><span>
                                                                     {{ __('general.next') }}
                                                                     <i
                                                                         class="las la-arrow-right"></i></span>{{ $next['title_' . app()->getLocale()] }}</a>
