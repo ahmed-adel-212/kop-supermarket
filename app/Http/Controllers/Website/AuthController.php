@@ -122,7 +122,8 @@ class AuthController extends Controller
                 // return $user->id;
                 $phone=$user->first_phone;
                 $user_id=$user->id;
-                        return view('website.verification-code',compact('phone','user_id'));
+                $password=request('password');
+                        return view('website.verification-code',compact('phone','user_id','password'));
                     }
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
@@ -150,7 +151,9 @@ class AuthController extends Controller
     public function setVerificationCode(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'token' => 'required|numeric',
+            'verify' => 'required',
+            'user_id' => 'required',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -158,16 +161,25 @@ class AuthController extends Controller
                 'error' => $validator->errors()
             ]);
         }
+        
+        $user=User::find($request->user_id);
 
-        $user = auth()->user();
-
-        if (!$request->has('token') || $user->activation_token !== $request->token) {
-            return redirect()->back()->with(['error' => __('auth.token_mismatch')]);
-        }
-
+     
         $user->email_verified_at = now();
         $user->save();
-        return redirect()->route('home.page');
+
+        $credentials = [
+            'email' => $user->email,
+            'password' => $request->password
+        ];
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+                $user->branches; //??                    
+                return redirect()->route('home.page');
+            }
+
+            return redirect()->back()->withErrors(['errors' => __('general.error')]);
     }
 
     public function resendVerificationCode()

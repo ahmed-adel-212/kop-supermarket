@@ -82,7 +82,8 @@
                             <form class="card mt-4" action="{{route('verifyCode.save')}}" id="verification"  method="get">
                                 @csrf
                                     <input hidden type="text" id="number" name="phone" value="{{$phone}}">
-                                    <input hidden  type="text" id="number" name="user_id" value="{{$user_id}}">
+                                    <input hidden  type="text" id="user_id" name="user_id" value="{{$user_id}}">
+                                    <input hidden  type="text" id="password" name="password" value="{{$password}}">
                                     <input hidden  type="text" id="verify" name="verify" value="0">
                                 <div class="card-body">
                                     <div class="form-group">
@@ -95,7 +96,7 @@
                                         <div class="help-block" style="display: none"></div>
                                     </div>
                                 </div>
-                                <div class="card-footer" id='submit_form' style="display:none;">
+                                <div class="card-footer" id='submit_form' style="">
                                     <button class="btn btn-primary" id="save" type="submit">{{__('general.Send')}}</button>
                                     <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" onclick="sendOTP()">{{__('auth.resend code')}}</button>
                                 </div>
