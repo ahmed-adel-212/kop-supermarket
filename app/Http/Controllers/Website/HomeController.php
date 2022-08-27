@@ -10,6 +10,7 @@ use App\Models\News;
 use App\Models\HomeItem;
 use App\Models\OfferDiscount;
 use App\Models\Anoucement;
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,7 @@ class HomeController extends Controller
         $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories2())->getOriginalContent();
 
         if($return['success'] == 'success'){
-            $menu['categories'] = $return['data'];
+             $menu['categories'] = $return['data'];
         }
         $return = (app(FrontController::class)->getGallery())->getOriginalContent();
         if($return['success'] == 'success'){
@@ -44,17 +45,28 @@ class HomeController extends Controller
         $filters = new OfferFilters($request);
         $offers = Offer::with('buyGet', 'discount')->filter($filters)->get();
         // $return = (app(\App\Http\Controllers\Api\OffersController::class)->index($request, $filters))->getOriginalContent();
-        // if($return['success'] == 'success'){
-        //     $menu['offers'] = (count($return['data']))? $return['data'] : [];
+        // if($return['success'] ==  nt($return['data']))? $return['data'] : [];
         // }
         $menu['offers'] = $offers;
         $menu['main_offer']=Offer::with('buyGet', 'discount')->where('main',1)->get();
-        $dealItems = Item::where('best_seller', 'activate')->get();
-        $menu['categoryof_dealitems']=$dealItems->pluck('category_id')->toArray();
-        $menu['dealItems'] = ($dealItems->count() > 0)? $dealItems : [];
+        $dealItems = Category::with('items')->get();
+        $menu['dealItems']=[];
+        foreach($menu['categories'] as $category)
+        {
+            $count=0;
+            foreach($category->items as $item)
+            {
+                if($count == 3)
+                {break;}
+                array_push($menu['dealItems'] , $item);
+                $count++;
+            }
+            $count=0;
+        }
+       
         $menu['recommended']=Item::where('recommended', true)->get();
         $menu['homeitem']=HomeItem::all();
-        $menu['anoucement']=Anoucement::all();
+         $menu['anoucement']=Anoucement::all();
         return view('website.index',compact(['menu']));
     } 
 }

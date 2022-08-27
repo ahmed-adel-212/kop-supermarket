@@ -234,22 +234,20 @@
         <section class="food-menu bg-grey padding">
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
-                    <h4>BEST SELLER ITEMS</h4>
+                    <h4>MENU</h4>
                     <h2>Our Delicious <span>Foods</span></h2>
                     <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
                 </div>
                 <ul class="food-menu-filter">
                     <li class="active" data-filter="*">All</li>
                     @foreach($menu['categories'] as $index => $category)
-                    @if(in_array($category->id,$menu['categoryof_dealitems']))
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
-                    @endif
                     @endforeach
                 </ul>
                 <div class="row product-items">
                     @foreach($menu['dealItems'] as $dealItem)
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}">
-                        <div class="product-item wow fadeInUp" data-wow-delay="200ms">
+                        <div class="product-item wow fadeInUp" >
                           
                            <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food">
