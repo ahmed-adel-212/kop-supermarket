@@ -38,8 +38,8 @@
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        min-height: 180px;
-        max-height: 180px;
+        min-height: 135px;
+        /* max-height: 180px; */
     }
     .about-section .content-img-holder {
     /* position: absolute !important;
