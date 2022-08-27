@@ -6,7 +6,6 @@
 
 @section('styles')
     <style>
-      
         .text-danger {
             color: #f32129;
         }
@@ -55,18 +54,22 @@
             font-size: 35px;
             line-height: 7px;
         }
-           
-      label.btn.btn-outline-primary
-        {border: none!important;
-        color:black!important;}
-        label.btn.btn-outline-primary:hover
-        {color: #6dc405 !important;
-         background-color: white !important;}
-        .btn-check:checked+.btn
-        {
+
+        label.btn.btn-outline-primary {
+            border: none !important;
+            color: black !important;
+        }
+
+        label.btn.btn-outline-primary:hover {
+            color: #6dc405 !important;
+            background-color: white !important;
+        }
+
+        .btn-check:checked+.btn, .btn-check:checked+.btn:hover {
             background-color: #6dc405 !important;
-            border-radius: 10px!important;
+            border-radius: 10px !important;
             border-color: #6dc405 !important;
+            color: #fff !important;
         }
     </style>
 @endsection
@@ -78,15 +81,14 @@
         activeItem: '',
         buy_items: {},
         addItem: function() {
-            const dough = document.querySelectorAll('[name=dough_type]');
+            {{-- const dough = document.querySelectorAll('[name=dough_type]');
             let active = '';
     
             for (let d of dough) {
                 if (d.checked) {
                     active = d;
                 }
-            }
-    
+            } --}}    
             this.items.push({
                 uid: Math.floor(Math.random() * 100000000),
                 item_id: {{ $item['id'] }},
@@ -94,7 +96,7 @@
                 info: '{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}',
                 category: '{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}',
                 calories: {{ $item->calories }},
-                dough: active.value,
+                dough: '{{$item['dough_type'][0]['name_ar']}},{{$item['dough_type'][0]['name_en']}}',
                 real_price: {{ round($item->price, 2) }},
                 price: {{ round(isset($item['offer']) ? $item['offer']['offer_price'] : $item->price, 2) }},
                 offer_price: {{ isset($item['offer']) ? round($item['offer']['offer_price'], 2) : 0 }},
@@ -130,6 +132,14 @@
                 return x;
             });
         },
+        setDoughType: function(id, dough) {
+            this.items.map(x => {
+                if (x.uid === id) {
+                    x.dough = dough;
+                }
+                return x;
+            });
+        },
         getItems: function() {
             const it = JSON.parse(JSON.stringify(this.items));
             it.map(x => {
@@ -145,7 +155,7 @@
     @endsection
 
     @section('content')
-    
+
         <section class="page-header">
             <div class="bg-shape grey"></div>
             <div class="container">
@@ -162,8 +172,9 @@
                 <form id="addToCard" action="{{ route('add.cart') }}" method="POST">
                     @csrf
                     @if ($item['offer'])
-                        <input type="hidden" name="offer_id" value="{{$item['offer']? $item['offer']['offer_id'] :'' }}">
-                        <input type="hidden" name="offer_price" value="{{ $item['offer']?round($item['offer']['offer_price'], 2):'' }}">
+                        <input type="hidden" name="offer_id" value="{{ $item['offer'] ? $item['offer']['offer_id'] : '' }}">
+                        <input type="hidden" name="offer_price"
+                            value="{{ $item['offer'] ? round($item['offer']['offer_price'], 2) : '' }}">
                     @endif
                     <input type="hidden" name="item_id" value="{{ $item['id'] }}">
                     <input type='hidden' name='add_items' x-bind:value="getItems" />
@@ -194,10 +205,10 @@
                                                 style="font-size: 26px;color:#6dc405;text-decoration: none">{{ round($item['offer']['offer_price'], 2) }}
                                             </span>
                                         @endif
-                                       <span></span> @lang('general.SR')
+                                        <span></span> @lang('general.SR')
                                     </h4>
-                                   
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 75%;">
+
+                                    {{-- <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="width: 75%;">
                                         @foreach ($item['dough_type'] as $dough)
                                         <input
                                         class="btn-check" autocomplete="off"  id="{{ $dough['name_en'] }}" type="radio" name="dough_type"
@@ -205,18 +216,23 @@
                                                     @if ($loop->first) checked @endif>
                                         <label class="btn btn-outline-primary"  for="{{ $dough['name_en'] }}"> <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
                                         @endforeach
-                                    </div>
+                                    </div> --}}
 
                                     <p><br>
-                                    {{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}
+                                        {{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}
                                     </p>
 
                                     <div class="product-btn">
                                         <span class="counter" style="display: flex;"><span class="minus" x-data
-                                                x-on:click="$dispatch('remove-last-item')" style="font-size: 50px;cursor: pointer;">-</span><input disabled type="text"
-                                                name="quantity" x-bind:value="items.length" id="quantity" style="width: 20%;margin-left: 5px; margin-right: 5px;"><span
-                                                class="plus" x-data x-on:click="$dispatch('add-item')" style="font-size: 30px;cursor: pointer;">+</span></span>
-                                        <div> <button @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="purchase-btn cart" 
+                                                x-on:click="$dispatch('remove-last-item')"
+                                                style="font-size: 50px;cursor: pointer;">-</span><input disabled
+                                                type="text" name="quantity" x-bind:value="items.length" id="quantity"
+                                                style="width: 20%;margin-left: 5px; margin-right: 5px;"><span class="plus"
+                                                x-data x-on:click="$dispatch('add-item')"
+                                                style="font-size: 30px;cursor: pointer;">+</span></span>
+                                        <div> <button @auth
+                                                    @if (!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif
+                                                @endauth class="purchase-btn cart"
                                                 type="submit">{{ __('home.Add to Cart') }}</button></div>
                                     </div>
                                     <ul class="product-meta">
@@ -252,30 +268,26 @@
                             x-bind:aria-labelledby="'flush-heading' + item.uid" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="container">
-                                    <ul class="nav tab-navigation" id="product-tab-navigation" role="tablist">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{__('general.Dough Type')}}:&nbsp;
+                                            <div class="btn-group" role="group"
+                                                aria-label="Basic radio toggle button group" style="width: 75%;">
+                                                @foreach ($item['dough_type'] as $dough)
+                                                    <input class="btn-check" autocomplete="off"
+                                                        x-bind:id="'{{ $dough['name_en'] }}' + item.uid" type="radio" x-bind:name="'dough_type' + item.uid"
+                                                        value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
+                                                        @if ($loop->first) checked @endif>
+                                                    <label class="btn btn-outline-primary" x-bind:for="'{{ $dough['name_en'] }}' + item.uid" x-on:click="setDoughType(item.uid, '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}')">
+                                                        <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
                                         @if ($item['category']['extras']->count() > 0)
-                                            <li role="presentation">
-                                                <button class="active" x-bind:id="'extra-tab' + item.uid"
-                                                    data-bs-toggle="tab" x-bind:data-bs-target="'#extra' + item.uid"
-                                                    type="button" role="tab" aria-controls="extra"
-                                                    aria-selected="true">
-                                                    {{ __('general.Extra') }}</button>
-                                            </li>
-                                        @endif
-                                        @if ($item['category']['withouts']->count() > 0)
-                                            <li role="presentation">
-                                                <button x-bind:id="'without-tab' + item.uid" data-bs-toggle="tab"
-                                                    x-bind:data-bs-target="'#without' + item.uid" type="button"
-                                                    role="tab" aria-controls="without"
-                                                    aria-selected="false">{{ __('general.Without') }}</button>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                    <div class="tab-content" id="product-tab-content">
-                                        @if ($item['category']['extras']->count() > 0)
-                                            <div class="tab-pane fade show active description"
-                                                x-bind:id="'extra' + item.uid" role="tabpanel"
-                                                x-bind:aria-labelledby="'extra-tab' + item.uid">
+                                            <div class="col-md-6">
                                                 <table class="table product-table">
                                                     <thead>
                                                         <tr>
@@ -300,14 +312,14 @@
 
                                                                 </td>
                                                                 <td> <input type="checkbox" value="{{ $extra['id'] }}"
-                                                                        name="extras[]" class="checkExtra"
-                                                                        x-data x-on:click="addToItem(
-                                                                                        'extras',
-                                                                                        {{ $extra['id'] }},
-                                                                                        '{{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}',
-                                                                                        {{ round($extra['price'], 2) }},
-                                                                                        item.uid
-                                                                                    )">
+                                                                        name="extras[]" class="checkExtra" x-data
+                                                                        x-on:click="addToItem(
+                                                                                    'extras',
+                                                                                    {{ $extra['id'] }},
+                                                                                    '{{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}',
+                                                                                    {{ round($extra['price'], 2) }},
+                                                                                    item.uid
+                                                                                )">
                                                                 </td>
 
 
@@ -318,8 +330,7 @@
                                             </div>
                                         @endif
                                         @if ($item['category']['withouts']->count() > 0)
-                                            <div class="tab-pane fade show  description" x-bind:id="'without' + item.uid"
-                                                role="tabpanel" x-bind:aria-labelledby="'without-tab' + item.uid">
+                                            <div class="col-md-6">
                                                 <table class="table product-table">
                                                     <thead>
                                                         <tr>
@@ -338,7 +349,8 @@
                                                                         {{ $without['calories'] }}
                                                                     </span>
                                                                     <span>
-                                                                        ({{ round($without['price'], 2) }} {{ __('general.SR') }})
+                                                                        ({{ round($without['price'], 2) }}
+                                                                        {{ __('general.SR') }})
                                                                     </span>
 
                                                                 </td>
@@ -346,12 +358,12 @@
                                                                         value="{{ $without['id'] }}" name="without[]"
                                                                         class="checkExtra"
                                                                         x-on:click="addToItem(
-                                                                                        'withouts',
-                                                                                        {{ $without['id'] }},
-                                                                                        '{{ app()->getLocale() == 'ar' ? $without['name_ar'] : $without['name_en'] }}',
-                                                                                        {{ round($without['price'], 2) }},
-                                                                                        item.uid
-                                                                                    )">
+                                                                                    'withouts',
+                                                                                    {{ $without['id'] }},
+                                                                                    '{{ app()->getLocale() == 'ar' ? $without['name_ar'] : $without['name_en'] }}',
+                                                                                    {{ round($without['price'], 2) }},
+                                                                                    item.uid
+                                                                                )">
                                                                 </td>
 
 
