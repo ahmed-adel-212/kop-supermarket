@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,12 +29,12 @@ class AuthController extends BaseController
             'email' => request('email'),
             'password' => request('password')
         ];
-        $user=User::where('email',request('email'))->first();
-        if($user){
-        if ($user->hasRole('customer')) {
-            if (Auth::attempt($credentials)) {
-                $user = Auth::user();
-                
+        $user = User::where('email', request('email'))->first();
+        if ($user) {
+            if ($user->hasRole('customer')) {
+                if (Auth::attempt($credentials)) {
+                    $user = Auth::user();
+
                     if ($request->has('device_token')) {
                         $user->device_token = $request->device_token;
                         $user->save();
@@ -48,14 +49,14 @@ class AuthController extends BaseController
                     if (auth()->user()->email_verified_at == null) {
                         return $this->sendResponse($data, __('auth.verify'));
                     }
-                    $pushNotifications=new NotificationController();
-                    $request->request->add(['user_id' =>$user->id]);
+                    $pushNotifications = new NotificationController();
+                    $request->request->add(['user_id' => $user->id]);
                     $pushNotifications->pushNotifications($request);
                     return $this->sendResponse($data, __('auth.logged'));
-                    
                 }
-        }}
-      
+            }
+        }
+
         return $this->sendError(__('auth.unauthorised!'), $credentials, 401);
     }
 
@@ -66,12 +67,12 @@ class AuthController extends BaseController
             'email' => request('email'),
             'password' => request('password')
         ];
-        $user=User::where('email',request('email'))->first();
-        if($user){
-        if ($user->hasRole('cashier')) {
-            if (Auth::attempt($credentials)) {
-                $user = Auth::user();
-            
+        $user = User::where('email', request('email'))->first();
+        if ($user) {
+            if ($user->hasRole('cashier')) {
+                if (Auth::attempt($credentials)) {
+                    $user = Auth::user();
+
                     if ($request->has('device_token')) {
                         $user->device_token = $request->device_token;
                         $user->save();
@@ -88,12 +89,13 @@ class AuthController extends BaseController
 
                         return $this->sendResponse($data, __('auth.verify'));
                     }
-                    $pushNotifications=new NotificationController();
-                    $request->request->add(['user_id' =>$user->id]);
+                    $pushNotifications = new NotificationController();
+                    $request->request->add(['user_id' => $user->id]);
                     $pushNotifications->pushNotifications($request);
                     return $this->sendResponse($data, __('auth.logged'));
                 }
-        }}
+            }
+        }
         return $this->sendError(__('auth.unauthorised'), $credentials, 401);
     }
 
@@ -128,68 +130,78 @@ class AuthController extends BaseController
         // DB::beginTransaction();
 
         $name = explode(" ", $request->name);
-            if (count($name) < 2) {
-                return response()->json([
-                    "success" => false,
-                    "message" => __('auth.last_name_not_included'),
-                ], 400);
-            }
-
-            $request->merge([
-                'first_name' => $name[0],
-                'last_name' => $name[1],
-                'password' => bcrypt($request->password),
-                'first_phone' => $request->phone,
-                'age' => $request->age,
-                'activation_token' => mt_rand(100000, 999999)
-            ]);
-
-            $user = User::create($request->all());
-            $user->attachRole(3); // customer
-
-            Auth::login($user);
-
-            $token = $user->createToken('AppName')->accessToken;
-
-        try {
-            // send mail to user
-            // $user->notify(new SignupActivate);
-
-            $this->sendMessage(
-                $user->first_phone,
-                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
-            );
-
-            // return $this->sendResponse($user, 'Successfully created user!');
-            $pushNotifications=new NotificationController();
-            $request->request->add(['user_id' =>$user->id]);
-            $pushNotifications->pushNotifications($request);
+        if (count($name) < 2) {
             return response()->json([
-                "success" => true,
-                'user_created' => true,
-                'user' => $user,
-                'data' => $user,
-                'token' => $token,
-                'message_sent'=> true,
-                "message" => __('general.created', ['key' => __('auth.user_account')]),
-            ], 200);
-
-            //            return $this->sendResponse($user, 'Successfully created user!');
-
-        } catch (\Exception $e) {
-            // DB::rollBack();
-            
-            return response()->json([
-                "success" => true,
-                'user_created' => true,
-                'user' => $user,
-                'token' => $token,
-                'message_sent'=> false,
-                "message" => __('auth.twillo_err')
-            ], 200);
-
-            //echo "Error: " . $e->getMessage();
+                "success" => false,
+                "message" => __('auth.last_name_not_included'),
+            ], 400);
         }
+
+        $request->merge([
+            'first_name' => $name[0],
+            'last_name' => $name[1],
+            'password' => bcrypt($request->password),
+            'first_phone' => $request->phone,
+            'age' => $request->age,
+            'activation_token' => mt_rand(100000, 999999)
+        ]);
+
+        $user = User::create($request->all());
+        $user->attachRole(3); // customer
+
+        // Auth::login($user);
+
+        $token = $user->createToken('AppName')->accessToken;
+
+        return response()->json([
+            "success" => true,
+            'user_created' => true,
+            'user' => $user,
+            // 'data' => $user,
+            'token' => $token,
+            'message_sent' => true,
+            "message" => __('general.created', ['key' => __('auth.user_account')]),
+        ], 200);
+
+        // try {
+        //     // send mail to user
+        //     // $user->notify(new SignupActivate);
+
+        //     $this->sendMessage(
+        //         $user->first_phone,
+        //         "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+        //     );
+
+        //     // return $this->sendResponse($user, 'Successfully created user!');
+        //     $pushNotifications=new NotificationController();
+        //     $request->request->add(['user_id' =>$user->id]);
+        //     $pushNotifications->pushNotifications($request);
+        //     return response()->json([
+        //         "success" => true,
+        //         'user_created' => true,
+        //         'user' => $user,
+        //         'data' => $user,
+        //         'token' => $token,
+        //         'message_sent'=> true,
+        //         "message" => __('general.created', ['key' => __('auth.user_account')]),
+        //     ], 200);
+
+        //     //            return $this->sendResponse($user, 'Successfully created user!');
+
+        // } catch (\Exception $e) {
+        //     // DB::rollBack();
+
+        //     return response()->json([
+        //         "success" => true,
+        //         'user_created' => true,
+        //         'user' => $user,
+        //         'token' => $token,
+        //         'message_sent'=> false,
+        //         "message" => __('auth.twillo_err')
+        //     ], 200);
+
+        //     //echo "Error: " . $e->getMessage();
+        // }
 
         // DB::commit();
 
@@ -238,7 +250,7 @@ class AuthController extends BaseController
         //         "message" => __('auth.twillo_err')
         //     ], 400);
 
-            //echo "Error: " . $e->getMessage();
+        //echo "Error: " . $e->getMessage();
         // }
         //end test Twillo
 
@@ -252,7 +264,7 @@ class AuthController extends BaseController
         if ($user->activation_token !== $token) {
             return $this->sendError(__('auth.invalid_otp'));
         }
-        
+
         $user->active = true;
         $user->email_verified_at = now();
         $user->save();
@@ -263,7 +275,7 @@ class AuthController extends BaseController
     {
         try {
             $this->sendMessage(
-                $request->user()->first_phone, 
+                $request->user()->first_phone,
                 "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $request->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $request->user()->activation_token
             );
             return $this->sendResponse($request->user(), __('auth.sent_sms'));
@@ -341,7 +353,7 @@ class AuthController extends BaseController
         $validator = Validator::make($request->all(), [
             'points' => ['required', 'numeric']
         ]);
-        
+
         $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3, 4])->get()->sum('points');
         $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2])->get()->sum('points');
         $userPoints = $validRefundedPoints - $consumedCanceledPoints;
@@ -350,7 +362,7 @@ class AuthController extends BaseController
             return response()->json(['error' => __('validation.lte.numeric', [
                 'attribute' => __('auth.points'),
                 'value' => $request->points
-            ]) ], 400);
+            ])], 400);
         }
 
         if ($validator->fails()) {
