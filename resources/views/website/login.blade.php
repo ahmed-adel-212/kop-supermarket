@@ -51,7 +51,7 @@
 
     @section('content')
         <div class="page-wrapper">
-            <div class="login-page row position-relative" style="padding: 100px 0;">
+            <div class="login-page row position-relative" style="padding-top: 125px;height: 1024px;">
                 <div class="col-0 col-md-6 col-lg-8">
                     <video loop autoplay muted id="video" style="object-fit: fill;height: 100%;">
                         <source src="{{ asset('website2-assets/img/bg.mp4') }}" type="video/mp4">

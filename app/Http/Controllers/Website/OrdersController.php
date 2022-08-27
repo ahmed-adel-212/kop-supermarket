@@ -374,6 +374,7 @@ class OrdersController extends Controller
 
         // apply 50% discount if this is first order
         $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
+        $pointsValue = $request->has('points') ? $request->points : $request->points_value;
 
         $orderData = [
             "address_id" => $request->address_id,
@@ -386,6 +387,7 @@ class OrdersController extends Controller
             "delivery_fees" => $request->delivery_fees,
             "total" => round($request->total, 2),
             "points_paid" => $request->points_paid,
+            'points' => $pointsValue,
             'order_from' => 'website',
             'description_box' => $request->description,
         ];
