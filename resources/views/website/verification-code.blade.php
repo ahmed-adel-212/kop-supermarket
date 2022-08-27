@@ -93,12 +93,13 @@
                                         <input class="form-control" type="text" id="token-for-pass"  placeholder="- - - - -" name="token">
                                         <div id="recaptcha-container"></div>
                                         <button  id="otp_token" type="button" class="btn btn-primary mt-3" onclick="sendOTP()">Send OTP</button>
+                                        <button  id="resend_otp_token" type="button" class="btn btn-primary mt-3" onclick="sendOTP()"  style="display:none">{{__('auth.resend code')}}</button>
                                         <div class="help-block" style="display: none"></div>
                                     </div>
                                 </div>
-                                <div class="card-footer" id='submit_form' style="">
+                                <div class="card-footer" id='submit_form' style="display:none">
                                     <button class="btn btn-primary" id="save" type="submit">{{__('general.Send')}}</button>
-                                    <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" onclick="sendOTP()">{{__('auth.resend code')}}</button>
+                                    <!-- <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" onclick="sendOTP()">{{__('auth.resend code')}}</button> -->
                                 </div>
                             </form>
                         </div>
@@ -135,13 +136,15 @@
         }
         function sendOTP() {
             var number = $("#number").val();
+                
             firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
                 window.confirmationResult = confirmationResult;
                 coderesult = confirmationResult;
                 console.log(coderesult);
-                alert("Message sent");
                 document.getElementById('otp_token').style.display = 'none';
+                document.getElementById('resend_otp_token').style.display = 'block';
                 document.getElementById('submit_form').style.display = 'block';
+                alert("Message sent");
             }).catch(function (error) {
                 $("#error").text(error.message);
                 $("#error").show();
