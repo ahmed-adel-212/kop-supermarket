@@ -71,14 +71,20 @@
                                             <div class="post-thumb">
                                                 <img src="{{ asset($ar->image) }}" alt="img">
                                                 <div class="category">
+                                                    @isset($health)
+                                                    <a href="{{ route('health-infos.show', $ar->id) }}">
+                                                        {{ $ar['title_' . app()->getLocale()] }}
+                                                    </a>
+                                                    @else
                                                     <a href="{{ route('get.new', $ar->id) }}">
                                                         {{ $ar['title_' . app()->getLocale()] }}
                                                     </a>
+                                                    @endisset
                                                 </div>
                                             </div>
                                             <div class="post-content">
                                                 <ul class="post-meta">
-                                                    <li><i class="far fa-calendar-alt"></i><a href="{{route('news.archive', [$ar->updated_at->year, $ar->updated_at->format('m')])}}">
+                                                    <li><i class="far fa-calendar-alt"></i><a href="{{ route(isset($health) ? 'health-infos.archive' : 'news.archive', [$ar->updated_at->year, $ar->updated_at->format('m')])}}">
                                                             {{ $ar->updated_at->translatedFormat('d M Y') }}
                                                         </a></li>
                                                     {{-- <li><i class="far fa-user"></i><a href="#">Jonathan Smith</a></li> --}}
@@ -89,9 +95,16 @@
                                                 <p>
                                                     {{ Str::limit($ar['description_' . app()->getLocale()], 60) }}
                                                 </p>
+                                                @isset($health)
+                                                <a href="{{ route('health-infos.show', $ar->id) }}" class="read-more">
+                                                    {{__('general.Read More')}} <i
+                                                        class="las la-long-arrow-alt-right"></i></a>
+                                                @else
                                                 <a href="{{ route('get.new', $ar->id) }}" class="read-more">
                                                     {{__('general.Read More')}} <i
                                                         class="las la-long-arrow-alt-right"></i></a>
+                                                @endisset
+                                                
                                             </div>
                                         </div>
                                     </div>
