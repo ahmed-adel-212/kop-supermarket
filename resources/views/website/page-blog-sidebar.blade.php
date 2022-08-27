@@ -19,7 +19,7 @@
                             <h3><a href="{{ route(isset($health) ? 'health-infos.show' : 'get.new', $lat->id) }}">
                                     {{ $lat['title_' . app()->getLocale()] }}
                                 </a></h3>
-                            <a href="{{ route('get.new', $lat->id) }}" class="date"><i class="far fa-calendar-alt"></i>
+                            <a href="{{ route(isset($health) ? 'health-infos.archive' : 'news.archive', [$lat->updated_at->year, $lat->updated_at->format('m')])}}" class="date"><i class="far fa-calendar-alt"></i>
                                 {{ $lat->updated_at->translatedFormat('d M Y') }}
                             </a>
                         </div>
