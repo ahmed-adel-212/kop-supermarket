@@ -91,6 +91,7 @@
                                         <input class="form-control" type="email" id="email-for-pass"
                                                value="@if(isset($email)){{$email}}@else{{old('email')}}@endif" name="email" hidden>
                                         <input class="form-control" type="text" id="token-for-pass"  placeholder="- - - - -" name="token">
+                                        <div id="error"></div>
                                         <div id="recaptcha-container"></div>
                                         <button  id="otp_token" type="button" class="btn btn-primary mt-3" onclick="sendOTP()">Send OTP</button>
                                         <button  id="resend_otp_token" type="button" class="btn btn-primary mt-3" onclick="sendOTP()"  style="display:none">{{__('auth.resend code')}}</button>
@@ -152,7 +153,9 @@
         }
     
         $(function(){
-            $('#verification').on('submit', function(){
+            $('#verification').on('submit', function(event){
+                event.preventDefault();
+
                 var code = $("#token-for-pass").val();
             coderesult.confirm(code).then(function (result) {
                 var user = result.user;
@@ -165,6 +168,7 @@
                 $("#error").text(error.message);
                 $("#error").show();
                 $('#verify').val(0);
+                 
                 return false;
             });
             });
