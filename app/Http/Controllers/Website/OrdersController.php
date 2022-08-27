@@ -57,6 +57,7 @@ class OrdersController extends Controller
             }
             if (session()->has('point_claim_value')) {
                 session()->forget('point_claim_value');
+                session()->forget('points_value');
             }
             // return redirect()->route('get.cart')->with(['success' => __('general.Your order been submitted successfully')]);
             return redirect()->route('get.orders');
@@ -77,6 +78,7 @@ class OrdersController extends Controller
                     'address_id' => array_key_exists('address_id', session('checkOut_details')) ? session('checkOut_details')['address_id'] : null,
                     'service_type' => session('checkOut_details')['service_type'],
                     'points_paid' => array_key_exists("points_paid", session('checkOut_details')) ? session('checkOut_details')['points_paid'] : 0,
+                    'points' => array_key_exists("points_value", session('checkOut_details')) ? session('checkOut_details')['points_value'] : 0,
                     'taxes' => session('checkOut_details')['taxes'],
                     'customer_id' => auth()->user()->id,
                 ]);
@@ -119,6 +121,7 @@ class OrdersController extends Controller
                     }
                     if (session()->has('point_claim_value')) {
                         session()->forget('point_claim_value');
+                        session()->forget('points_value');
                     }
                     session()->flash('success', __('general.Order Payed Successfully'));
                     return redirect()->route('get.cart');
@@ -281,6 +284,7 @@ class OrdersController extends Controller
         $request = $request->merge([
             'delivery_fees' => $order->delivery_fees,
             'points_paid' => (session('point_claim_value')) ? session('point_claim_value') : 0,
+            'points_value' => (session('points_value')) ? session('points_value') : 0,
             'branch_id' => $order->branch_id,
             'address_id' => $order->address_id,
             'service_type' => $order->service_type,
@@ -294,6 +298,7 @@ class OrdersController extends Controller
         $return = $this->store_order($request);
         if (session()->has('point_claim_value')) {
             session()->forget('point_claim_value');
+            session()->forget('points_value');
         }
         if ($return['success']) {
             return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
