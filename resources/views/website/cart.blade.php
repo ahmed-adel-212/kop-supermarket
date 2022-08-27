@@ -50,7 +50,7 @@
     @endsection
 
     @section('content')
-        <section class="page-header" style="background-image: url({{asset('website2-assets/img/page-header-theme.jpg')}})">
+        <section class="page-header" style="background-image: url({{ asset('website2-assets/img/page-header-theme.jpg') }})">
             <div class="bg-shape grey"></div>
             <div class="container">
                 <div class="page-header-content">
@@ -87,6 +87,10 @@
                                         {{-- <p> {{ app()->getLocale() == 'ar' ? $cart->item->description_ar : $cart->item->description_en }}
                                         </p> --}}
                                         <div style="font-size: 10px" class="small">
+                                            <p>
+                                                {{ __('general.Dough Type') }}:
+                                                <b>{{ $cart['dough_type_' . app()->getLocale()] }}</b>
+                                            </p>
                                             @if (count($cart->extras_objects))
                                                 <p>
                                                     <b class="text-primary">{{ __('general.Extra') }}:</b>
@@ -121,7 +125,9 @@
                                     <input style="width: 25%;" type="number"
                                         @if ($cart->offer_id && !$cart->dough_type_ar) disabled @endif data-zeros="true"
                                         value="{{ $cart->quantity }}" min="1" max="20" readonl
-                                        data-id="{{ $cart->id }}" data-price="{{ $cart->price }}" data-prev="{{$cart->quantity}}" data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
+                                        data-id="{{ $cart->id }}" data-price="{{ $cart->price }}"
+                                        data-prev="{{ $cart->quantity }}"
+                                        data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
                                         class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}">
                                 </div>
                             </div>
@@ -179,7 +185,9 @@
                                             {{ round($arr_check['points'], 2) }} {{ __('general.SR') }}</span>
                                         <input id="pointsinput" hidden name="points_paid"
                                             value="{{ $arr_check['points'] }}" />
-                                        <input id="pointsValue" hidden name="points_value" value="{{$arr_check['points_value']}}" />                                    </li>
+                                        <input id="pointsValue" hidden name="points_value"
+                                            value="{{ $arr_check['points_value'] }}" />
+                                    </li>
                                 @endif
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Total') }}
                                         : </b> <span style="font-size: smaller;" id="total">{{ $arr_check['total'] }}
@@ -227,7 +235,7 @@
             </div>
         </div>
 
-       
+
     @endsection
 
     @section('scripts')
@@ -283,7 +291,7 @@
                     });
                 });
 
-                $(document).on('change', '.quantity_ch',function(ev) {
+                $(document).on('change', '.quantity_ch', function(ev) {
                     ev.preventDefault();
 
                     var elem = $(this);
@@ -292,12 +300,15 @@
                     var price = $(this).attr('data-price');
                     var href = $(this).attr('data-url');
 
-                    $('.confirm').attr('data-id', id).attr('data-price', price).attr('quantity', parseInt(quantity));
+                    $('.confirm').attr('data-id', id).attr('data-price', price).attr('quantity', parseInt(
+                        quantity));
                     $('.item-link').attr('href', href);
 
                     var val = parseInt(elem.val(), 10);
                     var prev = parseInt(elem.attr('data-prev'), 10);
-                    if (val <= 0) {return;}
+                    if (val <= 0) {
+                        return;
+                    }
 
                     // console.log(val, prev);
 
