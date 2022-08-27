@@ -20,7 +20,7 @@ class AuthController extends Controller
 
     public function get_login()
     {
-        return view('website.login');
+        return view('website.login'); 
     }
 
     public function get_sign_up()

@@ -79,10 +79,11 @@
                  <div class="container padding-bottom-3x mb-2">
                     <div class="row justify-content-center">
                         <div class="col-lg-8 col-md-10">
-                            <form class="card mt-4" id="verification"  method="get">
+                            <form class="card mt-4" action="{{route('verifyCode.save')}}" id="verification"  method="get">
                                 @csrf
                                     <input hidden type="text" id="number" name="phone" value="{{$phone}}">
                                     <input hidden  type="text" id="number" name="user_id" value="{{$user_id}}">
+                                    <input hidden  type="text" id="verify" name="verify" value="0">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="email-for-pass">{{__('auth.Enter Your Verification Code')}}</label>
@@ -95,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer" id='submit_form' style="display:none;">
-                                    <button class="btn btn-primary" id="save" type="submit" formaction="{{route('verifyCode.save')}}">{{__('general.Send')}}</button>
+                                    <button class="btn btn-primary" id="save" type="submit">{{__('general.Send')}}</button>
                                     <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" onclick="sendOTP()">{{__('auth.resend code')}}</button>
                                 </div>
                             </form>
@@ -113,13 +114,13 @@
 
     <script>
         var firebaseConfig = {
-            apiKey: "API_KEY",
-            authDomain: "PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://PROJECT_ID.firebaseio.com",
-            projectId: "PROJECT_ID",
-            storageBucket: "PROJECT_ID.appspot.com",
-            messagingSenderId: "SENDER_ID",
-            appId: "APP_ID"
+            apiKey: "AIzaSyD7P_2ebS_75Ipug4RKuWUh30O8SVVqHLg",
+            authDomain: "kopflutter.firebaseapp.com",
+            projectId: "kopflutter",
+            storageBucket: "kopflutter.appspot.com",
+            messagingSenderId: "205767716669",
+            appId: "1:205767716669:web:bdbb42d05daa0d43171f54",
+            measurementId: "G-WNMF4VSY4F"
         };
         firebase.initializeApp(firebaseConfig);
     </script>
@@ -137,8 +138,7 @@
                 window.confirmationResult = confirmationResult;
                 coderesult = confirmationResult;
                 console.log(coderesult);
-                $("#successAuth").text("Message sent");
-                $("#successAuth").show();
+                alert("Message sent");
                 document.getElementById('otp_token').style.display = 'none';
                 document.getElementById('submit_form').style.display = 'block';
             }).catch(function (error) {
@@ -146,18 +146,25 @@
                 $("#error").show();
             });
         }
-        function verify() {
-            var code = $("#verification").val();
+    
+        $(function(){
+            $('#verification').on('submit', function{
+                var code = $("#token-for-pass").val();
             coderesult.confirm(code).then(function (result) {
                 var user = result.user;
                 console.log(user);
-                $("#successOtpAuth").text("Auth is successful");
-                $("#successOtpAuth").show();
+                $('#verify').val(1);
+                return false;
+                // $("#successOtpAuth").text("Auth is successful");
+                // $("#successOtpAuth").show();
             }).catch(function (error) {
                 $("#error").text(error.message);
                 $("#error").show();
+                $('#verify').val(0);
+                return false;
             });
-        }
+            });
+        });
     </script>
 @endsection 
 

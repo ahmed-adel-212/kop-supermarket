@@ -247,7 +247,7 @@
                 <div class="row product-items">
                     @foreach($menu['dealItems'] as $dealItem)
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}">
-                        <div class="product-item wow fadeInUp" >
+                        <div class="product-item " >
                           
                            <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food">
