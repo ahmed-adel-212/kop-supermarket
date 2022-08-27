@@ -98,7 +98,7 @@
                                         <div class="help-block" style="display: none"></div>
                                     </div>
                                 </div>
-                                <div class="card-footer" id='submit_form' style="display:none">
+                                <div class="card-footer" id='submit_form' >
                                     <button class="btn btn-primary" id="save" type="submit">{{__('general.Send')}}</button>
                                     <!-- <button class="btn btn-default font-weight-bold" style="color: #0f7ae5; @if(app()->getLocale() == 'ar') float:left; @else float:right; @endif" type="submit" onclick="sendOTP()">{{__('auth.resend code')}}</button> -->
                                 </div>
@@ -161,7 +161,7 @@
                 var user = result.user;
                 console.log(user);
                 $('#verify').val(1);
-                return false;
+                $('#verification').submit();
                 // $("#successOtpAuth").text("Auth is successful");
                 // $("#successOtpAuth").show();
             }).catch(function (error) {
