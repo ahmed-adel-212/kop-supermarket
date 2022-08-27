@@ -67,13 +67,22 @@
                                 <p class="text-50">{{ __('general.Sign up to continue') }}</p>
 
 
-                                @error('errors')
-                                    <div class="row mr-2 ml-2">
-                                        <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
-                                            id="type-error">{{ $message }}
-                                        </button>
-                                    </div>
-                                @enderror
+                                <div class="row">
+                                    @if (Session::has('success'))
+                                        <div class="col-12 mr-2 ml-2">
+                                            <button type="text" class="btn btn-lg btn-block btn-outline-success mb-2"
+                                                id="type-error">{{ Session::get('success') }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                    @if (Session::has('error'))
+                                        <div class="col-12 mr-2 ml-2">
+                                            <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
+                                                id="type-error">{{ Session::get('error') }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
                                 <form class="mt-5 mb-4" method="POSt" action="{{ route('sign.up') }}">
                                     @CSRF
                                     <div class="form-group my-2">

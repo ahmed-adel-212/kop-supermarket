@@ -5,7 +5,7 @@
 @extends('layouts.website.app')
 
 @section('title')
-    {{__('auth.login')}}
+    {{ __('auth.login') }}
 @endsection
 
 @section('styles')
@@ -17,9 +17,11 @@
             left: 0;
             height: 100%;
         }
+
         [dir="rtl"] .login-page video {
             right: 0;
         }
+
         [dir="rtl"] .login-page input:focus {
             direction: ltr;
         }
@@ -27,15 +29,16 @@
         .header {
             background-color: #fff;
         }
+
         .header a {
             color: #000;
         }
+
         .footer-section {
             /* display: none; */
         }
 
-        @media (max-width: 992px) {
-        }
+        @media (max-width: 992px) {}
 
         @media (max-width: 736px) {
             .login-page video {
@@ -69,27 +72,30 @@
                                 </a>
                                 <h2 class="text-dark my-0">{{ __('general.Welcome Back') }}</h2>
                                 <p class="text-50">{{ __('general.Sign in to continue') }}</p>
-                                @if (Session::has('success'))
-                                    <div class="row mr-2 ml-2">
-                                        <button type="text" class="btn btn-lg btn-block btn-outline-success mb-2"
-                                            id="type-error">{{ Session::get('success') }}
-                                        </button>
-                                    </div>
-                                @endif
-                                @if (Session::has('error'))
-                                    <div class="row mr-2 ml-2">
-                                        <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
-                                            id="type-error">{{ Session::get('error') }}
-                                        </button>
-                                    </div>
-                                @endif
+                                <div class="row">
+                                    @if (Session::has('success'))
+                                        <div class="col-12 mr-2 ml-2">
+                                            <button type="text" class="btn btn-lg btn-block btn-outline-success mb-2"
+                                                id="type-error">{{ Session::get('success') }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                    @if (Session::has('error'))
+                                        <div class="col-12 mr-2 ml-2">
+                                            <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
+                                                id="type-error">{{ Session::get('error') }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
                                 <form class="mt-0 mb-0" method="post" action="{{ route('sign.in') }}">
                                     @csrf
                                     <div class="form-group my-2">
                                         <label for="exampleInputEmail1" class="text-dark">{{ __('general.Email') }}</label>
-                                        <input type="email" value="{{ Session::has('email') ? Session::get('email') : old('email') }}" name="email"
-                                            placeholder="{{ __('general.Enter Your E-mail') }}" class="form-control"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        <input type="email"
+                                            value="{{ Session::has('email') ? Session::get('email') : old('email') }}"
+                                            name="email" placeholder="{{ __('general.Enter Your E-mail') }}"
+                                            class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                         @error('email')
                                             <div class="help-block">{{ $message }}</div>
                                         @enderror
