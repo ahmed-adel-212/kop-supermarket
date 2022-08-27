@@ -41,4 +41,6 @@ return [
     'points_success' => 'Points Changed Successfully',
     'unauthenticated' => 'User is not Logged In',
     'unauthorised' => 'User is not Authorised',
+    'no_id' => 'invalid user id',
+    'already_verified' => 'User Account is Already Verified',
 ];

@@ -38,6 +38,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
     Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');
 
+    Route::put('verify-user/{id}', 'Api\AuthController@activateUser')->name('verify-user');
+
     Route::group(['middleware' => ['auth:api', 'verifyTwilio']], function () {
         Route::get('user', 'Api\AuthController@getUser');
         Route::put('user', 'Api\AuthController@updateUser');

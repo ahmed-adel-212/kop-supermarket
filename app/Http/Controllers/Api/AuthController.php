@@ -151,14 +151,14 @@ class AuthController extends BaseController
 
         // Auth::login($user);
 
-        $token = $user->createToken('AppName')->accessToken;
+        // $token = $user->createToken('AppName')->accessToken;
 
         return response()->json([
             "success" => true,
             'user_created' => true,
             'user' => $user,
             // 'data' => $user,
-            'token' => $token,
+            'token' => null,
             'message_sent' => true,
             "message" => __('general.created', ['key' => __('auth.user_account')]),
         ], 200);
@@ -574,5 +574,46 @@ class AuthController extends BaseController
         return response()->json([
             'message' => __('auth.unauthenticated'),
         ]);
+    }
+    
+    public function activateUser(Request $request, $id)
+    {
+        // dd($request->all());
+        $req = (object) $request->validate([
+            'verified' => 'required|boolean',
+        ]);
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return $this->sendError(
+                __('auth.no_id'),
+            );
+        }
+
+        if ($req->verified === true) {
+            if ($user->email_verified_at !== null) {
+                return $this->sendError(
+                    __('auth.already_verified')
+                );
+            }
+
+            $user->email_verified_at = now();
+            $user->save();
+
+            $token = $user->createToken('AppName')->accessToken;
+
+            Auth::login($user);
+
+            return $this->sendResponse([
+                // 'user_verified' => true,
+                'token' => $token,
+            ], __('auth.verified'));
+        }
+
+        return $this->sendError([
+            // 'user_verified' => false,
+            'token' => null,
+        ], [], 403);
     }
 }
