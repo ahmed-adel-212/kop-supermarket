@@ -59,7 +59,7 @@ class ItemController extends Controller
             "price" => 'required|numeric',
             "calories" => 'required|numeric',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
             "category_id" => 'required|exists:categories,id',
         ]);
 
@@ -175,7 +175,7 @@ class ItemController extends Controller
             "price" => 'required|numeric',
             "calories" => 'required|numeric',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
             "category_id" => 'required|exists:categories,id',
         ]);
 
