@@ -221,7 +221,9 @@
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Loyality Discount') }}
                                             : </b> <span> -
                                             <span id="points"
-                                                style="font-size: smaller;">{{ round($arr_check['points'], 2) }}
+                                                style="font-size: smaller;">{{ round($arr_check['points'], 2) }}</span>
+                                                <span id="points"
+                                                style="font-size: smaller;">
                                                 {{ __('general.SR') }}</span></span>
                                         <input id="pointsinput" hidden name="points_paid"
                                             value="{{ $arr_check['points'] }}" />
@@ -314,11 +316,27 @@
                             // $('#itemcount').text((parseInt($('#itemcount').text())) - data.carts.length);
 
 
-                            $('#subtotal').text(data.arr_check.taxes);
-                            $('#taxes').text((data.arr_check.taxes - (data.arr_check.taxes /
-                                1.15)).toFixed(2));
-                            $('#total').text(data.arr_check.total);
-                            $('#delivery_fees').text(data.arr_check.delivery_fees);
+                            // $('#subtotal').text(data.arr_check.taxes);
+                            // $('#taxes').text((data.arr_check.taxes - (data.arr_check.taxes /
+                            //     1.15)).toFixed(2));
+                            // $('#total').text(data.arr_check.total);
+                            // $('#delivery_fees').text(data.arr_check.delivery_fees);
+                            data = data.arr_check;
+                            $('#subtotal').text((data.subtotal_without_offer /1.15).toFixed(2) +
+                                ' {{ __('general.SR') }}');
+                            $('#subtotalinput').val(data.subtotal_without_offer /1.15);
+
+                            $('#taxes').text((data.subtotal_without_offer - (data.subtotal_without_offer / 1.15)).toFixed(2) +
+                                ' {{ __('general.SR') }}');
+                            $('#taxesinput').val(data.subtotal_without_offer - (data.subtotal_without_offer / 1.15));
+
+                            $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
+                            $('#totalinput').val(data.total);
+
+                            $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
+                                ' {{ __('general.SR') }}');
+                            $('#delivery_feesinput').val(data.delivery_fees);
+                            $('#discount').text((data.subtotal_without_offer - data.subtotal).toFixed(2));
                             @if (isset($arr_check['points']))
                                 $('#points').text(data.arr_check.points);
                             @endif

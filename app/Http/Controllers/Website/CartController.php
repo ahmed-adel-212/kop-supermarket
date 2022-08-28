@@ -270,7 +270,7 @@ class CartController extends Controller
 
     public function get_delivery_fees($area_id)
     {
-
+        return round(15.563256, 2);
         $fees =Area::where('id', $area_id)->select('delivery_fees')->first();
         return round($fees->delivery_fees, 2);
     }
