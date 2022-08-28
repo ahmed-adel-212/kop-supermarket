@@ -15,6 +15,13 @@ class Address extends Model
 
     protected $guarded = [];
 
+    public $appends = ['delivery_fee'];
+
+    public function getDeliveryFeeAttribute()
+    {
+        return 25.05;
+    }
+
     public function customer()
     {
     	return $this->belongsTo('App\Models\user');
