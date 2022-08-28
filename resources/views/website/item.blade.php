@@ -227,7 +227,7 @@
                                                 x-on:click="$dispatch('remove-last-item')"
                                                 style="font-size: 50px;cursor: pointer;">-</span><input disabled
                                                 type="text" name="quantity" x-bind:value="items.length" id="quantity"
-                                                style="width: 20%;margin-left: 5px; margin-right: 5px;"><span class="plus"
+                                                style="width: 20%;margin-left: 5px; margin-right: 5px;text-align: center;"><span class="plus"
                                                 x-data x-on:click="$dispatch('add-item')"
                                                 style="font-size: 30px;cursor: pointer;">+</span></span>
                                         <div> <button @auth
