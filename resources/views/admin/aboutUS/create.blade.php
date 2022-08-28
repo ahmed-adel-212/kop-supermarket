@@ -205,7 +205,7 @@
             }
 
             if (val === 'with-bg') {
-                $('.img-size').text('1920*1080');
+                $('.img-size').text('1100*1000');
             } else {
                 $('.img-size').text('600*400');
             }
