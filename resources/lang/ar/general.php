@@ -381,4 +381,5 @@ return [
 'payment_type' => 'طريقة الدفع',
 'confirm_order' => 'تأكيد الطلب',
 'discount' => 'خصم العروض',
+'Dough Type2' => 'حجم العجينة',
 ];

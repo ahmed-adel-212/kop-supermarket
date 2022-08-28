@@ -65,11 +65,15 @@
             background-color: white !important;
         }
 
-        .btn-check:checked+.btn, .btn-check:checked+.btn:hover {
+        .btn-check:checked+.btn,
+        .btn-check:checked+.btn:hover {
             background-color: #6dc405 !important;
             border-radius: 10px !important;
             border-color: #6dc405 !important;
             color: #fff !important;
+        }
+        .btn-outline-primary {
+            background-color: #eee;
         }
     </style>
 @endsection
@@ -88,7 +92,7 @@
                 if (d.checked) {
                     active = d;
                 }
-            } --}}    
+            } --}}
             this.items.push({
                 uid: Math.floor(Math.random() * 100000000),
                 item_id: {{ $item['id'] }},
@@ -96,12 +100,14 @@
                 info: '{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}',
                 category: '{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}',
                 calories: {{ $item->calories }},
-                dough: '{{$item['dough_type'][0]['name_ar']}},{{$item['dough_type'][0]['name_en']}}',
+                dough: '{{ $item['dough_type'][0]['name_ar'] }},{{ $item['dough_type'][0]['name_en'] }}',
+                @if (isset($item['dough_type_2']) && !empty($item['dough_type_2'])) dough2: '{{ $item['dough_type_2'][0]['name_ar'] }},{{ $item['dough_type_2'][0]['name_en'] }}', @endif
                 real_price: {{ round($item->price, 2) }},
                 price: {{ round(isset($item['offer']) ? $item['offer']['offer_price'] : $item->price, 2) }},
                 offer_price: {{ isset($item['offer']) ? round($item['offer']['offer_price'], 2) : 0 }},
                 extras: [],
                 withouts: [],
+                quantity: 1,
             });
     
             console.log(this.items);
@@ -128,14 +134,6 @@
                     } else {
                         x[type].splice(found, 1);
                     }
-                }
-                return x;
-            });
-        },
-        setDoughType: function(id, dough) {
-            this.items.map(x => {
-                if (x.uid === id) {
-                    x.dough = dough;
                 }
                 return x;
             });
@@ -172,7 +170,8 @@
                 <form id="addToCard" action="{{ route('add.cart') }}" method="POST">
                     @csrf
                     @if ($item['offer'])
-                        <input type="hidden" name="offer_id" value="{{ $item['offer'] ? $item['offer']['offer_id'] : '' }}">
+                        <input type="hidden" name="offer_id"
+                            value="{{ $item['offer'] ? $item['offer']['offer_id'] : '' }}">
                         <input type="hidden" name="offer_price"
                             value="{{ $item['offer'] ? round($item['offer']['offer_price'], 2) : '' }}">
                     @endif
@@ -226,9 +225,9 @@
                                         <span class="counter" style="display: flex;"><span class="minus" x-data
                                                 x-on:click="$dispatch('remove-last-item')"
                                                 style="font-size: 50px;cursor: pointer;">-</span><input disabled
-                                                type="text" name="quantity" x-bind:value="items.length" id="quantity"
-                                                style="width: 20%;margin-left: 5px; margin-right: 5px;text-align: center;"><span class="plus"
-                                                x-data x-on:click="$dispatch('add-item')"
+                                                type="text" name="quantity" x-bind:value="items.length + items.reduce((a, b) => a += b.quantity -1, 0)" id="quantity"
+                                                style="width: 20%;margin-left: 5px; margin-right: 5px;text-align: center;"><span
+                                                class="plus" x-data x-on:click="$dispatch('add-item')"
                                                 style="font-size: 30px;cursor: pointer;">+</span></span>
                                         <div> <button @auth
                                                     @if (!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif
@@ -236,7 +235,8 @@
                                                 type="submit">{{ __('home.Add to Cart') }}</button></div>
                                     </div>
                                     <ul class="product-meta">
-                                        <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $item->calories }}</a></li>
+                                        <li>{{ __('general.calories') }}:<a
+                                                href="javascript:void(0)">{{ $item->calories }}</a></li>
                                     </ul>
                                     <ul class="social-icon">
                                         <li>Share:</li>
@@ -259,29 +259,69 @@
 
                     <div class="accordion-item">
                         <h2 class="accordion-header" x-bind:id="'flush-heading' + item.uid">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed d-flex justify-content-between" type="button" data-bs-toggle="collapse"
                                 x-bind:data-bs-target="'#flush-collapse' + item.uid" aria-expanded="false"
                                 x-bind:aria-controls="'flush-collapse' + item.uid" x-text="'Sandwich ' + (sinx+1)">
                             </button>
+                            
                         </h2>
                         <div x-bind:id="'flush-collapse' + item.uid" class="accordion-collapse collapse"
                             x-bind:aria-labelledby="'flush-heading' + item.uid" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            {{__('general.Dough Type')}}:&nbsp;
-                                            <div class="btn-group" role="group"
-                                                aria-label="Basic radio toggle button group" style="width: 75%;">
-                                                @foreach ($item['dough_type'] as $dough)
-                                                    <input class="btn-check" autocomplete="off"
-                                                        x-bind:id="'{{ $dough['name_en'] }}' + item.uid" type="radio" x-bind:name="'dough_type' + item.uid"
-                                                        value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
-                                                        @if ($loop->first) checked @endif>
-                                                    <label class="btn btn-outline-primary" x-bind:for="'{{ $dough['name_en'] }}' + item.uid" x-on:click="setDoughType(item.uid, '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}')">
-                                                        <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
-                                                @endforeach
+                                    <div class="d-flex justify-content-between">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-6 my-2">
+                                                    {{ __('general.Dough Type') }}:&nbsp;
+                                                    <div class="btn-group" role="group"
+                                                        aria-label="Basic radio toggle button group" style="width: 50%;">
+                                                        @foreach ($item['dough_type'] as $dough)
+                                                            <input class="btn-check" autocomplete="off"
+                                                                x-bind:id="'{{ $dough['name_en'] }}' + item.uid" type="radio"
+                                                                x-bind:name="'dough_type' + item.uid"
+                                                                value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
+                                                                @if ($loop->first) checked @endif>
+                                                            <label class="btn btn-outline-primary"
+                                                                x-bind:for="'{{ $dough['name_en'] }}' + item.uid"
+                                                                x-on:click="item.dough = '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}'">
+                                                                <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
+                                            <div class="row my-2">
+                                                @if (isset($item['dough_type_2']) && !empty($item['dough_type_2']))
+                                                    <div class="col-md-6 my-2">
+                                                        {{ __('general.Dough Type2') }} :&nbsp;
+                                                        <div class="btn-group" role="group"
+                                                            aria-label="Basic radio toggle button group" style="width: 50%;">
+                                                            @foreach ($item['dough_type_2'] as $dough)
+                                                                <input class="btn-check" autocomplete="off"
+                                                                    x-bind:id="'{{ $dough['name_en'] }}' + item.uid"
+                                                                    type="radio" x-bind:name="'dough_type_2' + item.uid"
+                                                                    value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
+                                                                    @if ($loop->first) checked @endif>
+                                                                <label class="btn btn-outline-primary"
+                                                                    x-bind:for="'{{ $dough['name_en'] }}' + item.uid"
+                                                                    x-on:click="item.dough2 = '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}'">
+                                                                    <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <span class="counter" style="display: flex;"><span class="minus" x-data
+                                                x-on:click="item.quantity--"
+                                                style="font-size: 50px;cursor: pointer;">-</span><input disabled
+                                                type="text" name="item-quantity" x-bind:value="item.quantity" id="item-quantity"
+                                                style="width: 20%;margin-left: 5px; margin-right: 5px;text-align: center;"><span
+                                                class="plus" x-data x-on:click="item.quantity++"
+                                                style="font-size: 30px;cursor: pointer;">+</span></span>
                                         </div>
                                     </div>
 

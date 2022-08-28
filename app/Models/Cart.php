@@ -17,6 +17,8 @@ class Cart extends Model
         'withouts',
         'dough_type_ar',
         'dough_type_en',
+        'dough_type_2_ar',
+        'dough_type_2_en',
         'quantity',
         'offer_id',
         'offer_price'

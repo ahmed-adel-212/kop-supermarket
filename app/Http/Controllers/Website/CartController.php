@@ -15,19 +15,19 @@ class CartController extends Controller
 {
 
     public function addCart(Request $request)
-    { 
+    {
         // return $request;
-        
+
         if ($request->has('add_items')) {
             // dd(json_decode($request->add_items), $request->all());
             $items = json_decode($request->add_items);
             foreach ($items as $index => $item) {
                 $newRequest = new Request();
                 $newRequest->merge(['item_id' => $request->item_id]);
-                $newRequest->merge(['offer_id' => $request->offer_id]);
-                $newRequest->merge(['offer_price' => $request->offer_price?$request->offer_price:null]);
-                $newRequest->merge(['quantity' => 1]);
-                
+                $newRequest->merge(['offer_id' => $request->offer_id ? $request->offer_id : null]);
+                $newRequest->merge(['offer_price' => $request->offer_price ? $request->offer_price : null]);
+                $newRequest->merge(['quantity' => $item->quantity]);
+
                 $dough = explode(',', $item->dough);
                 $request->merge([
                     'dough_type_ar' => $dough[0],
@@ -35,7 +35,17 @@ class CartController extends Controller
                 $request->merge([
                     'dough_type_en' => $dough[1],
                 ]);
-                
+
+                if (isset($item->dough2)) {
+                    $dough = explode(',', $item->dough2);
+                    $request->merge([
+                        'dough_type_2_ar' => $dough[0],
+                    ]);
+                    $request->merge([
+                        'dough_type_2_en' => $dough[1],
+                    ]);
+                }
+
 
                 // dd([
                 //     'user_id' =>  Auth::user()->id,
@@ -48,7 +58,7 @@ class CartController extends Controller
                 //     'offer_id' =>  $request->offer_id,
                 //     'offer_price' =>  $request->offer_price,
                 // ]);
-                
+
                 $cart = Cart::create([
                     'user_id' =>  Auth::user()->id,
                     'item_id' =>  $request->item_id,
@@ -56,7 +66,9 @@ class CartController extends Controller
                     'withouts' =>  json_encode($item->withouts),
                     'dough_type_ar' =>  $request->dough_type_ar,
                     'dough_type_en' =>  $request->dough_type_en,
-                    'quantity' =>  1,
+                    'dough_type_2_ar' =>  $request->has('dough_type_2_ar') ? $request->dough_type_2_ar : null,
+                    'dough_type_2_en' =>  $request->has('dough_type_2_en') ? $request->dough_type_2_en : null,
+                    'quantity' =>  $item->quantity,
                     'offer_id' =>  $request->offer_id,
                     'offer_price' =>  $request->offer_price,
                 ]);
@@ -120,26 +132,25 @@ class CartController extends Controller
     {
         $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
         $request = new \Illuminate\Http\Request();
-        
+
         if ($return['success'] == 'success') {
             $carts = $return['data'];
             $arr_check = $this->get_check();
-            
+
             if (session()->has('point_claim_value')) {
 
                 return view('website.cart', compact(['carts', 'arr_check']));
             } else {
                 return view('website.cart', compact(['carts', 'arr_check']));
-
             }
         }
-    }  public function get_cart_res()
+    }
+    public function get_cart_res()
     {
         $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
-         if ($return['success'] == 'success') {
-              return response()->json(['success'=>true,'data'=>count($return['data'])], 200);
-
-         }
+        if ($return['success'] == 'success') {
+            return response()->json(['success' => true, 'data' => count($return['data'])], 200);
+        }
     }
 
     public function delete_cart(Request $request)
@@ -147,10 +158,10 @@ class CartController extends Controller
         $deleteCart = (app(\App\Http\Controllers\Api\CartController::class)->deleteCart($request))->getOriginalContent();
         $carts = $deleteCart['data'];
         $arr_check = $this->get_check();
-        
+
         return response()->json([
-            'carts'=>$carts,
-            'arr_check'=>$arr_check,
+            'carts' => $carts,
+            'arr_check' => $arr_check,
         ]);
     }
 
@@ -174,7 +185,6 @@ class CartController extends Controller
                 $quantity = $cart->quantity;
                 if ($cart->offer_id) {
                     $item_price = $cart->offer_price;
-
                 } else {
                     $item_price = $cart->item->price;
                 }
@@ -190,16 +200,16 @@ class CartController extends Controller
 
 
             // if (session()->has('loyality-points')) {
-                // $loyality = session('loyality-points');
-                // $value = $loyality['value'];
-                // $points = $loyality['points'];
-                // $arr_data['points'] = round($value, 2);
-                // $arr_data['taxes'] = round($final_item_price / 1.15, 2);
-                // $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
-                // $arr_data['subtotal'] = round($final_item_price, 2);
-                // $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
-                // $arr_data['total'] = round($final_item_price, 2);
-                // return $arr_data;
+            // $loyality = session('loyality-points');
+            // $value = $loyality['value'];
+            // $points = $loyality['points'];
+            // $arr_data['points'] = round($value, 2);
+            // $arr_data['taxes'] = round($final_item_price / 1.15, 2);
+            // $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
+            // $arr_data['subtotal'] = round($final_item_price, 2);
+            // $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
+            // $arr_data['total'] = round($final_item_price, 2);
+            // return $arr_data;
             // }
             if (session()->has('point_claim_value')) {
                 $arr_data['points'] = round(session()->get('point_claim_value'), 2);
@@ -225,15 +235,12 @@ class CartController extends Controller
                 $arr_data['total'] = round($final_item_price, 2);
                 return $arr_data;
             }
-
         }
-
-
     }
 
     public function get_checkout(Request $request)
     {
-        if(auth()->user()->carts()->get()->count() <= 0 ){
+        if (auth()->user()->carts()->get()->count() <= 0) {
             return redirect()->route('menu.page');
         }
         $service_type = session()->get('service_type');
@@ -264,13 +271,11 @@ class CartController extends Controller
         }
 
         return view('website.checkout', compact('request', 'branch', 'work_hours'));
-
-
     }
 
     public function get_delivery_fees($area_id)
     {
-        $fees =Area::where('id', $area_id)->select('delivery_fees')->first();
+        $fees = Area::where('id', $area_id)->select('delivery_fees')->first();
         return round($fees->delivery_fees, 2);
     }
 }

@@ -183,13 +183,13 @@
                         </div>
                         <div class="col-lg-4 sm-padding">
                             <ul class="cart-total">
-                                <li><span>{{ __('general.Sub Total') }}:</span>{{ $request->subtotal }}
+                                <li><span>{{ __('general.Sub Total') }}:</span>{{ round($request->subtotal, 2) }}
                                     {{ __('general.SR') }}</li>
 
                                 <li><span>{{ __('general.Taxes') }} :</span>{{ round($request->taxes, 2) }}
                                     {{ __('general.SR') }}</li>
 
-                                <li><span>{{ __('general.Delivery Fees') }} :</span>{{ $request->delivery_fees }}
+                                <li><span>{{ __('general.Delivery Fees') }} :</span>{{ round($request->delivery_fees, 2) }}
                                     {{ __('general.SR') }}</li>
 
                                 <li><span>{{ __('general.discount') }} :</span>- {{ round($request->discount, 2) }}
@@ -199,7 +199,7 @@
                                     <li><span>{{ __('general.Loyality Points') }} :</span> <span>-
                                             {{ round($request->points_paid, 2) }} {{ __('general.SR') }}</span></li>
                                 @endif
-                                <li><span>{{ __('general.Total') }} :</span>{{ $request->total }}
+                                <li><span>{{ __('general.Total') }} :</span>{{ round($request->total, 2) }}
                                     {{ __('general.SR') }}
                                 </li>
 

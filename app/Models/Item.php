@@ -18,7 +18,7 @@ class Item extends Model
     protected $fillable = ['branches','name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
 
     // protected $hidden = ["branches"];
-    protected $appends = ['is_hidden', 'dough_type', 'favoured', 'price_without_tax'];
+    protected $appends = ['is_hidden', 'dough_type', 'dough_type_2', 'favoured', 'price_without_tax'];
 
     public $casts = ['main' => 'boolean'];
 
@@ -77,6 +77,19 @@ class Item extends Model
             return [];
         }
         $dough_type_id = $category->dough_type_id;
+        $dough_type = DoughType::where('dough_type_id', $dough_type_id)->select('name_ar', 'name_en')->get();
+
+        return $dough_type;
+    }
+
+    public function getDoughType2Attribute()
+    {
+        // $category = Category::where('id', $this->category_id)->first();
+        $category = Category::find($this->category_id);
+        if (!$category || null === $category->dough_type_2_id) {
+            return [];
+        }
+        $dough_type_id = $category->dough_type_2_id;
         $dough_type = DoughType::where('dough_type_id', $dough_type_id)->select('name_ar', 'name_en')->get();
 
         return $dough_type;

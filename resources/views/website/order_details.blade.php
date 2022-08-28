@@ -42,7 +42,7 @@
     @section('content')
         <main class="page-main">
             <section class="page-header"
-                style="background-image: url({{ asset('website-assets/img/pages/home/careers.jpg') }})">
+            style="background-image: url({{ asset('website2-assets/img/page-header-theme.jpg') }})">
                 <div class="bg-shape grey"></div>
                 <div class="container">
                     <div class="page-header-content">
@@ -157,6 +157,15 @@
                                             <input id="pointsinput" hidden name="points_paid"
                                                 value="{{ $order['points_paid'] }}" />
 
+                                        </li>
+                                    @endif
+
+                                    @if ($order['subtotal'] < $order['total'])
+                                        <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
+                                                : </b> <span id="points" style="font-size: smaller;">
+                                                {{ round($order['total'] - ($order['subtotal'] + $order['taxes']), 2) }} {{ __('general.SR') }}</span>
+                                            <input id="discount-offers" hidden name="discount"
+                                                value="{{ round($order['total'] < $order['subtotal'], 2) }}" />
                                         </li>
                                     @endif
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Total') }}

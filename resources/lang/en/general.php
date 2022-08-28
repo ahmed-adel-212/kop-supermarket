@@ -359,4 +359,5 @@ return [
     'payment_type' => 'Payment Type',
     'confirm_order' => 'Confirm Order',
     'discount' => 'Offers Discount',
+    'Dough Type2' => 'Dough Size',
 ];

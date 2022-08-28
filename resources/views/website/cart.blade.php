@@ -93,6 +93,12 @@
                                                     <b>{{ $cart['dough_type_' . app()->getLocale()] }}</b>
                                                 </p>
                                             @endif
+                                            @if (isset($cart['dough_type_2_' . app()->getLocale()]))
+                                                <p>
+                                                    {{ __('general.Dough Type2') }}:
+                                                    <b>{{ $cart['dough_type_2_' . app()->getLocale()] }}</b>
+                                                </p>
+                                            @endif
                                             @if (count($cart->extras_objects))
                                                 <p>
                                                     <b class="text-primary">{{ __('general.Extra') }}:</b>
