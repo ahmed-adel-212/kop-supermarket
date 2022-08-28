@@ -76,22 +76,26 @@ class OffersController extends BaseController
 
             $get_items = $offer->buyGet->getItems;
 
-            foreach ($get_items as $item) {
-
-                if ($offer->buyGet->offer_price) {
-                    $disccountValue = $item->price * $offer->buyGet->offer_price / 100;
-                    $item->offer_price = $item->price - $disccountValue;
-                } else {
-                    $item->offer_price = 0;
-                }
-            }
             $details = $offer->buyGet;
             $details['buy_items'] = $buy_items;
-            $details['get_items'] = $get_items;
+            $details['get_items'] = [];
+            
             $details['buy_category'] = $offer->buyGet->buyCategory;
             $details['get_category'] = $offer->buyGet->getCategory;
 
             $result['details'] = $details;
+            foreach ($get_items as $item) {
+                $item = $item->toArray();
+                if ($offer->buyGet->offer_price) {
+                    $disccountValue = $item['price'] * $offer->buyGet->offer_price / 100;
+                    $item['offer_price'] = $item['price'] - $disccountValue;
+                } else {
+                    $item['offer_price'] = 0;
+                    // dd($item);
+                }
+                $result['details']['get_items'][] = $item;
+            }
+
             return $this->sendResponse($result, 'offer detials');
         }
 
@@ -104,21 +108,26 @@ class OffersController extends BaseController
             }
             $items = Item::whereIn('id', $itemsIds)->get();
 
-            foreach ($items as $item) {
-                if ($offer->discount->discount_type == 1) {
-                    $disccountValue = $item->price * $offer->discount->discount_value / 100;
-                    $item->offer_price = $item->price - $disccountValue;
-                } elseif ($offer->discount->discount_type == 2) {
-                    $item->offer_price = $item->price - $offer->discount->discount_value;
-                }
-            }
             $details = $offer->discount;
-            $details['items'] = $items;
+            // $details['items'] = $items;
             $result['details'] = $details;
+
+            foreach ($items as $item) {
+                $item = $item->toArray();
+                if ($offer->discount->discount_type == 1) {
+                    $disccountValue = $item['price'] * $offer->discount->discount_value / 100;                   
+                    $item['offer_price'] = round($item['price'] - $disccountValue, 2);                    
+                } elseif ($offer->discount->discount_type == 2) {
+                    $item['offer_price'] = round($item['price'] - $offer->discount->discount_value);
+                }
+                // $result['details']['items'];
+                $result['details']['items'][] = $item;
+            }
+            
             return $this->sendResponse($result, 'offer details');
         }
 
-        return $offer->with('buyGet', 'discount')->first()->toJson();
+        // return $offer->with('buyGet', 'discount')->first()->toJson();
     }
 
     public function check(Request $request)
