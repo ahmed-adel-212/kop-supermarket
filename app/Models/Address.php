@@ -19,7 +19,7 @@ class Address extends Model
 
     public function getDeliveryFeeAttribute()
     {
-        return 25.05;
+        return round($this->area->delivery_fees, 2);
     }
 
     public function customer()
