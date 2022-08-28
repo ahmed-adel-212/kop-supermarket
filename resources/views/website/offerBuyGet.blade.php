@@ -54,7 +54,7 @@
                                                                 <input type="hidden" name="offer_price[]" value="{{round($buyItem['price'], 2)}}">
                                                                 <div class="gold-members p-3 border-bottom">
                                                                     <div class="media d-flex">
-                                                                        <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$buyItem['id']}}" name="buy_items[]" class="d-none checkItem">
+                                                                        <div class="mr-3 col-3" style="height: 150px;width: 150px;"><input type="checkbox" value="{{$buyItem['id']}}" name="buy_items[]" class="d-none checkItem">
                                                                             <img class="img-thumbnail rounded h-100 w-100" src="{{asset($buyItem->image)}}" alt="">
                                                                         </div>
                                                                         <div class="media-body" style="margin-left: 2%;">
@@ -83,10 +83,10 @@
                                                         <div class="rounded border" style="background-color: #f5f5f5!important;box-shadow: 0.1rem 0rem 1.5rem rgb(0 0 0 / 20%);">
                                                             <div class="gold-members p-3 border-bottom">
                                                                 <div class="media d-flex">
-                                                                    <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$getItem['id']}}" name="get_items[]" class="d-none checkItem">
+                                                                    <div class="mr-3 col-3" style="height: 150px;width: 150px;"><input type="checkbox" value="{{$getItem['id']}}" name="get_items[]" class="d-none checkItem">
                                                                         <img class="img-thumbnail rounded h-100 w-100" src="{{asset($getItem->image)}}" alt="">
                                                                     </div>
-                                                                    <div class="media-body">
+                                                                    <div class="media-body" style="margin-left: 2%;">
                                                                         <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $getItem['name_ar'] : $getItem['name_en'] }}</h4>
                                                                         <ul class="product-meta">
                                                                                 <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $buyItem['calories'] }}</a></li>
