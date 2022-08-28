@@ -31,9 +31,9 @@ Route::group([
         Route::get('/show-points-transactions', 'GiftController@showPointsTransactions')->name('showPointsTransactions')->middleware('role:admin');
         Route::resource('gift', 'GiftController')->middleware('role:admin');
 
-        Route::get('/points-value', 'GiftController@pointsValue')->name('pointsValue')->middleware('role:admin,cashier');
-        Route::post('/points-value-post', 'GiftController@pointsValuePost')->name('pointsValuePost')->middleware('role:admin,cashier');
-        Route::resource('/points', 'PointController')->middleware('role:admin,cashier');
+        Route::resource('points', 'PointController')->middleware('role:admin,cashier');
+        // Route::post('/points-value-post', 'PointController@pointsValuePost')->name('pointsValuePost')->middleware('role:admin,cashier');
+        // Route::resource('/points', 'PointController')->middleware('role:admin,cashier');
         // Admin Dashboard
         Route::get('/home', 'HomeController@index')->name('home')->middleware('role:admin,cashier');
         Route::get('/', 'HomeController@index')->name('dashboard')->middleware('role:admin,cashier');

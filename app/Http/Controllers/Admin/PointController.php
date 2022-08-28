@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\General;
 use App\Traits\LogfileTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PointController extends Controller
 {
@@ -18,7 +19,13 @@ class PointController extends Controller
      */
     public function index()
     {
-        dd('www');
+        $points = General::where('key', 'pointsValue')->get();
+
+        // $value = 0;
+        // if($pointValue){
+        //     $value = $pointValue->value;
+        // }
+        return view('admin.points.index', compact('points'));
     }
 
     /**
@@ -50,7 +57,7 @@ class PointController extends Controller
             'key' => 'pointsValue',
         ]);
         $this->Make_Log('App\Models\General','update',$value->id);
-        return redirect()->route('admin.pointsValue')->with([
+        return redirect()->route('admin.points.index')->with([
             'type' => 'success',
             'message' => 'Value Updated Successfuly'
         ]);
@@ -64,7 +71,11 @@ class PointController extends Controller
      */
     public function show($id)
     {
-        //
+        $point = General::where('key', 'pointsValue')->where('id', $id)->first();
+
+        if (!$point) {
+            abort(404);
+        }
     }
 
     /**
@@ -76,6 +87,7 @@ class PointController extends Controller
     public function edit(int $point)
     {
         $point = General::findOrFail($point);
+
         return view('admin.points.edit', compact('point'));
     }
 
@@ -94,13 +106,14 @@ class PointController extends Controller
         ]);
 
         $point = General::findOrFail($point);
+
         $point->value = $request->value;
         $point->for = $attributes['for'];
 
-        $value = $point->save();
+        $value = $point->update();
         $value = $point;
         $this->Make_Log('App\Models\General','update',$value->id);
-        return redirect()->route('admin.pointsValue')->with([
+        return redirect()->route('admin.points.index')->with([
             'type' => 'success',
             'message' => 'Value Updated Successfuly'
         ]);
@@ -118,7 +131,7 @@ class PointController extends Controller
 
         $point->delete();
 
-        return redirect()->route('admin.pointsValue')->with([
+        return redirect()->route('admin.points.index')->with([
             'type' => 'success',
             'message' => 'Value Deleted Successfuly'
         ]);
