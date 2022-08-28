@@ -45,7 +45,7 @@ class MediaController extends Controller
             'title_ar' => ['required', 'string', 'unique:media,title_ar'],
             'title_en' => ['required', 'string', 'unique:media,title_en'],
             'author' => ['required', 'string'],
-            "url" => 'required|mimes:mp4,ogx,oga,ogv,ogg,webm,flv,wmv',
+            "url" => 'required|mimes:mp4,ogg,wmv',
             'img' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048|dimensions:width=150,height=150',
         ]);
         try {

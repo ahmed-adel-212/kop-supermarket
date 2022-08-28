@@ -51,7 +51,7 @@ class HealthInfoController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|dimensions:width=1000,height=650',
+            'image' => 'required|mimes:jpeg,png,jpg|dimensions:width=1000,height=650',
         ];
 
 
@@ -119,7 +119,7 @@ class HealthInfoController extends Controller
             'title_en' => 'required',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=1000,height=650',
+            'image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1000,height=650',
 
         ]);
 
