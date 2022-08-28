@@ -243,7 +243,7 @@
                     <?php $c=0; ?>
                     @foreach($menu['categories'] as $index => $category)
                     @if($c==0)
-                    <?php $c++ ;?>
+                    <?php $c=$category->id ;?>
                     <li  class="active" data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
                     @else
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
@@ -252,7 +252,11 @@
                 </ul>
                 <div class="row product-items">
                     @foreach($menu['dealItems'] as $dealItem)
-                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}">
+                    @if($c==$dealItem->category_id)
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}"  >
+                    @else
+                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}"  style="display:none;">
+                    @endif
                         <div class="product-item " >
                           
                            <div class="product-thumb">
@@ -273,6 +277,8 @@
                     </div>
                     @endforeach
                 </div>
+                <a href="{{route('menu.page')}}" class="default-btn cart">{{__('footer.Our Menu')}}<span></span></a>
+
             </div>
         </section><!--/.food-menu-->
 
