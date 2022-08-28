@@ -120,11 +120,11 @@
                                             <div class="help-block text-info">
                                                 <b>Note</b> Image Size: <span class="img-size">
                                                     @if ($about->type === 'emp')
-                                                    800*1142
+                                                    800 * 1142
                                                     @elseif ($about->type === 'with-bg')
-                                                    1920*1080
+                                                    1100 * 1000
                                                     @else
-                                                    600*400
+                                                    600 * 400
                                                     @endif
                                                 </span>
                                             </div>

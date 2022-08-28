@@ -11,7 +11,7 @@ class AboutUsController extends Controller
 {
     const IMG_SIZES = [
         'emp' => [800, 1142],
-        'with-bg' => [920, 1080],
+        'with-bg' => [1100, 1000],
     ];
 
     /**
