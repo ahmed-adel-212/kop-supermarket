@@ -127,6 +127,9 @@
                                                     600 * 400
                                                     @endif
                                                 </span>
+                                                <p>
+                                                    <b>Note</b> Image types: png | jpeg | jpg
+                                                </p>
                                             </div>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}"

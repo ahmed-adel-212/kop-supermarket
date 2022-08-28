@@ -85,6 +85,9 @@
                                 </div>
                                 <div class="help-block text-info">
                                             <b>Note</b> Image dimensions: 1100 * 1000
+                                            <p>
+                                                <b>Note</b> Image types: png | jpeg | jpg
+                                            </p>
                                 </div>
                             </div>
                            
