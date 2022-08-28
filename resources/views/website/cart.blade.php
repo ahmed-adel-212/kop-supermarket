@@ -88,10 +88,10 @@
                                         </p> --}}
                                         <div style="font-size: 10px" class="small">
                                             @if (isset($cart['dough_type_' . app()->getLocale()]))
-                                            <p>
-                                                {{ __('general.Dough Type') }}:
-                                                <b>{{ $cart['dough_type_' . app()->getLocale()] }}</b>
-                                            </p>
+                                                <p>
+                                                    {{ __('general.Dough Type') }}:
+                                                    <b>{{ $cart['dough_type_' . app()->getLocale()] }}</b>
+                                                </p>
                                             @endif
                                             @if (count($cart->extras_objects))
                                                 <p>
@@ -175,32 +175,25 @@
                         <div class="col-lg-6 offset-lg-6">
                             <ul class="cart-total mt-30">
                                 <li>
-                                    {{ __('general.Sub Total') }}: </b> 
+                                    {{ __('general.Sub Total') }}: </b>
                                     {{-- <span
                                         id="subtotal"style="font-size: smaller;">{{ $arr_check['subtotal'] - round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}
                                         {{ __('general.SR') }}</span> --}}
-                                        <span
+                                    <span
                                         id="subtotal"style="font-size: smaller;">{{ $arr_check['subtotal_without_offer'] - round($arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15, 2) }}
                                         {{ __('general.SR') }}</span>
                                     <input id="subtotalinput" hidden
-                                        name="subtotal"value="{{ $arr_check['subtotal'] - round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}" />
+                                        name="subtotal"value="{{ $arr_check['subtotal_without_offer'] - round($arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15, 2) }}" />
                                 </li>
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Taxes') }}
                                         : </b>
                                     <span id="taxes"
-                                        style="font-size: smaller;">{{ round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}
+                                        style="font-size: smaller;">{{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15, 2) }}
                                         {{ __('general.SR') }}</span>
                                     <input id="taxesinput" hidden name="taxes"
-                                        value="{{ $arr_check['subtotal'] - $arr_check['subtotal'] / 1.15 }}" />
+                                        value="{{ $arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15 }}" />
                                 </li>
-                                <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
-                                    : </b>
-                                <span id="discount"
-                                    style="font-size: smaller;">{{ ($arr_check['subtotal_without_offer'] - round($arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15, 2)) }}
-                                    {{ __('general.SR') }}</span>
-                                <input id="discountinput" hidden name="discount"
-                                    value="{{ $arr_check['subtotal'] - $arr_check['subtotal'] / 1.15 }}" />
-                            </li>
+                                
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Delivery Fees') }}
                                         : </b> <span id="delivery_fees"
                                         style="font-size: smaller;">{{ $arr_check['delivery_fees'] }}
@@ -208,6 +201,22 @@
                                     <input id="delivery_feesnput" hidden name="delivery_fees"
                                         value="{{ $arr_check['delivery_fees'] }}" />
                                 </li>
+                                @if ($arr_check['subtotal_without_offer'] > $arr_check['subtotal'])
+                                <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
+                                        : </b>
+                                    <span id="">
+                                        -
+                                        <span id="discount" style="font-size: smaller;">
+                                            {{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal'], 2) }}
+                                        </span>
+                                        <span style="font-size: smaller;">
+                                            {{ __('general.SR') }}
+                                        </span>
+                                    </span>
+                                    <input id="discountinput" hidden name="discount"
+                                        value="{{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal'], 2) }}" />
+                                </li>
+                                @endif
                                 @if (isset($arr_check['points']))
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Loyality Discount') }}
                                             : </b> <span> -
@@ -383,13 +392,13 @@
                         },
                         success: function(data) {
                             console.log(data);
-                            $('#subtotal').text((data.taxes).toFixed(2) +
+                            $('#subtotal').text((data.subtotal_without_offer /1.15).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#subtotalinput').val(data.taxes);
+                            $('#subtotalinput').val(data.subtotal_without_offer /1.15);
 
-                            $('#taxes').text((data.subtotal - (data.subtotal / 1.15)).toFixed(2) +
+                            $('#taxes').text((data.subtotal_without_offer - (data.subtotal_without_offer / 1.15)).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#taxesinput').val(data.subtotal - (data.subtotal / 1.15));
+                            $('#taxesinput').val(data.subtotal_without_offer - (data.subtotal_without_offer / 1.15));
 
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
@@ -397,6 +406,7 @@
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
                             $('#delivery_feesinput').val(data.delivery_fees);
+                            $('#discount').text((data.subtotal_without_offer - data.subtotal).toFixed(2));
 
                             $(".cart2" + id + ' .quantity_ch').val(quantity);
                             $(".cart2" + id + ' .quantity_ch').attr('data-prev', quantity);
