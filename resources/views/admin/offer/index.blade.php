@@ -40,9 +40,9 @@
                                     <td>{{ $offer->date_to }}</td>
                                     <td>{{ $offer->service_type }}</td>
                                     <td style="max-width:50px" class="text-center"><img class="img-fluid"
-                                            src="{{ $offer->image }}" /></td>
+                                            src="{{ asset($offer->image) }}" /></td>
                                     <td style="max-width:50px" class="text-center"><img class="img-fluid"
-                                            src="{{ $offer->website_image }}" /></td>
+                                            src="{{ asset($offer->website_image) }}" /></td>
                                     <td>
                                         @if ($offer->main)
                                             <form action="{{ route('admin.offer.unmain', $offer->id) }}" method="POST">
