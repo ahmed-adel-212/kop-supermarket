@@ -53,7 +53,7 @@ class ExtraController extends Controller
             "description_en" => 'nullable|required|string',
             "price" => 'required|numeric',
             "calories" => 'required|numeric',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             "category_id" => 'required|exists:categories,id',
         ]);
 
@@ -121,7 +121,7 @@ class ExtraController extends Controller
             "description_en" => 'nullable|required|string',
             "price" => 'required|numeric',
             "calories" => 'required|numeric',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             "category_id" => 'required|exists:categories,id',
         ]);
 
