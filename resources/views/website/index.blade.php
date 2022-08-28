@@ -267,6 +267,9 @@
                                 <h4>{{$dealItem['description_'.app()->getLocale()]}}</h4>
                                 <div class="price">
                                     <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
+                                    <ul class="product-meta">
+                                        <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $dealItem->calories }}</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

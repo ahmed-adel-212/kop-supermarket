@@ -236,7 +236,7 @@
                                                 type="submit">{{ __('home.Add to Cart') }}</button></div>
                                     </div>
                                     <ul class="product-meta">
-                                        <li>Categories:<a href="#">{{ $item->calories }}</a></li>
+                                        <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $item->calories }}</a></li>
                                     </ul>
                                     <ul class="social-icon">
                                         <li>Share:</li>
