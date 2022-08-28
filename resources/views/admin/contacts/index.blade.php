@@ -26,7 +26,7 @@
                         <tbody>
                             @foreach ($contacts as $contact)
                             <tr>
-                                <td><a href="">{{ $contact->id }}</a></td>
+                                <td><a href="{{route('admin.contact.show',$contact->id)}}">{{ $contact->id }}</a></td>
                                 <td>{{ $contact->subject }}</td>
                                 <td>{{ $contact->created_at }}</td> 
                                 <td>{{ $contact->customer->name }}</td>

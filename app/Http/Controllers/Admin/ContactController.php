@@ -25,4 +25,11 @@ class ContactController extends Controller
         $this->Make_Log('App\Models\Contact','view',0);
         return view('admin.contacts.index', compact('contacts'));
     }
+
+    public function show(Request $request,$id)
+    {
+        $contacts = Contact::where('id',$id)->with('customer')->first();
+        $this->Make_Log('App\Models\Contact','show',0);
+        return view('admin.contacts.show', compact('contacts'));
+    }
 }
