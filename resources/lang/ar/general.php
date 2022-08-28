@@ -48,7 +48,7 @@ return [
     'Phone' => 'هاتف',
     'Email' => 'بريد الكتروني',
     'Confirm Order' => 'تأكيد الطلب',
-    'Confirm Order Cash' => 'تأكيد الطلب',
+    'Confirm Order Cash' => 'الدفع نقدا',
     'Confirm Order OnlinePay' => 'الدفع بواسطة الفيزا',
     'Payment' => 'الدفع',
     'Cardholder\'s name' => 'اسم حامل البطاقة',
@@ -378,4 +378,6 @@ return [
 'hot_line' => 'الخط الساخن',
 'calories' => 'السعرات الحرارية',
 'categories' => 'الاقسام',
+'payment_type' => 'طريقة الدفع',
+'confirm_order' => 'تأكيد الطلب',
 ];
