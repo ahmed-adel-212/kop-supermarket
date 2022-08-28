@@ -250,11 +250,12 @@ class OrdersController extends BaseController
         // $subtotal = 0;
 
         $items = [];
+        // dd($request->items);
         foreach ($request->items as $item) {
             if (gettype($item) == 'object') {
                 $item = $item->toArray();
             }
-            if ($item['quantity'] > 1) {
+            // if ($item['quantity'] > 1) {
                 for ($i = 0;$i < $item['quantity'];$i++) {
                     $items[] = [
                         'item_id' => $item['item_id'],
@@ -268,9 +269,9 @@ class OrdersController extends BaseController
                         'dough_type_en' => $item['dough_type_en'][$i],
                     ];
                 }
-            } else {
-                $items[] = $item;
-            }  
+            // } else {
+            //     $items[] = $item;
+            // }  
         }
 
         foreach ($items as $item) {
@@ -302,16 +303,17 @@ class OrdersController extends BaseController
             // $subtotal = $subtotal + $itemPrice;
             $offer = Offer::find(isset($item['offerId']) ? $item['offerId'] : 0);
             $extras = array_key_exists('extras', $item) ? $item['extras'] : null;
-            if (is_array($extras)) {
+            
+            if (is_array($extras) && !is_int($extras[0])) {
                 $extras = collect($extras)->pluck('id');
             }
             $withouts = array_key_exists('withouts', $item) ? $item['withouts'] : null;
-            if (is_array($withouts)) {
+            if (is_array($withouts) && !is_int($extras[0])) {
                 $withouts = collect($withouts)->pluck('id');
             }
             $order->items()->attach($item['item_id'], [
-                'item_extras' =>  $extras,
-                'item_withouts' =>  $withouts,
+                'item_extras' =>  is_array($extras) ? implode(',', $extras) : $extras,
+                'item_withouts' =>  is_array($withouts) ? implode(',', $withouts) : $withouts,
                 'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                 'price' => $itemPrice,

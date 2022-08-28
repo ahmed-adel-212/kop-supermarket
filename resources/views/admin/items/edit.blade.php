@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Image</label>
+                                    <label>Mobile Image</label>
                                     <img src="{{ $item->image }}" class="img-thumbnail" style="widht: 77px;" />
                                     <div class="input-group">
                                         <div class="custom-file">

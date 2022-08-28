@@ -94,10 +94,10 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="exampleInputFile">Image</label>
+                  <label for="exampleInputFile">Mobile Image</label>
                   <br>
                    @if($offer->image)
-                        <img src="{{ $offer->image }}" alt="..." class="img-thumbnail">
+                        <img src="{{ $offer->image }}" alt="..." class="img-thumbnail" style="width: 250px;">
                     @endif
                 </div>
               </div>
