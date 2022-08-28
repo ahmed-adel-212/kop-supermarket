@@ -32,6 +32,14 @@ class AuthController extends BaseController
         $user = User::where('email', request('email'))->first();
         if ($user) {
             if ($user->hasRole('customer')) {
+                if ( $user->email_verified_at == null) {
+                    $data = [
+                        'userData' => $user,
+                        // 'token' => $user->createToken('AppName')->accessToken,
+                        'token' => null,
+                    ];
+                    return $this->sendResponse($data, __('auth.verify'));
+                }
                 if (Auth::attempt($credentials)) {
                     $user = Auth::user();
 
@@ -47,10 +55,6 @@ class AuthController extends BaseController
                         // 'token' => $user->createToken('AppName')->accessToken,
                         'token' => $user->token,
                     ];
-                    if (auth()->user()->email_verified_at == null) {
-                        $data['token'] = null;
-                        return $this->sendResponse($data, __('auth.verify'));
-                    }
 
                     $setPushToken=new NotificationController();
                     $request->request->add(['user_id' =>$user->id]);
@@ -73,6 +77,14 @@ class AuthController extends BaseController
         $user = User::where('email', request('email'))->first();
         if ($user) {
             if ($user->hasRole('cashier')) {
+                if ( $user->email_verified_at == null) {
+                    $data = [
+                        'userData' => $user,
+                        // 'token' => $user->createToken('AppName')->accessToken,
+                        'token' => null,
+                    ];
+                    return $this->sendResponse($data, __('auth.verify'));
+                }
                 if (Auth::attempt($credentials)) {
                     $user = Auth::user();
 
@@ -82,17 +94,6 @@ class AuthController extends BaseController
                     }
                     $user->branches;
 
-
-                    $data = [
-                        'userData' => $user,
-                        // 'token' => $user->createToken('AppName')->accessToken,
-                        'token' => $user->token,
-                    ];
-
-                    if (auth()->user()->email_verified_at == null) {
-                        $data['token'] = null;
-                        return $this->sendResponse($data, __('auth.verify'));
-                    }
 
                     $setPushToken=new NotificationController();
                     $request->request->add(['user_id' =>$user->id]);
@@ -167,7 +168,7 @@ class AuthController extends BaseController
         return response()->json([
             "success" => true,
             'user_created' => true,
-            'user' => $user,
+            'user' => $user->fresh(),
             // 'data' => $user,
             'token' => null,
             'message_sent' => true,
@@ -282,6 +283,7 @@ class AuthController extends BaseController
 
         return $this->sendResponse($user, __('auth.verified'));
     }
+    
     public function resendVerificationCode(Request $request)
     {
         try {
@@ -303,7 +305,7 @@ class AuthController extends BaseController
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        // $request->user()->token()->revoke();
         auth()->logout();
         return $this->sendResponse(null, __('auth.logged_out'));
     }
@@ -616,7 +618,7 @@ class AuthController extends BaseController
             Auth::login($user);
 
             return $this->sendResponse([
-                // 'user_verified' => true,
+                'userData' => $user,
                 'token' => $user->token,
             ], __('auth.verified'));
         }
