@@ -111,10 +111,12 @@
 
 @section('scripts')
   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   Firebase App (the core Firebase SDK) is always required and must be listed first 
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.9.3/firebase-auth-compat.js"></script>
     <script>
         var firebaseConfig = {
             apiKey: "AIzaSyD7P_2ebS_75Ipug4RKuWUh30O8SVVqHLg",

@@ -55,7 +55,7 @@
                         @foreach ($items as $index => $item)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->category['name_'.app()->getLocale()] }}</td>
+                            <td>@if(isset($item->category['name_'.app()->getLocale()]))$item->category['name_'.app()->getLocale()]@endif</td>
                             <td>{{ $item->name_ar }}</td>
                             <td>{{ $item->name_en }}</td>
                             <td>{{ $item->price }} SR</td>

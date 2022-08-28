@@ -32,7 +32,7 @@
                                     <select class="form-control categories select2" id="categories" name="category_id">
                                         <option value="" disabled>Select Category</option>
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}" {{@if($item->id==$homeitem->category_id) selected @endif}}>
+                                            <option value="{{ $item->id }}" @if($item->id==$homeitem->category_id)  selected @endif>
                                                 {{ $item['name_'.app()->getLocale()] }}
                                             </option>
                                         @endforeach
