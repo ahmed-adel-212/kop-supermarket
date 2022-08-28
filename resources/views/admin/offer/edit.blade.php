@@ -128,7 +128,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Image</label>
+                                    <label for="exampleInputFile">Mobile Image</label>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 800 * 418
+                                    </div>
                                     @if($offer->image)
                                     <img src="{{ $offer->image }}" alt="..." class="img-thumbnail">
                                     @endif

@@ -54,7 +54,7 @@
                                 <th>Name EN</th>
                                 <th>Price</th>
                                 <th>Calories</th>
-                                <th>Image</th>
+                                <th>Mobile Image</th>
                                 <th>Website Image</th>
                                 <th>Action</th>
                             </tr>

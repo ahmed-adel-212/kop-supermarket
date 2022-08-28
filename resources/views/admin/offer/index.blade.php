@@ -26,7 +26,7 @@
                                 <th>Date From</th>
                                 <th>Date To</th>
                                 <th>Service</th>
-                                <th>Image</th>
+                                <th>Mobile Image</th>
                                 <th>Website Image</th>
                                 <th>Action</th>
                             </tr>
