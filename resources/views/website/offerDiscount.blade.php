@@ -39,7 +39,7 @@
                                                             <input type="hidden" name="offer_price" value="{{round($item['offer_price'], 2)}}">
                                                             <div class="gold-members p-3 border-bottom">
                                                                 <div class="media d-flex">
-                                                                    <div class="mr-3 col-3" style="height: 150px">
+                                                                    <div class="mr-3 col-3" style="height: 150px;width: 150px;">
                                                                         <img class="img-thumbnail rounded w-100 h-100" src="{{asset($item->image)}}" alt="">
                                                                     </div>
                                                                     <div class="media-body" style="margin-left: 2%;">
