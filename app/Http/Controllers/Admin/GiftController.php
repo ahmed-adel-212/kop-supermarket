@@ -165,7 +165,8 @@ class GiftController extends Controller
 
     public function pointsValue()
     {
-        $points = General::where('key', 'pointsValue')->get();
+        $points = DB::table('general')->where('key', 'pointsValue')->get();
+
         // $value = 0;
         // if($pointValue){
         //     $value = $pointValue->value;
