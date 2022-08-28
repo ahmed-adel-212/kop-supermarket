@@ -230,30 +230,28 @@
                 @endif
 
                 @if ($sec->type === 'with-bg')
-                <section class="content-section delivery position-relative" style="background-image: url({{asset( $sec->image)}});">
+                <section class="content-section" style="height: 400px;">
                     <div class="bg-shape white"></div>
                     <div class="bg-shape grey"></div>
-                    <div class="position-absolute top-0 left-0 right-0 w-100 h-100" style="background: rgba(0, 0, 0, .3)"></div>
                     <div class="container">
                         <div class="row align-items-center">
-                            <div class="col-lg-6">
-                                <div class="content-info position-relative">
-                                    <h2><span>
-                                        {{$sec['title_' . app()->getLocale()]}}    
-                                    </span></h2>
-                                    <p>
-                                        {{$sec['description_' . app()->getLocale()]}}
-                                    </p>
+                            <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
+                                <div class="content-info">
+                                <h2>{{$sec['title_' . app()->getLocale()]}}</h2>
+                                    <p>{{$sec['description_' . app()->getLocale()]}}</p>
+                                   
                                 </div>
                             </div>
-                            {{-- <div class="col-lg-6">
-                                <div class="delivery-girl">
-                                    <img src="/website2-assets/img/delivery-girl.png" alt="img">
+                            <div class="col-md-6 wow fadeInRight" data-wow-delay="400ms">
+                                <div class="content-img-holder">
+                                    <img src="{{asset($sec->image)}}" alt="img">
+                                    
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
-                </section><!--/.content-section-->
+                </section>
+                <!--/.content-section-->
                 @endif
         @endforeach
     </main>
