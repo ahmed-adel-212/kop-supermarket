@@ -358,4 +358,5 @@ return [
     'categories' => 'Categories',
     'payment_type' => 'Payment Type',
     'confirm_order' => 'Confirm Order',
+    'discount' => 'Offers Discount',
 ];

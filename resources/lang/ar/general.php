@@ -380,4 +380,5 @@ return [
 'categories' => 'الاقسام',
 'payment_type' => 'طريقة الدفع',
 'confirm_order' => 'تأكيد الطلب',
+'discount' => 'خصم العروض',
 ];

@@ -207,7 +207,7 @@ class CartController extends Controller
                 $arr_data['taxes'] = round($final_item_price / 1.15, 2);
                 $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
-                $arr_data['subtotal_without_offer'] = $final_item_price_without_offer;
+                $arr_data['subtotal_without_offer'] = round($final_item_price_without_offer, 2);
                 // $final_item_price += ($arr_data['taxes'] + $arr_data['delivery_fees']) - $arr_data['points'];
                 if ($arr_data['subtotal'] <= $arr_data['points']) {
                     $arr_data['points'] = 0;
@@ -219,7 +219,7 @@ class CartController extends Controller
                 $arr_data['taxes'] = round($final_item_price / 1.15, 2);
                 $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
-                $arr_data['subtotal_without_offer'] = $final_item_price_without_offer;
+                $arr_data['subtotal_without_offer'] = round($final_item_price_without_offer, 2);
                 // $final_item_price += $arr_data['taxes'] + $arr_data['delivery_fees'];
                 $final_item_price += $arr_data['delivery_fees'];
                 $arr_data['total'] = round($final_item_price, 2);
