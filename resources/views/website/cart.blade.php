@@ -132,9 +132,23 @@
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
-                                <div class="cart-item">
-                                    <p>{{ $cart->price }}
-                                        {{ __('general.SR') }}</p>
+                                <div class="cart-item" style="flex-direction: column;">
+                                    @if ($cart->offer_id)
+                                        <p class="text-danger">
+                                            @isset($cart->extras_objects)
+                                                <del>{{ $cart->item->price + collect($cart->extras_objects)->sum('price') }}
+                                                    {{ __('general.SR') }}</del>
+                                            @else
+                                                <del>{{ $cart->item->price }} {{ __('general.SR') }}</del>
+                                            @endisset
+
+                                        </p>
+                                    @endif
+                                    <p>
+
+                                        {{ $cart->price }}
+                                        {{ __('general.SR') }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
@@ -160,9 +174,10 @@
                             <ul class="cart-total mt-30">
                                 <li>
                                     {{ __('general.Sub Total') }}: </b> <span
-                                        id="subtotal"style="font-size: smaller;">{{ $arr_check['subtotal'] }}
+                                        id="subtotal"style="font-size: smaller;">{{ $arr_check['subtotal'] - round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}
                                         {{ __('general.SR') }}</span>
-                                    <input id="subtotalinput" hidden name="subtotal"value="{{ $arr_check['subtotal'] }}" />
+                                    <input id="subtotalinput" hidden
+                                        name="subtotal"value="{{ $arr_check['subtotal'] - round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}" />
                                 </li>
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Taxes') }}
                                         : </b>
@@ -181,8 +196,10 @@
                                 </li>
                                 @if (isset($arr_check['points']))
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Loyality Discount') }}
-                                            : </b> <span id="points" style="font-size: smaller;"> -
-                                            {{ round($arr_check['points'], 2) }} {{ __('general.SR') }}</span>
+                                            : </b> <span> -
+                                            <span id="points"
+                                                style="font-size: smaller;">{{ round($arr_check['points'], 2) }}
+                                                {{ __('general.SR') }}</span></span>
                                         <input id="pointsinput" hidden name="points_paid"
                                             value="{{ $arr_check['points'] }}" />
                                         <input id="pointsValue" hidden name="points_value"
@@ -273,8 +290,9 @@
                                 1));
                             // $('#itemcount').text((parseInt($('#itemcount').text())) - data.carts.length);
 
-                            $('#subtotal').text(data.arr_check.subtotal);
-                            $('#taxes').text((data.arr_check.subtotal - (data.arr_check.subtotal /
+
+                            $('#subtotal').text(data.arr_check.taxes);
+                            $('#taxes').text((data.arr_check.taxes - (data.arr_check.taxes /
                                 1.15)).toFixed(2));
                             $('#total').text(data.arr_check.total);
                             $('#delivery_fees').text(data.arr_check.delivery_fees);
@@ -351,9 +369,9 @@
                         },
                         success: function(data) {
                             console.log(data);
-                            $('#subtotal').text((data.subtotal).toFixed(2) +
+                            $('#subtotal').text((data.taxes).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#subtotalinput').val(data.subtotal);
+                            $('#subtotalinput').val(data.taxes);
 
                             $('#taxes').text((data.subtotal - (data.subtotal / 1.15)).toFixed(2) +
                                 ' {{ __('general.SR') }}');

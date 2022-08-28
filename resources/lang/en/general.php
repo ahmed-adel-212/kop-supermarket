@@ -352,4 +352,8 @@ return [
     'desc_label' => 'Add More Description To Order',
     'media_cen' => 'Media Center',
     'menu' => 'Menu',
+    'rest_address' => 'Al-Ahsa - Mubarraz - Sixty Street, Al-Mulhim Administrative Tower - Third Floor, Kingdom of Saudi Arabia',
+    'hot_line' => 'Hot Line',
+    'calories' => 'Calories',
+    'categories' => 'Categories',
 ];

@@ -92,7 +92,7 @@
                                 <div class="form-group stepper-type-2 quantity-up-{{ $item->id }}">
                                     <input style="width: 25%;" type="number"
                                         class="form-control text-bold quantity_ch quantity_change{{ $item->id }}"
-                                        value="1" readonly>
+                                        value="{{$item->pivot->quantity}}" readonly>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
@@ -153,9 +153,9 @@
                                     @if (isset($order['points']))
                                         <li><b class="inset-right-5 text-gray-light">{{ __('general.Loyality Discount') }}
                                                 : </b> <span id="points" style="font-size: smaller;"> -
-                                                {{ round($order['points'], 2) }} {{ __('general.SR') }}</span>
+                                                {{ round($order['points_paid'], 2) }} {{ __('general.SR') }}</span>
                                             <input id="pointsinput" hidden name="points_paid"
-                                                value="{{ $order['points'] }}" />
+                                                value="{{ $order['points_paid'] }}" />
 
                                         </li>
                                     @endif

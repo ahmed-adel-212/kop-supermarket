@@ -43,9 +43,11 @@
                 <div class="bg-shape white"></div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-12 col-md-9">
-                            <iframe id="video-player" allow="autoplay *; fullscreen *" allowfullscreen="true" style="object-fit: fill;height: 100%;width: 100%;"
+                        <div class="col-12 col-md-9" style="height: 490px">
+                            {{-- <iframe  allow="autoplay *; fullscreen *" allowfullscreen="true" style="object-fit: fill;height: 100%;width: 100%;"
                                 src="{{ asset($videos->first()->url) }}">
+                            </iframe> --}}
+                            <iframe id="video-player" class="the-iframe" style="object-fit: fill;width: 100%; height: 100%" src="{{ asset($videos->first()->url) }}?controls=0" frameborder="0" allowfullscreen="">
                             </iframe>
                         </div>
                         <div class="col-md-3">
