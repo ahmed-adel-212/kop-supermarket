@@ -33,7 +33,7 @@
                             
                         @foreach ($infos as $index => $info)
                             <tr>
-                                <td>{{$index + 1 }}<img class="img-fluid" src="{{$info->image}}"/></td>
+                                <td><img class="img-fluid" src="{{asset($info->image)}}" height="150" width="150" /></td>
                                 <td>{{ $info->title_en}}</td>
                                 <td>{{ $info->title_ar}}</td>
 

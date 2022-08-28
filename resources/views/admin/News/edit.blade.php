@@ -69,8 +69,11 @@
                                         <label>Image</label>
                                         <div class="help-block text-info">
                                             <b>Note</b> Image dimensions: 1000 * 650
+                                            <p class="text-info">
+                                                <b>Note</b> Image types: png | jpeg | jpg
+                                            </p>
                                         </div>
-                                        <img src="{{ $blog->image }}" class="img-thumbnail" style="widht: 77px;" />
+                                        <img src="{{ $blog->image }}" class="img-thumbnail" style="width: 250px;" />
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}" name="image" value="{{ old('image') }}">

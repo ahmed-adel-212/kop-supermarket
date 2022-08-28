@@ -48,8 +48,8 @@ return [
     'Phone' => 'Phone',
     'Email' => 'Email',
     'Confirm Order' => 'Confirm Order',
-    'Confirm Order Cash' => 'Confirm Order Cash',
-    'Confirm Order OnlinePay' => 'Confirm Order OnlinePay',
+    'Confirm Order Cash' => 'Cash',
+    'Confirm Order OnlinePay' => 'OnlinePay',
     'Payment' => 'Payment',
     'Cardholder\'s name' => 'Cardholder\'s name',
     'Card Number' => 'Card Number',
@@ -356,4 +356,6 @@ return [
     'hot_line' => 'Hot Line',
     'calories' => 'Calories',
     'categories' => 'Categories',
+    'payment_type' => 'Payment Type',
+    'confirm_order' => 'Confirm Order',
 ];

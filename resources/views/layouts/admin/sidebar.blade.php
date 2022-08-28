@@ -84,7 +84,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item has-treeview
-                                 {{request()->segment(3) == 'points-value'||
+                                 {{request()->segment(3) == 'points'||
                                    request()->segment(3)=='gift'||
                                    request()->segment(3)=='show-points-transactions'||
                                    request()->segment(3)=='show-gifts-orders'
@@ -98,9 +98,9 @@
                                     @if(auth()->user()->hasRole('admin') )
 
                                         <li class="nav-item">
-                                            <a href="{{route('admin.pointsValue')}}" class="nav-link"><i
+                                            <a href="{{route('admin.points.index')}}" class="nav-link"><i
                                                     class="fas fa-certificate nav-icon"></i>
-                                                <p>Points Value</p>
+                                                <p>Points</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
