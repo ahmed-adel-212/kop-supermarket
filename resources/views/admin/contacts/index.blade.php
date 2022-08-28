@@ -19,16 +19,16 @@
                             <tr>
                                 <th>#ID</th>
                                 <th>Subject</th>
-                                <th>Body</th>
+                                <th>date</th>
                                 <th>Customer Name</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($contacts as $contact)
                             <tr>
-                                <td>{{ $contact->id }}</td>
+                                <td><a href="">{{ $contact->id }}</a></td>
                                 <td>{{ $contact->subject }}</td>
-                                <td>{{ $contact->body }}</td>
+                                <td>{{ $contact->created_at }}</td> 
                                 <td>{{ $contact->customer->name }}</td>
                             </tr>
                             @endforeach

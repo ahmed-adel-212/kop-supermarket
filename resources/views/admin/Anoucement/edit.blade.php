@@ -91,6 +91,9 @@
                                     </div>
                                     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
                                 </div>
+                                <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 1100 * 1000
+                                </div>
                             </div>
                         </div>
                            

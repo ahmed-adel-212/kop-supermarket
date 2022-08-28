@@ -85,14 +85,33 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Image</label>
+                                    
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}" name="image" value="{{ old('image') }}">
                                             <label class="custom-file-label">Choose file</label>
                                         </div>
+                                        
                                     </div>
                                     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
                                 </div>
+                                @if($homeitem->number==1)
+                                    <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 550 * 450
+                                        </div>
+                                    @elseif($homeitem->number==2)
+                                    <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 550 * 465
+                                        </div>
+                                    @elseif($homeitem->number==3)
+                                    <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 550 * 465
+                                        </div>
+                                    @elseif($homeitem->number==4)
+                                    <div class="help-block text-info">
+                                            <b>Note</b> Image dimensions: 550 * 220
+                                        </div>
+                                    @endif
                             </div>
                     </div>
                 </div>
