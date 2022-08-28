@@ -124,6 +124,7 @@ class CartController extends Controller
         if ($return['success'] == 'success') {
             $carts = $return['data'];
             $arr_check = $this->get_check();
+            
             if (session()->has('point_claim_value')) {
 
                 return view('website.cart', compact(['carts', 'arr_check']));
@@ -146,6 +147,7 @@ class CartController extends Controller
         $deleteCart = (app(\App\Http\Controllers\Api\CartController::class)->deleteCart($request))->getOriginalContent();
         $carts = $deleteCart['data'];
         $arr_check = $this->get_check();
+        
         return response()->json([
             'carts'=>$carts,
             'arr_check'=>$arr_check,
@@ -167,6 +169,7 @@ class CartController extends Controller
         if ($return['success'] == 'success') {
             $carts = $return['data'];
             $final_item_price = 0;
+            $final_item_price_without_offer = 0;
             foreach ($carts as $index => $cart) {
                 $quantity = $cart->quantity;
                 if ($cart->offer_id) {
@@ -176,12 +179,15 @@ class CartController extends Controller
                     $item_price = $cart->item->price;
                 }
                 $final_item_price += ($item_price * $quantity);
+                $final_item_price_without_offer += ($cart->item->price * $quantity);
 
                 if ($cart->ExtrasObjects) {
                     $extras_price = collect($cart->ExtrasObjects)->sum('price') * $quantity;
                     $final_item_price += $extras_price;
+                    $final_item_price_without_offer += $extras_price;
                 }
             }
+
 
             // if (session()->has('loyality-points')) {
                 // $loyality = session('loyality-points');
@@ -201,6 +207,7 @@ class CartController extends Controller
                 $arr_data['taxes'] = round($final_item_price / 1.15, 2);
                 $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
+                $arr_data['subtotal_without_offer'] = $final_item_price_without_offer;
                 // $final_item_price += ($arr_data['taxes'] + $arr_data['delivery_fees']) - $arr_data['points'];
                 if ($arr_data['subtotal'] <= $arr_data['points']) {
                     $arr_data['points'] = 0;
@@ -212,6 +219,7 @@ class CartController extends Controller
                 $arr_data['taxes'] = round($final_item_price / 1.15, 2);
                 $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
+                $arr_data['subtotal_without_offer'] = $final_item_price_without_offer;
                 // $final_item_price += $arr_data['taxes'] + $arr_data['delivery_fees'];
                 $final_item_price += $arr_data['delivery_fees'];
                 $arr_data['total'] = round($final_item_price, 2);

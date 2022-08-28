@@ -175,8 +175,12 @@
                         <div class="col-lg-6 offset-lg-6">
                             <ul class="cart-total mt-30">
                                 <li>
-                                    {{ __('general.Sub Total') }}: </b> <span
+                                    {{ __('general.Sub Total') }}: </b> 
+                                    {{-- <span
                                         id="subtotal"style="font-size: smaller;">{{ $arr_check['subtotal'] - round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}
+                                        {{ __('general.SR') }}</span> --}}
+                                        <span
+                                        id="subtotal"style="font-size: smaller;">{{ $arr_check['subtotal_without_offer'] - round($arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15, 2) }}
                                         {{ __('general.SR') }}</span>
                                     <input id="subtotalinput" hidden
                                         name="subtotal"value="{{ $arr_check['subtotal'] - round($arr_check['subtotal'] - $arr_check['subtotal'] / 1.15, 2) }}" />
@@ -189,6 +193,14 @@
                                     <input id="taxesinput" hidden name="taxes"
                                         value="{{ $arr_check['subtotal'] - $arr_check['subtotal'] / 1.15 }}" />
                                 </li>
+                                <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
+                                    : </b>
+                                <span id="discount"
+                                    style="font-size: smaller;">{{ ($arr_check['subtotal_without_offer'] - round($arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15, 2)) }}
+                                    {{ __('general.SR') }}</span>
+                                <input id="discountinput" hidden name="discount"
+                                    value="{{ $arr_check['subtotal'] - $arr_check['subtotal'] / 1.15 }}" />
+                            </li>
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Delivery Fees') }}
                                         : </b> <span id="delivery_fees"
                                         style="font-size: smaller;">{{ $arr_check['delivery_fees'] }}
