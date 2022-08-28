@@ -143,6 +143,23 @@
                                     @csrf
                                     <div class="card-body">
                                         <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    {{-- <label class="form-label" for="job_id"></label> --}}
+                                                    <select class="select form-control"
+                                                        data-placeholder="{{ __('general.Careers') }}" style="width: 100%;"
+                                                        name="job_id">
+                                                        @foreach ($jobs as $job)
+                                                            <option value="{{ $job->id }}">
+                                                                {{ $job['title_' . app()->getLocale()] }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
                                             <div class="col-12">
                                                 <div class="form-group">
                                                     {{-- <label class="form-label" for="name"></label> --}}
@@ -175,23 +192,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    {{-- <label class="form-label" for="job_id"></label> --}}
-                                                    <select class="select form-control"
-                                                        data-placeholder="{{ __('general.Careers') }}" style="width: 100%;"
-                                                        name="job_id">
-                                                        @foreach ($jobs as $job)
-                                                            <option value="{{ $job->id }}">
-                                                                {{ $job['title_' . app()->getLocale()] }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">

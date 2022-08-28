@@ -271,6 +271,9 @@
                                 <h4>{{$dealItem['description_'.app()->getLocale()]}}</h4>
                                 <div class="price">
                                     <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
+                                    <ul class="product-meta">
+                                        <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $dealItem->calories }}</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -315,7 +318,7 @@
                             <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
                             <div class="order-content">
                                <a href="{{route('menu.page')}}" class="default-btn">{{ __('header.Menu')}}<span></span></a>
-                                <h3><span>Order Number</span> <a href="tel:920001939" style="color: #f99839;">
+                                <h3><span>{{__('general.hot_line')}}</span> <a href="tel:920001939" style="color: #f99839;">
                                 920001939</a></h3>
                             </div>
                         </div>

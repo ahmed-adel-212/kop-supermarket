@@ -43,17 +43,19 @@ class ServiceController extends Controller
                 session()->put(['address_id'=>$id]);
              }
             session()->forget('status');
-            if (auth()->user()->carts()->get()->count() > 0) {
-                return redirect()->route('menu.page');
-                // return back();
-            }
-            return redirect()->intended();
+            return redirect()->route('menu.page');
+            // if (auth()->user()->carts()->get()->count() > 0) {
+            //     return redirect()->route('menu.page');
+            //     // return back();
+            // }
+            // return redirect()->intended();
         }
         session()->put(['err'=>$return['message']]);
-        if (auth()->user()->carts()->get()->count() > 0) {
-            return redirect()->route('menu.page');
-            // return back();
-        }
-        return redirect()->intended();
+        return redirect()->route('menu.page');
+        // if (auth()->user()->carts()->get()->count() > 0) {
+            
+        //     // return back();
+        // }
+        // return redirect()->intended();
     }
 }

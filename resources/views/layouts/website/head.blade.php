@@ -80,6 +80,9 @@
         .header-menu-wrap ul li > a {
             padding: 0 5px;
         }
+        .food-info h4 {
+            min-height: 0 !important;
+        }
     </style>
 
 
