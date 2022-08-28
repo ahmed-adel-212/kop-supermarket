@@ -46,50 +46,60 @@
                                         @if($offers['details']['buy_items']->count() > 0)
                                             <div class="col-sm-11 m-auto">
                                                 <h3 class="mb-4 mt-3 col-md-12">{{__('general.Buy')}} <small class="h6 text-black-50">  {{$offers['details']['buy_quantity']}}</small></h3>
-                                                <div class="col-md-12">
-                                                    <div class="rounded border" style="background-color: #f5f5f5!important;box-shadow: 0.1rem 0rem 1.5rem rgb(0 0 0 / 20%);">
-                                                        @foreach($offers['details']['buy_items'] as $buyItem)
-                                                            <input type="hidden" name="offer_price[]" value="{{round($buyItem['price'], 2)}}">
-                                                            <div class="gold-members p-3 border-bottom">
-                                                                <a class="default-btn float-right buyBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
-                                                                <div class="media d-flex">
-                                                                    <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$buyItem['id']}}" name="buy_items[]" class="d-none checkItem">
-                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{asset($buyItem->image)}}" alt="">
-                                                                    </div>
-                                                                    <div class="media-body">
-                                                                        <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $buyItem['name_ar'] : $buyItem['name_en'] }}</h4>
-                                                                        <p class="text-gray m-0" style="font-size: 12px;">{{__('menu.Price')}}: <span class="text-danger font-weight-bold">{{round($buyItem['price'], 2)}} {{__('general.SR')}}</span></p>
+                                                   <div class="row">
+                                                    @foreach($offers['details']['buy_items'] as $buyItem)
+                                                 
+                                                    <div class="col-md-6" style="margin-bottom: 1%;">
+                                                        <div class="rounded border" style="background-color: #f5f5f5!important;box-shadow: 0.1rem 0rem 1.5rem rgb(0 0 0 / 20%);">
+                                                                <input type="hidden" name="offer_price[]" value="{{round($buyItem['price'], 2)}}">
+                                                                <div class="gold-members p-3 border-bottom">
+                                                                    <div class="media d-flex">
+                                                                        <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$buyItem['id']}}" name="buy_items[]" class="d-none checkItem">
+                                                                            <img class="img-thumbnail rounded h-100 w-100" src="{{asset($buyItem->image)}}" alt="">
+                                                                        </div>
+                                                                        <div class="media-body" style="margin-left: 2%;">
+                                                                            <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $buyItem['name_ar'] : $buyItem['name_en'] }}</h4>
+                                                                            <ul class="product-meta">
+                                                                                <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $buyItem['calories'] }}</a></li>
+                                                                            </ul>           
+                                                                            <p class="text-gray m-0" style="font-size: 12px;">{{__('menu.Price')}}: <span class="text-danger font-weight-bold">{{round($buyItem['price'], 2)}} {{__('general.SR')}}</span></p>
+                                                                            <a class="default-btn float-right buyBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        @endforeach
-
-                                                    </div>
-                                                </div>
+                                                        </div>
+                                                    
+                                                @endforeach
+                                            </div>
                                             </div>
                                         @endif
                                         @if($offers['details']['get_items']->count() > 0)
                                             <div class="col-sm-11 m-auto">
                                                 <h3 class="mb-4 mt-3 col-md-12">{{__('general.Get')}} <small class="h6 text-black-50">  {{$offers['details']['get_quantity']}}</small></h3>
-                                                <div class="col-md-12">
-                                                    <div class="rounded border" style="background-color: #f5f5f5!important;box-shadow: 0.1rem 0rem 1.5rem rgb(0 0 0 / 20%);">
-                                                        @foreach($offers['details']['get_items'] as $getItem)
+                                                  <div class="row">
+                                                @foreach($offers['details']['get_items'] as $getItem)
+                                                  <div class="col-md-6" style="margin-bottom: 1%;">
+                                                        <div class="rounded border" style="background-color: #f5f5f5!important;box-shadow: 0.1rem 0rem 1.5rem rgb(0 0 0 / 20%);">
                                                             <div class="gold-members p-3 border-bottom">
-                                                                <a class="default-btn float-right getBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px"><input type="checkbox" value="{{$getItem['id']}}" name="get_items[]" class="d-none checkItem">
                                                                         <img class="img-thumbnail rounded h-100 w-100" src="{{asset($getItem->image)}}" alt="">
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $getItem['name_ar'] : $getItem['name_en'] }}</h4>
+                                                                        <ul class="product-meta">
+                                                                                <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $buyItem['calories'] }}</a></li>
+                                                                            </ul>    
                                                                         <p class="text-gray m-0 " style="font-size: 12px;">{{__('menu.Price')}}: <span class="text-success font-weight-bold">0 {{__('general.SR')}}</span></p>
+                                                                        <a class="default-btn float-right getBtnAdd" href="#">{{__('general.Buy')}}<span></span></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        @endforeach
-
-                                                    </div>
-                                                </div>
+                                                        </div>
+                                                    </div> 
+                                                 @endforeach
+                                            </div>
                                             </div>
                                         @endif
                                             <div class="col-sm-3 mt-4 offset-9">
