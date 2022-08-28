@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -188,7 +189,7 @@ class CartController extends Controller
                 // $points = $loyality['points'];
                 // $arr_data['points'] = round($value, 2);
                 // $arr_data['taxes'] = round($final_item_price / 1.15, 2);
-                // $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
+                // $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 // $arr_data['subtotal'] = round($final_item_price, 2);
                 // $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
                 // $arr_data['total'] = round($final_item_price, 2);
@@ -198,7 +199,7 @@ class CartController extends Controller
                 $arr_data['points'] = round(session()->get('point_claim_value'), 2);
                 $arr_data['points_value'] = round(session()->get('points_value'), 2);
                 $arr_data['taxes'] = round($final_item_price / 1.15, 2);
-                $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
+                $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
                 // $final_item_price += ($arr_data['taxes'] + $arr_data['delivery_fees']) - $arr_data['points'];
                 if ($arr_data['subtotal'] <= $arr_data['points']) {
@@ -209,7 +210,7 @@ class CartController extends Controller
                 return $arr_data;
             } else {
                 $arr_data['taxes'] = round($final_item_price / 1.15, 2);
-                $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('branch_id')), 2) : 0;
+                $arr_data['delivery_fees'] = session()->get('service_type') == 'delivery' ? round($this->get_delivery_fees(session()->get('address_area_id')), 2) : 0;
                 $arr_data['subtotal'] = round($final_item_price, 2);
                 // $final_item_price += $arr_data['taxes'] + $arr_data['delivery_fees'];
                 $final_item_price += $arr_data['delivery_fees'];
@@ -232,10 +233,12 @@ class CartController extends Controller
             $address_id = session()->get('address_id');
             $request->merge(['address_id' => $address_id]);
         }
-        $branch_id = session()->get('branch_id');
+        $branch_id = session()->get('address_area_id');
+        $area_id = session()->get('address_area_id');
         $request->merge([
             'branch_id' => $branch_id,
-            'service_type' => $service_type
+            'service_type' => $service_type,
+            'address_area_id' => $area_id,
         ]);
 
         $branch = Branch::where('id', $branch_id)->with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function ($day) {
@@ -257,10 +260,10 @@ class CartController extends Controller
 
     }
 
-    public function get_delivery_fees($branch_id)
+    public function get_delivery_fees($area_id)
     {
 
-        $fees = Branch::where('id', $branch_id)->select('delivery_fees')->get();
-        return ($fees[0]['delivery_fees']);
+        $fees =Area::where('id', $area_id)->select('delivery_fees')->first();
+        return round($fees->delivery_fees, 2);
     }
 }
