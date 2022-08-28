@@ -125,75 +125,67 @@
                                                 <textarea id="message" name="message" cols="30" rows="3" class="form-control" placeholder="Order Note"></textarea>
                                             </div>
                                         </div> -->
-                                <div class="payment-method">
-                                    <h2>
-                                        {{ __('general.Payment') }}
-                                    </h2>
+                                <div class="payment-method d-flex w-100 justi align-content-center flex-row">
+                                    <div>
+                                        <h2 >
+                                            {{ __('general.payment_type') }}:&nbsp;&nbsp;
+                                        </h2>
+                                    </div>
                                     <div class="mb-20">
-                                        <button class="btn btn-success btn-block btn-lg" type="submit"
-                                            formaction="{{ route('make_order') }}">
+                                        <button class="btn default-btn bg-primary rounded shadow selectType" type="button"
+                                            data-formaction="{{ route('make_order') }}">
                                             {{ __('general.Confirm Order Cash') }}
-                                            <i class="feather-arrow-right"></i>
+                                           
+                                            <span></span>
                                         </button>
-                                        <button class="btn btn-success btn-block btn-lg" type="submit"
-                                            formaction="{{ route('payment') }}">
+                                        <button class="btn default-btn bg-primary rounded shadow selectType" type="button"
+                                            data-formaction="{{ route('payment') }}">
                                             {{ __('general.Confirm Order OnlinePay') }}
-                                            <i class="feather-arrow-right"></i>
+                                            
+                                            <span></span>
                                         </button>
                                     </div>
-                                    <ul class="mb-20">
-                                        <input id="subtotalinput" hidden name="subtotal"
-                                            value="{{ $request->subtotal }} " />
-
-                                        <input id="taxesinput" hidden name="taxes"
-                                            value="{{ round($request->taxes, 2) }}" />
-
-                                        <input id="delivery_feesnput" hidden name="delivery_fees"
-                                            value="{{ $request->delivery_fees }}" />
-
-                                        @if ($request->has('points_paid'))
-                                            <input id="pointsinput" hidden
-                                                name="points_paid"value="{{ $request->points_paid }}" />
-                                        @endif
-                                        @if ($request->has('points_value'))
-                                            <input id="pointsinput55" hidden
-                                                name="points_value"value="{{ $request->points_value }}" />
-                                        @endif
-                                        @if ($request->has('branch_id'))
-                                            <input hidden name="branch_id" value="{{ $request->branch_id }}" />
-                                        @endif
-                                        @if ($request->has('address_id'))
-                                            <input id="pointsinput" hidden name="address_id"
-                                                value="{{ $request->address_id }}" />
-                                        @endif
-                                        @if ($request->has('service_type'))
-                                            <input id="pointsinput" hidden name="service_type"
-                                                value="{{ $request->service_type }}" />
-                                        @endif
-                                        @auth()
-                                            <input id="pointsinput" hidden name="customer_id"
-                                                value="{{ auth()->user()->id }}" />
-                                        @endauth
-                                        <input id="delivery_feesnput" hidden name="total"
-                                            value="{{ $request->total }}" />
-
-                                        <li>
-                                            <input type="radio" id="option-1" name="selector" checked="">
-                                            <label for="option-1">Direct Bank Transfer</label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="option-2" name="selector">
-                                            <label for="option-2">Check Payments</label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="option-3" name="selector">
-                                            <label for="option-3">Cash On Delivery</label>
-                                        </li>
-                                    </ul>
-                                    <a href="#" class="default-btn">Place Order <span></span></a>
+                                    
                                 </div>
+                                <ul class="mb-20">
+                                    <input id="subtotalinput" hidden name="subtotal"
+                                        value="{{ $request->subtotal }} " />
 
+                                    <input id="taxesinput" hidden name="taxes"
+                                        value="{{ round($request->taxes, 2) }}" />
 
+                                    <input id="delivery_feesnput" hidden name="delivery_fees"
+                                        value="{{ $request->delivery_fees }}" />
+
+                                    @if ($request->has('points_paid'))
+                                        <input id="pointsinput" hidden
+                                            name="points_paid"value="{{ $request->points_paid }}" />
+                                    @endif
+                                    @if ($request->has('points_value'))
+                                        <input id="pointsinput55" hidden
+                                            name="points_value"value="{{ $request->points_value }}" />
+                                    @endif
+                                    @if ($request->has('branch_id'))
+                                        <input hidden name="branch_id" value="{{ $request->branch_id }}" />
+                                    @endif
+                                    @if ($request->has('address_id'))
+                                        <input id="pointsinput" hidden name="address_id"
+                                            value="{{ $request->address_id }}" />
+                                    @endif
+                                    @if ($request->has('service_type'))
+                                        <input id="pointsinput" hidden name="service_type"
+                                            value="{{ $request->service_type }}" />
+                                    @endif
+                                    @auth()
+                                        <input id="pointsinput" hidden name="customer_id"
+                                            value="{{ auth()->user()->id }}" />
+                                    @endauth
+                                    <input id="delivery_feesnput" hidden name="total"
+                                        value="{{ $request->total }}" />
+
+                                   
+                                </ul>
+                                <button type="submit" class="default-btn">{{__('general.confirm_order')}} <span></span></button>
                             </div>
                             <div class="col-lg-4 sm-padding">
                                 <ul class="cart-total">
@@ -246,4 +238,13 @@
         @endsection
 
         @section('scripts')
+        <script>
+            $(document).ready(function() {
+                $('.selectType').click(function() {
+                    $('.selectType').removeClass('bg-success');
+                    $(this).addClass('bg-success');
+                    $('.checkout-form-wrap').attr('action', $(this).attr('data-formaction'));
+                });
+            });
+        </script>
         @endsection

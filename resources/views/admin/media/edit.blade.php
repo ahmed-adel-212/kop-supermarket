@@ -76,6 +76,9 @@
                                             <label>Video</label>
                                             <div class="help-block text-info">
                                                 <b>Note</b> Video Minimum dimensions: 720 * 650
+                                                <p class="text-info">
+                                                    <b>Note</b> Video types: mp4 | ogg | wmv
+                                                </p>
                                             </div>
                                             <div class="input-group">
                                                 <div class="custom-file">
@@ -95,6 +98,9 @@
                                             <label>Image</label>
                                             <div class="help-block text-info">
                                                 <b>Note</b> Image dimensions: 150 * 150
+                                                <p class="text-info">
+                                                    <b>Note</b> Image types: png | jpeg | jpg
+                                                </p>
                                             </div>
                                             <div class="input-group">
                                                 <div class="custom-file">

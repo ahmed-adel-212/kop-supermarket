@@ -49,7 +49,9 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Image <span style="color: #0f7ae5">hint: dimensional 600*600</span> </label>
+                                    <label>Image <span style="color: #0f7ae5">hint: dimensional 600*600</span> <p class="text-info">
+                                        <b>Note</b> Image types: png | jpeg | jpg
+                                    </p> </label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" value="{{old('url')}}" class="custom-file-input {!! $errors->first('url', 'is-invalid') !!}" name="url" >

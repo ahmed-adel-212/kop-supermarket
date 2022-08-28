@@ -75,7 +75,11 @@
                                         <label for="exampleInputFile">Image</label>
                                         <div class="help-block text-info">
                                             <b>Note</b> Image dimensions: 1000 * 650
+                                            <p class="text-info">
+                                                <b>Note</b> Image types: png | jpeg | jpg
+                                            </p>
                                         </div>
+                                        <img src="{{ $info->image }}" class="img-thumbnail" style="width: 250px;" />
                                         <div class="custom-file">
                                             <input type="file"
                                                 class="custom-file-input {!! $errors->first('image', 'is-invalid') !!}"
