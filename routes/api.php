@@ -168,7 +168,7 @@ Route::group(['prefix' => 'menu', 'middleware' => ['authIfTokenFound']], functio
 
     Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 });
-Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile')->middleware('auth:api');
+Route::get('/payment/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
 
 // helper endpoints
 Route::get('/cities', "Api\HelperController@getCities");

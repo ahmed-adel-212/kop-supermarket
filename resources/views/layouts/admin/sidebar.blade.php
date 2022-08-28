@@ -138,7 +138,7 @@
                                  {{request()->segment(3) == 'aboutUS'||
                                    request()->segment(3) == 'gallery'||
                                    request()->segment(3) == 'media'||
-                                   request()->segment(3) == 'deal-of-week'||
+                                //    request()->segment(3) == 'deal-of-week'||
                                    request()->segment(3) == 'contact'||
                                    request()->segment(3) == 'careers'||
                                    request()->segment(3) == 'news'||
@@ -171,12 +171,12 @@
                                             <p>Hero Backgrounds</p>
                                         </a>
                                     </li> --}}
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{route('admin.itemDealOfWeek')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>
                                             <p>Deal Of Week Items</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{route('admin.aboutUS.index')}}" class="nav-link"><i
                                                 class="fab fa-first-order nav-icon"></i>
