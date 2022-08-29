@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Api\FrontController;
 use App\Models\Address;
 use App\Models\User;
+use App\Models\City;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,6 +32,30 @@ class AddressController extends Controller
         $pageName = request()->routeIs('profile.address') ? 'website.address' : 'website.profile';
 
         return view($pageName, compact(['addresses', 'points']));
+    }
+
+    public function get_address_map()
+    {
+        $request = new \Illuminate\Http\Request();
+
+        $return = (app(\App\Http\Controllers\Api\AddressesController::class)->index($request))->getOriginalContent();
+        $return2 = (app(\App\Http\Controllers\Api\AuthController::class)->getUserPoints($request))->getOriginalContent();
+        $return3 = (app(\App\Http\Controllers\Api\HelperController::class)->getCities())->getOriginalContent();
+        if ($return2['success'] == 'success') {
+            $points = $return2['data'];
+        }
+
+        if ($return3['success'] == 'success') {
+            $cities = $return3['data'];
+        }
+        if ($return['success'] == 'success') {
+            $addresses = $return['data'];
+        }
+        
+        $cities =City::get()->toArray();
+        // $pageName = request()->routeIs('profile.address') ? 'website.address' : 'website.profile';
+
+        return view('website.map_address', compact(['cities','addresses', 'points']));
     }
 
     public function delete(Address $address)

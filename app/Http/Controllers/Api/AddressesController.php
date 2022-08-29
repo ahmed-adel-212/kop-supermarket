@@ -49,37 +49,37 @@ class AddressesController extends BaseController
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), $this->validationRules);
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), $this->validationRules);
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error!', $validator->errors(), 400);
-        }
+    //     if ($validator->fails()) {
+    //         return $this->sendError('Validation Error!', $validator->errors(), 400);
+    //     }
 
-        // attach customer reference
-        if ($request->user()) {
-            if ($request->user()->hasRole('customer')) {
-                $request->merge(['customer_id' => $request->user()->id]);
-            }
-        } else {
-            if (auth('web')->user()->hasRole('customer')) {
-                $request->merge(['customer_id' => auth('web')->user()->id]);
-            }
-        }
+    //     // attach customer reference
+    //     if ($request->user()) {
+    //         if ($request->user()->hasRole('customer')) {
+    //             $request->merge(['customer_id' => $request->user()->id]);
+    //         }
+    //     } else {
+    //         if (auth('web')->user()->hasRole('customer')) {
+    //             $request->merge(['customer_id' => auth('web')->user()->id]);
+    //         }
+    //     }
 
-        if ($request->has('_token')) {
-            unset($request['_token']);
-        }
-        $address = Address::firstOrCreate($request->all());
+    //     if ($request->has('_token')) {
+    //         unset($request['_token']);
+    //     }
+    //     $address = Address::firstOrCreate($request->all());
 
-        if (!$address) {
-            return $this->sendError(__('general.error'), 400);
-        }
+    //     if (!$address) {
+    //         return $this->sendError(__('general.error'), 400);
+    //     }
 
 
-        return $this->sendResponse($address, __('general.address.created'));
-    }
+    //     return $this->sendResponse($address, __('general.address.created'));
+    // }
 
     public function sotre(Request $request)
     {
@@ -251,5 +251,36 @@ class AddressesController extends BaseController
             }
             return $this->sendError(__('general.error'));
         }
+    }
+
+    /**
+     * check location exist in DB
+     */
+    public function checkLocation(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'city' => ['required', 'string'],
+            'area' => ['required', 'string'],
+        ]);
+        if ($validator->fails())
+            return $this->sendError(__('general.validation_errors'), $validator->errors(), 400);
+        $areaId=null;
+        $cityId=null;
+        $city = City::where('name_en', "LIKE", "%$request->city%")->orWhere('name_ar', "LIKE", "%$request->city%")->first();
+        if($city){
+            $area = Area::where('', $city->id)->where('name_en', "LIKE", "%$request->area%")->orWhere('name_ar', "LIKE", "%$request->area%")->first();
+            if($area){
+                $cityId = $city->id;
+                $areaId = $area->id;
+            }
+        }
+        $data =[
+            'city_id' => $cityId,
+            'area_id' => $areaId
+        ];
+        if($cityId){
+            return $this->sendResponse($data, __('general.address.created'));
+        }
+        return $this->sendError(__('general.address.city_not_found'));
     }
 }

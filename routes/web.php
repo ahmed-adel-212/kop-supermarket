@@ -213,6 +213,7 @@ Route::group([
 
             //profile
             Route::get('/profile/', [\App\Http\Controllers\Website\AddressController::class, 'get_address'])->name('profile');
+            Route::get('/profile/map', [\App\Http\Controllers\Website\AddressController::class, 'get_address_map'])->name('profile.map');
             Route::get('/profile/addresses', [\App\Http\Controllers\Website\AddressController::class, 'get_address'])->name('profile.address');
             Route::post('/update-profile/', [\App\Http\Controllers\Website\UserController::class, 'update_user'])->name('update.profile');
             Route::delete('/delete_address/{address}', [\App\Http\Controllers\Website\AddressController::class, 'delete'])->name('delete_address');

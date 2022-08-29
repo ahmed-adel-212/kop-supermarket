@@ -130,9 +130,13 @@
                                     </div>
                                 @endif
                                 <div class="text-center">
-                                    <a href="{{route('profile')}}" type="button" class="btn btn-primary btn-floating"
+                                    <a href="{{route('profile.address')}}" type="button" class="btn btn-primary btn-floating"
                                        style="margin: 20px">
                                         {{__('general.New Address')}} <i class="fas fa-map-marked-alt"></i>
+                                    </a>
+                                    <a href="{{route('profile.map')}}" type="button" class="btn btn-primary btn-floating"
+                                       style="margin: 20px">
+                                        {{__('general.use map')}} <i class="fas fa-map-marked-alt"></i>
                                     </a>
                                 </div>
                             </div>
