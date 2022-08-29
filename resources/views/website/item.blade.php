@@ -100,8 +100,10 @@
                 info: '{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}',
                 category: '{{ app()->getLocale() == 'ar' ? $item['category']['name_ar'] : $item['category']['name_en'] }}',
                 calories: {{ $item->calories }},
-                dough: '{{ $item['dough_type'][0]['name_ar'] }},{{ $item['dough_type'][0]['name_en'] }}',
-                @if (isset($item['dough_type_2']) && !empty($item['dough_type_2'])) dough2: '{{ $item['dough_type_2'][0]['name_ar'] }},{{ $item['dough_type_2'][0]['name_en'] }}', @endif
+                @if (isset($item['dough_type']) && !empty($item['dough_type']) && isset($item['dough_type'][1]))
+                dough: '{{ $item['dough_type'][1]['name_ar'] }},{{ $item['dough_type'][1]['name_en'] }}',
+                @endif
+                @if (isset($item['dough_type_2']) && !empty($item['dough_type_2']) && isset($item['dough_type_2'][0])) dough2: '{{ $item['dough_type_2'][0]['name_ar'] }},{{ $item['dough_type_2'][0]['name_en'] }}', @endif
                 real_price: {{ round($item->price, 2) }},
                 price: {{ round(isset($item['offer']) ? $item['offer']['offer_price'] : $item->price, 2) }},
                 offer_price: {{ isset($item['offer']) ? round($item['offer']['offer_price'], 2) : 0 }},
@@ -272,6 +274,7 @@
                                     <div class="d-flex justify-content-between">
                                         <div class="container-fluid">
                                             <div class="row">
+                                                @if (isset($item['dough_type']) && !empty($item['dough_type']) && isset($item['dough_type'][0]))
                                                 <div class="col-md-6 my-2">
                                                     {{ __('general.Dough Type') }}:&nbsp;
                                                     <div class="btn-group" role="group"
@@ -288,6 +291,7 @@
                                                                 <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
                                                         @endforeach
                                                     </div>
+                                                    @endif
                                                 </div>
                                                 @if (isset($item['dough_type_2']) && !empty($item['dough_type_2']))
                                                 <div class="col-md-6 my-2">

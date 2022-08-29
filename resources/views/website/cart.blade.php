@@ -170,7 +170,7 @@
                                         @if ($cart->offer_id && !$cart->dough_type_ar) disabled @endif data-zeros="true"
                                         value="{{ $cart->quantity }}" min="1" max="20" readonl
                                         data-id="{{ $cart->id }}" data-price="{{ $cart->price }}"
-                                        data-prev="{{ $cart->quantity }}"
+                                        data-prev="{{ $cart->quantity }}" data-price-without-offer="{{$cart->offer_id ? isset($cart->extras_objects) ? $cart->item->price + collect($cart->extras_objects)->sum('price') : $cart->item->price : $cart->price }}"
                                         data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
                                         class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}">
                                 </div>
@@ -178,7 +178,7 @@
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item" style="flex-direction: column;">
                                     @if ($cart->offer_id)
-                                        <p class="text-danger">
+                                        <p class="text-danger" id="price_without_offer">
                                             @isset($cart->extras_objects)
                                                 <del>{{ $cart->item->price + collect($cart->extras_objects)->sum('price') }}
                                                     {{ __('general.SR') }}</del>
@@ -196,7 +196,18 @@
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
-                                <div class="cart-item">
+                                <div class="cart-item d-flex flex-column">
+                                    @if ($cart->offer_id)
+                                        <p class="text-danger">
+                                            @isset($cart->extras_objects)
+                                                <del><span id="without-offer-total{{$cart->id}}">{{ ($cart->item->price + collect($cart->extras_objects)->sum('price')) * $cart->quantity }}</span>
+                                                    {{ __('general.SR') }}</del>
+                                            @else
+                                                <del><span id="without-offer-total{{$cart->id}}">{{ $cart->item->price * $cart->quantity }}</span> {{ __('general.SR') }}</del>
+                                            @endisset
+
+                                        </p>
+                                    @endif
                                     <p> <span id="total{{ $cart->id }}">{{ $cart->price * $cart->quantity }}</span>
                                         {{ __('general.SR') }}</p>
                                 </div>
@@ -214,7 +225,28 @@
                 <form action="{{ route('checkout') }}" method="post">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-6 offset-lg-6">
+                        <div class="col-lg-6">
+                            <div class="card-header mt-30">
+                                <h5 class='card-title text-center'>
+                                    {{__('general.loyality_earneings')}}
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-text row font-weight-bold text-indigo">
+                                    <div class="col-md-4">
+                                        {{__('general.Total')}}
+                                    </div>
+                                    <div class="col-lg-4 hidden visible-lg text-success">
+                                        {{__('general.applied')}}
+                                    </div>
+                                    <div class="col-lg-4 text-danger">
+                                        <span id="to-earn">
+                                            {{round($arr_check['total'])}}</span> {{__('general.Points')}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
                             <ul class="cart-total mt-30">
                                 <li>
                                     {{ __('general.Sub Total') }}: </b>
@@ -375,6 +407,8 @@
 
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
+                            
+                            $('#to-earn').text(Math.round(data.total));
 
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
@@ -403,10 +437,11 @@
                     var quantity = $(this).val();
                     var id = $(this).attr('data-id');
                     var price = $(this).attr('data-price');
+                    var price_without_offer = $(this).attr('data-price-without-offer');
                     var href = $(this).attr('data-url');
 
                     $('.confirm').attr('data-id', id).attr('data-price', price).attr('quantity', parseInt(
-                        quantity));
+                        quantity)).attr('data-price-without-offer', price_without_offer);
                     $('.item-link').attr('href', href);
 
                     var val = parseInt(elem.val(), 10);
@@ -451,6 +486,7 @@
                     var quantity = $(this).attr('quantity');
                     var id = $(this).attr('data-id');
                     var price = $(this).attr('data-price');
+                    var price_without_offer = $(this).attr('data-price-without-offer');
                     $(".cart2" + id + ' .quantity_ch').attr('readonly', true);
 
                     $.ajaxSetup({
@@ -480,6 +516,8 @@
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
 
+                            $('#to-earn').text(Math.round(data.total));
+
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
                             $('#delivery_feesinput').val(data.delivery_fees);
@@ -492,6 +530,8 @@
                             //     .first().html('{{ __('home.Price') }}: ' + (quantity * price)
                             //         .toFixed(2) + ' {{ __('general.SR') }}');
                             $('#total' + id).text((quantity * price).toFixed(2));
+
+                            $('#without-offer-total' + id).text((quantity * price_without_offer).toFixed(2));
 
                             @if (isset($arr_check['points']))
                                 $('#points').text(data.points);

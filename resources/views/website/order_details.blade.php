@@ -42,7 +42,7 @@
     @section('content')
         <main class="page-main">
             <section class="page-header"
-            style="background-image: url({{ asset('website2-assets/img/page-header-theme.jpg') }})">
+                style="background-image: url({{ asset('website2-assets/img/page-header-theme.jpg') }})">
                 <div class="bg-shape grey"></div>
                 <div class="container">
                     <div class="page-header-content">
@@ -92,26 +92,36 @@
                                 <div class="form-group stepper-type-2 quantity-up-{{ $item->id }}">
                                     <input style="width: 25%;" type="number"
                                         class="form-control text-bold quantity_ch quantity_change{{ $item->id }}"
-                                        value="{{$item->pivot->quantity}}" readonly>
+                                        value="{{ $item->pivot->quantity }}" readonly>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
-                                <div class="cart-item">
-                                    @if ($order->offer_id)
-                                    <p>
-                                        <del>
-                                            {{ ($item->price) * 1 }}
-                                        {{ __('general.SR') }}
-                                        </del>
-                                    </p>
+                                <div class="cart-item d-flex flex-column">
+                                    @if ($item->pivot->offer_id)
+                                        <p class=" text-danger">
+                                            <del>
+                                                {{ $item->price }}
+                                                {{ __('general.SR') }}
+                                            </del>
+                                        </p>
                                     @endif
-                                    <p>{{ ($order->offer_id ? $order->offer_price : $item->price) * 1 }}
+                                    <p class="">
+                                        {{ $item->pivot->offer_id ? $item->pivot->offer_price : $item->price }}
                                         {{ __('general.SR') }}</p>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
-                                <div class="cart-item">
-                                    <p>{{ ($order->offer_id ? $order->offer_price : $item->price) * $item->pivot->quantity }} {{ __('general.SR') }}
+                                <div class="cart-item d-flex flex-column">
+                                    @if ($item->pivot->offer_id)
+                                        <p class="text-danger">
+                                            <del>
+                                                {{ $item->price * $item->pivot->quantity }}
+                                                {{ __('general.SR') }}
+                                            </del>
+                                        </p>
+                                    @endif
+                                    <p>{{ ($item->pivot->offer_id ? $item->pivot->offer_price : $item->price) * $item->pivot->quantity }}
+                                        {{ __('general.SR') }}
                                     </p>
                                 </div>
                             </div>
@@ -126,14 +136,41 @@
                         @csrf
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="card-header mt-30">
-                                    <h5 class='card-title'>
-                                        {{__('general.Description')}}
-                                    </h5>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-header mt-30">
+                                            <h5 class='card-title text-center'>
+                                                {{ __('general.loyality_earneings') }}
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-text row font-weight-bold text-indigo">
+                                                <div class="col-md-4">
+                                                    {{ __('general.Total') }}
+                                                </div>
+                                                <div class="col-lg-4 hidden visible-lg text-success">
+                                                    {{ __('general.applied') }}
+                                                </div>
+                                                <div class="col-lg-4 text-danger">
+                                                    <span id="to-earn">
+                                                        {{ round($order->total) }}</span> {{ __('general.Points') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        {{$order->description_box}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-header mt-30">
+                                            <h5 class='card-title'>
+                                                {{ __('general.Description') }}
+                                            </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-text">
+                                                {{ $order->description_box }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +208,8 @@
                                     @if ($order['subtotal'] < $order['total'])
                                         <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
                                                 : </b> <span id="points" style="font-size: smaller;">
-                                                {{ round($order['total'] - ($order['subtotal'] + $order['taxes']), 2) }} {{ __('general.SR') }}</span>
+                                                {{ round($order['total'] - ($order['subtotal'] + $order['taxes']), 2) }}
+                                                {{ __('general.SR') }}</span>
                                             <input id="discount-offers" hidden name="discount"
                                                 value="{{ round($order['total'] < $order['subtotal'], 2) }}" />
                                         </li>
@@ -269,7 +307,7 @@
                                 return;
                             }
 
-                            window.location.href = "{{route('get.cart')}}";
+                            window.location.href = "{{ route('get.cart') }}";
                         },
                         error: function(err) {
                             // console.log(err);

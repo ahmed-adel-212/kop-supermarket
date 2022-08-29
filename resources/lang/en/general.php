@@ -363,4 +363,7 @@ return [
     'loyality_not_used' => "Your loyalty-points value is more than your order total value, \n<br> Please add more items to your order or remove loyalty points exchange",
     'go_menu' => 'Go to Menu',
     'remove_loyality' => 'Remove Loyalty Exchange',
+    'loyality_earneings' => 'Loyalty Earnings',
+    'applied' => 'Applied',
+    'to_be_applied' => 'To Be Applied',
 ];

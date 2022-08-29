@@ -821,7 +821,7 @@ class OrdersController extends BaseController
         $order->update(['state' => 'completed']);
 
         PointsTransaction::create([
-            'points' => round($order->total) / 10,
+            'points' => round($order->total),
             'user_id' => $order->customer_id,
             'order_id' => $order->id,
             'status' => 0
