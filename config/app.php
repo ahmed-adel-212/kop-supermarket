@@ -179,6 +179,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+         /*
+     * Package Service Providers...
+     */
+    Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -233,6 +238,8 @@ return [
         'FCM'      => LaravelFCM\Facades\FCM::class,
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
         'AWS' => Aws\Laravel\AwsFacade::class,
+
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 
     ],

@@ -14,11 +14,45 @@ use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Imports\AreaImport;
+use App\Models\Area;
+use \Excel as Excelll;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function homePage(Request $request){
         $menu = [];
+
+        // $areas = Excelll::toArray(new AreaImport, storage_path('/app/public/areas.xlsx'));
+
+        // $areas = array_splice($areas[0], 9);
+
+        // // DB::table('areas')->truncate();
+
+        // $lastId = Area::latest('id')->first();
+
+        // $i = $lastId ? $lastId->id+1 : 1;
+        
+        // foreach ($areas as $area) {
+        //     if ($area[0] === null) continue;
+
+        //     $ar = Area::create([
+        //         'id' => $i,
+        //         'city_id' => 23421,
+        //         'name_ar' => $area[0],
+        //         'name_en' => $area[1],
+        //         'delivery_fees' => 23,
+        //         'description_ar' => null,
+        //         'description_en' => null,
+        //         'min_delivery_ammount' => null,
+        //     ]);
+
+        //     // dump($ar);
+        //     $i++;
+        // }
+    
+        // dd('');
 
         $return = (app(\App\Http\Controllers\Api\MenuController::class)->getAllCategories2())->getOriginalContent();
 

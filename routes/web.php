@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\Website\OrdersController;
 
+
+
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 ], function () { 
-
     // Authentication Routes
     Route::group(['prefix' => 'admin'], function () {
         Auth::routes(['register' => false]);
