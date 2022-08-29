@@ -128,7 +128,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Image</label>
+                                    <label for="exampleInputFile">Menu Image</label>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                    </div>
                                     @if($offer->image)
                                     <img src="{{ $offer->image }}" alt="..." class="img-thumbnail">
                                     @endif
@@ -147,17 +150,38 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Website Image</label>
+                                    <label for="exampleInputFile">Website Home Image</label>
                                     <div class="help-block text-info">
                                         <b>Note</b> Image Dimensions Must Be: 300 * 300
                                     </div>
                                     @if($offer->website_image)
-                                    <img src="{{ $offer->website_image }}" alt="..." class="img-thumbnail">
+                                    <img src="{{ asset($offer->website_image) }}" alt="..." class="img-thumbnail">
                                     @endif
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="exampleInputFile" name="website_image"
-                                            value="{{$offer->website_image}}">
+                                            value="{{ asset($offer->website_image)}}">
                                         @error('website_image')
+                                        <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Mobile Home Image</label>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                    </div>
+                                    @if($offer->mobile_image)
+                                    <img src="{{ asset($offer->mobile_image) }}" alt="..." class="img-thumbnail">
+                                    @endif
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="mobile_image"
+                                            value="{{$offer->mobile_image}}">
+                                        @error('mobile_image')
                                         <div class="help-block">{{ $message }}</div>
                                         @enderror
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>

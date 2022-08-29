@@ -26,8 +26,9 @@
                                 <th>Date From</th>
                                 <th>Date To</th>
                                 <th>Service</th>
-                                <th>Image</th>
-                                <th>Website Image</th>
+                                <th>Menu Image</th>
+                                <th>Website Home Image</th>
+                                <th>Mobile Home Image</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,6 +44,8 @@
                                             src="{{ asset($offer->image) }}" /></td>
                                     <td style="max-width:50px" class="text-center"><img class="img-fluid"
                                             src="{{ asset($offer->website_image) }}" /></td>
+                                    <td style="max-width:50px" class="text-center"><img class="img-fluid"
+                                            src="{{ asset($offer->mobile_image) }}" /></td>
                                     <td>
                                         @if ($offer->main)
                                             <form action="{{ route('admin.offer.unmain', $offer->id) }}" method="POST">

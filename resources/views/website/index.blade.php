@@ -191,7 +191,7 @@
                     <div class="row align-items-center">
                     <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
                         <div class="content-img-holder">
-                            <img src="{{asset($main_offer->image)}}" alt="img">
+                            <img src="{{asset($main_offer->website_image)}}" alt="img">
                             <div class="sale">
                             @if($main_offer->discount)
                                 <div>
@@ -202,9 +202,10 @@
                                         <h2><span>{{$main_offer->discount->discount_value}} @lang('general.SR')</span>Off Now</h2>
                                         @endif
                                     </div>
-                                @else
+                                @elseif($main_offer->buyGet)
                                 <div>
-                                <h4>buy & get</h4>
+                                <h4>Buy {{$main_offer->buyGet->buy_quantity}}</h4>
+                                <h2><span>GET {{$main_offer->buyGet->get_quantity}}</span></h2>
                                 </div>
                                 @endif    
                                 </div>
