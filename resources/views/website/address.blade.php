@@ -4,7 +4,8 @@
     {{ __('general.address_title') }}
 @endsection
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-   
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery-gmaps-latlon-picker.css')}}"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css"/>
 @section('styles')
 <style type="text/css">
         #map {
@@ -25,15 +26,18 @@
     @endsection
 
     @section('main')
-    <div class="form-group">
-    <label for="address_address">Address</label>
-    <input type="text" id="address-input" name="address_address" class="form-control map-input">
-    <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
-    <input type="hidden" name="address_longitude" id="address-longitude" value="0" />
-</div>
-<div id="address-map-container" style="width:100%;height:400px; ">
-    <div style="width: 100%; height: 100%" id="address-map"></div>
-</div>
+    <fieldset class="gllpLatlonPicker" style="width:100%;padding-right:10%">
+										<div>
+											<input type="text" class="gllpSearchField" style="color:black; width:70%; float:right" placeholder="أدخل عنوانا للبحث عنه">
+											<input type="button" class="gllpSearchButton btn btn-primary" value=" بحث عن عنوان" style="padding: 2px 15px; vertical-align: none;float:right;background:rgb(3, 169, 245); margin-right:1%">
+										</div>
+										<div class="gllpMap">Google Maps</div>
+										<input type="hidden" class="gllpLatitude" value="23.8859" name="lat"/>
+										<input type="hidden" class="gllpLongitude" value="45.0792" name="lon"/>
+										<input type="hidden" class="gllpZoom" name="gllpZoom" value="5"/>
+										<input class="gllpUpdateButton" value="update map" type="button"
+											   style="display:none">
+									</fieldset>
         <div class="row">
             <div class="col-12 text-end mb-2" >
                 <button data-bs-toggle="modal" data-bs-target="#add-address-modal " href="#" type="button"
@@ -470,112 +474,33 @@
     @endsection
 
     @section('scripts')
-    @parent
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
-    <script src="/js/mapInput.js"></script>
-    <script>
-        function initialize() {
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+	<script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>
+	<script src="{{asset('js/jquery-gmaps-latlon-picker.js')}}"></script>
+	<script>
+        $(document).ready(function() {
+            // Copy the init code from "jquery-gmaps-latlon-picker.js" and extend it here
+            $(".gllpLatlonPicker").each(function() {
+                $obj = $(document).gMapsLatLonPicker();
 
-            $('form').on('keyup keypress', function(e) {
-                var keyCode = e.keyCode || e.which;
-                if (keyCode === 13) {
-                    e.preventDefault();
-                    return false;
-                }
+                $obj.params.strings.markerText = "Drag this Marker (example edit)";
+
+                $obj.params.displayError = function(message) {
+                    console.log("MAPS ERROR: " + message); // instead of alert()
+                };
+
+                $obj.init( $(this) );
             });
-            const locationInputs = document.getElementsByClassName("map-input");
-
-            const autocompletes = [];
-            const geocoder = new google.maps.Geocoder;
-            for (let i = 0; i < locationInputs.length; i++) {
-
-                const input = locationInputs[i];
-                const fieldKey = input.id.replace("-input", "");
-                const isEdit = document.getElementById(fieldKey + "-latitude").value != '' && document.getElementById(fieldKey + "-longitude").value != '';
-
-                const latitude = parseFloat(document.getElementById(fieldKey + "-latitude").value) || -33.8688;
-                const longitude = parseFloat(document.getElementById(fieldKey + "-longitude").value) || 151.2195;
-
-                const map = new google.maps.Map(document.getElementById(fieldKey + '-map'), {
-                    center: {lat: latitude, lng: longitude},
-                    zoom: 13
-                });
-                const marker = new google.maps.Marker({
-                    map: map,
-                    position: {lat: latitude, lng: longitude},
-                });
-
-                marker.setVisible(isEdit);
-
-                const autocomplete = new google.maps.places.Autocomplete(input);
-                autocomplete.key = fieldKey;
-                autocompletes.push({input: input, map: map, marker: marker, autocomplete: autocomplete});
+        });
+        $('input.gllpSearchField').keypress(function(e) {
+            if(e.which == 13) {
+                $('input.gllpSearchButton').click();
+                console.log("pressed");
+                return false;
             }
-
-            for (let i = 0; i < autocompletes.length; i++) {
-                const input = autocompletes[i].input;
-                const autocomplete = autocompletes[i].autocomplete;
-                const map = autocompletes[i].map;
-                const marker = autocompletes[i].marker;
-
-                google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                    marker.setVisible(false);
-                    const place = autocomplete.getPlace();
-
-                    geocoder.geocode({'placeId': place.place_id}, function (results, status) {
-                        if (status === google.maps.GeocoderStatus.OK) {
-                            const lat = results[0].geometry.location.lat();
-                            const lng = results[0].geometry.location.lng();
-                            setLocationCoordinates(autocomplete.key, lat, lng);
-                        }
-                    });
-
-                    if (!place.geometry) {
-                        window.alert("No details available for input: '" + place.name + "'");
-                        input.value = "";
-                        return;
-                    }
-
-                    if (place.geometry.viewport) {
-                        map.fitBounds(place.geometry.viewport);
-                    } else {
-                        map.setCenter(place.geometry.location);
-                        map.setZoom(17);
-                    }
-                    marker.setPosition(place.geometry.location);
-                    marker.setVisible(true);
-
-                });
-            }
-            }
-
-            function setLocationCoordinates(key, lat, lng) {
-            const latitudeField = document.getElementById(key + "-" + "latitude");
-            const longitudeField = document.getElementById(key + "-" + "longitude");
-            latitudeField.value = lat;
-            longitudeField.value = lng;
-            }
-            const map = new google.maps.Map(document.getElementById(fieldKey + '-map'), {
-                        center: {lat: latitude, lng: longitude},
-                        zoom: 13
-                    });
-            const marker = new google.maps.Marker({
-                map: map,
-                position: {lat: latitude, lng: longitude},
-            });
-            const autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.key = fieldKey;
-            autocompletes.push({input: input, map: map, marker: marker, autocomplete: autocomplete});
-            geocoder.geocode({'placeId': place.place_id}, function (results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-
-                    const lat = results[0].geometry.location.lat();
-                    const lng = results[0].geometry.location.lng();
-
-                    setLocationCoordinates(autocomplete.key, lat, lng);
-                }
-            });
-    </script>
+        });
+        </script>
         <script src="{{ asset('website2-assets_old/vendor/select2/js/select2.min.js') }}" type="text/javascript"></script>
 
         <script>

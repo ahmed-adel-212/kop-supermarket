@@ -30,7 +30,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::group(['prefix' => 'password'], function () {
         Route::post('create', 'Api\PasswordResetController@create');
         Route::get('find/{token}', 'Api\PasswordResetController@find');
-        Route::post('reset', 'Api\PasswordResetController@createNewPassword');
+        Route::post('reset', 'Api\PasswordResetController@createNewPassword')->name('reset');
     });
 
     Route::post('resend-code', 'Api\AuthController@resendCode');
