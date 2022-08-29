@@ -592,9 +592,9 @@ class AuthController extends BaseController
     public function activateUser(Request $request, $id)
     {
         // dd($request->all());
-        $req = (object) $request->validate([
-            'verified' => 'required|boolean',
-        ]);
+        // $req = (object) $request->validate([
+        //     'verified' => 'required|boolean',
+        // ]);
 
         $user = User::find($id);
 
@@ -603,14 +603,6 @@ class AuthController extends BaseController
                 __('auth.no_id'),
             );
         }
-
-        if ($req->verified === true) {
-            if ($user->email_verified_at !== null) {
-                return $this->sendError(
-                    __('auth.already_verified')
-                );
-            }
-
             $user->email_verified_at = now();
             $user->token = $user->createToken('AppName')->accessToken;
             $user->save();
@@ -621,7 +613,7 @@ class AuthController extends BaseController
                 'userData' => $user,
                 'token' => $user->token,
             ], __('auth.verified'));
-        }
+        
 
         return $this->sendError([
             // 'user_verified' => false,
