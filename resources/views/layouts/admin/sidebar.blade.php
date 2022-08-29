@@ -103,12 +103,12 @@
                                                 <p>Points</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
+                                        {{-- <li class="nav-item">
                                             <a href="{{route('admin.gift.index')}}" class="nav-link"><i
                                                     class="fas fa-certificate nav-icon"></i>
                                                 <p>Gifts</p>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     @endif
                                     <li class="nav-item">
                                         <a href="{{route('admin.showPointsTransactions')}}" class="nav-link"><i
@@ -116,7 +116,7 @@
                                             <p>Points Transactions</p>
                                         </a>
                                     </li>
-                                    @if(auth()->user()->hasRole('admin') )
+                                    {{-- @if(auth()->user()->hasRole('admin') )
 
                                         <li class="nav-item">
                                             <a href="{{route('admin.showGiftsOrders')}}" class="nav-link"><i
@@ -124,7 +124,7 @@
                                                 <p>Gifts Orders</p>
                                             </a>
                                         </li>
-                                    @endif
+                                    @endif --}}
                                 </ul>
                             </li>
                             <li class="nav-item">
