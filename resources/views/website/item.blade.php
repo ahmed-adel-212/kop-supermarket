@@ -289,32 +289,29 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
-                                                
-                                            </div>
-                                            <div class="row my-2">
                                                 @if (isset($item['dough_type_2']) && !empty($item['dough_type_2']))
-                                                    <div class="col-md-6 my-2">
-                                                        {{ __('general.Dough Type2') }} :&nbsp;
-                                                        <div class="btn-group" role="group"
-                                                            aria-label="Basic radio toggle button group" style="width: 50%;">
-                                                            @foreach ($item['dough_type_2'] as $dough)
-                                                                <input class="btn-check" autocomplete="off"
-                                                                    x-bind:id="'{{ $dough['name_en'] }}' + item.uid"
-                                                                    type="radio" x-bind:name="'dough_type_2' + item.uid"
-                                                                    value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
-                                                                    @if ($loop->first) checked @endif>
-                                                                <label class="btn btn-outline-primary"
-                                                                    x-bind:for="'{{ $dough['name_en'] }}' + item.uid"
-                                                                    x-on:click="item.dough2 = '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}'">
-                                                                    <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
-                                                            @endforeach
-                                                        </div>
+                                                <div class="col-md-6 my-2">
+                                                    {{ __('general.Dough Type2') }} :&nbsp;
+                                                    <div class="btn-group" role="group"
+                                                        aria-label="Basic radio toggle button group" style="width: 50%;">
+                                                        @foreach ($item['dough_type_2'] as $dough)
+                                                            <input class="btn-check" autocomplete="off"
+                                                                x-bind:id="'{{ $dough['name_en'] }}' + item.uid"
+                                                                type="radio" x-bind:name="'dough_type_2' + item.uid"
+                                                                value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
+                                                                @if ($loop->first) checked @endif>
+                                                            <label class="btn btn-outline-primary"
+                                                                x-bind:for="'{{ $dough['name_en'] }}' + item.uid"
+                                                                x-on:click="item.dough2 = '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}'">
+                                                                <span>{{ app()->getLocale() == 'ar' ? $dough->name_ar : $dough->name_en }}</span></label>
+                                                        @endforeach
                                                     </div>
-                                                @endif
+                                                </div>
+                                            @endif
                                             </div>
                                         </div>
 
-                                        <div class="d-flex justify-content-center align-items-center">
+                                        {{-- <div class="d-flex justify-content-center align-items-center">
                                             <span class="counter" style="display: flex;"><span class="minus" x-data
                                                 x-on:click="item.quantity--"
                                                 style="font-size: 50px;cursor: pointer;">-</span><input disabled
@@ -322,7 +319,7 @@
                                                 style="width: 20%;margin-left: 5px; margin-right: 5px;text-align: center;"><span
                                                 class="plus" x-data x-on:click="item.quantity++"
                                                 style="font-size: 30px;cursor: pointer;">+</span></span>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     <div class="row mt-3">
