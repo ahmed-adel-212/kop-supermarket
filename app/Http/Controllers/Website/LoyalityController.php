@@ -76,6 +76,6 @@ class LoyalityController extends Controller
     {
         session()->forget(['points_value', 'point_claim_value']);
 
-        return redirect()->route('profile.loyality');
+        return redirect()->route('get.cart');
     }
 }

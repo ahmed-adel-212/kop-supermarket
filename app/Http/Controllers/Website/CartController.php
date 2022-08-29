@@ -219,9 +219,9 @@ class CartController extends Controller
                 $arr_data['subtotal'] = round($final_item_price, 2);
                 $arr_data['subtotal_without_offer'] = round($final_item_price_without_offer, 2);
                 // $final_item_price += ($arr_data['taxes'] + $arr_data['delivery_fees']) - $arr_data['points'];
-                if ($arr_data['subtotal'] <= $arr_data['points']) {
-                    $arr_data['points'] = 0;
-                }
+                // if ($arr_data['subtotal'] <= $arr_data['points']) {
+                //     $arr_data['points'] = 0;
+                // }
                 $final_item_price += ($arr_data['delivery_fees']) - $arr_data['points'];
                 $arr_data['total'] = round($final_item_price, 2);
                 return $arr_data;
@@ -243,6 +243,11 @@ class CartController extends Controller
         if (auth()->user()->carts()->get()->count() <= 0) {
             return redirect()->route('menu.page');
         }
+
+        if ($request['total'] <= 0 && isset($request['points_paid']) && $request['points_paid'] > 0) {
+            return back()->with('loyality_not_used', __('general.loyality_not_used'));
+        }
+
         $service_type = session()->get('service_type');
         if ($service_type == 'delivery') {
             $address_id = session()->get('address_id');

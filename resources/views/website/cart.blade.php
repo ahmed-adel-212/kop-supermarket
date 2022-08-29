@@ -67,6 +67,42 @@
 
         <section class="cart-section bg-grey padding">
             <div class="container">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        @if(session()->has('loyality_not_used'))
+                        <div x-data x-init="() => {
+                            const myModalAlternative = new bootstrap.Modal('#loyalityerror', {
+                                backdrop: 'static',
+                            });
+                            myModalAlternative.show();
+                        }"></div>
+                        <div class="modal fade" id="loyalityerror" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loyalityerrorLabel" aria-modal="true" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
+                              <div class="modal-content">
+                                <div class="modal-header bg-danger">
+                                  <h5 class="modal-title text-white">{{__('general.confirm')}}</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body alert-danger m-0">
+                                  <p>
+                                    {!! session('loyality_not_used') !!}
+                                  </p>
+                                </div>
+                                <div class="modal-footer">
+                                  <a href="{{route('menu.page')}}" class="btn default-btn rounded bg-info" >
+                                    {{__('general.go_menu')}}
+                                <span></span>
+                                </a>
+                                  <a href="{{route('loyalty.unset')}}" class="btn default-btn rounded bg-primary">
+                                    {{__('general.remove_loyality')}}
+                            <span></span></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        @endif
+                    </div>
+                </div>
                 <div class="row cart-header">
                     <div class="col-lg-6">{{ __('general.Name') }}</div>
                     <div class="col-lg-3">{{ __('general.Quantity') }}</div>
@@ -199,7 +235,7 @@
                                     <input id="taxesinput" hidden name="taxes"
                                         value="{{ $arr_check['subtotal_without_offer'] - $arr_check['subtotal_without_offer'] / 1.15 }}" />
                                 </li>
-                                
+
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Delivery Fees') }}
                                         : </b> <span id="delivery_fees"
                                         style="font-size: smaller;">{{ $arr_check['delivery_fees'] }}
@@ -208,28 +244,27 @@
                                         value="{{ $arr_check['delivery_fees'] }}" />
                                 </li>
                                 @if ($arr_check['subtotal_without_offer'] > $arr_check['subtotal'])
-                                <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
-                                        : </b>
-                                    <span id="">
-                                        -
-                                        <span id="discount" style="font-size: smaller;">
-                                            {{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal'], 2) }}
+                                    <li><b class="inset-right-5 text-gray-light">{{ __('general.discount') }}
+                                            : </b>
+                                        <span id="">
+                                            -
+                                            <span id="discount" style="font-size: smaller;">
+                                                {{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal'], 2) }}
+                                            </span>
+                                            <span style="font-size: smaller;">
+                                                {{ __('general.SR') }}
+                                            </span>
                                         </span>
-                                        <span style="font-size: smaller;">
-                                            {{ __('general.SR') }}
-                                        </span>
-                                    </span>
-                                    <input id="discountinput" hidden name="discount"
-                                        value="{{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal'], 2) }}" />
-                                </li>
+                                        <input id="discountinput" hidden name="discount"
+                                            value="{{ round($arr_check['subtotal_without_offer'] - $arr_check['subtotal'], 2) }}" />
+                                    </li>
                                 @endif
                                 @if (isset($arr_check['points']))
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Loyality Discount') }}
                                             : </b> <span> -
                                             <span id="points"
                                                 style="font-size: smaller;">{{ round($arr_check['points'], 2) }}</span>
-                                                <span id="points"
-                                                style="font-size: smaller;">
+                                            <span id="points" style="font-size: smaller;">
                                                 {{ __('general.SR') }}</span></span>
                                         <input id="pointsinput" hidden name="points_paid"
                                             value="{{ $arr_check['points'] }}" />
@@ -328,13 +363,15 @@
                             // $('#total').text(data.arr_check.total);
                             // $('#delivery_fees').text(data.arr_check.delivery_fees);
                             data = data.arr_check;
-                            $('#subtotal').text((data.subtotal_without_offer /1.15).toFixed(2) +
+                            $('#subtotal').text((data.subtotal_without_offer / 1.15).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#subtotalinput').val(data.subtotal_without_offer /1.15);
+                            $('#subtotalinput').val(data.subtotal_without_offer / 1.15);
 
-                            $('#taxes').text((data.subtotal_without_offer - (data.subtotal_without_offer / 1.15)).toFixed(2) +
+                            $('#taxes').text((data.subtotal_without_offer - (data
+                                    .subtotal_without_offer / 1.15)).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#taxesinput').val(data.subtotal_without_offer - (data.subtotal_without_offer / 1.15));
+                            $('#taxesinput').val(data.subtotal_without_offer - (data
+                                .subtotal_without_offer / 1.15));
 
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
@@ -342,9 +379,12 @@
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
                             $('#delivery_feesinput').val(data.delivery_fees);
-                            $('#discount').text((data.subtotal_without_offer - data.subtotal).toFixed(2));
+                            $('#discount').text((data.subtotal_without_offer - data.subtotal)
+                                .toFixed(2));
                             @if (isset($arr_check['points']))
+                                // $('#points').text(data.arr_check.points);
                                 $('#points').text(data.arr_check.points);
+                                $('#pointsnput').val(data.arr_check.points);
                             @endif
                             // if(((parseInt($('#itemcount').text())) - data.carts.length) == -1){
                             //     window.location.reload();
@@ -379,6 +419,17 @@
 
                     if (val === prev - 1) {
                         // console.log(quantity);
+                        // @if (isset($arr_check['points']))
+                        //     const itemTotal = price * quantity;
+                        //     const cartTotal = parseFloat($('#totalinput').val());
+
+                        //     console.log(itemTotal, cartTotal);
+                        //     if (cartTotal - itemTotal < {{ round($arr_check['points'], 2) }}) {
+                        //         console.log('you will not benifit');
+                        //     }
+                        // @endif
+                        // return;
+
                         elem.attr('data-prev', val);
                         elem.val(val);
                         $('.confirm').click();
@@ -416,13 +467,15 @@
                         },
                         success: function(data) {
                             console.log(data);
-                            $('#subtotal').text((data.subtotal_without_offer /1.15).toFixed(2) +
+                            $('#subtotal').text((data.subtotal_without_offer / 1.15).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#subtotalinput').val(data.subtotal_without_offer /1.15);
+                            $('#subtotalinput').val(data.subtotal_without_offer / 1.15);
 
-                            $('#taxes').text((data.subtotal_without_offer - (data.subtotal_without_offer / 1.15)).toFixed(2) +
+                            $('#taxes').text((data.subtotal_without_offer - (data
+                                    .subtotal_without_offer / 1.15)).toFixed(2) +
                                 ' {{ __('general.SR') }}');
-                            $('#taxesinput').val(data.subtotal_without_offer - (data.subtotal_without_offer / 1.15));
+                            $('#taxesinput').val(data.subtotal_without_offer - (data
+                                .subtotal_without_offer / 1.15));
 
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
@@ -430,7 +483,8 @@
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
                             $('#delivery_feesinput').val(data.delivery_fees);
-                            $('#discount').text((data.subtotal_without_offer - data.subtotal).toFixed(2));
+                            $('#discount').text((data.subtotal_without_offer - data.subtotal)
+                                .toFixed(2));
 
                             $(".cart2" + id + ' .quantity_ch').val(quantity);
                             $(".cart2" + id + ' .quantity_ch').attr('data-prev', quantity);
