@@ -143,7 +143,7 @@ Route::middleware('api')->group(function () {
         Route::resource('/address', 'Api\AddressesController');
         Route::post('/addressmaps', 'Api\AddressesController@sotreWithMaps');
         Route::post('/add-address', 'Api\AddressesController@sotre');
-        Route::get('/check-location', 'Api\AddressesController@checkLocation');
+        Route::post('/check-location', 'Api\AddressesController@checkLocation');
     });
 });
 
