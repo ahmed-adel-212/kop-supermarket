@@ -214,7 +214,28 @@
                 <form action="{{ route('checkout') }}" method="post">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-6 offset-lg-6">
+                        <div class="col-lg-6">
+                            <div class="card-header mt-30">
+                                <h5 class='card-title text-center'>
+                                    {{__('general.loyality_earneings')}}
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-text row font-weight-bold text-indigo">
+                                    <div class="col-md-4">
+                                        {{__('general.Total')}}
+                                    </div>
+                                    <div class="col-lg-4 hidden visible-lg text-success">
+                                        {{__('general.applied')}}
+                                    </div>
+                                    <div class="col-lg-4 text-danger">
+                                        <span id="to-earn">
+                                            {{$arr_check['total']}}</span> {{__('general.Points')}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
                             <ul class="cart-total mt-30">
                                 <li>
                                     {{ __('general.Sub Total') }}: </b>
@@ -375,6 +396,8 @@
 
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
+                            
+                            $('#to-earn').text(Math.round(data.total));
 
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
@@ -479,6 +502,8 @@
 
                             $('#total').text((data.total).toFixed(2) + ' {{ __('general.SR') }}');
                             $('#totalinput').val(data.total);
+
+                            $('#to-earn').text(Math.round(data.total));
 
                             $('#delivery_fees').text((data.delivery_fees).toFixed(2) +
                                 ' {{ __('general.SR') }}');
