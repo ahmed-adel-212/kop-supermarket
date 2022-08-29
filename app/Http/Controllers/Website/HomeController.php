@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Imports\AreaImport;
 use App\Models\Area;
-use \Excel as Excelll;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller

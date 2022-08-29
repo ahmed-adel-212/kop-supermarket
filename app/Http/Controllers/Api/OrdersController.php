@@ -214,6 +214,8 @@ class OrdersController extends BaseController
             $branch_id = $branch->id;
         }
 
+
+
         // apply 50% discount if this is first order
         $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
@@ -234,11 +236,13 @@ class OrdersController extends BaseController
             'description_box' => $request->description,
         ];
 
-        try{
-            $order = Order::create($orderData);
-        }catch(\Exception $ex){
-            return $this->sendError('Order did not placed');
-        }
+        $order = Order::create($orderData);
+
+        // try{
+            
+        // }catch(\Exception $ex){
+        //     return $this->sendError('Order did not placed');
+        // }
 
         $cashiers = Branch::find($branch_id);
         if ($cashiers) {
@@ -263,8 +267,8 @@ class OrdersController extends BaseController
                         'offer_price' => isset($item['offer_price']) ? $item['offer_price'] : null,
                         'price' => $item['price'],
                         'offerId' => isset($item['offerId']) ? $item['offerId'] : null,
-                        'extras' => isset($item['extras'][$i]) ? $item['extras'][$i] : [],
-                        'withouts' => isset($item['withouts'][$i]) ? $item['withouts'][$i] : [],
+                        'extras' => isset($item['extras'][$i]) && count($item['extras']) ? $item['extras'][$i] : [],
+                        'withouts' => isset($item['withouts'][$i]) && count($item['withouts']) ? $item['withouts'][$i] : [],
                         'dough_type_ar' => $item['dough_type_ar'][$i],
                         'dough_type_en' => $item['dough_type_en'][$i],
                         'dough_type_2_ar' => isset($item['dough_type_2_ar'][$i]) ? $item['dough_type_2_ar'][$i] : null,
@@ -306,11 +310,11 @@ class OrdersController extends BaseController
             $offer = Offer::find(isset($item['offerId']) ? $item['offerId'] : 0);
             $extras = array_key_exists('extras', $item) ? $item['extras'] : null;
             
-            if (is_array($extras) && !is_int($extras[0])) {
+            if (is_array($extras) && count($extras) && !is_int($extras[0])) {
                 $extras = collect($extras)->pluck('id');
             }
             $withouts = array_key_exists('withouts', $item) ? $item['withouts'] : null;
-            if (is_array($withouts) && !is_int($extras[0])) {
+            if (is_array($withouts) && count($withouts) && !is_int($withouts[0])) {
                 $withouts = collect($withouts)->pluck('id');
             }
             $order->items()->attach($item['item_id'], [
