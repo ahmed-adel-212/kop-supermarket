@@ -56,8 +56,8 @@
                     </div>
                     <div class='row'>
                         @foreach ($pointValues as $val)
-                            <a href="{{ ($cartHasItems && ($points['user_points'] >= $val->for)) ? route('loyalty.set', [$val->value, $val->for]) : 'javascript:void0' }}"
-                                class="col-4 point-value rounded @unless($cartHasItems) show-modal @endif @if($points['user_points'] < $val->for) show-amount @endif">
+                            <a href="{{ ($cartHasItems && ($points['user_points'] >= $val->for)) ? route('loyalty.set', [$val->value, $val->for]) : 'javascript:void(0)' }}"
+                                class="col-4 point-value rounded @unless($cartHasItems) show-modal @endif @if($points['user_points'] < $val->for) show-amount @endif @if(session('point_claim_value') == $val->value) active bg-info @endif">
                                 <div class="card-body">
                                     <h4 class="d-inline">
                                         <span class="text-warning">{{ $val->value }}</span> {{ __('general.SR') }}

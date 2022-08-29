@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\General;
 use App\Models\Order;
 use App\Models\PointsTransaction;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ class LoyalityController extends Controller
         $request = new \Illuminate\Http\Request();
         $request->merge(['points'=>100]);
         (app(\App\Http\Controllers\Api\AuthController::class)->changeUserPoints($request))->getOriginalContent();
-        session()->put(['point_claim_value' => DB::table('general')->where('key', 'pointsValue')->first()->value]);
+        session()->put(['point_claim_value' => General::where('key', 'pointsValue')->first()->value]);
         return redirect()->route('profile');
     }
 
@@ -37,7 +38,7 @@ class LoyalityController extends Controller
         $pointsApi = (app(\App\Http\Controllers\Api\AuthController::class)->getUserPoints($request))->getOriginalContent();
         $points =  $pointsApi['data'];
 
-        $pointValues = DB::table('general')->where('key', 'pointsValue')->get();
+        $pointValues = General::where('key', 'pointsValue')->get();
 
         // history
         $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();
