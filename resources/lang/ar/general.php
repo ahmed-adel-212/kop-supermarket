@@ -387,4 +387,5 @@ return [
 'remove_loyality' => 'إزالة تبادل نقاط الولاء',
 'loyality_earneings' => 'أرباح نقاط الولاء',
 'applied' => 'مُطبَّق',
+'to_be_applied' => 'سيتم تطبيقها',
 ];

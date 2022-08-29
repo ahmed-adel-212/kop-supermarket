@@ -365,4 +365,5 @@ return [
     'remove_loyality' => 'Remove Loyalty Exchange',
     'loyality_earneings' => 'Loyalty Earnings',
     'applied' => 'Applied',
+    'to_be_applied' => 'To Be Applied',
 ];
