@@ -226,6 +226,7 @@ Route::group([
             Route::get('/profile/loyality',  [\App\Http\Controllers\Website\LoyalityController::class, 'getPage'])->name('profile.loyality');
             Route::get('/exchange/', [\App\Http\Controllers\Website\LoyalityController::class, 'get_loyalty_exchange'])->name('exchange.points');
             Route::get('/loyality/set/{value}/{points}', 'LoyalityController@setValue')->name('loyalty.set');
+            Route::get('/loyality/unset', 'LoyalityController@unSetValue')->name('loyalty.unset');
 
             //choose service delivery or take away
             Route::get('/takeaway', 'ServiceController@takeawayPage')->name('takeaway.page');

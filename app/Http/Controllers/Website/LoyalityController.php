@@ -71,4 +71,11 @@ class LoyalityController extends Controller
 
         return redirect()->route('get.cart');
     }
+
+    public function unSetValue()
+    {
+        session()->forget(['points_value', 'point_claim_value']);
+
+        return redirect()->route('profile.loyality');
+    }
 }
