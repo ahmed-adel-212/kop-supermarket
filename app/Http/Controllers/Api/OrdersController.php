@@ -260,13 +260,15 @@ class OrdersController extends BaseController
                     $items[] = [
                         'item_id' => $item['item_id'],
                         'quantity' => 1,
-                        'offer_price' => $item['offer_price'],
+                        'offer_price' => isset($item['offer_price']) ? $item['offer_price'] : null,
                         'price' => $item['price'],
-                        'offerId' => $item['offerId'],
-                        'extras' => $item['extras'][$i],
-                        'withouts' => $item['withouts'][$i],
+                        'offerId' => isset($item['offerId']) ? $item['offerId'] : null,
+                        'extras' => isset($item['extras'][$i]) ? $item['extras'][$i] : [],
+                        'withouts' => isset($item['withouts'][$i]) ? $item['withouts'][$i] : [],
                         'dough_type_ar' => $item['dough_type_ar'][$i],
                         'dough_type_en' => $item['dough_type_en'][$i],
+                        'dough_type_2_ar' => isset($item['dough_type_2_ar'][$i]) ? $item['dough_type_2_ar'][$i] : null,
+                        'dough_type_2_en' => isset($item['dough_type_2_en'][$i]) ? $item['dough_type_2_en'][$i] : null,
                     ];
                 }
             // } else {
@@ -316,6 +318,8 @@ class OrdersController extends BaseController
                 'item_withouts' =>  is_array($withouts) ? implode(',', $withouts) : $withouts,
                 'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
+                'dough_type_2_ar' => array_key_exists('dough_type_2_ar', $item) ? $item['dough_type_2_ar'] : null,
+                'dough_type_2_en' => array_key_exists('dough_type_2_en', $item) ? $item['dough_type_2_en'] : null,
                 'price' => $itemPrice,
                 'pure_price' => $orderItem->price,
                 'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
