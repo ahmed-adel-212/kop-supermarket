@@ -268,7 +268,7 @@ class AddressesController extends BaseController
         $cityId=null;
         $city = City::where('name_en', "LIKE", "%$request->city%")->orWhere('name_ar', "LIKE", "%$request->city%")->first();
         if($city){
-            $area = Area::where('', $city->id)->where('name_en', "LIKE", "%$request->area%")->orWhere('name_ar', "LIKE", "%$request->area%")->first();
+            $area = Area::where('area_id', $city->id)->where('name_en', "LIKE", "%$request->area%")->orWhere('name_ar', "LIKE", "%$request->area%")->first();
             if($area){
                 $cityId = $city->id;
                 $areaId = $area->id;
