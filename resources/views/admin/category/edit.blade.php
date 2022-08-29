@@ -74,6 +74,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="pl-3 card-title mb-2">
+                                    <b>Dough</b>
+                                </div>
+                                <div class="card-body">
+                                    @foreach ($doughTypes->groupBy('dough_type_id') as $doughGroup)
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="dough_type{{$loop->index > 0 ? '_2' : ''}}_id" type="checkbox"
+                                                    value="{{ $doughGroup->first()->dough_type_id }}"
+                                                    id="flexCheckDefault{{ $doughGroup->first()->dough_type_id }}" @if($category->dough_type_id === $doughGroup->first()->dough_type_id) checked @endif>
+                                                <label class="form-check-label"
+                                                    for="flexCheckDefault{{ $doughGroup->first()->dough_type_id }}">
+                                                    ({{ $doughGroup->first()->name_en }} -
+                                                    {{ $doughGroup->first()->name_ar }},
+                                                    {{ $doughGroup->last()->name_en }} -
+                                                    {{ $doughGroup->last()->name_ar }})
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
                         {{-- <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

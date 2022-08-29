@@ -54,6 +54,8 @@ class CategoryController extends Controller
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dough_type_id' => 'nullable',
+            'dough_type_2_id' => 'nullable'
         ]);
 
         if ($validator->fails())
@@ -89,7 +91,8 @@ class CategoryController extends Controller
             'description_en' => $request->description_en,
             'image' => '',
             'created_by' => auth()->id(),
-            'dough_type_id' => 1
+            'dough_type_id' =>  $request->has('dough_type_id') ? $request->dough_type_id : null,
+            'dough_type_2_id' => $request->has('dough_type_2_id') ? $request->dough_type_2_id : null,
         ]);
         $this->Make_Log('App\Models\Category','create',$category->id);
         if ($request->hasFile('image')) {
@@ -184,7 +187,9 @@ class CategoryController extends Controller
         $items = $category->items;
         $extras = $category->extras;
 
-        return view('admin.category.edit', compact('category', 'items', 'extras'));
+        $doughTypes = DoughType::all();
+
+        return view('admin.category.edit', compact('category', 'items', 'extras', 'doughTypes'));
     }
 
     /**
@@ -202,6 +207,8 @@ class CategoryController extends Controller
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dough_type_id' => 'nullable',
+            'dough_type_2_id' => 'nullable'
         ]);
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
@@ -224,6 +231,10 @@ class CategoryController extends Controller
         $category->description_en = $request->description_en;
 
         $category->updated_by = auth()->id();
+
+        $category->dough_type_id =  $request->has('dough_type_id') ? $request->dough_type_id : null;
+        $category->dough_type_2_id = $request->has('dough_type_2_id') ? $request->dough_type_2_id : null;
+
         $category->save();
 
         // if ($request->dough_type_id) {

@@ -47,6 +47,7 @@
                                  {{request()->segment(3) == 'category'||
                                    request()->segment(3)=='item'||
                                    request()->segment(3)=='without'||
+                                   request()->segment(3)=='dough'||
                                    request()->segment(3)=='extra'
 
                                             ? 'menu-open': ''}}
@@ -79,6 +80,12 @@
                                         <a href="{{route('admin.without.index')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>
                                             <p>Without</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.dough.index')}}" class="nav-link"><i
+                                                class="fas fa-certificate nav-icon"></i>
+                                            <p>Dough Types</p>
                                         </a>
                                     </li>
                                 </ul>
