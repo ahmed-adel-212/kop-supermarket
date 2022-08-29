@@ -78,7 +78,7 @@
                                     <div class="container">
                                         <div class="row branches-lists">
                                             @foreach ($branches as $branch)
-                                                <div class="col-lg-3 col-sm-6 my-3">
+                                                <div class="col-lg-3 col-sm-6 my-3" style="display: flex">
                                                     <div class="mx-2 px-2 sm-padding branch {{ session()->get('branch_id') === $branch->id ? 'text-white active' : '' }}"
                                                         data-href="{{ route('takeaway.branch', [$branch->id, 'takeaway']) }}">
                                                         <div class="branches-list">
