@@ -67,10 +67,10 @@
                             {{ __('general.Quantity') }}
                         </div>
                         <div class="col-lg-1">
-                            {{ __('menu.Calories') }}
+                            {{ __('menu.Price') }}
                         </div>
                         <div class="col-lg-1">
-                            {{ __('menu.Price') }}
+                            {{ __('general.Total') }}
                         </div>
                         <div class="col-lg-1"></div>
                     </div>
@@ -97,14 +97,22 @@
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ $item->calories }}
+                                    @if ($order->offer_id)
+                                    <p>
+                                        <del>
+                                            {{ ($item->price) * 1 }}
+                                        {{ __('general.SR') }}
+                                        </del>
                                     </p>
+                                    @endif
+                                    <p>{{ ($order->offer_id ? $order->offer_price : $item->price) * 1 }}
+                                        {{ __('general.SR') }}</p>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
                                 <div class="cart-item">
-                                    <p>{{ ($order->offer_id ? $order->offer_price : $item->price) * 1 }}
-                                        {{ __('general.SR') }}</p>
+                                    <p>{{ ($order->offer_id ? $order->offer_price : $item->price) * $item->pivot->quantity }} {{ __('general.SR') }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-2 col-lg-1 ">
