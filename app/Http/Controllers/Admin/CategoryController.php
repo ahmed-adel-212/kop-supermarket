@@ -88,7 +88,8 @@ class CategoryController extends Controller
             'description_ar' => $request->description_ar,
             'description_en' => $request->description_en,
             'image' => '',
-            'created_by' => auth()->id()
+            'created_by' => auth()->id(),
+            'dough_type_id' => 1
         ]);
         $this->Make_Log('App\Models\Category','create',$category->id);
         if ($request->hasFile('image')) {
@@ -147,13 +148,13 @@ class CategoryController extends Controller
 //            }
 //        }
 
-        if ($request->dough_type_id) {
-            $category->dough_type_id = (int)$request->dough_type_id;
-            $category->save();
-        } else {
-            $category->dough_type_id = null;
-            $category->save();
-        }
+        // if ($request->dough_type_id) {
+        //     $category->dough_type_id = (int)$request->dough_type_id;
+        //     $category->save();
+        // } else {
+        //     $category->dough_type_id = null;
+        //     $category->save();
+        // }
 
         return redirect()->route('admin.category.index')->with([
             'type' => 'success',
@@ -225,13 +226,13 @@ class CategoryController extends Controller
         $category->updated_by = auth()->id();
         $category->save();
 
-        if ($request->dough_type_id) {
-            $category->dough_type_id = (int)$request->dough_type_id;
-            $category->save();
-        } else {
-            $category->dough_type_id = null;
-            $category->save();
-        }
+        // if ($request->dough_type_id) {
+        //     $category->dough_type_id = (int)$request->dough_type_id;
+        //     $category->save();
+        // } else {
+        //     $category->dough_type_id = null;
+        //     $category->save();
+        // }
 
         $this->Make_Log('App\Models\Category','update',$category->id);
         if ($request->has('Item'))
