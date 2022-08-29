@@ -21,16 +21,16 @@
                 <table class="table table-bordered table-striped dataTable">
                     <thead>
                         <tr>
-                            <th>id</th>
+                            {{-- <th>id</th> --}}
+                            <th>Discount (SR)</th>
                             <th>Points</th>
-                            <th>For</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($points as  $point)
                         <tr>
-                            <td>#{{$point->id}}</td>
-                            <td>{{$point->value}}</td>
+                            {{-- <td>#{{$point->id}}</td> --}}
+                            <td>{{$point->value}} {{__('general.SR')}}</td>
                             <td>{{$point->for}}</td>
                             <td>
                                 <a href="{{ route('admin.points.edit', $point->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
