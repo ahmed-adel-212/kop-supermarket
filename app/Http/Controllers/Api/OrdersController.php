@@ -236,11 +236,13 @@ class OrdersController extends BaseController
             'description_box' => $request->description,
         ];
 
-        try{
-            $order = Order::create($orderData);
-        }catch(\Exception $ex){
-            return $this->sendError('Order did not placed');
-        }
+        $order = Order::create($orderData);
+
+        // try{
+            
+        // }catch(\Exception $ex){
+        //     return $this->sendError('Order did not placed');
+        // }
 
         $cashiers = Branch::find($branch_id);
         if ($cashiers) {
