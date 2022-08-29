@@ -147,10 +147,13 @@ class CartController extends Controller
     }
     public function get_cart_res()
     {
-        $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
-        if ($return['success'] == 'success') {
-            return response()->json(['success' => true, 'data' => count($return['data'])], 200);
-        }
+        // $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
+
+        // $count = count($return['data']);
+        
+        // if ($return['success'] == 'success') {
+            return response()->json(['success' => true, 'data' => Auth::user()->carts()->sum('quantity')], 200);
+        // }
     }
 
     public function delete_cart(Request $request)
