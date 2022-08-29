@@ -82,7 +82,7 @@ class HomeController extends Controller
         // if($return['success'] ==  nt($return['data']))? $return['data'] : [];
         // }
         $menu['offers'] = $offers;
-        $menu['main_offer']=Offer::with('buyGet', 'discount')->where('main',1)->get();
+        $menu['main_offer']=Offer::with('buyGet','discount')->filter($filters)->where('main',true)->get();
         $dealItems = Category::with('items')->get();
         $menu['dealItems']=[];
         foreach($menu['categories'] as $category)

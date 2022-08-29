@@ -137,9 +137,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Mobile Image</label>
+
+                                    <label for="exampleInputFile">Menu Image (website,mobile)</label>
                                     <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 800 * 418
+                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
                                     </div>
                                     <div class="custom-file">
                                         <input type="file"
@@ -156,15 +157,34 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Website Image</label>
+                                    <label for="exampleInputFile">Website Home Page Image</label>
                                     <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                        <b>Note</b> Image Dimensions Must Be: 509 * 459
                                     </div>
                                     <div class="custom-file">
                                         <input type="file"
                                             class="custom-file-input {!! $errors->first('website_image', 'is-invalid') !!}"
                                             id="exampleInputFile" name="website_image" value="{{old('website_image')}}">
                                         @error('website_image')
+                                        <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Mobile Home Page Image</label>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 800 * 418
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file"
+                                            class="custom-file-input {!! $errors->first('mobile_image', 'is-invalid') !!}"
+                                            id="exampleInputFile" name="mobile_image" value="{{old('mobile_image')}}">
+                                        @error('mobile_image')
                                         <div class="help-block">{{ $message }}</div>
                                         @enderror
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>

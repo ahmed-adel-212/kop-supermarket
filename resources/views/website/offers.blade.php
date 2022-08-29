@@ -46,7 +46,7 @@
             <div class="container">
                 <div class="heading-wrap">
                     <div class="section-heading mb-30">
-                        <h4>Popular Dishes</h4>
+                        <h4>Offers</h4>
                         <h2>Our Popular <span>Dishes</span></h2>
                         <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
                     </div>
@@ -67,7 +67,7 @@
                                    <div class="sale">-{{$offer->discount->discount_value}}%</div>
                                 @endif
                                     <div class="product-thumb">
-                                        <img src="{{asset($offer->website_image)}}" alt="food">
+                                        <img src="{{asset($offer->image)}}" alt="food">
                                         <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$offer->id)}}" class="order-btn cart">Order Now</a></div>
                                     </div>
                                     <div class="food-info">
