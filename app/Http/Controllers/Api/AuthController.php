@@ -99,6 +99,12 @@ class AuthController extends BaseController
                     $request->request->add(['user_id' =>$user->id]);
                     $setPushToken->setPushToken($request);
 
+                    $data = [
+                        'userData' => $user,
+                        // 'token' => $user->createToken('AppName')->accessToken,
+                        'token' => $user->token,
+                    ];
+
                     return $this->sendResponse($data, __('auth.logged'));
                 }
             }
