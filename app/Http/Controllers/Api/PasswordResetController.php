@@ -85,7 +85,6 @@ class PasswordResetController extends BaseController
      */
     public function createNewPassword(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
@@ -107,12 +106,12 @@ class PasswordResetController extends BaseController
         if (!$user)
         return  view('api.change-password')->withError(__('general.We can\'t find a user with that e-mail address.'));
 
-
-        $user->update(['password' => bcrypt($request->password)]);
+        $user->password=bcrypt($request->password);
+        $user->save();
         DB::table('password_resets')->where([['token', $request->token],['email', $request->email]])->delete();
 
-        // $user->notify(new PasswordResetSuccess($passwordReset));
-        return  view('api.change-password')->withSuccess(__('general.Your Password Changed Successfully'));
+        //  $user->notify(new PasswordResetSuccess($passwordReset));
+        return  view('api.change-password');
 
         // return $this->sendresponse($user, 'successful message');
     }
