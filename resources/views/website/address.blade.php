@@ -5,13 +5,6 @@
 @endsection
 
 @section('styles')
-<link rel="stylesheet" type="text/css" href="{{asset('css/jquery-gmaps-latlon-picker.css')}}"/>
-	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/build/css/bootstrap-datetimepicker.css"/>
-<style type="text/css">
-        #map {
-          height: 400px;
-        }
-    </style>
     <style>
         .form-group {
             margin-top: 1rem;
@@ -26,19 +19,7 @@
     @endsection
 
     @section('main')
-    <fieldset class="gllpLatlonPicker" style="width:100%;padding-right:10%">
-		<div>
-			<input type="text" class="gllpSearchField" style="color:black; width:70%; float:right" placeholder="أدخل عنوانا للبحث عنه">
-			<input type="button" class="gllpSearchButton btn btn-primary" value=" بحث عن عنوان" style="padding: 2px 15px; vertical-align: none;float:right;background:rgb(3, 169, 245); margin-right:1%">
-		</div>
-		<div class="gllpMap">Google Maps</div>
-		<input type="hidden" class="gllpLatitude" value="23.8859" name="lat"/>
-		<input type="hidden" class="map-address" name="address[]"/>
-		<input type="hidden" class="gllpLongitude" value="45.0792" name="lon"/>
-		<input type="hidden" class="gllpZoom" name="gllpZoom" value="5"/>
-		<input class="gllpUpdateButton" value="update map" type="button"
-			   style="display:none">
-	</fieldset>
+
         <div class="row">
             <div class="col-12 text-end mb-2" >
                 <button data-bs-toggle="modal" data-bs-target="#add-address-modal " href="#" type="button"
@@ -475,36 +456,6 @@
     @endsection
 
     @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-	<script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/v4.0.0/src/js/bootstrap-datetimepicker.js"></script>
-	<script src="{{asset('js/jquery-gmaps-latlon-picker.js')}}"></script>
-	<script>
-        $(document).ready(function() {
-            // Copy the init code from "jquery-gmaps-latlon-picker.js" and extend it here
-            $(".gllpLatlonPicker").each(function() {
-                $obj = $(document).gMapsLatLonPicker();
-
-                $obj.params.strings.markerText = "Drag this Marker (example edit)";
-
-                $obj.params.displayError = function(message) {
-                    console.log("MAPS ERROR: " + message); // instead of alert()
-                };
-
-                $obj.init( $(this) );
-            });
-        });
-        $('input.gllpSearchField').keypress(function(e) {
-            if(e.which == 13) {
-                $('input.gllpSearchButton').click();
-                console.log("pressed");
-                return false;
-            }
-        });
-        </script>
-
         <script src="{{ asset('website2-assets_old/vendor/select2/js/select2.min.js') }}" type="text/javascript"></script>
 
         <script>

@@ -74,7 +74,7 @@ $.fn.gMapsLatLonPicker = (function() {
 
 		if (_self.params.queryLocationNameWhenLatLngChanges) {
 			getLocationName(position);
-			console.log(getLocationName(position));
+		
 		}
 		if (_self.params.queryElevationWhenLatLngChanges) {
 			getElevation(position);
@@ -87,20 +87,70 @@ $.fn.gMapsLatLonPicker = (function() {
 		_self.vars.geocoder.geocode({'latLng': latlng}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK && results[1]) {
 				$(_self.vars.cssID + ".gllpLocationName").val(results[1].formatted_address);
-				
-				var add= results[1].formatted_address ;
-				var  value=add.split(",");
-				console.log(value);
-				// count=value.length;
-				// country=value[count-1];
-				// state=value[count-2];
-				// city=value[count-3];
-				console.log(cities);
+					var add= results[1].formatted_address ;
+					var  value=add.split(",");
+					count=value.length;
+					country=value[count-1];
+					city=value[count-2];
+					areaMap=value[count-3];
+					selectedId=0
+					$(".city").html('');
+					cities.forEach(function(cityObj){
+						if( add.includes(cityObj[1])){
+							selectedId=cityObj[0];
+							$(".city").append(
+								'<option  value="'+selectedId+'" selected>'+cityObj[1]+'</option>');
+						}
+						else{
+							$(".city").append(
+								'<option  value="'+cityObj[0]+'" >'+cityObj[1]+'</option>');
+						}
+						
+					})
+					if(selectedId!=0)
+					{
+						$('.not_found').removeClass('d-block').addClass('d-none');
+						document.getElementById('city-select').value=selectedId;
+						$.ajax({
+							type: 'get',
+							url: app_url + "/api/cities/" + selectedId + "/areas",
+							data: {},
+							success: function(data) {
+								// console.log(data);
+								if (data) {
+									$(".city").parent().parent().next().first().find('.area').html('');
+									$(".city").parent().parent().next().first().find('.area').append(
+										'<option  value="">'+message[0]+'</option>');
+									$.each(data.data, function(index, area) {
+										var selected=""
+										if( add.includes(area.name_en) || add.includes(area.name_ar)){
+											selected="selected"
+										}
+										$(".city").parent().parent().next().first().find('.area').append(
+											'<option value="' + area.id + '" '+selected+'>' + area.name_ar +
+											'</option>');
+									});
+								}
+							},
+							error: function(jqXhr, textStatus, errorMessage) {
+	
+							}
+						})
+						$('#street').val(add);
+					}
+					console.log($('#city-select').val());
+					if($('#city-select').val()==3)
+					{
+						$('.not_found').removeClass('d-none').addClass('d-block');
+					}
+
+					
 			} else {
 				$(_self.vars.cssID + ".gllpLocationName").val("");
 			}
 			$(_self.vars.cssID).trigger("location_name_changed", $(_self.vars.cssID));
 		});
+		
 	};
 
 	// for getting the elevation value for a position
