@@ -17,6 +17,9 @@
             margin-top: 1rem;
             margin-bottom: 1rem;
         }
+        /* .d-block {
+            display: block !important;
+        } */
     </style>
 @endsection
 
@@ -29,13 +32,13 @@
     <fieldset class="gllpLatlonPicker" style="width:100%;padding-bottom:2%">
 		<div class="row" style="width:100%;padding-bottom:2%">
       
-        <div class="col-md-2">
-        <button class="default-btn  gllpSearchButton" >  {{ __('general.search') }} <span></span> </button>
+            <div class="col-md-2">
+            <button class="default-btn  gllpSearchButton" >  {{ __('general.search') }} <span></span> </button>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="gllpSearchField" style="color:black; width:100%;height:45px;width: 115%;" placeholder="{{__('general.search address')}}">
         </div>
-        <div class="col-md-9">
-             <input type="text" class="gllpSearchField" style="color:black; width:100%;height:45px;margin-left: 7%;width: 108%;" placeholder="أدخل عنوانا للبحث عنه">
-        </div>
-
+        <span class="d-none text-danger mb-2 font-weight-bold not_found" >{{__('general.branch_no_cover')}}</span>
 			<!-- <input type="button" class=" default-btn" value=" بحث عن عنوان" style="padding: 2px 15px; vertical-align: none;float:right;background:rgb(3, 169, 245); margin-right:1%"> -->
             
         </div>
@@ -65,10 +68,7 @@
                                                 <h5 class="modal-title text-dark" id="add-address">
                                                     {{ __('general.Add Delivery Address') }}
                                                 </h5>
-                                                <button type="button" class="close" data-bs-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                
                                             </div>
                                             <div class="modal-body">
                                                 <form method="post" action="{{ route('new.address') }}"
@@ -97,7 +97,7 @@
                                                                 {{ __('general.City') }}
                                                             </label>
                                                             <div class="input-group">
-                                                                <select
+                                                                <select id="city-select"
                                                                     class="form-control select2-cities city w-100 select2-cities"
                                                                     name="city_id" required>
                                                                     <option value="">
@@ -149,7 +149,7 @@
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control"
                                                                     placeholder="{{ __('general.Delivery Area') }}"
-                                                                    name="street" value="">
+                                                                    name="street" id="street" value="">
                                                                 <div class="input-group-append">
                                                                 </div>
                                                             </div>
@@ -196,12 +196,8 @@
 
 
                                                     </div>
-                                                    <div class="modal-footer d-flex">
-                                                        <button type="button" class="btn text-center btn-outline-danger"
-                                                            data-bs-dismiss="modal" style="width: 48%!important;">
-                                                            {{ __('general.Cancel') }}
-                                                        </button>
-
+                                                    <div class="modal-footer d-flex" style="flex-flow: column-reverse;">
+                                 
                                                         <button type="submit"
                                                             class="btn text-center btn-outline-success default-btn rounded"
                                                             style="width: 48%!important;">
@@ -225,6 +221,10 @@
 
     @section('scripts')
     <script>
+        var message=[];
+        var selectedId=2;
+        message.push("{{ __('general.Choose Area') }}");
+        message.push("{{__('general.branch_no_cover')}}");
         var cities = [];
         var cityObj = [];
         @foreach($cities as $city)
@@ -258,7 +258,7 @@
         });
         $('input.gllpSearchField').keypress(function(e) {
             if(e.which == 13) {
-                $('input.gllpSearchButton').click();
+                $('.gllpSearchButton').click();
                 console.log("pressed");
                 return false;
             }
@@ -293,6 +293,7 @@
                 let app_url = '{{ url('/') }}';
                 let city_id = $(this).val();
                 let selectele = $(this);
+                console.log(selectele);
                 $.ajax({
                     type: 'get',
                     url: app_url + "/api/cities/" + city_id + "/areas",

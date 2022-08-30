@@ -388,4 +388,6 @@ return [
 'loyality_earneings' => 'أرباح نقاط الولاء',
 'applied' => 'مُطبَّق',
 'to_be_applied' => 'سيتم تطبيقها',
+'search' => 'بحث',
+'search address'=>'أدخل عنوانا للبحث عنه',
 ];

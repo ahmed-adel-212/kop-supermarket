@@ -12,6 +12,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'search address'=>'enter your address',
+    'search' => 'Search',
     'Careers' => 'Careers',
     'Gallery' => 'Gallery',
     'Pictures of pastries kingdom products' => 'Pictures of pastries kingdom products',
