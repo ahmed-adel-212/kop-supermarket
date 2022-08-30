@@ -26,7 +26,7 @@
         </section>
         <!--/.page-header-->
 
-        <div class="card mr-auto ml-auto mt-3">
+        <div class="card mx-auto mt-3">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">

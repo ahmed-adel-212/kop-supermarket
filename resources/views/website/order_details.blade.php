@@ -139,6 +139,110 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card-header mt-30">
+                                            <h5 class='card-title'>
+                                                {{ __('general.Personal information') }}
+                                            </h5>
+                                        </div>
+                                        <div class="">
+                                            <div class="row my-2">
+                                                <div class="col-md-4">
+                                                    <label for="full_name" style="line-height: 3;">
+                                                        {{ __('general.Full name') }}</label>
+                                                </div>
+                                                <div class="form-field col-md-8">
+                                                    <input type="text" id="full_name" name="full_name"
+                                                        class="form-control" value="{{ $user->name }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="row my-2">
+                                                <div class="col-md-4">
+                                                    <label for="Phone" style="line-height: 3;">
+                                                        {{ __('general.Phone') }}</label>
+                                                </div>
+                                                <div class="form-field col-md-8">
+                                                    <input type="text" id="Phone" name="Phone" class="form-control"
+                                                        value="{{ $user->first_phone }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="row my-2">
+                                                <div class="col-md-4">
+                                                    <label for="Email" style="line-height: 3;">
+                                                        {{ __('general.Email') }}</label>
+                                                </div>
+                                                <div class="form-field col-md-8">
+                                                    <input type="text" id="Email" name="Email" class="form-control"
+                                                        value="{{ $user->email }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @isset($address)
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card-header mt-30">
+                                                <h5 class='card-title'>
+                                                    <span>{{ __('general.We will deliver your address to') }}</span>
+                                                </h5>
+                                            </div>
+                                            <div class="">
+                                                <div class="row">
+                                                    <p>
+                                                        {{ $address->name }}
+                                                    </p>
+                                                    <p class="small text m-0">
+                                                        {{ app()->getLocale() == 'ar' ? $address->city->name_ar : $address->city->name_en }}
+                                                        ,
+                                                        {{ app()->getLocale() == 'ar' ? $address->area->name_ar : $address->area->name_en }}
+                                                    </p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="small text m-0">{{ $address->street }}
+                                                        , {{ __('general.BuildNo') }}: {{ $address->building_number }}
+                                                        , {{ __('general.FloorNo') }}: {{ $address->floor_number }}
+                                                        , {{ __('general.Landmark') }}: {{ $address->landmark }}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endisset
+
+                                @isset($branch)
+                                    <div class='row my-3'>
+                                        <div class="card-header">
+                                            <h5 class='card-title'>
+                                                {{ __('general.Receive Your Order From') }}
+                                            </h5>
+                                        </div>
+                                        <div class="checkout-form">
+                                            <div class="row my-2">
+                                                <p class="">
+                                                    {{ app()->getLocale() == 'ar' ? $branch->name_ar : $branch->name_en }}</p>
+
+                                                <p class="small text m-0">
+                                                    {{ app()->getLocale() == 'ar' ? $branch->address_description_ar . ' ' . $branch->city->name_ar . ' ' . $branch->area->name_ar : $branch->address_description_en . ' ' . $branch->city->name_en . ' ' . $branch->area->name_en }}
+                                                </p>
+                                            </div><br>
+                                            <div class="row">
+                                                @if (isset($work_hours))
+                                                    <h6 class="mb-0">{{ __('general.Working Hours') }}</h6>
+                                                    @foreach ($work_hours as $h)
+                                                        <p class="small text-muted m-0">{{ __('general.From') }}
+                                                            : {{ $h->time_from }} {{ __('general.To') }}
+                                                            :{{ $h->time_to }}</p>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endisset
+                            </div>
+                            <div class="col-lg-6 ">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card-header mt-30">
                                             <h5 class='card-title text-center'>
                                                 {{ __('general.loyality_earneings') }}
                                             </h5>
@@ -173,14 +277,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 ">
                                 <ul class="cart-total mt-30">
                                     <li>
                                         {{ __('general.Sub Total') }}: </b> <span
                                             id="subtotal"style="font-size: smaller;">{{ $order['subtotal'] }}
                                             {{ __('general.SR') }}</span>
-                                        <input id="subtotalinput" hidden name="subtotal"value="{{ $order['subtotal'] }}" />
+                                        <input id="subtotalinput" hidden
+                                            name="subtotal"value="{{ $order['subtotal'] }}" />
                                     </li>
                                     <li><b class="inset-right-5 text-gray-light">{{ __('general.Taxes') }}
                                             : </b>
