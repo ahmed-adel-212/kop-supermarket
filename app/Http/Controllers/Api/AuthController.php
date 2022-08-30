@@ -38,6 +38,12 @@ class AuthController extends BaseController
                         // 'token' => $user->createToken('AppName')->accessToken,
                         'token' => null,
                     ];
+
+                    $this->sendMessage(
+                        $user->first_phone,
+                        "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+                    );
+
                     return $this->sendResponse($data, __('auth.verify'));
                 }
                 if (Auth::attempt($credentials)) {
@@ -59,6 +65,7 @@ class AuthController extends BaseController
                     $setPushToken=new NotificationController();
                     $request->request->add(['user_id' =>$user->id]);
                     $setPushToken->setPushToken($request);
+
                     return $this->sendResponse($data, __('auth.logged'));
                 }
             }
@@ -83,6 +90,10 @@ class AuthController extends BaseController
                         // 'token' => $user->createToken('AppName')->accessToken,
                         'token' => null,
                     ];
+                    // $this->sendMessage(
+                    //     $user->first_phone,
+                    //     "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+                    // );
                     return $this->sendResponse($data, __('auth.verify'));
                 }
                 if (Auth::attempt($credentials)) {
@@ -170,6 +181,11 @@ class AuthController extends BaseController
         $setPushToken=new NotificationController();
         $request->request->add(['user_id' =>$user->id]);
         $setPushToken->setPushToken($request);
+
+        $this->sendMessage(
+            $user->first_phone,
+            "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+        );
 
         return response()->json([
             "success" => true,
@@ -275,29 +291,36 @@ class AuthController extends BaseController
 
     }
     /* for verification */
-    public function setVerificationCode(Request $request, string $token)
+    public function setVerificationCode(Request $request)
     {
-        $user = $request->user();
+        $user = User::findOrFail($request->user_id);
 
-        if ($user->activation_token !== $token) {
+        if ($user->activation_token !== $request->otp) {
             return $this->sendError(__('auth.invalid_otp'));
         }
 
+        $user->token = $user->createToken('AppName')->accessToken;
         $user->active = true;
         $user->email_verified_at = now();
         $user->save();
 
-        return $this->sendResponse($user, __('auth.verified'));
+        Auth::login($user);
+
+        return $this->sendResponse([
+            'userData' => $user,
+            'token' => $user->token,
+        ], __('auth.verified'));
     }
     
     public function resendVerificationCode(Request $request)
     {
+        $user = User::findOrFail($request->user_id);
         try {
             $this->sendMessage(
-                $request->user()->first_phone,
-                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $request->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $request->user()->activation_token
+                $user->first_phone,
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
             );
-            return $this->sendResponse($request->user(), __('auth.sent_sms'));
+            return $this->sendResponse($user, __('auth.sent_sms'));
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,

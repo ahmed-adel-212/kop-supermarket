@@ -84,7 +84,7 @@ class AuthController extends Controller
             try {
                 $this->sendMessage(
                     $user->first_phone,
-                    "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+                    "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
                 );
                 // return redirect()->back()->with(['success'=>__('auth.Sent SMS successfully.')]);
             } catch (\Exception $e) {

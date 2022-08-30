@@ -36,7 +36,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('resend-code', 'Api\AuthController@resendCode');
     /* for verification */
     Route::post('resend-verification-code', 'Api\AuthController@resendVerificationCode');
-    Route::post('verify-account/{code}', 'Api\AuthController@setVerificationCode');
+    Route::post('verify-account', 'Api\AuthController@setVerificationCode');
 
     Route::post('verify-user/{id}', 'Api\AuthController@activateUser')->name('verify-user');
 
