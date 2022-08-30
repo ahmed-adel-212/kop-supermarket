@@ -9,6 +9,9 @@
         .point-value .branches-list {
             transition: all ease-in .3s;
             cursor: pointer;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #cdcdcd;
         }
 
         .point-value .branches-list:hover {
@@ -77,7 +80,7 @@
                                                 {{ $val->value }} {{ __('general.SR') }} <span style="color: inherit;font-size: .9rem;">{{ __('general.on') }}</span>
                                             </h3>
                                         </li>
-                                        <li><h3 style="color: inherit;font-size: 1.3rem;">
+                                        <li><h3 style="color: inherit;font-size: 1.3rem;text-indent: 2rem;">
                                             {{ $val->for }} {{ __('general.Points') }}
                                         </h3></li>
                                     </ul>
