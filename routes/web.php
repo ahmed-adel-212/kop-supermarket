@@ -166,8 +166,8 @@ Route::group([
         /* for verification */
         // Route::group(['middleware' => ['auth']], function() {
             Route::get('/verification-code', 'AuthController@get_code')->name('verifyCode.page');
-            Route::get('resend-verification-code', 'AuthController@resendVerificationCode')->name('verifyCode.resend');
-            Route::get('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
+            Route::post('resend-verification-code', 'AuthController@resendVerificationCode')->name('verifyCode.resend');
+            Route::post('verify-account', 'AuthController@setVerificationCode')->name('verifyCode.save');
         // });
 
         /*********** Auth Routes ***********/
