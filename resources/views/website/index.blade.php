@@ -78,15 +78,19 @@
         </div>/#popup-search-box -->
 
         <div id="main-slider" class="main-slider" >
-            <div class="single-slide">
+            <div class="single-slide {{app()->getLocale() === 'ar' ? 'right' : ''}}" dir="ltr">
                 <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-01.jpg')}});"></div>
+                @if (app()->getLocale() === 'ar')
+                <div class="slider-shape left" style="background-image: url({{asset('website2-assets/img/slider-shape-02.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div>
+                @else
                 <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
-                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});" data-animation="fade-in-right" data-delay="1s"></div>
-                <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});" data-animation="zoomIn" data-delay="1.3s"></div>
+                @endif
+                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});" data-animation="fade-in-{{app()->getLocale() === 'ar' ? 'right' : 'left'}}" data-delay="1s"></div>
+                <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});{{app()->getLocale() == 'ar' ? 'right: -10%;' : ''}}" data-animation="zoomIn" data-delay="1.3s"></div>
                 <div class="slider-content-wrap d-flex align-items-center">
                     <div class="container">
-                        <div class="slider-content">
-                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
+                        <div class="slider-content" dir="{{app()->getLocale() === 'ar' ? 'rtl' : ''}}">
+                            <div class="slider-caption medium" ><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
                             <div class="slider-caption big"><div class="inner-layer"><div data-animation="reveal-text" data-delay="1s">{{__('home.Order Today, While It’s Hot!')}}</div></div>
                             </div>
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">{{__('home.Eat Delicious & Tasty Fast-Foods With Real Flavours')}}</div></div></div>
@@ -99,7 +103,7 @@
                     </div>
                 </div>
             </div><!--Slide-1-->
-            <div class="single-slide center">
+            <div class="single-slide center" dir="ltr">
                 <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-02.jpg')}});"></div>
                 <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
                 <div class="slider-shape left" style="background-image: url({{asset('website2-assets/img/slider-shape-02.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div>
@@ -121,13 +125,19 @@
                     </div>
                 </div>
             </div><!--Slide-2-->
-            <div class="single-slide right">
+            <div class="single-slide {{app()->getLocale() === 'ar' ? '' : 'right'}}" dir="ltr">
                 <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-03.jpg')}});"></div>
+                {{-- <div class="slider-shape left" style="background-image: url({{asset('website2-assets/img/slider-shape-02.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div> --}}
+                @if (app()->getLocale() !== 'ar')
                 <div class="slider-shape left" style="background-image: url({{asset('website2-assets/img/slider-shape-02.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div>
+                @else
+                <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
+                @endif
+
                 <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-03.png')}});" data-animation="fade-in-top" data-delay="1s"></div>
                 <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});" data-animation="zoomIn" data-delay="1.3s"></div>
                 <div class="slider-content-wrap d-flex align-items-center text-right">
-                    <div class="container">
+                    <div class="container" @if (app()->getLocale() === 'ar') style="justify-content: flex-start;"@endif>
                         <div class="slider-content">
                            <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">ewewEat Sleep And</div></div></div>
                             <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splittin>Fried masala <br>in town!</div></div>
