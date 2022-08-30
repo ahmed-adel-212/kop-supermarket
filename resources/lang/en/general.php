@@ -13,6 +13,7 @@ return [
     |
     */
     'search address'=>'enter your address',
+    'use map'=>'Use Map',
     'search' => 'Search',
     'Careers' => 'Careers',
     'Gallery' => 'Gallery',

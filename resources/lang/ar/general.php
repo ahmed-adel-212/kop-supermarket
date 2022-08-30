@@ -13,6 +13,7 @@ return [
     |
     */
     'Careers' => 'الوظائف',
+    'use map' => 'استخدام الخريطه',
     'Gallery' => 'المعرض',
     'Pictures of pastries kingdom products' => 'منتجات مملكة المعجنات',
     'Health Information' => 'معلومات صحية',

@@ -100,7 +100,7 @@
                                                                 <select id="city-select"
                                                                     class="form-control select2-cities city w-100 select2-cities"
                                                                     name="city_id" required>
-                                                                    <option value="">
+                                                                    <option value="" selected>
                                                                         {{ __('general.Select City') }}
                                                                     </option>
 
@@ -225,6 +225,7 @@
         var selectedId=2;
         message.push("{{ __('general.Choose Area') }}");
         message.push("{{__('general.branch_no_cover')}}");
+        message.push("{{ __('general.Select City') }}");
         var cities = [];
         var cityObj = [];
         @foreach($cities as $city)

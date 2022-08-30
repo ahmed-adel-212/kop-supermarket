@@ -95,12 +95,15 @@ $.fn.gMapsLatLonPicker = (function() {
 					areaMap=value[count-3];
 					selectedId=0
 					$(".city").html('');
+					$(".city").append(
+						'<option  value="" >'+message[2]+'</option>');
+					
 					cities.forEach(function(cityObj){
 						if( add.includes(cityObj[1])){
 							selectedId=cityObj[0];
 							$(".city").append(
 								'<option  value="'+selectedId+'" selected>'+cityObj[1]+'</option>');
-						}
+								}
 						else{
 							$(".city").append(
 								'<option  value="'+cityObj[0]+'" >'+cityObj[1]+'</option>');
@@ -139,7 +142,7 @@ $.fn.gMapsLatLonPicker = (function() {
 						$('#street').val(add);
 					}
 					console.log($('#city-select').val());
-					if($('#city-select').val()==3)
+					if($('#city-select').val()=="")
 					{
 						$('.not_found').removeClass('d-none').addClass('d-block');
 					}
