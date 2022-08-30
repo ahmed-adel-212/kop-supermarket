@@ -69,7 +69,7 @@ class OfferController extends Controller
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=509,height=459',
-            'mobile_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
             'offer_type' => 'required',
         ]);
 
@@ -145,11 +145,11 @@ class OfferController extends Controller
             $image = '';
         }
 
-        if ($request->hasFile('mobile_image')) {
-            $image = $request->mobile_image;
+        if ($request->hasFile('website_image_menu')) {
+            $image = $request->website_image_menu;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('offers'), $image_new_name);
-            $offer->mobile_image = '/offers/' . $image_new_name;
+            $offer->website_image_menu = '/offers/' . $image_new_name;
             $offer->save();
         } else {
             $image = '';
@@ -298,9 +298,9 @@ class OfferController extends Controller
             'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg||dimensions:width=300,height=300',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=509,height=459',
-            'mobile_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
             'offer_type' => 'required',
         ]);
         // $branches = implode(",", $request->get('branches'));
@@ -321,11 +321,11 @@ class OfferController extends Controller
             $offer->website_image = '/offers/' . $image_new_name;
             $offer->save();
         }
-        if ($request->hasFile('mobile_image')) {
-            $image = $request->mobile_image;
+        if ($request->hasFile('website_image_menu')) {
+            $image = $request->website_image_menu;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('offers'), $image_new_name);
-            $offer->mobile_image = '/offers/' . $image_new_name;
+            $offer->website_image_menu = '/offers/' . $image_new_name;
             $offer->save();
         }
 
