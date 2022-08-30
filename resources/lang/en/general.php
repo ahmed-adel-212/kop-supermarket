@@ -370,4 +370,5 @@ return [
     'loyality_earneings' => 'Loyalty Earnings',
     'applied' => 'Applied',
     'to_be_applied' => 'To Be Applied',
+    'home' => 'Home Page',
 ];

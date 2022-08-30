@@ -2,7 +2,7 @@
     @ThemeEaster
     ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Rubik:wght@300;400;500;600&family=Shadows+Into+Light&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Cairo&family=Cairo:wght@300;400;500;600&family=Shadows+Into+Light&display=swap'); */
 
 /* Common Styles */
 *{
@@ -11,7 +11,7 @@
 }
 body{
     background-color: #fff;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Cairo', sans-serif;
     font-size: 16px;
     line-height: 26px;
     color: #777;
@@ -22,7 +22,7 @@ body{
 }
 
 h1, h2, h3, h4, h5, h6{
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Cairo', sans-serif;
     -webkit-font-smoothing:antialiased;
 	color: #0e1318;
 }
@@ -250,7 +250,7 @@ button{
     display: inline-block;
     background: #ff9d2d;
     color: #fff;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Cairo', sans-serif;
     font-size: 14px;
     font-weight: 500;
     text-transform: capitalize;
@@ -490,7 +490,7 @@ button{
     color: #f43127;
     font-weight: 500;
     letter-spacing: -0.5px;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     position: relative;
     margin-bottom: 10px;
     z-index: 1;
@@ -587,7 +587,7 @@ max-height: 600px;
 .about-info{}
 .check-list{ margin-bottom: 30px; }
 .check-list li{
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 16px;
     font-weight: 500;
     letter-spacing: -0.5px;
@@ -685,7 +685,7 @@ max-height: 600px;
 }
 .product-item .sale{
     background-color: #f43127;
-    font-family: "Roboto",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 12px;
     color: #fff;
     font-weight: 600;
@@ -705,7 +705,7 @@ max-height: 600px;
 .product-thumb img{width: 100%;}
 .product-thumb .order-btn{
     background-color: #f43127;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 14px;
     font-weight: 500;
     text-transform: capitalize;
@@ -749,7 +749,7 @@ max-height: 600px;
 .product-item .ratting li{
     display: inline-flex;
     align-items: center;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-weight: 500;
 }
 .product-item .ratting li:first-child{margin-right: 10px;}
@@ -780,7 +780,7 @@ max-height: 600px;
 }
 .food-menu-filter li {
     background-color: #fff;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 15px;
     font-weight: 500;
     color: #0e1318;
@@ -831,7 +831,7 @@ max-height: 600px;
     align-items: center;
 }
 .product-details .product-inner .category li a{
-    font-family: "Roboto",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 17px;
     color: #777; 
 }
@@ -873,7 +873,7 @@ max-height: 600px;
 }
 .purchase-btn{
     background-color: #ff8e28;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 14px;
     font-weight: 500;
     text-transform: capitalize;
@@ -935,7 +935,7 @@ max-height: 600px;
 .tab-navigation li button{
     background-color: #eee;
     color: #0e1318;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 14px;
     font-weight: 500;
     text-transform: capitalize;
@@ -958,7 +958,7 @@ max-height: 600px;
 }
 .description-meta li span{}
 .product-table thead tr th{
-    font-family: "Roboto",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -999,7 +999,7 @@ max-height: 600px;
     border: 1px solid #eee;
 }
 .review .comment-list .comment-text h3 span {
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 14px;
     font-weight: 500;
     text-transform: capitalize;
@@ -1096,7 +1096,7 @@ max-height: 600px;
 .cart-total li:not(:last-of-type){margin-bottom: 20px;}
 .cart-total li a:not(.default-btn),
 .cart-total li span{
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 18px;
     font-weight: 500;
     color: #0e1318;
@@ -1158,7 +1158,7 @@ max-height: 600px;
     color: #0e1318;
     font-size: 18px;
     letter-spacing: -0.5px;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-weight: 500;
     border: 1px solid #eee;
     padding: 10px 15px;
@@ -1419,7 +1419,7 @@ max-height: 600px;
     text-align: center;
     padding: 0 25px;
     display: inline-block;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 14px;
     font-weight: 500;
     color: #fff;
@@ -1487,7 +1487,7 @@ max-height: 600px;
 .hero-content h1 span{ color: #ff9d2d; }
 .hero-content .hero-list{ margin-bottom: 20px; }
 .hero-content .hero-list li{
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 15px;
     font-weight: 500;
     display: inline-flex;
@@ -1730,7 +1730,7 @@ max-height: 600px;
     background-color: #0e1318;
 }
 .footer-widget h3{
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 18px;
     font-weight: 600;
     display: inline-block;
@@ -1771,7 +1771,7 @@ max-height: 600px;
     text-decoration: underline;
 }
 .footer-recent-post li .post-content .date{
-    font-family: "Roboto",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -1847,7 +1847,7 @@ max-height: 600px;
     line-height: 40px;
     padding: 0 25px;
     text-align: center;
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 15px;
     font-weight: 500;
     color: #fff;
@@ -1868,7 +1868,7 @@ max-height: 600px;
 }
 .subscribe-form .submit{
     background-color: #ff9d2d;
-    font-family: "Roboto",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -1940,7 +1940,7 @@ max-height: 600px;
 .contact-details-wrap{ padding-right: 60px; }
 .contact-title{margin-bottom: 20px;}
 .contact-title h2{
-    font-family: "Rubik",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 28px;
     line-height: 38px;
     font-weight: 600;
@@ -2046,7 +2046,7 @@ textarea:-ms-input-placeholder{
 
 .branches-section{ position: relative; }
 .branches-list h3{
-    font-family: "Roboto",sans-serif;
+    font-family: "Cairo",sans-serif;
     font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;

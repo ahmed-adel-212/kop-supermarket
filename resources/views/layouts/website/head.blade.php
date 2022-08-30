@@ -9,6 +9,9 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
 
     <link rel="shortcut icon" href="{{ asset('website-assets/img/faviconkop.png') }}" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+    </style>
 
     @if (app()->getLocale() == 'ar')
         {{-- <link
