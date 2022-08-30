@@ -61,13 +61,14 @@ class PasswordResetController extends BaseController
         $passwordReset = DB::table('password_resets')->where('token', $token)->first();
 
         if (!$passwordReset)
-            return view('api.change-password' )->with([
-                'type' => 'error', 'message' =>__('general.This password reset token is invalid.')]);
+            return  redirect()->route('api.faild');
+
 
 
         if (Carbon::parse($passwordReset->created_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
-             return view('api.change-password')->withErrors(__('general.This password reset token is invalid.'));
+            return  redirect()->route('api.faild');
+
         }
         $email=$passwordReset->email;
         return view('api.change-password' ,compact('token','email'));
