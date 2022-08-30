@@ -93,13 +93,15 @@ class AuthController extends Controller
                 // return redirect()->back()->withErrors(['errors' => __('auth.phone_number_error')]);
             }
 
-            return view('website.verification-code', [
+            session(['user' => [
                 'email' => $user->email,
-                'user_phone' => $user->first_phone,
-                'user_id' => $user->id
-            ])->with([
-                'success' => __('general.created', ['key' => __('auth.user_account')]),
-            ]);
+                'phone' => $user->first_phone,
+                'id' => $user->id
+            ]]);
+
+            session()->flash('success', __('auth.verify'));
+
+            return redirect()->route('verifyCode.page');
 
             // return redirect(route('verifyCode.page'))->with(['success' => __('general.created', ['key' => __('auth.user_account')]), 'email' => $user->email]);
         } catch (\Exception $e) {
@@ -131,12 +133,21 @@ class AuthController extends Controller
                     $user_id = $user->id;
                     $password = request('password');
                     auth()->logout();
+                    session()->flush();
                     $this->sendMessage(
                         $user->first_phone,
                         "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
                     );
-                    
-                    return view('website.verification-code', compact('phone', 'user_id', 'password'));
+
+                    session(['user' => [
+                        'email' => $user->email,
+                        'phone' => $user->first_phone,
+                        'id' => $user->id
+                    ]]);
+
+                    session()->flash('error', __('auth.verify'));
+
+                    return redirect()->route('verifyCode.page');
                 }
 
 
@@ -167,12 +178,15 @@ class AuthController extends Controller
         abort_unless($user, 404);
 
         if ($user->activation_token !== $request->token) {
-            return redirect()->back()->withErrors(['errors' => __('auth.invalid_otp')]);
+            session()->flash('error', __('auth.invalid_otp'));
+            return redirect()->back();
         }
 
         $user->email_verified_at = now();
         $user->active = true;
         $user->save();
+
+        session()->forget('user');
 
         $user->branches; //?? 
 

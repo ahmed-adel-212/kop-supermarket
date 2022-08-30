@@ -311,7 +311,7 @@ class AuthController extends BaseController
         try {
             $this->sendMessage(
                 $user->first_phone,
-                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
             );
             return $this->sendResponse($user, __('auth.sent_sms'));
         } catch (\Exception $e) {
@@ -626,14 +626,14 @@ class AuthController extends BaseController
         }
         $user->email_verified_at = now();
         $user->token = $user->createToken('AppName')->accessToken;
-        $user->save();
+        // $user->save();
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return $this->sendResponse([
-            'userData' => $user,
-            'token' => $user->token,
-        ], __('auth.verified'));
+        // return $this->sendResponse([
+        //     'userData' => $user,
+        //     'token' => $user->token,
+        // ], __('auth.verified'));
 
 
         return $this->sendError([
