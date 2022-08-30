@@ -39,6 +39,7 @@
                 <input type="text" class="gllpSearchField" style="color:black; width:100%;height:45px;width: 115%;" placeholder="{{__('general.search address')}}">
         </div>
         <span class="d-none text-danger mb-2 font-weight-bold not_found" >{{__('general.branch_no_cover')}}</span>
+        <span class="d-none text-danger mb-2 font-weight-bold riyadh" >{{__('general.no delivery riyadh')}}</span>
 			<!-- <input type="button" class=" default-btn" value=" بحث عن عنوان" style="padding: 2px 15px; vertical-align: none;float:right;background:rgb(3, 169, 245); margin-right:1%"> -->
             
         </div>

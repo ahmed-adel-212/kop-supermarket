@@ -14,6 +14,7 @@ return [
     */
     'Careers' => 'الوظائف',
     'use map' => 'استخدام الخريطه',
+    'no delivery riyadh' => 'خدمة التوصيل غير متاحة الان فى هذا النطاق',
     'Gallery' => 'المعرض',
     'Pictures of pastries kingdom products' => 'منتجات مملكة المعجنات',
     'Health Information' => 'معلومات صحية',

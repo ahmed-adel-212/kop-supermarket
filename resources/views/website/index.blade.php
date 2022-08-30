@@ -55,6 +55,16 @@
     padding-top: 9% !important;*/} 
    
     </style>
+    @if(app()->getLocale() == 'ar')
+    <!-- <style>
+        .food-img
+        {
+            margin: -2%;
+            transform: scaleX(-1);
+        }
+    </style> -->
+    @endif
+
 @endsection
 
 

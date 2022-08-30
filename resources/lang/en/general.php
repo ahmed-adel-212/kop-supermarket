@@ -14,6 +14,7 @@ return [
     */
     'search address'=>'enter your address',
     'use map'=>'Use Map',
+    'no delivery riyadh' => 'Delivery service is not available in this area ',
     'search' => 'Search',
     'Careers' => 'Careers',
     'Gallery' => 'Gallery',
