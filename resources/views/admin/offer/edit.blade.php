@@ -129,7 +129,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
 
-                                    <label for="exampleInputFile">Menu Image</label>
+                                    <label for="exampleInputFile">Mobile Image</label>
                                     <div class="help-block text-info">
                                         <b>Note</b> Image Dimensions Must Be: 300 * 300
                                     </div>
@@ -172,17 +172,17 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Mobile Home Image</label>
+                                    <label for="exampleInputFile">Website Menu Image</label>
                                     <div class="help-block text-info">
                                         <b>Note</b> Image Dimensions Must Be: 800 * 418
                                     </div>
-                                    @if($offer->mobile_image)
-                                    <img src="{{ asset($offer->mobile_image) }}" alt="..." class="img-thumbnail">
+                                    @if($offer->website_image_menu)
+                                    <img src="{{ asset($offer->website_image_menu) }}" alt="..." class="img-thumbnail">
                                     @endif
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="mobile_image"
-                                            value="{{$offer->mobile_image}}">
-                                        @error('mobile_image')
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="website_image_menu"
+                                            value="{{$offer->website_image_menu}}">
+                                        @error('website_image_menu')
                                         <div class="help-block">{{ $message }}</div>
                                         @enderror
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
