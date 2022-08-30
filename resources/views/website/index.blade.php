@@ -56,13 +56,18 @@
    
     </style>
     @if(app()->getLocale() == 'ar')
-    <!-- <style>
+    <style>
         .food-img
         {
             margin: -2%;
             transform: scaleX(-1);
         }
-    </style> -->
+        .slider-shape
+        {
+            /* margin: -2%; */
+            transform: scaleX(-1);
+        }
+    </style>
     @endif
 
 @endsection
@@ -90,8 +95,8 @@
         <div id="main-slider" class="main-slider" >
             <div class="single-slide">
                 <div class="bg-img kenburns-top" style="background-image: url({{asset('website2-assets/img/slider-bg-01.jpg')}});"></div>
-                <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
-                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});" data-animation="fade-in-right" data-delay="1s"></div>
+                <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-left" data-delay="0.5s"></div>
+                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});" data-animation="fade-in-left" data-delay="1s"></div>
                 <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});" data-animation="zoomIn" data-delay="1.3s"></div>
                 <div class="slider-content-wrap d-flex align-items-center">
                     <div class="container">

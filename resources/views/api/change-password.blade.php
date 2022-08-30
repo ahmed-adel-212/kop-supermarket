@@ -1,3 +1,15 @@
+@extends('layouts.website.app')
+
+@section('title')
+    {{ __('general.Change password') }}
+@endsection
+
+@section('styles')
+    <style>
+
+
+    </style>
+@endsection
 
 @section('pageName')
 
@@ -44,7 +56,7 @@
 
                                 {{-- <p>{{__('general.Set a new password')}}</p> --}}
 
-                                <form action="{{ route('reset') }}" method="POST" id="change_password">
+                                <form action="{{ route('password.get-reset') }}" method="POST" id="change_password">
                                     @csrf
                                     <input type="email" id="email" name="email" value="{{ $email }}" hidden>
                                     <input type="text" id="token" name="token" value="{{ $token }}" hidden>
