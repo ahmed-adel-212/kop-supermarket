@@ -5,9 +5,11 @@
 @endsection
 
 @section('styles')
-    <style>
+<style>
 
-
+.header,.sticky-header{
+    display:none !important;
+}
     </style>
 @endsection
 
@@ -56,7 +58,7 @@
 
                                 {{-- <p>{{__('general.Set a new password')}}</p> --}}
 
-                                <form action="{{ route('password.get-reset') }}" method="POST" id="change_password">
+                                <form action="{{ route('reset') }}" method="POST" id="change_password">
                                     @csrf
                                     <input type="email" id="email" name="email" value="{{ $email }}" hidden>
                                     <input type="text" id="token" name="token" value="{{ $token }}" hidden>
