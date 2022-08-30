@@ -276,19 +276,25 @@ class AuthController extends BaseController
 
     }
     /* for verification */
-    public function setVerificationCode(Request $request, string $token)
+    public function setVerificationCode(Request $request)
     {
-        $user = $request->user();
+        $user = User::findOrFail($request->user_id);
 
-        if ($user->activation_token !== $token) {
+        if ($user->activation_token !== $request->otp) {
             return $this->sendError(__('auth.invalid_otp'));
         }
 
+        $user->token = $user->createToken('AppName')->accessToken;
         $user->active = true;
         $user->email_verified_at = now();
         $user->save();
 
-        return $this->sendResponse($user, __('auth.verified'));
+        Auth::login($user);
+
+        return $this->sendResponse([
+            'userData' => $user,
+            'token' => $user->token,
+        ], __('auth.verified'));
     }
     
     public function resendVerificationCode(Request $request)
