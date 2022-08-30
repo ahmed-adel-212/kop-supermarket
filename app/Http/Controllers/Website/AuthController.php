@@ -115,14 +115,15 @@ class AuthController extends Controller
             'password' => request('password')
         ];
 
-        $user=User::where('email',request('email'))->first();
-        if($user){
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
         if ($user->hasRole('customer')) {
             if ($user->email_verified_at == null) {
                 // return $user->id;
                 $phone=$user->first_phone;
                 $user_id=$user->id;
                 $password=request('password');
+                auth()->logout();
                         return view('website.verification-code',compact('phone','user_id','password'));
                     }
             if (Auth::attempt($credentials)) {
