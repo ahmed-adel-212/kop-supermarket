@@ -10,6 +10,10 @@ class Area extends Model
     use SoftDeletes;
     protected $guarded = [];
 
+    protected $casts = [
+        'delivery_fees' => 'double'
+    ];
+
     public function city() {
         return $this->belongsTo('App\Models\City');
     }

@@ -304,6 +304,7 @@
                                             value="{{ $arr_check['points_value'] }}" />
                                     </li>
                                 @endif
+
                                 <li><b class="inset-right-5 text-gray-light">{{ __('general.Total') }}
                                         : </b> <span style="font-size: smaller;" id="total">{{ $arr_check['total'] }}
                                         {{ __('general.SR') }}</span>

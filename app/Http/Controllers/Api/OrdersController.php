@@ -185,13 +185,13 @@ class OrdersController extends BaseController
                     if ($branch) {
                         $branch_id = $branch->id;
                     } else {
-                        return $this->sendError("sorry there is no branch cover this area");
+                        return $this->sendError(__('general.branch_no_cover'));
                     }
                 } else {
-                    return $this->sendError("sorry there is no branch cover this area");
+                    return $this->sendError(__('general.branch_no_cover'));
                 }
             } else {
-                return $this->sendError("sorry there is no branch cover this area");
+                return $this->sendError(__('general.branch_no_cover'));
             }
         }
 
@@ -269,8 +269,8 @@ class OrdersController extends BaseController
                         'offerId' => isset($item['offerId']) ? $item['offerId'] : null,
                         'extras' => isset($item['extras'][$i]) && count($item['extras']) ? $item['extras'][$i] : [],
                         'withouts' => isset($item['withouts'][$i]) && count($item['withouts']) ? $item['withouts'][$i] : [],
-                        'dough_type_ar' => $item['dough_type_ar'][$i],
-                        'dough_type_en' => $item['dough_type_en'][$i],
+                        'dough_type_ar' => isset($item['dough_type_ar'][$i]) ? $item['dough_type_ar'][$i] : null,
+                        'dough_type_en' => isset($item['dough_type_en'][$i]) ? $item['dough_type_en'][$i] : null,
                         'dough_type_2_ar' => isset($item['dough_type_2_ar'][$i]) ? $item['dough_type_2_ar'][$i] : null,
                         'dough_type_2_en' => isset($item['dough_type_2_en'][$i]) ? $item['dough_type_2_en'][$i] : null,
                     ];
@@ -371,13 +371,13 @@ class OrdersController extends BaseController
                         if ($branch) {
                             $branch_id = $branch->id;
                         } else {
-                            return $this->sendError("sorry there is no branch cover this area");
+                            return $this->sendError(__('general.branch_no_cover'));
                         }
                     } else {
-                        return $this->sendError("sorry there is no branch cover this area");
+                        return $this->sendError(__('general.branch_no_cover'));
                     }
                 } else {
-                    return $this->sendError("sorry there is no branch cover this area");
+                    return $this->sendError(__('general.branch_no_cover'));
                 }
             }
 

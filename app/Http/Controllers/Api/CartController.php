@@ -33,20 +33,22 @@ class CartController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 401);
         }
 
         $cart = Cart::create([
-                'user_id' =>  Auth::user()->id,
-                'item_id' =>  $request->item_id,
-                'extras' =>  $request->extras,
-                'withouts' =>  $request->withouts,
-                'dough_type_ar' =>  $request->dough_type_ar,
-                'dough_type_en' =>  $request->dough_type_en,
-                'quantity' =>  $request->quantity,
-                'offer_id' =>  $request->offer_id,
-                'offer_price' =>  $request->offer_price,
-            ]);
+            'user_id' =>  Auth::user()->id,
+            'item_id' =>  $request->item_id,
+            'extras' =>  $request->extras,
+            'withouts' =>  $request->withouts,
+            'dough_type_ar' =>  $request->has('dough_type_ar') ? $request->dough_type_ar : null,
+            'dough_type_en' =>  $request->has('dough_type_en') ? $request->dough_type_en : null,
+            'dough_type_2_ar' =>  $request->has('dough_type_2_ar') ? $request->dough_type_2_ar : null,
+            'dough_type_2_en' =>  $request->has('dough_type_2_en') ? $request->dough_type_2_en : null,
+            'quantity' =>  $request->quantity,
+            'offer_id' =>  $request->offer_id,
+            'offer_price' =>  $request->offer_price,
+        ]);
 
         // $cart = new Cart;
         // $cart->user_id = Auth::user()->id;
@@ -67,16 +69,16 @@ class CartController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 401);
         }
 
         $deletedID = Auth::user()->carts()->where('id', $request->cart_id)
             ->select('id')->get();
         $cart = Auth::user()->carts()->findOrFail($request->cart_id);
-        if($cart->offer_id){
+        if ($cart->offer_id) {
             $offer = Offer::find($cart->offer_id);
             /* to delete offer(buy and get) package from cart */
-            if($offer->offer_type == 'buy-get'){
+            if ($offer->offer_type == 'buy-get') {
                 $deletedID = Auth::user()->carts()->where('offer_id', $cart->offer_id)
                     ->where('created_at', $cart->created_at)
                     ->select('id')->get();
@@ -94,16 +96,15 @@ class CartController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'cart_id' => ['required'],
-            'quantity'=> ['required']
+            'quantity' => ['required']
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 401);
         }
 
         Auth::user()->carts()->findOrFail($request->cart_id)->update(['quantity' => $request->quantity]);
 
         return $this->sendResponse(Auth::user()->carts()->with('item')->get(), __('general.updated', ['key' => __('general.cart')]));
     }
-
 }

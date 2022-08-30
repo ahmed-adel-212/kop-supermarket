@@ -28,13 +28,15 @@ class CartController extends Controller
                 $newRequest->merge(['offer_price' => $request->offer_price ? $request->offer_price : null]);
                 $newRequest->merge(['quantity' => $item->quantity]);
 
-                $dough = explode(',', $item->dough);
-                $request->merge([
-                    'dough_type_ar' => $dough[0],
-                ]);
-                $request->merge([
-                    'dough_type_en' => $dough[1],
-                ]);
+                if (isset($item->dough)) {
+                    $dough = explode(',', $item->dough);
+                    $request->merge([
+                        'dough_type_ar' => $dough[0],
+                    ]);
+                    $request->merge([
+                        'dough_type_en' => $dough[1],
+                    ]);
+                }
 
                 if (isset($item->dough2)) {
                     $dough = explode(',', $item->dough2);
@@ -64,8 +66,8 @@ class CartController extends Controller
                     'item_id' =>  $request->item_id,
                     'extras' =>  json_encode($item->extras),
                     'withouts' =>  json_encode($item->withouts),
-                    'dough_type_ar' =>  $request->dough_type_ar,
-                    'dough_type_en' =>  $request->dough_type_en,
+                    'dough_type_ar' =>  $request->has('dough_type_ar') ? $request->dough_type_ar : null,
+                    'dough_type_en' =>  $request->has('dough_type_en') ? $request->dough_type_en : null,
                     'dough_type_2_ar' =>  $request->has('dough_type_2_ar') ? $request->dough_type_2_ar : null,
                     'dough_type_2_en' =>  $request->has('dough_type_2_en') ? $request->dough_type_2_en : null,
                     'quantity' =>  $item->quantity,
@@ -150,9 +152,9 @@ class CartController extends Controller
         // $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
 
         // $count = count($return['data']);
-        
+
         // if ($return['success'] == 'success') {
-            return response()->json(['success' => true, 'data' => Auth::user()->carts()->sum('quantity')], 200);
+        return response()->json(['success' => true, 'data' => Auth::user()->carts()->sum('quantity')], 200);
         // }
     }
 
