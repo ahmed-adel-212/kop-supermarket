@@ -395,6 +395,7 @@ class OrdersController extends Controller
             'points' => $pointsValue,
             'order_from' => 'website',
             'description_box' => $request->description,
+            'offer_value' => abs($request->has('offer_value') ? $request->offer_value : round($request->total - ($request->subtotal + $request->taxes), 2))
         ];
 
         $order = Order::create($orderData);
