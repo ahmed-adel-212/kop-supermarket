@@ -39,6 +39,12 @@ class AuthController extends BaseController
                         'token' => null,
                     ];
                     auth()->logout();
+
+                    $this->sendMessage(
+                        $user->first_phone,
+                        "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+                    );
+
                     return $this->sendResponse($data, __('auth.verify'));
                 }
 
@@ -168,6 +174,11 @@ class AuthController extends BaseController
         $request->request->add(['user_id' => $user->id]);
         $setPushToken->setPushToken($request);
 
+        $this->sendMessage(
+            $user->first_phone,
+            "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+        );
+
         return response()->json([
             "success" => true,
             'user_created' => true,
@@ -295,18 +306,19 @@ class AuthController extends BaseController
 
     public function resendVerificationCode(Request $request)
     {
+        $user = User::findOrFail($request->user_id);
+
         try {
             $this->sendMessage(
-                $request->user()->first_phone,
-                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $request->user()->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $request->user()->activation_token
+                $user->first_phone,
+                "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على التسجيل! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
             );
-            return $this->sendResponse($request->user(), __('auth.sent_sms'));
+            return $this->sendResponse($user, __('auth.sent_sms'));
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
                 "message" => __('auth.twillo_err')
             ], 400);
-
             //echo "Error: " . $e->getMessage();
         }
     }

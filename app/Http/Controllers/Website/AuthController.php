@@ -131,6 +131,11 @@ class AuthController extends Controller
                     $user_id = $user->id;
                     $password = request('password');
                     auth()->logout();
+                    $this->sendMessage(
+                        $user->first_phone,
+                        "KOP\nThanks for signup!\n Please before you begin, you must confirm your account. Your Code is:" . $user->activation_token . "\n\n شكرا على تسجيلك! من فضلك قبل أن تبدأ ، يجب عليك تأكيد حسابك. رمزك هو:" . $user->activation_token
+                    );
+                    
                     return view('website.verification-code', compact('phone', 'user_id', 'password'));
                 }
 
