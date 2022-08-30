@@ -99,20 +99,20 @@ class PasswordResetController extends BaseController
         $passwordReset = DB::table('password_resets')->where([['token', $request->token],['email', $request->email]])->first();
 
         if (!$passwordReset)
-        return  view('api.change-password')->withError(__('general.This password reset token is invalid.'));
+            return  redirect()->route('api.faild');
 
 
         $user = User::where('email', $passwordReset->email)->first();
 
         if (!$user)
-        return  view('api.change-password')->withError(__('general.We can\'t find a user with that e-mail address.'));
+            return  redirect()->route('api.faild');
 
 
         $user->update(['password' => bcrypt($request->password)]);
         DB::table('password_resets')->where([['token', $request->token],['email', $request->email]])->delete();
 
         // $user->notify(new PasswordResetSuccess($passwordReset));
-        return  view('api.change-password');
+        return  redirect()->route('api.success');
 
         // return $this->sendresponse($user, 'successful message');
     }
