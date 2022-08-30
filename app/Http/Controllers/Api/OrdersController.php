@@ -185,13 +185,13 @@ class OrdersController extends BaseController
                     if ($branch) {
                         $branch_id = $branch->id;
                     } else {
-                        return $this->sendError("sorry there is no branch cover this area");
+                        return $this->sendError(__('general.branch_no_cover'));
                     }
                 } else {
-                    return $this->sendError("sorry there is no branch cover this area");
+                    return $this->sendError(__('general.branch_no_cover'));
                 }
             } else {
-                return $this->sendError("sorry there is no branch cover this area");
+                return $this->sendError(__('general.branch_no_cover'));
             }
         }
 
@@ -371,13 +371,13 @@ class OrdersController extends BaseController
                         if ($branch) {
                             $branch_id = $branch->id;
                         } else {
-                            return $this->sendError("sorry there is no branch cover this area");
+                            return $this->sendError(__('general.branch_no_cover'));
                         }
                     } else {
-                        return $this->sendError("sorry there is no branch cover this area");
+                        return $this->sendError(__('general.branch_no_cover'));
                     }
                 } else {
-                    return $this->sendError("sorry there is no branch cover this area");
+                    return $this->sendError(__('general.branch_no_cover'));
                 }
             }
 
