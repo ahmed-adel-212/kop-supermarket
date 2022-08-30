@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Without;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Traits\GeneralTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -162,6 +163,22 @@ class OrdersController extends Controller
 
         $order = Order::find($id);
 
+        $user = User::find($order->customer_id);
+
+        $branch = $work_hours = null;
+        if (isset($order->branch_id)) {
+            $branch = Branch::where('id', $order->branch_id)->with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function ($day) {
+                $day->where('day', strtolower(now()->englishDayOfWeek))->first();
+            }])->first();
+
+            $work_hours = $branch->workingDays()->where('day', strtolower(now()->englishDayOfWeek))->get();
+        }
+
+        $address = null;
+        if ($order->address_id) {
+            $address = Address::find($order->address_id);
+        }
+
         $items = $order->items;
 
         $items->map(function (&$item, $key) {
@@ -175,9 +192,9 @@ class OrdersController extends Controller
             }
         });
         if ($reorder != null) {
-            return view('website.order_details', compact('items', 'order', 'reorder'));
+            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'reorder'));
         } else {
-            return view('website.order_details', compact('items', 'order'));
+            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order'));
         }
     }
 
@@ -371,7 +388,7 @@ class OrdersController extends Controller
             $branch = Branch::find($request->branch_id);
 
             if (!$branch) {
-                return ['error' =>  __('general.Branches').' ' . __('general.not_found')];
+                return ['error' =>  __('general.Branches') . ' ' . __('general.not_found')];
             }
 
             $branch_id = $branch->id;
@@ -459,8 +476,8 @@ class OrdersController extends Controller
                 'quantity' => ($item['quantity']) ? $item['quantity'] : 1
             ]);
         }
-       return (app(ApiOrdersController::class)->sendResponse($order,  __('general.Order created successfully!')))->getOriginalContent();
-         
+        return (app(ApiOrdersController::class)->sendResponse($order,  __('general.Order created successfully!')))->getOriginalContent();
+
         // return redirect()->route('get.orders')->with(['success' => __('general.Your order been submitted successfully')]);
     }
 
