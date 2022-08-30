@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Moyasar\Providers\PaymentService;
 
@@ -55,8 +56,9 @@ class PaymentController extends Controller
         try {
 
             if (session()->has('checkOut_details')) {
-                $amount = (int)ceil(session('checkOut_details')['total']);
+                $amount = (session('checkOut_details')['total']);
                 $request = $request->merge(['amount' => $amount * 100]);
+                $request = $request->merge(['description' => '']);
                 $request->request->remove('_token');
                 $endpoint = "https://api.moyasar.com/v1/payments.html";
                 $redir = [];
@@ -87,6 +89,21 @@ class PaymentController extends Controller
             return redirect(route('get.payment'))->withInput();
         }
 
+    }
+
+    public function store_payment(Request $request)
+    {
+        $payment = Payment::create([
+            'payment_id' => $request->id,
+            'customer_id' => Auth::id(),
+            'total_paid' => $request->amount / 100,
+        ]);
+
+        if ($payment) {
+            return response()->json([], 201);
+        }
+
+        return response('not found', 404);
     }
 
 }
