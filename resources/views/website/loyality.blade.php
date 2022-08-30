@@ -86,8 +86,8 @@
                                     <div class="row border-bottom pb-1">
                                         <div class="col-8">
                                             <h5 class="card-title">
-                                                {{ __('general.ORDER') }}:&nbsp;
-                                                {{ $h->order_id }}
+                                                <a href="{{route('order.details', [$h->order_id])}}">{{ __('general.ORDER') }}:&nbsp;
+                                                {{ $h->order_id }}</a>
                                             </h5>
                                             <p class="card-text">
                                                 <i class="fas fa-clock mx-1"></i>
@@ -96,8 +96,8 @@
                                         </div>
                                         <div class="col-4 d-flex align-items-center justify-content-center">
                                             <h5
-                                                class="@if ($points < 0) text-danger @else text-success @endif">
-                                {{ abs($h->points) }}
+                                                class="@if ($h->points < 0) text-danger @else text-success @endif">
+                                {{ $h->points }}
                                 </h5>
                     </div>
                 </div>

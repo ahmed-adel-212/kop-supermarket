@@ -41,21 +41,23 @@ class LoyalityController extends Controller
         $pointValues = General::where('key', 'pointsValue')->get();
 
         // history
-        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();
+        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->where('points', '!=', null)->get();
         $points_still = PointsTransaction::where('status', 0)->where('user_id', Auth::id())->get();
+
         $history = [];
-        foreach ($completed as $order) {
-            $history[] = (object)[
-                'points' => $order->points * -1,
-                'order_id' => $order->id,
-                'created_at' => $order->updated_at,
-            ];
-        }
+        
         foreach ($points_still as $point) {
             $history[] = (object)[
                 'points' => (int)$point->points,
                 'order_id' => (int)$point->order_id,
                 'created_at' => $point->created_at,
+            ];
+        }
+        foreach ($completed as $order) {
+            $history[] = (object)[
+                'points' => $order->points * -1,
+                'order_id' => $order->id,
+                'created_at' => $order->updated_at,
             ];
         }
 
