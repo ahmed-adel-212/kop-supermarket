@@ -41,11 +41,11 @@
                                 <form id="addToCard" action="{{route('add.cart')}}" method="POST">
                                     @csrf
                                     <input type="hidden" name="quantity" value="1">
-                                    <input type="hidden" name="offer_id" value="{{$offers['details']['offer_id']}}">
+                                    <input type="hidden" name="offer_id" value="{{$offers['buy_get']['offer_id']}}">
                                     <div class="row">
                                         @if($offers['details']['buy_items']->count() > 0)
                                             <div class="col-sm-11 m-auto">
-                                                <h3 class="mb-4 mt-3 col-md-12">{{__('general.Buy')}} <small class="h6 text-black-50">  {{$offers['details']['buy_quantity']}}</small></h3>
+                                                <h3 class="mb-4 mt-3 col-md-12">{{__('general.Buy')}} <small class="h6 text-black-50">  {{$offers['buy_get']['buy_quantity']}}</small></h3>
                                                    <div class="row">
                                                     @foreach($offers['details']['buy_items'] as $buyItem)
                                                  
@@ -74,9 +74,9 @@
                                             </div>
                                             </div>
                                         @endif
-                                        @if($offers['details']['get_items']->count() > 0)
+                                        @if(count($offers['details']['get_items']) > 0)
                                             <div class="col-sm-11 m-auto">
-                                                <h3 class="mb-4 mt-3 col-md-12">{{__('general.Get')}} <small class="h6 text-black-50">  {{$offers['details']['get_quantity']}}</small></h3>
+                                                <h3 class="mb-4 mt-3 col-md-12">{{__('general.Get')}} <small class="h6 text-black-50">  {{$offers['buy_get']['get_quantity']}}</small></h3>
                                                   <div class="row">
                                                 @foreach($offers['details']['get_items'] as $getItem)
                                                   <div class="col-md-6" style="margin-bottom: 1%;">
@@ -84,7 +84,7 @@
                                                             <div class="gold-members p-3 border-bottom">
                                                                 <div class="media d-flex">
                                                                     <div class="mr-3 col-3" style="height: 150px;width: 150px;"><input type="checkbox" value="{{$getItem['id']}}" name="get_items[]" class="d-none checkItem">
-                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{asset($getItem->image)}}" alt="">
+                                                                        <img class="img-thumbnail rounded h-100 w-100" src="{{asset($getItem['image'])}}" alt="">
                                                                     </div>
                                                                     <div class="media-body" style="margin-left: 2%;">
                                                                         <h4 class="m-0" style="font-size: 20px;line-height: 1.8;">{{(app()->getLocale() == 'ar')? $getItem['name_ar'] : $getItem['name_en'] }}</h4>
@@ -119,8 +119,8 @@
 @section('scripts')
     <script>
         $( document ).ready(function() {
-            var buy_quantity = parseInt({{$offers['details']['buy_quantity']}});
-            var get_quantity = parseInt({{$offers['details']['get_quantity']}});
+            var buy_quantity = parseInt({{$offers['buy_get']['buy_quantity']}});
+            var get_quantity = parseInt({{$offers['buy_get']['get_quantity']}});
 
             var buy_quantity_counter = 0;
             var get_quantity_counter = 0;

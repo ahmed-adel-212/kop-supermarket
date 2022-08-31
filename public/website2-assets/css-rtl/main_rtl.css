@@ -762,7 +762,7 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     text-align: center;
     margin-bottom: 20px;
 }
-.food-menu-filter li{
+/* .food-menu-filter li{
     background-color: #fff;
     font-family: "Cairo",sans-serif;
     font-size: 16px;
@@ -773,6 +773,21 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     padding: 5px 20px;
     border: 1px solid #eee;
     cursor: pointer;
+} */
+.food-menu-filter li {
+    background-color: #fff;
+    font-family: "Cairo",sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: #0e1318;
+    display: inline-block;
+    margin: 3px 5px;
+    padding: 5px 20px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    width: 18%;
+    max-height: 15%;
+    min-height: 15%;
 }
 .food-menu-filter li.active{
     background-color: #ff9d2d;

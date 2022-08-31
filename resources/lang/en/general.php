@@ -11,9 +11,15 @@ return [
     | messages that we need to display to the user. You are free to modify
     | these language lines according to your application's requirements.
     |
+    
     */
+ 
+    'home.food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
     'search address'=>'enter your address',
     'verify'=>'Verify',
+    'recommended_Dishes' => 'recommended Dishes',
+    'Our_DeliciousFoods' => 'Our Delicious Foods' ,
+    'Off_Now' => ' Off Now' ,
     'use map'=>'Use Map',
     'no delivery riyadh' => 'Delivery service is not available in this area ',
     'search' => 'Search',
@@ -213,6 +219,7 @@ return [
         'team' => 'Team Mebmers',
         'cook' => 'They Will <span>Cook</span> For You'
     ],
+   
     'first' => 'Section With Video',
     'bg-st' => 'Section with Image at end',
     'bg-nd' => 'Section with Image at start',
