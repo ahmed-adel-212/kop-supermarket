@@ -29,7 +29,8 @@ class Order extends Model
         'offer_value',
         'order_from',
         'points',
-        'description_box'
+        'description_box',
+        'payment_type'
     ];
 
     protected $casts = ['delivery_fees' => 'double'];

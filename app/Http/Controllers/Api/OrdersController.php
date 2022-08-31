@@ -233,6 +233,8 @@ class OrdersController extends BaseController
             'offer_value' =>$request->offer_value,
             'order_from' => 'mobile',
             'description_box' => $request->description,
+            'payment_type' =>$request->payment_type
+  
         ];
 
         $order = Order::create($orderData);
@@ -330,11 +332,12 @@ class OrdersController extends BaseController
                 'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
                 'offer_id' => optional($offer)->id,
                 'offer_last_updated_at' => optional($offer)->updated_at,
-                'quantity' => array_key_exists('quantity', $item) ? $item['quantity'] : 1
+                'quantity' => array_key_exists('quantity', $item) ? $item['quantity'] : 1,
             ]);
 
             
         }
+       
 
         return $this->sendResponse($order,  __('general.Order created successfully!'));
     }
@@ -739,7 +742,7 @@ class OrdersController extends BaseController
             'service_type' => $order->service_type,
             'items' => $items,
             'customer_id' => $order->customer_id,
-            // 'offer_value' =>$request->offer_value,
+            'payment_type' =>$request->payment_type,
         ]);
 
         // Get address or branch based on service_type
@@ -763,12 +766,13 @@ class OrdersController extends BaseController
         // confirm order
         // show popup if offer have changes or price changed
         if ($request->has('confirm') && $request->input('confirm')) {
-            $return = $this->store($requestt);
+            // return $requestt;
+             $return = $this->store($requestt);
             if ($return->getOriginalContent()['success']) {
                 return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
             }
         }
-     
+    
         return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>$reorder], '');
     }
 
