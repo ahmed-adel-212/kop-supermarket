@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <form action="" method="get">
+                    <form method="post" id="checkout-form">
                         @csrf
                         <div class="row">
                             <div class="col-lg-6">
@@ -461,7 +461,10 @@
                                 return;
                             }
 
-                            window.location.href = "{{ route('get.cart') }}";
+                            $('#checkout-form').attr('action', "{{route('checkout')}}");
+                            $('#checkout-form').submit();
+
+                            // window.location.href = "{{ route('get.cart') }}";
                         },
                         error: function(err) {
                             // console.log(err);
