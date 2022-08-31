@@ -6,6 +6,7 @@ use App\Models\User;
 use Twilio\Rest\Client;
 use AWS;
 use Twilio\Jwt\ClientToken;
+use Exception;
 
 trait GeneralTrait
 {
@@ -276,6 +277,8 @@ trait GeneralTrait
         // ahmed.adel@212sol
         $accountSid = 'AC1bb0ef15ed89519af5c9c0784335cf17';
         $authToken  = 'cd30cd9c4e21f2f8a0cebf254b87df2c';
+
+        try {
         $client = new Client($accountSid, $authToken);
 
         // Use the client to do fun stuff like send text messages!
@@ -289,5 +292,8 @@ trait GeneralTrait
                 'body' => $message
             )
         );
+    } catch (Exception $e) {
+
+    }
     }
 }
