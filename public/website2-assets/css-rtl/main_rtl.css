@@ -569,7 +569,7 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
 }
 .about-section .content-img-holder .sale{
     background-image: url(../img/sale-shape-red.png);
-    right: 100px;
+    right: 340px;
     top: 0;
 }
 .about-section .content-img-holder .sale h4,
@@ -1239,7 +1239,7 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     font-size: 42px;
 }
 .content-img-holder .sale div{
-    margin: 35px 0px 0px 30px;
+    margin: 35px 70px 0px 30px;
 }
 .delivery-girl{
     position: relative;
