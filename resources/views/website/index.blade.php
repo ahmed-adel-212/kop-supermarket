@@ -55,20 +55,8 @@
     padding-top: 9% !important;*/} 
    
     </style>
-    @if(app()->getLocale() == 'ar')
-    <style>
-        .food-img
-        {
-            margin: -2%;
-            transform: scaleX(-1);
-        }
-        .slider-shape
-        {
-            /* margin: -2%; */
-            transform: scaleX(-1);
-        }
-    </style>
-    @endif
+  
+
 
 @endsection
 
@@ -221,17 +209,19 @@
                             <div class="sale">
                             @if($main_offer->discount)
                                 <div>
-                                    <h4>Get </h4>
+                                    <h4>{{(app()->getLocale() == 'ar') ?'احصل على':'Get'}} </h4>
                                     @if($main_offer->discount->discount_type==1)
-                                        <h2><span>{{$main_offer->discount->discount_value}}%</span>Off Now</h2>
+                                        <h2><span>{{$main_offer->discount->discount_value}}%</span></h2>
+                                        <h2>{{(app()->getLocale() == 'ar') ?'خصم الان':'Off Now'}}</h2>
                                         @else
-                                        <h2><span>{{$main_offer->discount->discount_value}} @lang('general.SR')</span>Off Now</h2>
+                                        <h2><span>{{$main_offer->discount->discount_value." "}} @lang('general.SR')</span></h2>
+                                        <h2>{{(app()->getLocale() == 'ar') ?'خصم الان':'Off Now'}}</h2>
                                         @endif
                                     </div>
                                 @elseif($main_offer->buyGet)
                                 <div>
-                                <h4>Buy {{$main_offer->buyGet->buy_quantity}}</h4>
-                                <h2><span>GET {{$main_offer->buyGet->get_quantity}}</span></h2>
+                                <h4>{{(app()->getLocale() == 'ar') ?' اشترى':'Buy '}} {{$main_offer->buyGet->buy_quantity}}</h4>
+                                <h2>{{(app()->getLocale() == 'ar') ? ' احصل على':'Get '}} {{$main_offer->buyGet->get_quantity}} <span>{{(app()->getLocale() == 'ar') ? 'الان ':'now'}}</span></h2>
                                 </div>
                                 @endif    
                                 </div>
@@ -312,7 +302,7 @@
             </div>
         </section><!--/.food-menu-->
 
-        <section class="content-section" style="height: 400px;">
+        <section class="content-section" >
             <div class="bg-shape white"></div>
             <div class="bg-shape grey"></div>
             <div class="container">
