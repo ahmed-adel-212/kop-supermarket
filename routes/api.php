@@ -79,6 +79,7 @@ Route::middleware('api')->group(function () {
     Route::group(['prefix' => 'branches'], function () {
         Route::get('', 'Api\BranchesController@index');
         Route::Get('/{branch}', 'Api\BranchesController@show');
+        Route::Get('/check/{branch}', 'Api\BranchesController@check');
     });
 
 
