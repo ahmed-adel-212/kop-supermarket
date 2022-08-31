@@ -47,9 +47,23 @@ class BranchesController extends BaseController
         return $this->sendResponse($branch, __('general.branch_ret'));
     }
 
+    //check if open 
+    public function check(Request $request, $id)
+    {
+        $branch = Branch::where('id',$id)->with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function($day) {
+            $day->where('day', strtolower(now()->englishDayOfWeek))->first();
+        }])->first();
+        $open= $branch->open();
+        $close= $branch->close();
+        // return date("h:i:s a",strtotime($open));
+        if((date("h:i:s a",strtotime($open)) < date("h:i:s a",time()) ) and (date("h:i:s a",strtotime($close)) >  date("h:i:s a",time())))
+        {
+            return $this->sendError(__('general.branch_no_cover'));
+        }
+        return $this->sendResponse($branch, __('general.branch_ret'));
+    }
+
     public function getBranchWorkingHours(Request $request) {
-
-
 
         if ($request->address_id) {
 
