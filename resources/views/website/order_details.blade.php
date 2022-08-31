@@ -136,7 +136,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-12">
                                         <div class="card-header mt-30">
                                             <h5 class='card-title'>
@@ -176,7 +176,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 @isset($address)
                                     <div class="row">
                                         <div class="col-12">
