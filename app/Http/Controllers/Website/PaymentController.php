@@ -7,6 +7,7 @@ use App\Models\Payment;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,12 @@ class PaymentController extends Controller
 
     public function index()
     {
-        return view('website.payment');
+        abort_unless(session()->has('checkOut_details'), 404);
+
+        $user = auth()->user();
+        $amount = session()->has('checkOut_details') ? session('checkOut_details')['total'] : 0;
+
+        return view('website.payment', compact('user', 'amount'));
     }
 
     public function get_payment(Request $request)
@@ -47,7 +53,7 @@ class PaymentController extends Controller
 
 
         // If validation fails, redirect to the settings page and send the errors
-//        $validatedData = $request->validate($validator_rules,$validator_rules_messages);
+        //        $validatedData = $request->validate($validator_rules,$validator_rules_messages);
         $validatedData = Validator::Make($request->all(), $validator_rules, $validator_rules_messages);
         if ($validatedData->fails()) {
             return redirect()->back()->withErrors($validatedData->getMessageBag())->withInput();
@@ -73,12 +79,10 @@ class PaymentController extends Controller
                 if ($response->getStatusCode() == '200')
                     return redirect($redir[1]);
                 return $statusCode = $response->getStatusCode();
-
             } else {
                 session()->flash('error', __('general.error'));
                 return redirect()->route('get_cart');
             }
-
         } catch (GuzzleException $exception) {
             //$responseBody = $exception->getResponse()->getBody(true)->getContents();
             $response = json_decode($exception->getResponse()->getBody(true)->getContents(), true);
@@ -88,7 +92,6 @@ class PaymentController extends Controller
             }
             return redirect(route('get.payment'))->withInput();
         }
-
     }
 
     public function store_payment(Request $request)
@@ -96,7 +99,7 @@ class PaymentController extends Controller
         $payment = Payment::create([
             'payment_id' => $request->id,
             'customer_id' => Auth::id(),
-            'total_paid' => $request->amount / 100,
+            'total_paid' => $request->amount,
         ]);
 
         if ($payment) {
@@ -105,5 +108,4 @@ class PaymentController extends Controller
 
         return response('not found', 404);
     }
-
 }

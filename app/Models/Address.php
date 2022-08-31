@@ -17,6 +17,10 @@ class Address extends Model
 
     public $appends = ['delivery_fee'];
 
+    public $casts = [
+        'delivery_fee' => 'double'
+    ];
+
     public function getDeliveryFeeAttribute()
     {
         return round($this->area->delivery_fees, 2);

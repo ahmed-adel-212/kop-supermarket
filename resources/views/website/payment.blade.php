@@ -30,7 +30,7 @@
     </section>
     <!--/.page-header-->
 
-    @dump(request()->all())
+    {{-- @dump(request()->all()) --}}
 
     <div class="card mx-auto mt-3">
         <div class="card-body">
@@ -129,15 +129,29 @@
                 </div>
 
             </div> --}}
+            @if (session()->has('error'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-danger w-75 mx-auto">
+                            {{ __('general.'. session('error')) }}
+                        </div>
+                    </div>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-12">
-                    <div class="mysr-form"></div>
+                    <div class="mysr-form">
+                        <div class="w-100 text-center">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div></div>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -156,7 +170,7 @@
                 // 10 SAR = 10 * 100 Halalas
                 // 10 KWD = 10 * 1000 Fils
                 // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
-                amount: {{session('checkOut_details')['total'] * 100}},
+                amount: {{ $amount * 100 }},
 
                 // Required
                 // Currency of the payment transation
@@ -164,7 +178,7 @@
 
                 // Required
                 // A small description of the current payment process
-                description: '{{auth()->user()->name}} Order',
+                description: '{{ $user->name }} Order',
 
                 // Required
                 publishable_api_key: 'pk_test_q8VZ5iA7J3ZCRXzCo8mVkjgNr1WmDvXJHdm2mQRt',
@@ -183,14 +197,16 @@
                             url: "{{ route('payment.store') }}",
                             data: payment,
                             headers: {
-                                'X-CSRF-TOKEN': "{{csrf_token()}}"
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
                             },
                             dataType: 'json',
                             success: function(data, textStatus, jqXHR) {
                                 // An empty dictionary/object is required to indicate to the form everything is good to go
                                 // console.log(data, textStatus, jqXHR);
                                 if (jqXHR.status === 201) {
-                                    resolve({status: jqXHR.status});
+                                    resolve({
+                                        status: jqXHR.status
+                                    });
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {

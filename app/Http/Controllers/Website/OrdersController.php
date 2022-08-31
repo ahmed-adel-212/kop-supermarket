@@ -68,7 +68,6 @@ class OrdersController extends Controller
     /* To view payment page */
     public function make_order_payment(Request $request)
     {
-
         $paymentId = Payment::where('payment_id', $request->id)->where('customer_id', Auth::id())->first();
 
         if (!$paymentId) {
@@ -79,6 +78,12 @@ class OrdersController extends Controller
         $testMessage = ' (Test Environment)';
 
         if ($request->status == 'paid' && $request->message == "Succeeded!$testMessage" && session('checkOut_details')) {
+
+            $payment = \Moyasar\Facades\Payment::fetch($request->id);
+
+            // dd($payment->status, $payment->amount, $paymentId->total_paid);
+
+            abort_if($payment->status !== 'paid' || $payment->amount !== (int)$paymentId->total_paid, 404);
 
             if (session()->has('checkOut_details')) {
                 $request->merge([
@@ -145,17 +150,21 @@ class OrdersController extends Controller
             }
         } else {
             if ($request->status == 'failed') {
-                switch ($request->message) {
-                    case 'Unable to process the purchase transaction':
-                        return redirect(route('get.payment'))->with(['error' => __('general.Unable to process the purchase transaction')]);
-                    case 'Insufficient Funds':
-                        return redirect(route('get.payment'))->with(['error' => __('general.Insufficient Funds')]);
-                    case 'Declined':
-                        return redirect(route('get.payment'))->with(['error' => __('general.Declined')]);
-                    default:
-                        return redirect(route('get.payment'))->with(['error' => $request->message]);
-                }
-                return redirect(route('get.payment'))->with(['error' => $request->message]);
+
+                // switch ($request->message) {
+                //     case 'Unable to process the purchase transaction':
+                //         return redirect(route('get.payment'))->with(['error' => __('general.Unable to process the purchase transaction')]);
+                //     case 'Insufficient Funds':
+                //         return redirect(route('get.payment'))->with(['error' => __('general.Insufficient Funds')]);
+                //     case 'Declined':
+                //         return redirect(route('get.payment'))->with(['error' => __('general.Declined')]);
+                //     default:
+                //         return redirect(route('get.payment'))->with(['error' => $request->message]);
+                // }
+                session()->flash('error', strtolower(str_replace(" (Test Environment)", "", $request->message)));
+                // delete this payment from payments
+
+                return redirect(route('get.payment'));
             }
             session()->flash('error', __('general.error'));
             return redirect()->route('get.payment');

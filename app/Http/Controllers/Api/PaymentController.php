@@ -5,18 +5,33 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\ClientException;
 
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends BaseController
 {
 
 
-    public function index($amount)
+    public function index($id, $amount)
     {
-        return view('api.paymentMobile', compact(['amount']));
+        $user = User::findOrFail($id);
+
+        return view('website.payment', compact('user', 'amount'));
+    }
+
+    public function check($id)
+    {
+        $payment = Payment::where('payment_id', $id)->where('customer_id', Auth::id())->first();
+
+        if (!$payment) {
+            return $this->sendError(__('general.payment_not_found'));
+        }
+
+        return $this->sendResponse($payment, __('general.' . str_replace(" (Test Environment)", "", $payment->message)));
     }
 
     public function get_payment(Request $request)
