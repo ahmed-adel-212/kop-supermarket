@@ -215,9 +215,8 @@ class OrdersController extends BaseController
         }
 
 
-
         // apply 50% discount if this is first order
-        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
+         $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
         $orderData = [
             "address_id" => $request->address_id,
@@ -281,13 +280,14 @@ class OrdersController extends BaseController
         }
 
         foreach ($items as $item) {
+            
             $orderItem = Item::where('id', $item['item_id'])->first();
             $orderItemExtras = null;
 
-            if (array_key_exists('extras', $item)) {
-                $orderItemExtras = Extra::whereIn('id', $item['extras'])->get();
-            }
 
+            if (array_key_exists('extras', $item)) {
+                   $orderItemExtras = Extra::whereIn('id', $item['extras'])->get();
+            }
             $orderItemWithouts = null;
             if (array_key_exists('withouts', $item)) {
                 $orderItemWithouts = Without::whereIn('id', $item['withouts'])->get();
@@ -313,6 +313,7 @@ class OrdersController extends BaseController
             if (is_array($extras) && count($extras) && !is_int($extras[0])) {
                 $extras = collect($extras)->pluck('id');
             }
+            
             $withouts = array_key_exists('withouts', $item) ? $item['withouts'] : null;
             if (is_array($withouts) && count($withouts) && !is_int($withouts[0])) {
                 $withouts = collect($withouts)->pluck('id');
@@ -331,6 +332,8 @@ class OrdersController extends BaseController
                 'offer_last_updated_at' => optional($offer)->updated_at,
                 'quantity' => array_key_exists('quantity', $item) ? $item['quantity'] : 1
             ]);
+
+            
         }
 
         return $this->sendResponse($order,  __('general.Order created successfully!'));
@@ -593,8 +596,8 @@ class OrdersController extends BaseController
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] >= now()) {
                 $items[] = collect([
                     'item_id' => $item->id,
-                    'extras' => explode(', ', $item->pivot->item_extras),
-                    'withouts' => explode(', ', $item->pivot->item_withouts),
+                    'extras' => [explode(', ', $item->pivot->item_extras)],
+                    'withouts' => [explode(', ', $item->pivot->item_withouts)],
                     'price' => Item::find($item->id)->price,
                     'dough_type_ar' => $item->pivot->dough_type_ar,
                     'dough_type_en' => $item->pivot->dough_type_en,
@@ -608,8 +611,8 @@ class OrdersController extends BaseController
             else {
                 $items[] = collect([
                     'item_id' => $item->id,
-                    'extras' => explode(', ', $item->pivot->item_extras),
-                    'withouts' => explode(', ', $item->pivot->item_withouts),
+                    'extras' =>[explode(', ', $item->pivot->item_extras)],
+                    'withouts' =>[ explode(', ', $item->pivot->item_withouts)],
                     'price' => Item::find($item->id)->price,
                     'dough_type_ar' => $item->pivot->dough_type_ar,
                     'dough_type_en' => $item->pivot->dough_type_en,
@@ -630,8 +633,8 @@ class OrdersController extends BaseController
                         "offer_price" => null,
                         "offer_id" => null,
                         "offer_last_updated_at" => null,
-                        "extras" => Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get(),
-                        "withouts" => Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get(),
+                        "extras" => [Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get()],
+                        "withouts" => [Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get()],
                         "item" => $item,
                         "calories" => $item->calories,
                     ];
@@ -660,8 +663,8 @@ class OrdersController extends BaseController
                     'price' => Item::find($item->id)->price + Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price'),
                     "offer_price" => ((Offer::find($item->pivot->offer_id))['offer_type'] == 'discount') ? $this->calcOfferItem($item->pivot->offer_id, $item->id) + Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') : $item->pivot->offer_price,
                     "offer_id" => $item->pivot->offer_id,
-                    "extras" => Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get(),
-                    "withouts" => Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get(),
+                    "extras" => [Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get()],
+                    "withouts" => [Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get()],
                     "item" => $item,
                     "type" => (Offer::find($item->pivot->offer_id))['offer_type'],
                 ];
