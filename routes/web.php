@@ -78,6 +78,8 @@ Route::group([
             Route::get('order-customer', 'ReportController@getOrderCustomer')->name('order-customer');
             Route::get('income', 'ReportController@getIncome')->name('income');
             Route::get('order-item', 'ReportController@getOrderItems')->name('order-item');
+            Route::get('payments', 'ReportController@getPayments')->name('payments');
+            Route::get('payments/{id}', 'ReportController@getOnePayment')->name('payments.one');
         });
 
         //healthinfo
