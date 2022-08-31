@@ -32,6 +32,8 @@ class Order extends Model
         'description_box'
     ];
 
+    protected $casts = ['delivery_fees' => 'double'];
+
     public $appends = [
         'payment_type'
     ];
