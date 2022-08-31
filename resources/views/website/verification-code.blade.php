@@ -80,15 +80,15 @@
                     <div class="col-lg-8 col-md-10">
                         <form class="card mt-4" action="{{ route('verifyCode.save') }}" id="verification" method="post">
                             @csrf
-                            <input hidden type="text" id="number" name="phone" value="{{ $user_phone }}">
-                            <input hidden type="text" id="user_id" name="user_id" value="{{ $user_id }}">
+                            <input hidden type="text" id="number" name="phone" value="{{ session('user')['phone'] }}">
+                            <input hidden type="text" id="user_id" name="user_id" value="{{ session('user')['id'] }}">
                             {{-- <input hidden  type="text" id="password" name="password" value="{{$password}}"> --}}
                             <input hidden type="text" id="verify" name="verify" value="1">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="email-for-pass">{{ __('auth.Enter Your Verification Code') }}</label>
                                     <input class="form-control" type="email" id="email-for-pass"
-                                        value="{{$email}}"
+                                        value="{{session('user')['email']}}"
                                         name="email" hidden>
                                     <input class="form-control" type="text" id="token-for-pass" placeholder="- - - - -"
                                         name="token">

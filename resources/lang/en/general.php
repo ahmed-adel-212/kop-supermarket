@@ -371,4 +371,13 @@ return [
     'applied' => 'Applied',
     'to_be_applied' => 'To Be Applied',
     'home' => 'Home Page',
+    'insufficient funds' => 'There is no enough amount on the card to complete the transaction',
+    'unable to process the purchase transaction' => 'Unable to Process the Purchase Transaction',
+    'declined' => 'Transaction declined by the customer’s bank. The customer should use an alternate credit card',
+    'allowed time frame for transaction has been expired' => 'The payment process took too long (more than 15 minutes) and then failed. Either because the bank message containing the PIN was delayed to the customer’s mobile phone, or because the customer was late in completing it.',
+    'unspecified failure' => '
+    The customer’s bank has declined the transaction for an undefined cause. The customer should use an alternate credit card.',
+    'expired card' => 'The transaction failed as the card appears to have expired.',
+    'timed out' => 'The customer’s bank was unable to be connected. The customer should attempt to process this transaction again.',
+    
 ];

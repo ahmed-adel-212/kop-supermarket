@@ -20,7 +20,7 @@ class Item extends Model
     // protected $hidden = ["branches"];
     protected $appends = ['is_hidden', 'dough_type', 'dough_type_2', 'favoured', 'price_without_tax'];
 
-    public $casts = ['main' => 'boolean'];
+    protected $casts = ['main' => 'boolean'];
 
     public function category()
     {
