@@ -517,7 +517,7 @@ class OrdersController extends Controller
                 'dough_type_ar' => ($item['dough_type_ar']) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => ($item['dough_type_en']) ? $item['dough_type_en'] : null,
                 'price' => $itemPrice,
-                'pure_price' => $item->price,
+                'pure_price' => $orderItem->price,
                 'offer_price' => ($item['offer_price'] && $item['offer_price'] != null) ? $itemOfferPrice : null, // TODO: Remove price
                 'offer_id' => optional($offer)->id,
                 'offer_last_updated_at' => optional($offer)->updated_at, //??

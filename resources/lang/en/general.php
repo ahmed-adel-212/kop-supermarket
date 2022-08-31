@@ -147,7 +147,7 @@ return [
     'responsibilities' => 'responsibilities',
     'Description' => 'Description',
     'Apply Now' => 'Apply Now',
-    'your application been submitted' => 'your application been submitted',
+    'your application been submitted' => 'your application has been submitted',
     'Something Went Wrong' => 'Something Went Wrong',
     'Contact Message Sent' => 'Contact Message Sent',
     'Subject' => 'Subject',
