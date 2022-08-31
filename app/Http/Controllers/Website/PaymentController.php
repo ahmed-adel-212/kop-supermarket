@@ -18,12 +18,18 @@ class PaymentController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
         abort_unless(session()->has('checkOut_details'), 404);
 
         $user = auth()->user();
         $amount = session()->has('checkOut_details') ? session('checkOut_details')['total'] : 0;
+
+        if (session()->has('checkOut_details')) {
+            $details = session('checkOut_details');
+            $details['description'] = $request->description;
+            session(['checkOut_details' => $details]);
+        }
 
         return view('website.payment', compact('user', 'amount'));
     }

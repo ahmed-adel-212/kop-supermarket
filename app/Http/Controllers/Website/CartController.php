@@ -9,6 +9,7 @@ use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -249,6 +250,20 @@ class CartController extends Controller
             return redirect()->route('menu.page');
         }
 
+        $payment = null;
+        if (session()->has('payment')) {
+            $payment = (object) session('payment');
+
+            if (null === $payment->status) {
+                Payment::where('payment_id', $payment->payment_id)->delete();
+                
+                session()->forget('payment');
+                // abort(404);
+            } else {
+                $request->merge(session('checkOut_details'));
+            }
+        }
+
         if ($request['total'] <= 0 && isset($request['points_paid']) && $request['points_paid'] > 0) {
             return back()->with('loyality_not_used', __('general.loyality_not_used'));
         }
@@ -280,7 +295,7 @@ class CartController extends Controller
             return view('website.checkout', compact('request', 'address', 'work_hours'));
         }
 
-        return view('website.checkout', compact('request', 'branch', 'work_hours'));
+        return view('website.checkout', compact('request', 'branch', 'work_hours', 'payment'));
     }
 
     public function get_delivery_fees($area_id)

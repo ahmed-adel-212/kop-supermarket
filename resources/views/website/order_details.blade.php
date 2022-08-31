@@ -242,13 +242,10 @@
                                 <div class='row my-3'>
                                     <div class="card-header">
                                         <h5 class='card-title'>
-                                            {{ __('general.payment_type') }}
+                                            {{ __('general.payment_type') }}:&nbsp;&nbsp;<b class="uppercase">{{ $order->payment_type }}</b>
                                         </h5>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text">
-                                            {{ $order->payment_type }}
-                                        </p>
                                         @if ($order->payment_type === 'online' && $payment)
                                             <h6>
                                                 {{ __('general.Details') }}
