@@ -50,7 +50,7 @@ class OrdersController extends BaseController
             $address->with(['city', 'area']);
         }])->orderBy('id', 'DESC')->paginate(10);
 
- 
+
         foreach ($orders as $order) {
             foreach ($order->items as $item) {
                 $extras = $item->pivot->item_extras;
@@ -231,7 +231,7 @@ class OrdersController extends BaseController
             "total" => $request->total,
             "points_paid" => $request->points_paid,
             'points' => $request->points,
-            'offer_value' =>$request->offer_value,
+            'offer_value' => $request->offer_value,
             'order_from' => 'mobile',
             'description_box' => $request->description,
         ];
@@ -239,7 +239,7 @@ class OrdersController extends BaseController
         $order = Order::create($orderData);
 
         // try{
-            
+
         // }catch(\Exception $ex){
         //     return $this->sendError('Order did not placed');
         // }
@@ -260,21 +260,21 @@ class OrdersController extends BaseController
                 $item = $item->toArray();
             }
             // if ($item['quantity'] > 1) {
-                for ($i = 0;$i < $item['quantity'];$i++) {
-                    $items[] = [
-                        'item_id' => $item['item_id'],
-                        'quantity' => 1,
-                        'offer_price' => isset($item['offer_price']) ? $item['offer_price'] : null,
-                        'price' => $item['price'],
-                        'offerId' => isset($item['offerId']) ? $item['offerId'] : null,
-                        'extras' => isset($item['extras'][$i]) && count($item['extras']) ? $item['extras'][$i] : [],
-                        'withouts' => isset($item['withouts'][$i]) && count($item['withouts']) ? $item['withouts'][$i] : [],
-                        'dough_type_ar' => isset($item['dough_type_ar'][$i]) ? $item['dough_type_ar'][$i] : null,
-                        'dough_type_en' => isset($item['dough_type_en'][$i]) ? $item['dough_type_en'][$i] : null,
-                        'dough_type_2_ar' => isset($item['dough_type_2_ar'][$i]) ? $item['dough_type_2_ar'][$i] : null,
-                        'dough_type_2_en' => isset($item['dough_type_2_en'][$i]) ? $item['dough_type_2_en'][$i] : null,
-                    ];
-                }
+            for ($i = 0; $i < $item['quantity']; $i++) {
+                $items[] = [
+                    'item_id' => $item['item_id'],
+                    'quantity' => 1,
+                    'offer_price' => isset($item['offer_price']) ? $item['offer_price'] : null,
+                    'price' => $item['price'],
+                    'offerId' => isset($item['offerId']) ? $item['offerId'] : null,
+                    'extras' => isset($item['extras'][$i]) && count($item['extras']) ? $item['extras'][$i] : [],
+                    'withouts' => isset($item['withouts'][$i]) && count($item['withouts']) ? $item['withouts'][$i] : [],
+                    'dough_type_ar' => isset($item['dough_type_ar'][$i]) ? $item['dough_type_ar'][$i] : null,
+                    'dough_type_en' => isset($item['dough_type_en'][$i]) ? $item['dough_type_en'][$i] : null,
+                    'dough_type_2_ar' => isset($item['dough_type_2_ar'][$i]) ? $item['dough_type_2_ar'][$i] : null,
+                    'dough_type_2_en' => isset($item['dough_type_2_en'][$i]) ? $item['dough_type_2_en'][$i] : null,
+                ];
+            }
             // } else {
             //     $items[] = $item;
             // }  
@@ -309,7 +309,7 @@ class OrdersController extends BaseController
             // $subtotal = $subtotal + $itemPrice;
             $offer = Offer::find(isset($item['offerId']) ? $item['offerId'] : 0);
             $extras = array_key_exists('extras', $item) ? $item['extras'] : null;
-            
+
             if (is_array($extras) && count($extras) && !is_int($extras[0])) {
                 $extras = collect($extras)->pluck('id');
             }
@@ -415,24 +415,24 @@ class OrdersController extends BaseController
             //     'order_from' => 'mobile'
             // ];
 
-        // apply 50% discount if this is first order
-        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
+            // apply 50% discount if this is first order
+            $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
-        $orderData = [
-            "address_id" => $request->address_id,
-            "customer_id" => $request->customer_id, //$request->user()->id,
-            "branch_id" => $branch_id, //$branch->id,
-            "service_type" => $request->service_type,
-            "state" => 'pending',
-            "subtotal" => $request->subtotal,
-            "taxes" => $request->taxes,
-            "delivery_fees" => $request->delivery_fees,
-            "total" => $request->total,
-            "points_paid" => $request->points_paid,
-            'points' => $request->points,
-            'offer_value' =>$request->offer_value,
-            'order_from' => 'mobile'
-        ];
+            $orderData = [
+                "address_id" => $request->address_id,
+                "customer_id" => $request->customer_id, //$request->user()->id,
+                "branch_id" => $branch_id, //$branch->id,
+                "service_type" => $request->service_type,
+                "state" => 'pending',
+                "subtotal" => $request->subtotal,
+                "taxes" => $request->taxes,
+                "delivery_fees" => $request->delivery_fees,
+                "total" => $request->total,
+                "points_paid" => $request->points_paid,
+                'points' => $request->points,
+                'offer_value' => $request->offer_value,
+                'order_from' => 'mobile'
+            ];
 
             $order = Order::create($orderData);
 
@@ -505,13 +505,13 @@ class OrdersController extends BaseController
 
             return $this->sendResponse($order,  __('general.Order created successfully!'));
         }
-        return $this->sendError( __('general.Order did not placed'));
+        return $this->sendError(__('general.Order did not placed'));
     }
 
     public function re_order(Request $request)
     {
-        $message=__('general.success');
-        $validation=true;
+        $message = __('general.success');
+        $validation = true;
         $order = Order::find($request->order_id);
         // check if order exists in DB
         if (!$order) {
@@ -526,12 +526,10 @@ class OrdersController extends BaseController
         $noOffers = [];
         $allItems = [];
 
-        if( $order->items->count() != OrderItem::where('order_id',$request->order_id)->count())
-        {
-            $message=__('general.item deleted');
-            $validation=false;
-            return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
-
+        if ($order->items->count() != OrderItem::where('order_id', $request->order_id)->count()) {
+            $message = __('general.item deleted');
+            $validation = false;
+            return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => (object)[]], '');
         }
 
         foreach ($order->items as $item) {
@@ -539,18 +537,17 @@ class OrdersController extends BaseController
             $is_valid = false;
             $hasOffer = 0;
 
-           
 
-            if($item->price != OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('pure_price')->first())
-            {
-                $message=__('general.item price changed');
-                $validation=false;
-                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
+
+            if ($item->price != OrderItem::where('order_id', $request->order_id)->where('item_id', $item->id)->pluck('pure_price')->first()) {
+                $message = __('general.item price changed');
+                $validation = false;
+                return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => (object)[]], '');
             }
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] < now()) {
-                $message=__('general.offer expired');
-                $validation=false;
-                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
+                $message = __('general.offer expired');
+                $validation = false;
+                return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => (object)[]], '');
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
                 $final_item_price = ($item_price * $quantity);
@@ -560,7 +557,6 @@ class OrdersController extends BaseController
                 }
                 $deletedOfferPrice += $final_item_price;
                 $hasOffer = 1;
-          
             }
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] >= now()) {
                 $quantity = $item->pivot->quantity;
@@ -572,13 +568,12 @@ class OrdersController extends BaseController
                 }
                 $deletedOfferPrice += $final_item_price;
                 $hasOffer = 1;
-            } 
+            }
             if ($item->pivot->offer_id == null) {
-                if(OrderItem::where('order_id',$request->order_id)->where('item_id',$item->id)->pluck('offer_id')->first())
-                {
-                $message=__('general.offer deleted');
-                $validation=false;
-                return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
+                if (OrderItem::where('order_id', $request->order_id)->where('item_id', $item->id)->pluck('offer_id')->first()) {
+                    $message = __('general.offer deleted');
+                    $validation = false;
+                    return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => (object)[]], '');
                 }
                 $quantity = $item->pivot->quantity;
                 $item_price = Item::find($item->id)->price;
@@ -589,7 +584,7 @@ class OrdersController extends BaseController
                 }
                 $deletedOfferPrice += $final_item_price;
             }
-            
+
             if ($item->pivot->offer_id && (Offer::find($item->pivot->offer_id))['date_to'] >= now()) {
                 $items[] = collect([
                     'item_id' => $item->id,
@@ -604,8 +599,7 @@ class OrdersController extends BaseController
                 ]);
                 $hasOffer = 1;
                 $is_valid = true;
-            } 
-            else {
+            } else {
                 $items[] = collect([
                     'item_id' => $item->id,
                     'extras' => explode(', ', $item->pivot->item_extras),
@@ -672,16 +666,15 @@ class OrdersController extends BaseController
                         $Offer_price += Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') * $item->pivot->quantity;
                     }
                 } else {
-                   
-                    $message=__('general.offer deleted');
-                    $validation=false;
-                    return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>(object)[]], '');
-                    
+
+                    $message = __('general.offer deleted');
+                    $validation = false;
+                    return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => (object)[]], '');
+
                     $Offer_price = (Item::find($item->id)->price) * $item->pivot->quantity;
                     if ($item->pivot->item_extras) {
                         $Offer_price += Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') * $item->pivot->quantity;
                     }
-
                 }
                 $offer = Offer::find($item->pivot->offer_id);
                 if ((Offer::find($item->pivot->offer_id))['offer_type'] == 'discount') {
@@ -752,10 +745,10 @@ class OrdersController extends BaseController
 
         // remove 50% discount if user trying to reorder an order that has this offer
         $total = $this->removeDiscountIfNotFirstOrder(request()->user(), $requestt->total);
-        
+
         $subtotal = $requestt->subtotal;
         $taxes = $requestt->taxes;
-        $allItems=array_merge($noOffers,$offers);
+        $allItems = array_merge($noOffers, $offers);
         $reorder = compact('location', 'allItems', 'total', 'subtotal', 'taxes', 'delivery_fees');
         // confirm order
         // show popup if offer have changes or price changed
@@ -765,8 +758,8 @@ class OrdersController extends BaseController
         //         return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
         //     }
         // }
-     
-        return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>$reorder], '');
+
+        return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => $reorder], '');
     }
 
     public function getById(Request $request, Order $order)
@@ -784,7 +777,7 @@ class OrdersController extends BaseController
         $order->update(['state' => 'in-progress']);
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Accepted, لقد تم قبول طلبك", "Order");
-        return $this->sendResponse($order->toArray(),__('general.Order has been accepted'));
+        return $this->sendResponse($order->toArray(), __('general.Order has been accepted'));
     }
 
     public function rejectOrder(Request $request, Order $order)
@@ -834,7 +827,7 @@ class OrdersController extends BaseController
 
         if ($order->service_type == 'takeaway') {
             \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been completed, تم تجهيز الطلب", "Order");
-            return $this->sendResponse($order->toArray(),__('general.Order has been completed'));
+            return $this->sendResponse($order->toArray(), __('general.Order has been completed'));
         }
     }
 
@@ -858,7 +851,7 @@ class OrdersController extends BaseController
         }
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Cancelled, لقد تم إلغاء طلبك", "Order");
-        return $this->sendResponse($order->toArray(),__('general.Order has been canceled'));
+        return $this->sendResponse($order->toArray(), __('general.Order has been canceled'));
     }
 
     public function getBranch(Request $request)
@@ -972,7 +965,7 @@ class OrdersController extends BaseController
     }
     public function today_orders(Request $request, OrderFilters $filters)
     {
-        
+
         $orders = Order::filter($filters);
 
         $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
@@ -985,7 +978,7 @@ class OrdersController extends BaseController
             $address->with(['city', 'area']);
         }])->whereRaw('Date(created_at) >= CURDATE()')->orderBy('id', 'DESC')->get();
 
- 
+
         foreach ($orders as $order) {
             foreach ($order->items as $item) {
                 $extras = $item->pivot->item_extras;
@@ -994,7 +987,7 @@ class OrdersController extends BaseController
                 $withouts = $item->pivot->item_withouts;
                 $withouts = $withouts ? explode(", ", $withouts) : [];
 
-                
+
 
                 $all_extras = [];
                 foreach ($extras as $extra) {
@@ -1022,14 +1015,14 @@ class OrdersController extends BaseController
         $user_branches = Auth::user()->branches()->pluck('branches.id')->toArray();
 
         if (!empty($user_branches)) {
-            $orders = $orders->whereIn('branch_id', $user_branches)->whereIn('state',['completed','canceled','rejected']);
+            $orders = $orders->whereIn('branch_id', $user_branches)->whereIn('state', ['completed', 'canceled', 'rejected']);
         }
 
         $orders = $orders->with(['customer', 'branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
         }])->whereRaw('Date(created_at) < CURDATE()')->orderBy('id', 'DESC')->get();
 
- 
+
         foreach ($orders as $order) {
             foreach ($order->items as $item) {
                 $extras = $item->pivot->item_extras;
@@ -1038,7 +1031,7 @@ class OrdersController extends BaseController
                 $withouts = $item->pivot->item_withouts;
                 $withouts = $withouts ? explode(", ", $withouts) : [];
 
-                
+
 
                 $all_extras = [];
                 foreach ($extras as $extra) {
@@ -1055,5 +1048,47 @@ class OrdersController extends BaseController
             }
         }
         return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully.');
+    }
+
+    public function make_order_payment(Request $request)
+    {
+
+        $paymentId = Payment::where('payment_id', $request->id)->where('hash', session('payment_hash'))->first();
+
+        if (!$paymentId) {
+            session()->flash('error', 'payment id is not valid');
+            return redirect()->route('payment');
+        }
+
+        $testMessage = ' (Test Environment)';
+
+        if ($request->status == 'paid' && $request->message == "Succeeded!$testMessage") {
+
+            $payment = \Moyasar\Facades\Payment::fetch($request->id);
+
+            abort_if($payment->status !== 'paid' || $payment->amount !== (int)$paymentId->total_paid, 404);
+
+            session()->flash('success', __('general.Order Payed Successfully'));
+            session()->forget('payment_hash');
+            // session(['payment' => $paymentId->toArray()]);
+
+            return view('api.payment_response');
+        } else {
+
+            if ($request->status == 'failed') {
+                session()->flash('error', strtolower(str_replace(" (Test Environment)", "", $request->message)));
+
+                // delete this payment from payments
+                $paymentId->delete();
+
+                return redirect(route('get.paymentMobile', [
+                    session('user_id'), session('payment_amount'), session('payment_hash')
+                ]));
+            }
+            session()->flash('error', __('general.error'));
+            return redirect()->route('get.paymentMobile', [
+                session('user_id'), session('payment_amount'), session('payment_hash')
+            ]);
+        }
     }
 }

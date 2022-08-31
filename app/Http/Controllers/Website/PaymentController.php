@@ -107,12 +107,13 @@ class PaymentController extends Controller
             'customer_id' => Auth::id(),
             'total_paid' => $request->amount,
             'data' => json_encode($request->all()),
+            'hash' => session('payment_hash', null),
         ]);
 
         if ($payment) {
             return response()->json([], 201);
         }
 
-        return response('not found', 404);
+        return response(__('general.payment_not_found'), 404);
     }
 }

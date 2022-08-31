@@ -210,7 +210,7 @@
                 // Required
                 // This URL is used to redirect the user when payment process has completed
                 // Payment can be either a success or a failure, which you need to verify on you system (We will show this in a couple of lines)
-                callback_url: "{{ route('make-order.payment') }}",
+                callback_url: "{{ session()->has('payment_hash') ? route('api.make-order.payment') : route('make-order.payment')}}",
 
                 on_completed: function(payment) {
                     return new Promise(function(resolve, reject) {
@@ -218,10 +218,11 @@
                         // This is just an example, provide anything you want here
                         $.ajax({
                             type: 'POST',
-                            url: "{{ route('payment.store') }}",
+                            url: "{{ route('api.payment.store') }}",
                             data: payment,
                             headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                'Authorization': "Bearer {{$user->token}}",
                             },
                             dataType: 'json',
                             success: function(data, textStatus, jqXHR) {

@@ -157,6 +157,11 @@ class OrdersController extends Controller
                 session()->flash('success', __('general.Order Payed Successfully'));
                 session(['payment' => $paymentId->toArray()]);
 
+                if (session()->has('payment_hash')) {
+                    return view('api.payment_response');
+                    session()->forget('payment_hash');
+                }
+
                 return redirect()->route('payment.checkout');
                 // }
             }

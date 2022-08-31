@@ -169,9 +169,11 @@ Route::group(['prefix' => 'menu', 'middleware' => ['authIfTokenFound']], functio
 
     Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 });
-Route::get('/payment/{id}/{amount}', 'Api\PaymentController@index')->name('get.paymentMobile');
+Route::get('/payment/make-order', 'Api\OrdersController@make_order_payment')->name('api.make-order.payment');
+Route::get('/payment/{id}/{amount}/{hash}', 'Api\PaymentController@index')->name('get.paymentMobile');
+Route::post('payment/save', 'Api\PaymentController@store_payment')->middleware('auth:api')->name('api.payment.store');
 
-Route::post('/payment/check/{id}', 'Api\PaymentController@check')->middleware('auth:api')->name('check.paymentMobile');
+Route::post('/payment/check/{hash}', 'Api\PaymentController@check')->middleware('auth:api')->name('check.paymentMobile');
 
 // helper endpoints
 Route::get('/cities', "Api\HelperController@getCities");

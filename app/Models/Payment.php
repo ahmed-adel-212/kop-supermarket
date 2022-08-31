@@ -17,7 +17,8 @@ class Payment extends Model
         'customer_id',
         'order_id',
         'total_paid',
-        'data'
+        'data',
+        'hash'
     ];
     public $timestamps = true;
 

@@ -157,7 +157,7 @@ return [
     'Unable to process the purchase transaction' => 'Unable to process the purchase transaction',
     'Insufficient Funds' => 'Insufficient Funds',
     'Declined' => 'Declined',
-    'Order Payed Successfully' => 'Order Payed Successfully',
+    'Order Payed Successfully' => 'Order Paid Successfully',
     'Delivery Hours' => 'Delivery Hours',
     'ownername' => 'Kingdom of Pastries',
     'Loyalty Points' => 'Loyalty Points',
@@ -398,4 +398,7 @@ return [
     'Failed!' => 'Failed',
     'paid' => 'Paid',
     'Succeeded!' => 'Succeeded!',
+    'payment_not_found' => 'Payment Not Found',
+    'congrat' => 'Congratulations',
+    'closeTab' => 'you can now close this window to complete your order checkout',
 ];
