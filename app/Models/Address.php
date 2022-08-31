@@ -17,7 +17,7 @@ class Address extends Model
 
     public $appends = ['delivery_fee'];
 
-    public $casts = [
+    protected $casts = [
         'delivery_fee' => 'double'
     ];
 
