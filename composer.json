@@ -20,7 +20,7 @@
         "laravel/passport": "^6.0",
         "laravel/tinker": "^1.0",
         "mcamara/laravel-localization": "^1.6",
-        "moyasar/moyasar": "^1.0",
+        "moyasar/moyasar": "^1.1",
         "twilio/sdk": "^6.12",
         "zizaco/entrust": "5.2.x-dev"
     },

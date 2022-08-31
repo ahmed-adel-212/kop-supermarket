@@ -197,6 +197,7 @@ Route::group([
 
                 Route::post('/payment', 'PaymentController@index')->name('payment');
                 Route::post('payment/order', 'PaymentController@get_payment')->name('do.payment');
+                Route::post('payment/save', 'PaymentController@store_payment')->name('payment.store');
                 Route::get('/payment/make-order', 'OrdersController@make_order_payment')->name('make-order.payment');
                 Route::get('/payment/refund/{id}', 'PaymentController@refund')->name('get.refund');
 

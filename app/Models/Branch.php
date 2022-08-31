@@ -10,7 +10,7 @@ class Branch extends Model
     use SoftDeletes;
     protected $guarded = [];
 
-    protected $casts = ['service_type' => 'array'];
+    protected $casts = ['service_type' => 'array', 'delivery_fees' => 'double'];
 
 
     protected function todayTimes() {
