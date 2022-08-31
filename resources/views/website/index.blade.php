@@ -162,8 +162,8 @@
             <div class="bg-shape white"></div>
             <div class="container">
             <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
-                    <h4>recommended Dishes</h4>
-                    <h2>Our Delicious <span>Foods</span></h2>
+                    <h4>@lang('general.recommended_Dishes')</h4>
+                    <h2>@lang('general.Our_DeliciousFoods') </h2>
                 </div>
                 <div class="nav-outside">
                   <div class="food-carousel swiper-container nav-visible"> 
@@ -209,19 +209,19 @@
                             <div class="sale">
                             @if($main_offer->discount)
                                 <div>
-                                    <h4>{{(app()->getLocale() == 'ar') ?'احصل على':'Get'}} </h4>
+                                    <h4>@lang('general.Get')</h4>
                                     @if($main_offer->discount->discount_type==1)
                                         <h2><span>{{$main_offer->discount->discount_value}}%</span></h2>
-                                        <h2>{{(app()->getLocale() == 'ar') ?'خصم الان':'Off Now'}}</h2>
+                                        <h2>@lang('general.Off_Now')</h2>
                                         @else
                                         <h2><span>{{$main_offer->discount->discount_value." "}} @lang('general.SR')</span></h2>
-                                        <h2>{{(app()->getLocale() == 'ar') ?'خصم الان':'Off Now'}}</h2>
+                                        <h2>@lang('general.Off_Now')</h2>
                                         @endif
                                     </div>
                                 @elseif($main_offer->buyGet)
                                 <div>
-                                <h4>{{(app()->getLocale() == 'ar') ?' اشترى':'Buy '}} {{$main_offer->buyGet->buy_quantity}}</h4>
-                                <h2>{{(app()->getLocale() == 'ar') ? ' احصل على':'Get '}} {{$main_offer->buyGet->get_quantity}} <span>{{(app()->getLocale() == 'ar') ? 'الان ':'now'}}</span></h2>
+                                <h4>@lang('general.Buy') {{$main_offer->buyGet->buy_quantity}}</h4>
+                                <h2>@lang('general.Get') {{$main_offer->buyGet->get_quantity}} <span>@lang('general.now')</span></h2>
                                 </div>
                                 @endif    
                                 </div>
@@ -251,9 +251,9 @@
         <section class="food-menu bg-grey padding">
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
-                    <h4>MENU</h4>
-                    <h2>Our Delicious <span>Foods</span></h2>
-                    <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
+                    <h4>@lang('general.menu')</h4>
+                    <h2>@lang('general.Our_DeliciousFoods')</span></h2>
+                    <p>@lang('general.home.food')</p>
                 </div>
                 <ul class="food-menu-filter">
                     <!-- <li class="active" data-filter="*">All</li> -->

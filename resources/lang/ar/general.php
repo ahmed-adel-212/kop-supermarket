@@ -12,7 +12,13 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'home.food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+
     'Careers' => 'الوظائف',
+    'recommended_Dishes' => 'الأطباق الموصى بها',
+    'Our_DeliciousFoods' => 'أطعمتنا اللذيذة',
+    'Off_Now' => ' خصم الان',
+    'now' => ' الان',
     'verify'=>'تأكيد',
     'use map' => 'استخدام الخريطه',
     'no delivery riyadh' => 'خدمة التوصيل غير متاحة الان فى هذا النطاق',
@@ -234,6 +240,7 @@ return [
     'team' => 'أعضاء الفريق',
     'cook' => 'سوف يقومون <span>بالطبخ</span> من اجلك'
 ],
+
 'first' => 'قسم به فيديو',
 'bg-st' => 'قسم به صورة فى نهايته',
 'bg-nd' => 'قسم به صورة فى بدايته',

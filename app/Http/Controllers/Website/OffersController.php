@@ -62,8 +62,8 @@ class OffersController extends Controller
     public function offerItems($offerID)
     {
         $request = new \Illuminate\Http\Request();
-        $offer = Offer::find($offerID);
-        $return = (app(\App\Http\Controllers\Api\OffersController::class)->get($request, $offer))->getOriginalContent();
+         $offer = Offer::find($offerID);
+        $return = (app(\App\Http\Controllers\Api\OffersController::class)->get($request,$offerID))->getOriginalContent();
         $offers = $return['data'];
         if ($offer->offer_type == 'discount') {
             return view('website.offerDiscount', compact(['offers']));
