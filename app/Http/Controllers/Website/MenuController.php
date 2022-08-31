@@ -57,7 +57,7 @@ class MenuController extends Controller
 
                 }
 
-                if ($parent_offer) {
+                if ($parent_offer && $parent_offer->offer) {
 
                     if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
                         $parent_offer = null;
