@@ -100,6 +100,7 @@ class PaymentController extends Controller
             'payment_id' => $request->id,
             'customer_id' => Auth::id(),
             'total_paid' => $request->amount,
+            'data' => json_encode($request->all()),
         ]);
 
         if ($payment) {

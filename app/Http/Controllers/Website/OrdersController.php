@@ -162,7 +162,9 @@ class OrdersController extends Controller
                 //         return redirect(route('get.payment'))->with(['error' => $request->message]);
                 // }
                 session()->flash('error', strtolower(str_replace(" (Test Environment)", "", $request->message)));
+                
                 // delete this payment from payments
+                $paymentId->delete();
 
                 return redirect(route('get.payment'));
             }
@@ -205,6 +207,11 @@ class OrdersController extends Controller
 
         $items = $order->items;
 
+        $payment = null;
+        if ($order->payment_type === 'online') {
+            $payment = Payment::where('order_id', $order->id)->where('customer_id', $order->customer_id)->first();
+        }
+
         $items->map(function (&$item, $key) {
             if ($item->pivot->offer_id) {
                 $offer = Offer::find($item->pivot->offer_id);
@@ -216,9 +223,9 @@ class OrdersController extends Controller
             }
         });
         if ($reorder != null) {
-            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'reorder'));
+            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'reorder', 'payment'));
         } else {
-            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order'));
+            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'payment'));
         }
     }
 

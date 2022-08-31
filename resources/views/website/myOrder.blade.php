@@ -133,7 +133,7 @@
                 <div class="uk-margin-small-top uk-container">
                     @if (Session::has('success'))
                         <div class="row mr-2 ml-2">
-                            <div class="col-12">
+                            <div class="col-12 justify-content-center align-items-center d-flex my-2" style="min-height: 50px;">
                                 <button type="text" class="btn btn-lg btn-block btn-success mb-2"
                                     id="type-error">{{ Session::get('success') }}
                                 </button>
@@ -142,7 +142,7 @@
                     @endif
                     @if (Session::has('error'))
                         <div class="row mr-2 ml-2">
-                            <div class="col-12">
+                            <div class="col-12 justify-content-center align-items-center d-flex my-2" style="min-height: 50px;">
                                 <button type="text" class="btn btn-lg btn-block btn-outline-danger mb-2"
                                     id="type-error">{{ Session::get('error') }}
                                 </button>
