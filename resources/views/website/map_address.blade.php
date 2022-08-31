@@ -78,7 +78,7 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="inputPassword4"
-                                                                class="text-dark">{{ __('general.Delivery Area') }}</label>
+                                                                class="text-dark">{{ __('general.Address Name') }}</label>
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control"
                                                                     placeholder="{{ __('general.Address Name') }}"
@@ -98,7 +98,7 @@
                                                                 {{ __('general.City') }}
                                                             </label>
                                                             <div class="input-group">
-                                                                <select id="city-select"
+                                                                <select id="city-select" disabled
                                                                     class="form-control select2-cities city w-100 select2-cities"
                                                                     name="city_id" required>
                                                                     <option value="" selected>
@@ -124,7 +124,7 @@
                                                                 {{ __('general.Area') }}
                                                             </label>
                                                             <div class="input-group">
-                                                                <select class="form-control area w-100" name="area_id"
+                                                                <select disabled class="form-control area w-100" name="area_id"
                                                                     required>
                                                                     <option value="">
 

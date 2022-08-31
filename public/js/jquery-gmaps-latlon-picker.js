@@ -102,7 +102,7 @@ $.fn.gMapsLatLonPicker = (function() {
 						'<option  value="" >'+message[2]+'</option>');
 					
 					cities.forEach(function(cityObj){
-						if( add.includes(cityObj[1]) && cityObj[0] != 3){
+						if( add.includes(cityObj[1])){
 							selectedId=cityObj[0];
 							$(".city").append(
 								'<option  value="'+selectedId+'" selected>'+cityObj[1]+'</option>');

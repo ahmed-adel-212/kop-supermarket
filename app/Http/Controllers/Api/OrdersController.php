@@ -759,12 +759,12 @@ class OrdersController extends BaseController
         $reorder = compact('location', 'allItems', 'total', 'subtotal', 'taxes', 'delivery_fees');
         // confirm order
         // show popup if offer have changes or price changed
-        // if ($request->has('confirm') && $request->input('confirm')) {
-        //     $return = $this->store($requestt);
-        //     if ($return->getOriginalContent()['success']) {
-        //         return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
-        //     }
-        // }
+        if ($request->has('confirm') && $request->input('confirm')) {
+            $return = $this->store($requestt);
+            if ($return->getOriginalContent()['success']) {
+                return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
+            }
+        }
      
         return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>$reorder], '');
     }
