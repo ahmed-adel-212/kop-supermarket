@@ -32,10 +32,10 @@ class OffersController extends BaseController
         return $this->sendResponse($offers, 'Offers retreived successfully');
     }
 
-    public function get(Request $request, Offer $offer)
+    public function get(Request $request, $id)
     {
-
-        $result = $offer->toArray();
+        $offer=Offer::where('id',$id)->with('buyGet', 'discount')->first();
+         $result = $offer->toArray();
 
 
         // if ($offer->offer_type == 'buy-get') {
