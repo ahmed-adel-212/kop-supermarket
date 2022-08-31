@@ -1,7 +1,7 @@
 @extends('layouts.website.app')
 
 @section('title')
-    Payment
+    {{ __('general.Payment') }}
 @endsection
 @section('styles')
     <link href="{{ asset('website-assets/css/payment.css') }}" rel="stylesheet" />
@@ -10,6 +10,30 @@
     <!-- Moyasar Scripts -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=fetch"></script>
     <script src="https://cdn.moyasar.com/mpf/1.6.1/moyasar.js"></script>
+    <style>
+        <style>@media screen and (min-width: 768px) {
+            .pl-form {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                max-width: 340px !important
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+            .pl-form {
+                margin-left: auto !important;
+                margin-right: auto !important;
+                max-width: 340px !important
+            }
+        }
+        .pl-form {
+            min-width:240px;
+        }
+        .border-colored {
+            color: #fe9d2d;
+        }
+    </style>
+    </style>
 @endsection
 
 
@@ -133,7 +157,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="alert alert-danger w-75 mx-auto">
-                            {{ __('general.'. session('error')) }}
+                            {{ __('general.' . session('error')) }}
                         </div>
                     </div>
                 </div>
@@ -141,8 +165,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="mysr-form">
-                        <div class="w-100 text-center">
-                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        <div class="w-100 text-center h-100 d-flex align-items-center justify-content-center" style="min-height: 200px;">
+                            <div class="spinner-border border-colored" style="width: 4rem; height: 4rem;" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
@@ -186,7 +210,7 @@
                 // Required
                 // This URL is used to redirect the user when payment process has completed
                 // Payment can be either a success or a failure, which you need to verify on you system (We will show this in a couple of lines)
-                callback_url: "{{ route('make-order.payment') }}",
+                callback_url: "{{ session()->has('payment_hash') ? route('api.make-order.payment') : route('make-order.payment')}}",
 
                 on_completed: function(payment) {
                     return new Promise(function(resolve, reject) {
@@ -194,10 +218,11 @@
                         // This is just an example, provide anything you want here
                         $.ajax({
                             type: 'POST',
-                            url: "{{ route('payment.store') }}",
+                            url: "{{ route('api.payment.store') }}",
                             data: payment,
                             headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                'Authorization': "Bearer {{$user->token}}",
                             },
                             dataType: 'json',
                             success: function(data, textStatus, jqXHR) {

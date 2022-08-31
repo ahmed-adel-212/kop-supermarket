@@ -203,6 +203,7 @@ Route::group([
 
                 /*****************Begin Checkout And Orders Routes ****************/
                 Route::post('get-checkout/', [\App\Http\Controllers\Website\CartController::class, 'get_checkout'])->name('checkout');
+                Route::get('get-checkout-payment/', [\App\Http\Controllers\Website\CartController::class, 'get_checkout'])->name('payment.checkout');
                 Route::post('make-order/', [\App\Http\Controllers\Website\OrdersController::class, 'make_order'])->name('make_order');
                 /*****************End Checkout And Orders Routes ****************/
             });

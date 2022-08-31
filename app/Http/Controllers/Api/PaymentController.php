@@ -16,16 +16,24 @@ class PaymentController extends BaseController
 {
 
 
-    public function index($id, $amount)
+    public function index($id, $amount, $hash)
     {
+        if (!is_numeric($amount) || strlen($hash) < 16) {
+            return $this->sendError('hash is less than 16 chars');
+        }
+
         $user = User::findOrFail($id);
+
+        session(['payment_hash' => $hash]);
+        session(['user_id' => $user->id]);
+        session(['payment_amount' => $amount]);
 
         return view('website.payment', compact('user', 'amount'));
     }
 
-    public function check($id)
+    public function check($hash)
     {
-        $payment = Payment::where('payment_id', $id)->where('customer_id', Auth::id())->first();
+        $payment = Payment::where('hash', $hash)->where('customer_id', Auth::id())->first();
 
         if (!$payment) {
             return $this->sendError(__('general.payment_not_found'));
@@ -131,5 +139,22 @@ class PaymentController extends BaseController
             return $this->sendError($payment, $e->getMessage());
 
         }
+    }
+
+    public function store_payment(Request $request)
+    {
+        $payment = Payment::create([
+            'payment_id' => $request->id,
+            'customer_id' => Auth::id(),
+            'total_paid' => $request->amount,
+            'data' => json_encode($request->all()),
+            'hash' => session('payment_hash', null),
+        ]);
+
+        if ($payment) {
+            return response()->json([], 201);
+        }
+
+        return response(__('general.payment_not_found'), 404);
     }
 }

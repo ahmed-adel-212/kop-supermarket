@@ -60,6 +60,16 @@ class OrdersController extends Controller
                 session()->forget('point_claim_value');
                 session()->forget('points_value');
             }
+
+            if (session()->has('payment')) {
+                $payment = Payment::where('payment_id', session('payment')['payment_id'])->where('customer_id', Auth::id())->first();
+
+                $payment->order_id = $return['data']['id'];
+                $payment->save();
+
+                session()->forget('payment');
+            }
+
             // return redirect()->route('get.cart')->with(['success' => __('general.Your order been submitted successfully')]);
             return redirect()->route('get.orders');
         }
@@ -121,32 +131,39 @@ class OrdersController extends Controller
 
                     ]);
                 }
-                $return = $this->store_order($request);
-                if ($return['success'] == true) {
+                // $return = $this->store_order($request);
+                // if ($return['success'] == true) {
 
-                    // Payment::create([
-                    //     'payment_id' => $request->id,
-                    //     'customer_id' => auth()->user()->id,
-                    //     'status' => $request->status,
-                    //     'message' => $request->message,
-                    //     'order_id' => $return['data']->id,
-                    //     'total_paid' => $request->amount / 100
-                    // ]);
-                    $paymentId->status = $request->status;
-                    $paymentId->message = $request->message;
-                    $paymentId->order_id = $return['data']['id'];
-                    $paymentId->save();
-                    session()->put(['success' => $return['success']]);
-                    foreach ($items as $item) {
-                        $item->delete();
-                    }
-                    if (session()->has('point_claim_value')) {
-                        session()->forget('point_claim_value');
-                        session()->forget('points_value');
-                    }
-                    session()->flash('success', __('general.Order Payed Successfully'));
-                    return redirect()->route('get.orders');
+                //     // Payment::create([
+                //     //     'payment_id' => $request->id,
+                //     //     'customer_id' => auth()->user()->id,
+                //     //     'status' => $request->status,
+                //     //     'message' => $request->message,
+                //     //     'order_id' => $return['data']->id,
+                //     //     'total_paid' => $request->amount / 100
+                //     // ]);
+                $paymentId->status = $request->status;
+                $paymentId->message = $request->message;
+                // $paymentId->order_id = $return['data']['id'];
+                $paymentId->save();
+                //     session()->put(['success' => $return['success']]);
+                //     foreach ($items as $item) {
+                //         $item->delete();
+                //     }
+                //     if (session()->has('point_claim_value')) {
+                //         session()->forget('point_claim_value');
+                //         session()->forget('points_value');
+                //     }
+                session()->flash('success', __('general.Order Payed Successfully'));
+                session(['payment' => $paymentId->toArray()]);
+
+                if (session()->has('payment_hash')) {
+                    return view('api.payment_response');
+                    session()->forget('payment_hash');
                 }
+
+                return redirect()->route('payment.checkout');
+                // }
             }
         } else {
             if ($request->status == 'failed') {
@@ -162,7 +179,9 @@ class OrdersController extends Controller
                 //         return redirect(route('get.payment'))->with(['error' => $request->message]);
                 // }
                 session()->flash('error', strtolower(str_replace(" (Test Environment)", "", $request->message)));
+
                 // delete this payment from payments
+                $paymentId->delete();
 
                 return redirect(route('get.payment'));
             }
@@ -205,6 +224,11 @@ class OrdersController extends Controller
 
         $items = $order->items;
 
+        $payment = null;
+        if ($order->payment_type === 'online') {
+            $payment = Payment::where('order_id', $order->id)->where('customer_id', $order->customer_id)->first();
+        }
+
         $items->map(function (&$item, $key) {
             if ($item->pivot->offer_id) {
                 $offer = Offer::find($item->pivot->offer_id);
@@ -216,9 +240,9 @@ class OrdersController extends Controller
             }
         });
         if ($reorder != null) {
-            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'reorder'));
+            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'reorder', 'payment'));
         } else {
-            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order'));
+            return view('website.order_details', compact('branch', 'work_hours', 'address', 'user', 'items', 'order', 'payment'));
         }
     }
 
