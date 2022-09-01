@@ -26,9 +26,11 @@
                 max-width: 340px !important
             }
         }
+
         .pl-form {
-            min-width:240px;
+            min-width: 240px;
         }
+
         .border-colored {
             color: #fe9d2d;
         }
@@ -165,7 +167,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="mysr-form">
-                        <div class="w-100 text-center h-100 d-flex align-items-center justify-content-center" style="min-height: 200px;">
+                        <div class="w-100 text-center h-100 d-flex align-items-center justify-content-center"
+                            style="min-height: 200px;">
                             <div class="spinner-border border-colored" style="width: 4rem; height: 4rem;" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
@@ -183,35 +186,13 @@
         $(document).ready(function() {
 
             Moyasar.init({
-                // Required
-                // Specify where to render the form
-                // Can be a valid CSS selector and a reference to a DOM element
                 element: '.mysr-form',
-
-                // Required
-                // Amount in the smallest currency unit
-                // For example:
-                // 10 SAR = 10 * 100 Halalas
-                // 10 KWD = 10 * 1000 Fils
-                // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
                 amount: {{ $amount * 100 }},
-
-                // Required
-                // Currency of the payment transation
                 currency: 'SAR',
-
-                // Required
-                // A small description of the current payment process
                 description: '{{ $user->name }} Order',
-
-                // Required
                 publishable_api_key: 'pk_test_q8VZ5iA7J3ZCRXzCo8mVkjgNr1WmDvXJHdm2mQRt',
-
-                // Required
-                // This URL is used to redirect the user when payment process has completed
-                // Payment can be either a success or a failure, which you need to verify on you system (We will show this in a couple of lines)
-                callback_url: "{{ session()->has('payment_hash') ? route('api.make-order.payment') : route('make-order.payment')}}",
-
+                callback_url: "{{ session()->has('payment_hash') ? route('api.make-order.payment') : route('make-order.payment') }}",
+                language: "{{ app()->getLocale() }}",
                 on_completed: function(payment) {
                     return new Promise(function(resolve, reject) {
 
@@ -222,7 +203,7 @@
                             data: payment,
                             headers: {
                                 'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                                'Authorization': "Bearer {{$user->token}}",
+                                'Authorization': "Bearer {{ $user->token }}",
                             },
                             dataType: 'json',
                             success: function(data, textStatus, jqXHR) {
@@ -240,10 +221,6 @@
                         });
                     });
                 },
-
-                // Optional
-                // Required payments methods
-                // Default: ['creditcard', 'applepay', 'stcpay']
                 methods: [
                     'creditcard',
                 ],
