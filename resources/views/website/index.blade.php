@@ -232,10 +232,10 @@
                                 <h2>{{(app()->getLocale() == 'ar') ?$main_offer->title_ar:$main_offer->title}}</h2>
                                 <p>{{(app()->getLocale() == 'ar') ?$main_offer->description_ar:$main_offer->description}}</p>
                                 <ul class="check-list">
-                                    <li><i class="fas fa-check"></i>Delicious &amp; Healthy Foods</li>
-                                    <li><i class="fas fa-check"></i>Spacific Family And Kids Zone</li>
-                                    <li><i class="fas fa-check"></i>Music &amp; Other Facilities</li>
-                                    <li><i class="fas fa-check"></i>Fastest Food Home Delivery</li>
+                                    <li><i class="fas fa-check"></i>{!!__('home.desc1')!!}</li>
+                                    <li><i class="fas fa-check"></i>{!!__('home.desc2')!!}</li>
+                                    <li><i class="fas fa-check"></i>{!!__('home.desc3')!!}</li>
+                                    <li><i class="fas fa-check"></i>{!!__('home.desc4')!!}</li>
                                 </ul>
                             
                                 <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$main_offer->id)}}" class="default-btn cart">Order Now <span></span></a>

@@ -13,6 +13,10 @@ return [
     |
     */
     'Fresh Ingredients' => 'Fresh Ingredients',
+    'desc1' => 'Delicious &amp; Healthy Foods',
+    'desc2' => 'Spacific Family And Kids Zone',
+    'desc3' => 'Music &amp; Other Facilities',
+    'desc4' => 'Fastest Food Home Delivery',
     'The Certified Chefs' => 'The Certified Chefs',
     '30 Mins Delivery' => '30 Mins Delivery',
     'Our Special Deals' => 'Our Special Food' ,
