@@ -24,7 +24,7 @@ class OffersController extends BaseController
         $offers=[];
         if (!empty($user_branches)) {
             $offer_id = DB::table("branch_offer")->whereIn('branch_id', $user_branches)->pluck('offer_id');
-            $offers = Offer::whereIn('id',$offer_id)->with('buyGet', 'discount')->filter($filters)->orderBy('created_at', 'desc')->get();
+            $offers = Offer::whereIn('id',$offer_id)->with('buyGet')->filter($filters)->orderBy('created_at', 'desc')->get();
         }
 
         // $offers =  $offerswith('buyGet', 'discount')->filter($filters)->get();
