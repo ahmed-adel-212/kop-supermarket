@@ -51,10 +51,10 @@ class Branch extends Model
     }
 
     public function open() {
-        return $this->todayTimes()->time_from;
+        return optional($this->todayTimes())->time_from;
     }
 
     public function close() {
-        return $this->todayTimes()->time_to;
+        return optional($this->todayTimes())->time_to;
     }
 }
