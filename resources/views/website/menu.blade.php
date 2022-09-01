@@ -72,11 +72,13 @@
                                    <li>{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
                                </ul>
                                 <h4>{{$dealItem['name_'.app()->getLocale()]}}</h4>
-                                <div class="price">
-                                    <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
-                                    <ul class="product-meta">
+                                <ul class="product-meta">
                                         <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $dealItem->calories }}</a></li>
                                     </ul>
+                                <div class="price">
+                               
+                                    <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
+                                  
                                 </div>
                             </div>
                         </div>

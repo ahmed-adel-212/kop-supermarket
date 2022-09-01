@@ -678,10 +678,10 @@ max-height: 600px;
 .food-menu{ position: relative; }
 .product-item {
     background-color: #fff;
-    padding: 70px 20px 20px;
+    padding: 20px 20px 20px;
     position: relative;
-    min-height: 525px;
-    max-height: 525px;
+    min-height: 475px;
+    max-height: 475px;
 }
 .product-item .sale{
     background-color: #f43127;
@@ -698,8 +698,8 @@ max-height: 600px;
 }
 .product-thumb {
     position: relative;
-    max-height: 250px;
-    min-height: 250px;
+    max-height: 300px;
+    min-height: 300px;
 
 }
 .product-thumb img{width: 100%;}

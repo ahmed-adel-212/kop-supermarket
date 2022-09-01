@@ -101,7 +101,10 @@
                    </div>
                 </div>
                 @else
-                <p style="margin-right: 43%;">@lang('general.barnchNoOffer')</p>
+                <div class="text-center">
+                <p>@lang('general.barnchNoOffer')</p>
+                </div>
+                
                 @endif
             </div>
         </section><!--/.food-menu-->
