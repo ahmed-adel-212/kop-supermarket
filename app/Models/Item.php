@@ -73,7 +73,7 @@ class Item extends Model
     {
         // $category = Category::where('id', $this->category_id)->first();
         $category = Category::find($this->category_id);
-        if (!$category) {
+        if (!$category || null === $category->dough_type_id) {
             return [];
         }
         $dough_type_id = $category->dough_type_id;
