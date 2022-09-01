@@ -166,13 +166,15 @@
                             </div>
                             <div class="col-4 col-lg-3">
                                 <div class="form-group stepper-type-2 quantity-up-{{ $cart->id }}">
-                                    <input style="width: 25%;" type="number"
+                                    <i class="fas fa-spinner fa-spin d-none"></i>
+                                    <input style="width: 30%;display: inline;" type="number"
                                         @if ($cart->offer_id && !$cart->dough_type_ar) disabled @endif data-zeros="true"
                                         value="{{ $cart->quantity }}" min="1" max="20" readonl
                                         data-id="{{ $cart->id }}" data-price="{{ $cart->price }}"
                                         data-prev="{{ $cart->quantity }}" data-price-without-offer="{{$cart->offer_id ? isset($cart->extras_objects) ? $cart->item->price + collect($cart->extras_objects)->sum('price') : $cart->item->price : $cart->price }}"
                                         data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
                                         class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}">
+                                        
                                 </div>
                             </div>
                             <div class="col-3 col-lg-1">
@@ -216,7 +218,7 @@
                                 <div @auth
                                         @if (!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif
                                     @endauth class="cart-item delete_cart cart" data-id="{{ $cart->id }}">
-                                    <a class="remove" href="#"><i class="las la-times"></i></a>
+                                    <a class="remove" href="javascript:void(0)"><i class="las la-times"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -389,17 +391,20 @@
                     keyboard: false,
                     backdrop: 'static',
                 });
-                const branchModal = new bootstrap.Modal('#branchClosed', {
-                    keyboard: false,
-                    
-                });
 
                 @if (session()->has('branch_closed'))
+                    const branchModal = new bootstrap.Modal('#branchClosed', {
+                        keyboard: false,
+                    });
                     branchModal.show();
                 @endif
+
                 $(document).on('click', '.delete_cart', function(e) {
                     e.preventDefault();
+                    
                     var id = $(this).attr('data-id');
+
+                    $(this).find('i').addClass('fas fa-spinner fa-spin').removeClass('la-times');
 
                     $.ajaxSetup({
                         headers: {
@@ -461,6 +466,7 @@
                         },
                         error: function(reject) {
                             console.log(reject);
+                            $(this).find('i').removeClass('fas fa-spinner fa-spin').addClass('la-times');
                         }
                     });
                 });
@@ -523,6 +529,7 @@
                     var price = $(this).attr('data-price');
                     var price_without_offer = $(this).attr('data-price-without-offer');
                     $(".cart2" + id + ' .quantity_ch').attr('readonly', true);
+                    $(".cart2" + id + ' .fa-spinner').removeClass('d-none');
 
                     $.ajaxSetup({
                         headers: {
@@ -575,11 +582,13 @@
 
                             quantityConfirm.hide();
                             $(".cart2" + id + ' .quantity_ch').attr('readonly', false);
+                            $(".cart2" + id + ' .fa-spinner').addClass('d-none');
 
                         },
                         error: function(reject) {
                             quantityConfirm.hide();
                             $(".cart2" + id + ' .quantity_ch').attr('readonly', false);
+                            $(".cart2" + id + ' .fa-spinner').addClass('d-none');
                             // $(".cart2" + id + ' .quantity_ch').data('prev', quantity);
                             console.log(reject);
                         }
