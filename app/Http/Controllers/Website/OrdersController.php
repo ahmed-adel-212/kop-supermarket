@@ -16,6 +16,7 @@ use App\Models\Without;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\PointsTransaction;
 use App\Traits\GeneralTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -467,6 +468,14 @@ class OrdersController extends Controller
         ];
 
         $order = Order::create($orderData);
+
+        // PointsTransaction::create([
+        //     'points' => $pointsValue,
+        //     'order_id' => $order->id,
+        //     'user_id' => Auth::id(),
+        //     'status' => 2,
+        // ]);
+        
         if (!$order) {
             return ['error' => 'Order not found'];
         }

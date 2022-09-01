@@ -640,6 +640,7 @@ class OrdersController extends BaseController
                         $noOffer_price += Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') * $item->pivot->quantity;
                     }
                     $noOffers[] = [
+                        'offers' => [],
                         'order_items' => $order_items,
                         'final_item_price' => $noOffer_price,
                     ];
