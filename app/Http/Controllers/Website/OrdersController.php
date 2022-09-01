@@ -468,17 +468,20 @@ class OrdersController extends Controller
         ];
 
         $order = Order::create($orderData);
-
-        // PointsTransaction::create([
-        //     'points' => $pointsValue,
-        //     'order_id' => $order->id,
-        //     'user_id' => Auth::id(),
-        //     'status' => 2,
-        // ]);
         
         if (!$order) {
             return ['error' => 'Order not found'];
         }
+
+        if ($pointsValue) {
+            PointsTransaction::create([
+                'points' => $pointsValue,
+                'order_id' => $order->id,
+                'user_id' => Auth::id(),
+                'status' => 2,
+            ]);
+        }
+
         // send notification to all user_branches
         $cashiers = Branch::find($branch_id);
         if ($cashiers) {

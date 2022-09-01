@@ -109,6 +109,8 @@ class Item extends Model
         return (string)round($this->price / 1.15, 2);
     }
 
+    
+
     public function isVisibleForAuthUser()
     {
         $authUser = auth()->user();
