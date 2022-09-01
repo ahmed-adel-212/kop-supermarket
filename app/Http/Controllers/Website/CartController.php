@@ -17,8 +17,6 @@ class CartController extends Controller
 
     public function addCart(Request $request)
     {
-        // return $request;
-
         if ($request->has('add_items')) {
             // dd(json_decode($request->add_items), $request->all());
             $items = json_decode($request->add_items);

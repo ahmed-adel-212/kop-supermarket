@@ -669,10 +669,12 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     Food Menu Section
 =======================================================*/
 .food-menu{ position: relative; }
-.product-item{
+.product-item {
     background-color: #fff;
-    padding: 70px 40px 40px;
+    padding: 70px 20px 20px;
     position: relative;
+    min-height: 525px;
+    max-height: 525px;
 }
 .product-item .sale{
     background-color: #f43127;

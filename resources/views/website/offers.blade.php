@@ -12,7 +12,7 @@
         text-overflow: ellipsis;
         display: -webkit-box;
         line-height: 20px;     /* fallback */
-        max-height: 32px;      /* fallback */
+        /* max-height: 32px;      fallback */
         -webkit-line-clamp: 3; /* number of lines to show */
         -webkit-box-orient: vertical;
     }
