@@ -284,7 +284,7 @@
                                                                 x-bind:id="'{{ $dough['name_en'] }}' + item.uid" type="radio"
                                                                 x-bind:name="'dough_type' + item.uid"
                                                                 value="{{ $dough['name_ar'] }},{{ $dough['name_en'] }}"
-                                                                @if ($loop->first) checked @endif>
+                                                                @if ($loop->last) checked @endif>
                                                             <label class="btn btn-outline-primary"
                                                                 x-bind:for="'{{ $dough['name_en'] }}' + item.uid"
                                                                 x-on:click="item.dough = '{{ $dough['name_ar'] }},{{ $dough['name_en'] }}'">

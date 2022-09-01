@@ -86,6 +86,21 @@
         .food-info h4 {
             min-height: 0 !important;
         }
+        .line-clamp2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .line-clamp5 {
+            display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 135px;
+        /* max-height: 180px; */
+        }
     </style>
 
 
