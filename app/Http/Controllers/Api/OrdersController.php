@@ -618,7 +618,7 @@ class OrdersController extends BaseController
                 if ($item->pivot->offer_id == null) {
                     $order_items = [];
                     $noOffer_price = 0;
-                    $order_items = [
+                    $order_items[] = [
                         "order_id" => $item->pivot->order_id,
                         "item_id" => $item->id,
                         'quantity' => $item->pivot->quantity,
@@ -693,7 +693,7 @@ class OrdersController extends BaseController
                     'offer' => $offer,
                     'order_items' => $order_items,
                     // 'is_valid' => $is_valid,
-                    // 'final_offer_price' => $Offer_price,
+                    'final_offer_price' => $Offer_price,
                 ];
             }
         }
