@@ -74,7 +74,7 @@ class MenuController extends BaseController
                             }
                             $item->discountAmount=(double)$item->price-(double)$item->offer->offer_price;
                             $item->offer_price=$item->offer->offer_price;
-                            unset($item->offer);
+                            unset($item->offer->offer);
                         }
                     }
                 }
