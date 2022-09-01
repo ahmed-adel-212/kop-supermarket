@@ -292,6 +292,7 @@ class CartController extends Controller
 
         if ($isOpen['data']['available'] === false) {
             session()->flash('branch_closed', true);
+            session()->flash('branch_name', $branch['name_' . app()->getLocale()]);
             return back();
         }
 
