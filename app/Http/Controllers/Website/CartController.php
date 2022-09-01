@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Website;
 
+use App\Http\Controllers\Api\BranchesController;
 use App\Models\Address;
 use App\Models\Branch;
 use App\Models\Cart;
@@ -286,6 +287,13 @@ class CartController extends Controller
         }])->first();
 
         $work_hours = $branch->workingDays()->where('day', strtolower(now()->englishDayOfWeek))->get();
+
+        $isOpen = (app(BranchesController::class)->check($request, $branch_id))->getOriginalContent();
+
+        if ($isOpen['data']['available'] === false) {
+            session()->flash('branch_closed', true);
+            return back();
+        }
 
         unset($request['_token']);
         session()->put(['checkOut_details' => $request->all()]);

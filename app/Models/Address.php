@@ -23,7 +23,11 @@ class Address extends Model
 
     public function getDeliveryFeeAttribute()
     {
-        return round($this->area->delivery_fees, 2);
+        if ($this->area) {
+            return round(optional($this->area)->delivery_fees, 2);
+        }
+
+        return 0;
     }
 
     public function customer()

@@ -351,6 +351,30 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="branchClosed" tabindex="-1" aria-labelledby="branchClosedLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="branchClosedLabel">
+                            {{ __('general.warning') }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ __('general.branch_is_closed') }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn default-btn rounded shadow-sm bg-primary confirm">
+                            {{ __('general.go_branches') }}
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     @endsection
 
@@ -363,6 +387,14 @@
                     keyboard: false,
                     backdrop: 'static',
                 });
+                const branchModal = new bootstrap.Modal('#branchClosed', {
+                    keyboard: false,
+                    backdrop: 'static',
+                });
+
+                @if (session()->has('branch_closed'))
+                    branchModal.show();
+                @endif
                 $(document).on('click', '.delete_cart', function(e) {
                     e.preventDefault();
                     var id = $(this).attr('data-id');
