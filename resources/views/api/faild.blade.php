@@ -11,13 +11,13 @@
           color: red;
           font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
           font-weight: 900;
-          font-size: 40px;
+          font-size: 60px;
           margin-bottom: 10px;
         }
         p {
           color: #404F5E;
           font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-size:20px;
+          font-size:40px;
           margin: 0;
         }
       i {
@@ -40,7 +40,7 @@
     <body>
       <div class="card">
 
-        <h1>Faild</h1> 
+        <h1>{{__('general.page expired')}}</h1> 
         <p>{{__('general.This password reset token is invalid.')}}</p>
       </div>
     </body>
