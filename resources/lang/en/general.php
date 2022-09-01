@@ -14,6 +14,8 @@ return [
     
     */
  
+    'page expired' => 'Page Expired',
+    'please visit login page and login using new password' => 'please visit login page and login using new password',
     'home.food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
     'ourPopularDishes' => 'Our Popular <span>Dishes</span>',
     'ourDeliciousFood' => 'Our Delicious <span>Food</span>',

@@ -12,6 +12,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'page expired' => 'انتهت صلاحية هذه الصفحة ',
+    'please visit login page and login using new password' => 'برجاء التوجه لصفحة تسجيل الدخول لاستخدام كلمة السر الجديدة',
     'home.food' => 'الغذاء هو أي مادة تستهلك<br> لتوفير الدعم الغذائي للكائن الحي.',
     'home.Blog_Posts' => 'احدث الاخبار',
     'Eat Delicious & Tasty Fast-Foods With Real Flavours' => 'تناول وجبات سريعة ولذيذة بنكهات حقيقية',

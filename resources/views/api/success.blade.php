@@ -11,13 +11,13 @@
           color: #88B04B;
           font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
           font-weight: 900;
-          font-size: 40px;
+          font-size: 60px;
           margin-bottom: 10px;
         }
         p {
           color: #404F5E;
           font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-          font-size:20px;
+          font-size:40px;
           margin: 0;
         }
       i {
@@ -44,6 +44,7 @@
       </div>
         <h1>Success</h1> 
         <p>{{__('general.Your Password Changed Successfully')}}</p>
+        <p>{{__('general.please visit login page and login using new password')}}</p>
       </div>
     </body>
 </html>
