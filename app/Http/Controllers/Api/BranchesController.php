@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
+use Carbon\Carbon;
 use DB;
 
 class BranchesController extends BaseController
@@ -53,14 +54,21 @@ class BranchesController extends BaseController
         $branch = Branch::where('id',$id)->with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function($day) {
             $day->where('day', strtolower(now()->englishDayOfWeek))->first();
         }])->first();
+
         $open= $branch->open();
         $close= $branch->close();
-        // return date("h:i:s a",strtotime($open));
-        if((date("h:i:s a",strtotime($open)) < date("h:i:s a",time()) ) and (date("h:i:s a",strtotime($close)) >  date("h:i:s a",time())))
+        $data=[
+            'open at'=>$open,
+            'close at'=>$close,
+            'available'=>false
+        ];
+
+        if((strtotime($open) < time()) and (strtotime($close) >  time()))
         {
-            return $this->sendError(__('general.branch_no_cover'));
+            $data['available']=true;
+            return $this->sendResponse($data,__('general.branch_ret'));
         }
-        return $this->sendResponse($branch, __('general.branch_ret'));
+        return $this->sendResponse($data, __('general.branch_ret'));
     }
 
     public function getBranchWorkingHours(Request $request) {
