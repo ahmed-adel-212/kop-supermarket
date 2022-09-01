@@ -12,11 +12,18 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'home.food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
-
+    'home.food' => 'الغذاء هو أي مادة تستهلك<br> لتوفير الدعم الغذائي للكائن الحي.',
+    'home.Blog_Posts' => 'احدث الاخبار',
+    'Eat Delicious & Tasty Fast-Foods With Real Flavours' => 'تناول وجبات سريعة ولذيذة بنكهات حقيقية',
+    'ourDeliciousFood' => 'أطعمتنا <span>اللذيذة</span>',
+    'ourPopularDishes' => 'اشهر <span>الاطباق</span>',
+    'offer_description' => 'الغذاء هو أي مادة تستهلك<br> لتوفير الدعم الغذائي للكائن الحي.',
+    'blog_caption' => ' كل هذا عن <span>اطعمتنا</span>',
+    'blog_description' => 'الغذاء هو أي مادة تستهلك<br> لتوفير الدعم الغذائي للكائن الحي.',
+    'delivery_description' => 'تلبي المطاعم في هانغتشو أيضًا العديد من الصينيين الشماليين الذين فروا جنوبًا من كايفنغ خلال غزو الجورشن في عشرينيات القرن الحادي عشر ، بينما من المعروف أيضًا أن العديد من المطاعم كانت تديرها العائلات.',
+    'delivery_caption' => 'لحظات من التسليم <br> فى <span>الوقت المحدد </span> &amp; و المكان',
     'Careers' => 'الوظائف',
     'recommended_Dishes' => 'الأطباق الموصى بها',
-    'Our_DeliciousFoods' => 'أطعمتنا اللذيذة',
     'Off_Now' => ' خصم الان',
     'now' => ' الان',
     'verify'=>'تأكيد',
@@ -88,6 +95,7 @@ return [
     'Offer' => 'العرض',
     'Get Offer' => 'احصل علي العرض',
     'Offer Menu' => 'قائمة العروض',
+    'barnchNoOffer' => 'لا يوجد عروض فى هذا الفرع حاليا',
     'Buy' => 'اشتري',
     'Get' => 'احصل علي',
     'Confirm Offer' => 'تأكيد الطلب',

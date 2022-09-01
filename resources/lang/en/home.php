@@ -18,6 +18,12 @@ return [
     'Our Special Deals' => 'Our Special Food' ,
     'Calories' => 'Calories' ,
     'Add to Cart' => 'Add to Cart' ,
+    'Tasty Pizza' => 'Tasty Pizza' ,
+    'Eat Sleep And' => 'Eat Sleep And',
+    'slider2_descriptiopn' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+    'slider3_descriptiopn' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+    'Fried masala' => 'Fried masala <br>in town!',
+
     'Price' => 'Price' ,
     'Order Your Own Tasty Food' => 'Order Your Own Tasty Food' ,
     'It Takes 2 Minutes To Make Your' => 'It Takes 2 Minutes To Make Your' ,

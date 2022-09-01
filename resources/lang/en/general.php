@@ -15,10 +15,19 @@ return [
     */
  
     'home.food' => 'Food is any substance consumed to provide nutritional <br>support for an organism.',
+    'ourPopularDishes' => 'Our Popular <span>Dishes</span>',
+    'ourDeliciousFood' => 'Our Delicious <span>Food</span>',
+    'offer_description' => 'Food is any substance consumed to provide nutritional <br> support for an organism.',
+    'Eat Delicious & Tasty Fast-Foods With Real Flavours' => 'Eat Delicious & Tasty Fast-Foods With Real Flavours',
+
     'search address'=>'enter your address',
+    'home.Blog_Posts' => 'Latest Blog Posts',
+    'blog_caption' => 'This Is All About <span>Foods</span>',
+    'blog_description' => 'Food is any substance consumed to provide nutritional <br> support for an organism.',
+    'delivery_description' => 'The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.',
+    'delivery_caption' => 'A Moments Of Delivered <br> On <span>Right Time</span> &amp; Place',
     'verify'=>'Verify',
     'recommended_Dishes' => 'recommended Dishes',
-    'Our_DeliciousFoods' => 'Our Delicious Foods' ,
     'Off_Now' => ' Off Now' ,
     'use map'=>'Use Map',
     'no delivery riyadh' => 'Delivery service is not available in this area ',
@@ -263,6 +272,7 @@ return [
     'checkout_tilte' => 'Your Order',
     'payment_title' => 'Complete Payment',
     'offers_title' => 'Find The Best Offers',
+    'barnchNoOffer' => 'No offers founded in this branch',
     'verification' => 'Verification Code',
     'verification_title' => 'Enter Verification Code',
     'not_found' => 'Page Not Found!',

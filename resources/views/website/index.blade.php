@@ -94,7 +94,7 @@
                 <div class="slider-content-wrap d-flex align-items-center">
                     <div class="container">
                         <div class="slider-content" dir="{{app()->getLocale() === 'ar' ? 'rtl' : ''}}">
-                            <div class="slider-caption medium" ><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
+                            <div class="slider-caption medium" ><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">{{__('home.Eat Sleep And')}}</div></div></div>
                             <div class="slider-caption big"><div class="inner-layer"><div data-animation="reveal-text" data-delay="1s">{{__('home.Order Today, While It’s Hot!')}}</div></div>
                             </div>
                             <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">{{__('home.Eat Delicious & Tasty Fast-Foods With Real Flavours')}}</div></div></div>
@@ -116,10 +116,10 @@
                 <div class="slider-content-wrap d-flex align-items-center text-center">
                     <div class="container">
                         <div class="slider-content">
-                           <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">Eat Sleep And</div></div></div>
-                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splittin>Tasty Pizza</div></div>
+                           <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">{{__('home.Eat Sleep And')}}</div></div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-top" data-delay="1s" data-splittin>{{__('home.Tasty Pizza')}}</div></div>
                             </div>
-                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="1.5s">Food is any substance consumed to provide nutritional <br>support for an organism.</div></div></div>
+                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="1.5s">{!!__('home.slider2_descriptiopn')!!}</div></div></div>
                             <div class="slider-btn-group justify-content-center">
                                 <div class="inner-layer">
                                 <a href="{{route('menu.page')}}" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">{{__('footer.Our Menu')}}</a>
@@ -143,10 +143,10 @@
                 <div class="slider-content-wrap d-flex align-items-center text-right">
                     <div class="container" @if (app()->getLocale() === 'ar') style="justify-content: flex-start;"@endif>
                         <div class="slider-content">
-                           <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">ewewEat Sleep And</div></div></div>
-                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splittin>Fried masala <br>in town!</div></div>
+                           <div class="slider-caption medium"><div class="inner-layer"><div data-animation="fade-in-top" data-delay="0.5s">{{__('home.Eat Sleep And')}}</div></div></div>
+                            <div class="slider-caption big"><div class="inner-layer"><div class="char-right" data-delay="1s" data-splittin>{!!__('home.Fried masala')!!}</div></div>
                             </div>
-                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">Food is any suwwwewebstance consumed to provide nutritional <br>support for an organism.</div></div></div>
+                            <div class="slider-caption small"><div class="inner-layer"><div data-animation="fade-in-bottom" data-delay="2s">{!!__('home.slider2_descriptiopn')!!}</div></div></div>
                             <div class="slider-btn-group justify-content-left">
                                 <div class="inner-layer">
                                 <a href="{{route('menu.page')}}" class="slider-btn" data-animation="fade-in-bottom" data-delay="2.5s">{{__('footer.Our Menu')}}</a>
@@ -163,7 +163,7 @@
             <div class="container">
             <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
                     <h4>@lang('general.recommended_Dishes')</h4>
-                    <h2>@lang('general.Our_DeliciousFoods') </h2>
+                    <h2>{!!__('general.ourDeliciousFood')!!} </h2>
                 </div>
                 <div class="nav-outside">
                   <div class="food-carousel swiper-container nav-visible"> 
@@ -252,7 +252,7 @@
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
                     <h4>@lang('general.menu')</h4>
-                    <h2>@lang('general.Our_DeliciousFoods')</span></h2>
+                    <h2>{!!__('general.ourDeliciousFood')!!} </h2>
                     <p>@lang('general.home.food')</p>
                 </div>
                 <ul class="food-menu-filter">
@@ -331,8 +331,8 @@
                 <div class="row align-items-center">
                     <div class="col-md-6 wow fadeInLeft" data-wow-delay="200ms">
                         <div class="delivery-info">
-                            <h2>A Moments Of Delivered <br> On <span>Right Time</span> &amp; Place</h2>
-                            <p>The restaurants in Hangzhou also catered to many northern Chinese who had fled south from Kaifeng during the Jurchen invasion of the 1120s, while it is also known that many restaurants were run by families.</p>
+                            <h2>{!! __('general.delivery_caption') !!}</h2>
+                            <p>{!! __('general.delivery_description') !!}</p>
                             <div class="order-content">
                                <a href="{{route('menu.page')}}" class="default-btn">{{ __('header.Menu')}}<span></span></a>
                                 <h3><span>{{__('general.hot_line')}}</span> <a href="tel:920001939" style="color: #f99839;">
@@ -406,9 +406,9 @@
            <div class="bg-shape white"></div>
             <div class="container">
                 <div class="section-heading mb-30 text-center wow fadeInUp" data-wow-delay="200ms">
-                    <h4>Latest Blog Posts</h4>
-                    <h2>This Is All About <span>Foods</span></h2>
-                    <p>Food is any substance consumed to provide nutritional <br> support for an organism.</p>
+                    <h4>@lang('general.home.Blog_Posts')</h4>
+                    <h2>{!! __('general.blog_caption') !!}</h2>
+                    <p>{!! __('general.blog_description') !!}</p>
                 </div>
                 <div class="row blog-posts">
                 @if(isset($menu['news']))

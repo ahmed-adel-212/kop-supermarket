@@ -14,6 +14,10 @@ return [
     */
 
     'Fresh Ingredients' => 'مقادير طازجة',
+    'Tasty Pizza' => 'البيتزا اللذيذه',
+    'Fresh Ingredients' => 'مقادير طازجة',
+    'Fresh Ingredients' => 'مقادير طازجة',
+    'Eat Sleep And' => 'استمتع بالاكل و ',
     'The Certified Chefs' => 'الطهاة المعتمدون',
     '30 Mins Delivery' => '30 دقيقة التسليم',
     'Our Special Deals' => 'المنتجات المميزة',
@@ -26,6 +30,9 @@ return [
     'Read More' => 'المزيد',
     'View Our Menu' => 'لزيارة القائمة',
     'Order Today, While It’s Hot!' => 'اطلب الآن!',
+    'slider2_descriptiopn' => 'الغذاء هو أي مادة تستهلك لتوفير التغذية <br>دعم لكائن حي.',
+    'slider3_descriptiopn' => 'الغذاء هو أي مادة تستهلك لتوفير التغذية <br>دعم لكائن حي.',
+    'Fried masala' => 'Fried masala <br>in town!',
     'Eat Delicious & Tasty Fast-Foods With Real Flavours' => 'تناول وجبات سريعة ولذيذة بنكهات حقيقية',
     'Create & Order Now!' => 'أطلب الأن!',
     'Our Offers' => 'عروضنا المميزة',
