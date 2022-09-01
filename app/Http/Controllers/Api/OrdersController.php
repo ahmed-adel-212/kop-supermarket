@@ -692,7 +692,7 @@ class OrdersController extends BaseController
                     'offer' => $offer,
                     'order_items' => $order_items,
                     // 'is_valid' => $is_valid,
-                    // 'final_offer_price' => $Offer_price,
+                    'final_offer_price' => $Offer_price,
                 ];
             }
         }
