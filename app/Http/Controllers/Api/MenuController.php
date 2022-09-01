@@ -64,6 +64,7 @@ class MenuController extends BaseController
         
                         $item->discountAmount=null;
                         $item->offer_price=null;
+                        $item->offer_price_without_tax = null;
                         $item->offer = $parent_offer;
                         if ($parent_offer) {
                             if ($parent_offer->discount_type == 1) {
@@ -73,7 +74,8 @@ class MenuController extends BaseController
                                 $item->offer->offer_price = $item->price - $parent_offer->discount_value;
                             }
                             $item->discountAmount=(double)$item->price-(double)$item->offer->offer_price;
-                            $item->offer_price=$item->offer->offer_price;
+                            $item->offer_price=round($item->offer->offer_price, 2);
+                            $item->offer_price_without_tax = round($item->offer_price / 1.15, 2);
                             unset($item->offer->offer);
                         }
                     }

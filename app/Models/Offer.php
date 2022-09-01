@@ -13,6 +13,8 @@ class Offer extends Model
 
     protected $dates = ['date_from', 'date_to'];
 
+    protected $appends = ['offer_price_without_tax'];
+
     public function details() {
 
         if ($this->offer_type == 'buy-get') {
@@ -50,6 +52,14 @@ class Offer extends Model
     public function branches()
     {
         return $this->belongsToMany('App\Models\Branch', 'branch_offer');
+    }
+
+    public function getOfferPriceWithoutTaxAttribute()
+    {
+        if (!$this->offer_price) {
+            return null;
+        }
+        return (string)round($this->offer_price / 1.15);
     }
 
 
