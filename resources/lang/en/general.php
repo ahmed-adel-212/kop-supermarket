@@ -412,4 +412,7 @@ return [
     'warning' => 'Warning',
     'branch_is_closed' => ':branch is Closed at this time',
     'go_branches' => 'Select Another Branch',
+    'fb' => 'Facebook',
+    'twitter' => 'Twitter',
+    'insta' => 'Instagram',
 ];

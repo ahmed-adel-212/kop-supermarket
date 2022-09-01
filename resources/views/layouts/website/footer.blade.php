@@ -6,12 +6,12 @@
             <div class="row">
                 <div class="col-lg-3 col-sm-6 sm-padding">
                     <div class="footer-widget">
-                        <a class="logo" href="#"><img src="{{asset('website-assets/img/logokop.bmp')}}" alt="img"></a>
+                        <a class="logo" href="{{route('home.page')}}"><img src="{{asset('website-assets/img/logokop.bmp')}}" alt="img"></a>
                         <ul class="footer-social">
-                            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                            <li><a target="_blank" href="https://www.facebook.com/groups/1324000870991750/?ref=share"><i class="fab fa-facebook"></i></a></li>
+                            <li><a target="_blank" href="https://twitter.com/kingdomof_p?s=21&t=8gPTwTI5Ao33PFBlqOYatQ"><i class="fab fa-twitter"></i></a></li>
+                            <li><a target="_blank" href="https://instagram.com/kingdom.of_p?igshid=NmNmNjAwNzg="><i class="fab fa-instagram"></i></a></li>
+                            {{-- <li><a href="#"><i class="fab fa-pinterest"></i></a></li> --}}
                         </ul>
                         <p class="pb-4">Financial experts support or help you to to find out which way you can raise your funds more.</p>
                     </div>

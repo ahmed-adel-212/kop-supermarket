@@ -68,8 +68,8 @@ class OfferController extends Controller
             'description' => 'nullable',
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=509,height=459',
-            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
+            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             'offer_type' => 'required',
         ]);
 
@@ -177,7 +177,7 @@ class OfferController extends Controller
 
             $discountOffer = OfferDiscount::create([
                 'offer_id' => $offer->id,
-                'quantity' => $request->discount_quantity,
+                'quantity' => 1,
                 'category_id' => $request->category_id,
                 'discount_type' => $request->discount_type,
                 'discount_value' => $request->discount_value,
