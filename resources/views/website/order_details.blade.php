@@ -432,7 +432,7 @@
             $(document).ready(function() {
                 let busy = false;
                 const reorderErrorModal = new bootstrap.Modal('#reorder-error', {
-                    backdrop: 'static',
+                    // backdrop: 'static',
                     keyboard: false,
                 });
                 $('.checkout-btn').click(function() {

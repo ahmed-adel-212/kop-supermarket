@@ -24,7 +24,7 @@ class OffersController extends BaseController
         $offers=[];
         if (!empty($user_branches)) {
             $offer_id = DB::table("branch_offer")->whereIn('branch_id', $user_branches)->pluck('offer_id');
-            $offers = Offer::whereIn('id',$offer_id)->with('buyGet', 'discount')->filter($filters)->orderBy('created_at', 'desc')->get();
+            $offers = Offer::whereIn('id',$offer_id)->with('buyGet')->filter($filters)->orderBy('created_at', 'desc')->get();
         }
 
         // $offers =  $offerswith('buyGet', 'discount')->filter($filters)->get();
@@ -117,17 +117,18 @@ class OffersController extends BaseController
             // $details['items'] = $items;
             $result['details'] = $details;
 
-            foreach ($items as $item) {
-                $item = $item->toArray();
-                if ($offer->discount->discount_type == 1) {
-                    $disccountValue = $item['price'] * $offer->discount->discount_value / 100;                   
-                    $item['offer_price'] = round($item['price'] - $disccountValue, 2);                    
-                } elseif ($offer->discount->discount_type == 2) {
-                    $item['offer_price'] = round($item['price'] - $offer->discount->discount_value);
-                }
-                // $result['details']['items'];
-                $result['details']['items'][] = $item;
-            }
+            // foreach ($items as $item) {
+            //     $item = $item->toArray();
+            //     $item['offer_price'] = 0;
+            //     if ($offer->discount->discount_type == 1) {
+            //         $disccountValue = $item['price'] * $offer->discount->discount_value / 100;                   
+            //         $item['offer_price'] = round($item['price'] - $disccountValue, 2);                    
+            //     } elseif ($offer->discount->discount_type == 2) {
+            //         $item['offer_price'] = round($item['price'] - $offer->discount->discount_value);
+            //     }
+            //     // $result['details']['items'];
+            //     // $result['details']['items'][] = $item;
+            // }
             
             return $this->sendResponse($result, 'offer details');
         }

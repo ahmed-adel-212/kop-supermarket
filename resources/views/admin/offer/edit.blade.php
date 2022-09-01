@@ -317,15 +317,15 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputQuauntity">Quauntity</label>
-                                            <input type="number" class="form-control" id="exampleInputQuauntity"
+                                    {{-- <div class="col-md-6">
+                                        <div class="form-group"> --}}
+                                            {{-- <label for="exampleInputQuauntity">Quauntity</label> --}}
+                                            <input type="hidden" hidden class="form-control" id="exampleInputQuauntity"
                                                 placeholder="Enter Quauntity" name="discount_quantity"
-                                                value="{{ $offer->discount->quantity }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                                value="1">
+                                        {{-- </div>
+                                    </div> --}}
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputCategory">Category</label>
                                             <select class="form-control category-select" id="exampleInputCategory1"

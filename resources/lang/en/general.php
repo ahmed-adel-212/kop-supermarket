@@ -420,7 +420,10 @@ return [
     'payment_not_found' => 'Payment Not Found',
     'congrat' => 'Congratulations',
     'closeTab' => 'you can now close this window to complete your order checkout',
-    'warning' => 'Warning',
+    'warning' => 'Alert',
     'branch_is_closed' => ':branch is Closed at this time',
     'go_branches' => 'Select Another Branch',
+    'fb' => 'Facebook',
+    'twitter' => 'Twitter',
+    'insta' => 'Instagram',
 ];

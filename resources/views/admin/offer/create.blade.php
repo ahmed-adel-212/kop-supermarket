@@ -338,20 +338,20 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="exampleInputQuauntity">Quauntity</label>
-                                            <input type="number"
-                                                class="form-control {!! $errors->first('discount_quantity', 'is-invalid') !!}"
+                                            <label for="exampleInputQuauntity">Quauntity</label> --}}
+                                            <input type="hidden" hidden
+                                                class="form-control"
                                                 id="exampleInputQuauntity" placeholder="Enter Quauntity"
                                                 name="discount_quantity"
-                                            value="{{old('discount_quantity')}}">
-                                            @error('discount_quantity')
+                                            value="1">
+                                            {{-- @error('discount_quantity')
                                             <div class="help-block">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    </div> --}}
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputCategory">Category</label>
                                             <select

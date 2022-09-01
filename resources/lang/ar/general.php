@@ -443,4 +443,7 @@ return [
 'warning' => 'تنبيه',
 'branch_is_closed' => ':branch مغلق حاليا',
 'go_branches' => 'اختر فرعًا آخر',
+'fb' => 'فيس بوك',
+'twitter' => 'تويتر',
+'insta' => 'إنستجرام',
 ];
