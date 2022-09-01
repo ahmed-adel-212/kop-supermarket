@@ -18,7 +18,9 @@ class Item extends Model
     protected $fillable = ['branches','name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
 
     // protected $hidden = ["branches"];
-    protected $appends = ['is_hidden', 'dough_type', 'dough_type_2', 'favoured', 'price_without_tax'];
+    protected $appends = ['is_hidden', 'dough_type', 'dough_type_2', 'favoured', 'price_without_tax', 
+    // 'offer_price_without_tax'
+];
 
     protected $casts = ['main' => 'boolean'];
 
@@ -109,7 +111,13 @@ class Item extends Model
         return (string)round($this->price / 1.15, 2);
     }
 
-    
+    // public function getOfferPriceWithoutTaxAttribute()
+    // {
+    //     if (!$this->offer || !optional($this->offer)->offer_price) {
+    //         return null;
+    //     }
+    //     return round($this->offer->offer_price / 1.15);
+    // }
 
     public function isVisibleForAuthUser()
     {
