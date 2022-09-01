@@ -13,7 +13,7 @@
                             <li><a target="_blank" href="https://instagram.com/kingdom.of_p?igshid=NmNmNjAwNzg="><i class="fab fa-instagram"></i></a></li>
                             {{-- <li><a href="#"><i class="fab fa-pinterest"></i></a></li> --}}
                         </ul>
-                        <p class="pb-4">Financial experts support or help you to to find out which way you can raise your funds more.</p>
+                        <p class="pb-4">@lang('footer.financial')</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6 sm-padding">
