@@ -19,9 +19,11 @@ class Payment extends Model
         'order_id',
         'total_paid',
         'data',
-        'hash'
+        'hash',
     ];
     public $timestamps = true;
+
+    protected $hidden = ['data', 'hash'];
 
     public function order()
     {
