@@ -426,4 +426,5 @@ return [
     'fb' => 'Facebook',
     'twitter' => 'Twitter',
     'insta' => 'Instagram',
+    'share' => 'Share',
 ];

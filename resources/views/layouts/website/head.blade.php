@@ -1,6 +1,7 @@
 <head>
     <meta charset="utf-8">
     <title>@yield('title')</title>
+    @yield('share_meta')
     <meta content="Chernyh Mihail" name="author">
     <meta content="Spedito - All in one place" name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,12 +81,15 @@
         .default-bg:hover {
             background: #fe9d2d;
         }
-        .header-menu-wrap ul li > a {
+
+        .header-menu-wrap ul li>a {
             /* padding: 0 5px; */
         }
+
         .food-info h4 {
             min-height: 0 !important;
         }
+
         .line-clamp2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -95,11 +99,11 @@
 
         .line-clamp5 {
             display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        min-height: 135px;
-        /* max-height: 180px; */
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 135px;
+            /* max-height: 180px; */
         }
     </style>
 
@@ -230,12 +234,17 @@
         .header-menu-wrap li li.active {
             background-color: #ff8e28;
         }
+
         .contact-info-list li a:hover {
             color: #585353;
         }
-        [dir=rtl] .dl-slider-button-prev i, [dir=rtl] .dl-slider-button-next i, .las.la-arrow-left i, .las.la-arrow-right i {
-        transform: rotateY(180deg);
-      }
+
+        [dir=rtl] .dl-slider-button-prev i,
+        [dir=rtl] .dl-slider-button-next i,
+        .las.la-arrow-left i,
+        .las.la-arrow-right i {
+            transform: rotateY(180deg);
+        }
     </style>
     @if (app()->getLocale() == 'ar')
         <style>
