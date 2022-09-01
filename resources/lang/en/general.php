@@ -29,6 +29,7 @@ return [
     'verify'=>'Verify',
     'recommended_Dishes' => 'recommended Dishes',
     'Off_Now' => ' Off Now' ,
+    'now' => 'Now' ,
     'use map'=>'Use Map',
     'no delivery riyadh' => 'Delivery service is not available in this area ',
     'search' => 'Search',
