@@ -40,7 +40,46 @@ class MenuController extends BaseController
             }}
             $categories = Category::with('items')->get();
             $categories->first()->loadMissing('items');
+            foreach($categories as $category){
+                foreach ($category->items as $key => $item) {
+                    $branches = explode(',', $item->branches);
+                    //if(in_array($request->branch_id, $branches))
+                    {
+                        $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
         
+                        $parent_offer = null;
+                        foreach ($offers as $offer) {
+                            $parent_offer = OfferDiscount::find($offer->offer_id);
+        
+        
+                            if ($parent_offer)  break;
+                        }
+                        // return $parent_offer;
+                        if (isset($parent_offer->offer)) {
+        
+                            if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
+                                $parent_offer = null;
+                            }
+                        }
+        
+                        $item->discountAmount=null;
+                        $item->offer = $parent_offer;
+                        if ($parent_offer) {
+                            if ($parent_offer->discount_type == 1) {
+                                $disccountValue = $item->price * $parent_offer->discount_value / 100;
+                                $item->offer->offer_price = $item->price - $disccountValue;
+                            } elseif ($parent_offer->discount_type == 2) {
+                                $item->offer->offer_price = $item->price - $parent_offer->discount_value;
+                            }
+                            $item->discountAmount=(double)$item->price-(double)$item->offer->offer_price;
+
+                            unset($item->offer->offer);
+                        }
+                    }
+                }
+            }
+            
+    
         return $this->sendResponse($categories, __('general.ret', ['key' => __('general.cat_ret')]));
     }
 
