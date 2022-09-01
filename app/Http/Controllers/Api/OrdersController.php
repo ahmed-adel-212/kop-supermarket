@@ -216,7 +216,7 @@ class OrdersController extends BaseController
 
 
         // apply 50% discount if this is first order
-         $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
+        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
         $orderData = [
             "address_id" => $request->address_id,
@@ -233,8 +233,8 @@ class OrdersController extends BaseController
             'offer_value' => $request->offer_value,
             'order_from' => 'mobile',
             'description_box' => $request->description,
-            'payment_type' =>$request->payment_type
-  
+            'payment_type' => $request->payment_type
+
         ];
 
         $order = Order::create($orderData);
@@ -282,13 +282,13 @@ class OrdersController extends BaseController
         }
 
         foreach ($items as $item) {
-            
+
             $orderItem = Item::where('id', $item['item_id'])->first();
             $orderItemExtras = null;
 
 
             if (array_key_exists('extras', $item)) {
-                   $orderItemExtras = Extra::whereIn('id', $item['extras'])->get();
+                $orderItemExtras = Extra::whereIn('id', $item['extras'])->get();
             }
             $orderItemWithouts = null;
             if (array_key_exists('withouts', $item)) {
@@ -315,7 +315,7 @@ class OrdersController extends BaseController
             if (is_array($extras) && count($extras) && !is_int($extras[0])) {
                 $extras = collect($extras)->pluck('id');
             }
-            
+
             $withouts = array_key_exists('withouts', $item) ? $item['withouts'] : null;
             if (is_array($withouts) && count($withouts) && !is_int($withouts[0])) {
                 $withouts = collect($withouts)->pluck('id');
@@ -334,10 +334,8 @@ class OrdersController extends BaseController
                 'offer_last_updated_at' => optional($offer)->updated_at,
                 'quantity' => array_key_exists('quantity', $item) ? $item['quantity'] : 1,
             ]);
-
-            
         }
-       
+
 
         return $this->sendResponse($order,  __('general.Order created successfully!'));
     }
@@ -608,8 +606,8 @@ class OrdersController extends BaseController
             } else {
                 $items[] = collect([
                     'item_id' => $item->id,
-                    'extras' =>[explode(', ', $item->pivot->item_extras)],
-                    'withouts' =>[ explode(', ', $item->pivot->item_withouts)],
+                    'extras' => [explode(', ', $item->pivot->item_extras)],
+                    'withouts' => [explode(', ', $item->pivot->item_withouts)],
                     'price' => Item::find($item->id)->price,
                     'dough_type_ar' => $item->pivot->dough_type_ar,
                     'dough_type_en' => $item->pivot->dough_type_en,
@@ -736,7 +734,7 @@ class OrdersController extends BaseController
             'service_type' => $order->service_type,
             'items' => $items,
             'customer_id' => $order->customer_id,
-            'payment_type' =>$request->payment_type,
+            'payment_type' => $request->payment_type,
         ]);
 
         // Get address or branch based on service_type
@@ -762,13 +760,13 @@ class OrdersController extends BaseController
 
         if ($request->has('confirm') && $request->input('confirm')) {
             // return $requestt;
-             $return = $this->store($requestt);
+            $return = $this->store($requestt);
             if ($return->getOriginalContent()['success']) {
                 return $this->sendResponse($return->getOriginalContent()['data'], 'Order confirmed successfully');
             }
         }
-    
-        return $this->sendResponse(['message'=>$message,'validation'=>$validation,'items'=>$reorder], '');
+
+        return $this->sendResponse(['message' => $message, 'validation' => $validation, 'items' => $reorder], '');
     }
 
     public function getById(Request $request, Order $order)
@@ -791,7 +789,6 @@ class OrdersController extends BaseController
 
     public function rejectOrder(Request $request, Order $order)
     {
-
         if ($order->state != 'pending') {
             return $this->sendError(__('general.You cannot reject this order!'), 400);
         }
@@ -800,12 +797,12 @@ class OrdersController extends BaseController
 
 
         if ($order->points_paid != 0 && is_int($order->points)) {
-            PointsTransaction::create([
-                'points' => $order->points,
-                'user_id' => $order->customer_id,
-                'order_id' => $order->id,
-                'status' => 3
-            ]);
+            
+            $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
+            if ($point) {
+                $point->status = 3; // rejected
+                $point->save();
+            }
         }
 
 
@@ -822,12 +819,20 @@ class OrdersController extends BaseController
 
         $order->update(['state' => 'completed']);
 
+
+        $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
+        if ($point) {
+            $point->status = 4; // completed
+            $point->save();
+        }
+
         PointsTransaction::create([
             'points' => round($order->total),
             'user_id' => $order->customer_id,
             'order_id' => $order->id,
             'status' => 0
         ]);
+
 
         if ($order->service_type == 'delivery') {
             \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order is on the way, الطلب في الطريق إليك", "Order");
@@ -851,12 +856,17 @@ class OrdersController extends BaseController
 
 
         if ($order->points_paid != 0 && is_int($order->points)) {
-            PointsTransaction::create([
-                'points' => $order->points,
-                'user_id' => $order->customer_id,
-                'order_id' => $order->id,
-                'status' => 4
-            ]);
+            // PointsTransaction::create([
+            //     'points' => $order->points,
+            //     'user_id' => $order->customer_id,
+            //     'order_id' => $order->id,
+            //     'status' => 4
+            // ]);
+            $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
+            if ($point) {
+                $point->status = 1; // canceled
+                $point->save();
+            }
         }
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Cancelled, لقد تم إلغاء طلبك", "Order");

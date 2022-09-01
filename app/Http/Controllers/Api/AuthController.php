@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\NotificationController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -363,8 +364,14 @@ class AuthController extends BaseController
 
     public function getUserPoints(Request $request)
     {
-        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0, 3, 4])->get()->sum('points');
+        // 0 --> order completed
+        // 1 --> order canceled
+        // 3 --> order rejected
+        // 4 --> order canceled
+        $validRefundedPoints = Auth::user()->points_transactions()->whereIn('status', [0])->get()->sum('points');
         $consumedCanceledPoints = Auth::user()->points_transactions()->whereIn('status', [2])->get()->sum('points');
+        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->sum('points');
+        $consumedCanceledPoints += (double) $completed;
         try {
             $data = [
                 //'user_points' => Auth::user()->points_transactions()->whereIn('status', [0, 2])->get()->sum('points'),
