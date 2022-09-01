@@ -1079,6 +1079,11 @@ class OrdersController extends BaseController
             session()->flash('success', __('general.Order Payed Successfully'));
             session()->forget('payment_hash');
             // session(['payment' => $paymentId->toArray()]);
+            $paymentId->status = $request->status;
+            $paymentId->message = $request->message;
+            $paymentId->data = $payment->toJson();
+            // $paymentId->order_id = $return['data']['id'];
+            $paymentId->save();
 
             return view('api.payment_response');
         } else {

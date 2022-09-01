@@ -111,26 +111,26 @@ class OrdersController extends Controller
                 ]);
 
                 // submit order
-                $items = auth()->user()->carts;
-                foreach ($items as $item) {
-                    $item->extras = json_decode($item->extras);
-                    $item->withouts = json_decode($item->withouts);
-                    $item->offerId = $item->offer_id;
-                    $item->offer_price = round($item->offer_price, 2);
-                    $item->price = Item::find($item->item_id)->price;
-                }
-                if (!$request->has('points_paid')) {
-                    $request = $request->merge([
-                        'items' => $items,
-                        'points_paid' => 0,
-                    ]);
-                } else {
-                    $request = $request->merge([
-                        'items' => $items,
-                        'points_paid' => $request->points_paid,
+                // $items = auth()->user()->carts;
+                // foreach ($items as $item) {
+                //     $item->extras = json_decode($item->extras);
+                //     $item->withouts = json_decode($item->withouts);
+                //     $item->offerId = $item->offer_id;
+                //     $item->offer_price = round($item->offer_price, 2);
+                //     $item->price = Item::find($item->item_id)->price;
+                // }
+                // if (!$request->has('points_paid')) {
+                //     $request = $request->merge([
+                //         'items' => $items,
+                //         'points_paid' => 0,
+                //     ]);
+                // } else {
+                //     $request = $request->merge([
+                //         'items' => $items,
+                //         'points_paid' => $request->points_paid,
 
-                    ]);
-                }
+                //     ]);
+                // }
                 // $return = $this->store_order($request);
                 // if ($return['success'] == true) {
 
@@ -142,29 +142,32 @@ class OrdersController extends Controller
                 //     //     'order_id' => $return['data']->id,
                 //     //     'total_paid' => $request->amount / 100
                 //     // ]);
-                $paymentId->status = $request->status;
-                $paymentId->message = $request->message;
-                // $paymentId->order_id = $return['data']['id'];
-                $paymentId->save();
-                //     session()->put(['success' => $return['success']]);
-                //     foreach ($items as $item) {
-                //         $item->delete();
-                //     }
-                //     if (session()->has('point_claim_value')) {
-                //         session()->forget('point_claim_value');
-                //         session()->forget('points_value');
-                //     }
-                session()->flash('success', __('general.Order Payed Successfully'));
-                session(['payment' => $paymentId->toArray()]);
-
-                if (session()->has('payment_hash')) {
-                    return view('api.payment_response');
-                    session()->forget('payment_hash');
-                }
-
-                return redirect()->route('payment.checkout');
+               
                 // }
             }
+
+            $paymentId->status = $request->status;
+            $paymentId->message = $request->message;
+            $paymentId->data = $payment->toJson();
+            // $paymentId->order_id = $return['data']['id'];
+            $paymentId->save();
+            //     session()->put(['success' => $return['success']]);
+            //     foreach ($items as $item) {
+            //         $item->delete();
+            //     }
+            //     if (session()->has('point_claim_value')) {
+            //         session()->forget('point_claim_value');
+            //         session()->forget('points_value');
+            //     }
+            session()->flash('success', __('general.Order Payed Successfully'));
+            session(['payment' => $paymentId->toArray()]);
+
+            if (session()->has('payment_hash')) {
+                return view('api.payment_response');
+                session()->forget('payment_hash');
+            }
+
+            return redirect()->route('payment.checkout');
         } else {
             if ($request->status == 'failed') {
 

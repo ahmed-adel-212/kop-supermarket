@@ -409,4 +409,7 @@ return [
     'payment_not_found' => 'Payment Not Found',
     'congrat' => 'Congratulations',
     'closeTab' => 'you can now close this window to complete your order checkout',
+    'warning' => 'Warning',
+    'branch_is_closed' => 'Branch :branch is Closed',
+    'go_branches' => 'Select Another Branch',
 ];
