@@ -138,7 +138,6 @@
                         selectele.addClass("btn-success");
                         selectele.removeClass("btn-primary");
                         selectele.next().attr('checked','checked');
-                        alert('checked');
                         buy_quantity_counter++;
                     }
                     else {
@@ -172,7 +171,6 @@
                 e.preventDefault();
                 let selectele = $(this);
                 if(get_quantity_counter < get_quantity){
-                    alert('item')
                     if(selectele.text() == "{{__('general.Buy')}}"){
                         selectele.text("{{__('general.Cancel')}}");
                         selectele.addClass("btn-success");
