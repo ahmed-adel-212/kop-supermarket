@@ -352,28 +352,30 @@
         </div>
 
         <!-- Modal -->
+        @if (session()->has('branch_closed'))
         <div class="modal fade" id="branchClosed" tabindex="-1" aria-labelledby="branchClosedLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="branchClosedLabel">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white" id="branchClosedLabel">
                             {{ __('general.warning') }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        {{ __('general.branch_is_closed') }}
+                    <div class="modal-body text-capitalize">
+                        {{ __('general.branch_is_closed', ['branch' => session('branch_name')]) }}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn default-btn rounded shadow-sm bg-primary confirm">
+                        <a href="{{route('takeaway.page')}}" class="btn default-btn rounded shadow-sm bg-primary confirm">
                             {{ __('general.go_branches') }}
                             <span></span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
 
 
     @endsection
@@ -389,7 +391,7 @@
                 });
                 const branchModal = new bootstrap.Modal('#branchClosed', {
                     keyboard: false,
-                    backdrop: 'static',
+                    
                 });
 
                 @if (session()->has('branch_closed'))
