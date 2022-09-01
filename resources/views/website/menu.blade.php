@@ -63,7 +63,7 @@
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category->id}}">
                         <div class="product-item" >
                            <!-- <div class="sale"></div> -->
-                            <div class="product-thumb">
+                            <div class="product-thumb" style="min-height:300px !important;max-height:300 !important">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>

@@ -276,7 +276,7 @@
                     @endif
                         <div class="product-item " >
                           
-                           <div class="product-thumb">
+                           <div class="product-thumb" style="min-height:300px !important;max-height:300 !important">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>
@@ -287,10 +287,11 @@
                                </ul>
                                 <h4>{{$dealItem['description_'.app()->getLocale()]}}</h4>
                                 <div class="price">
-                                    <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
-                                    <ul class="product-meta">
+                                <ul class="product-meta">
                                         <li>{{__('general.calories')}}:<a href="javascript:void(0)">{{ $dealItem->calories }}</a></li>
                                     </ul>
+                                    <h4>@lang('home.Price'): <span>{{$dealItem->price}} @lang('general.SR')</span> </h4>
+                                    
                                 </div>
                             </div>
                         </div>

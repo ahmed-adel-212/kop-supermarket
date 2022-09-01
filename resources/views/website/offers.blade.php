@@ -12,7 +12,7 @@
         text-overflow: ellipsis;
         display: -webkit-box;
         line-height: 20px;     /* fallback */
-        /* max-height: 32px;      fallback */
+        /* max-height: 32px !important;      fallback */
         -webkit-line-clamp: 3; /* number of lines to show */
         -webkit-box-orient: vertical;
     }
@@ -24,7 +24,8 @@
 @endsection
 
 @section('pageName')
-    <body class="page-article dm-light"> @endsection
+    <body class="page-article dm-light">
+@endsection
 
     @section('content')
 
@@ -55,7 +56,6 @@
                         <a href="{{route('menu.page')}}" class="default-btn"><i class="fas fa-utensils"></i>Full Menu <span></span></a>
                     </div>
                 </div>
-                @if(empty($offers))
                 <div class="nav-outside">
                   <div class="food-carousel swiper-container nav-visible">
                        <div class="swiper-wrapper">
@@ -79,7 +79,7 @@
                                             <li><i class="las la-star"></i></li>
                                             <li><i class="las la-star"></i></li>
                                        </ul>
-                                        <h3 class="line-clamp5">{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}
+                                        <h3 class="line-clamp5" style="min-height: 32px !important;">{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}
                                             <br>
                                          
                                         </h3>
@@ -100,12 +100,7 @@
                         <div class="carousel-preloader"><div class="dot-flashing"></div></div>
                    </div>
                 </div>
-                @else
-                <div class="text-center">
-                <p>@lang('general.barnchNoOffer')</p>
-                </div>
-                
-                @endif
+               
             </div>
         </section><!--/.food-menu-->
 
