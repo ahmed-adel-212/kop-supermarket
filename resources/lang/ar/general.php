@@ -432,4 +432,7 @@ return [
 'payment_not_found' => 'عملية الدفع غير موجودة',
 'congrat' => 'تهانينا',
 'closeTab' => 'يمكنك الآن إغلاق هذه النافذة لإستكمال طلبك',
+'warning' => 'تنبيه',
+'branch_is_closed' => ':branch مغلق حاليا',
+'go_branches' => 'اختر فرعًا آخر',
 ];

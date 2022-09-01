@@ -410,6 +410,6 @@ return [
     'congrat' => 'Congratulations',
     'closeTab' => 'you can now close this window to complete your order checkout',
     'warning' => 'Warning',
-    'branch_is_closed' => 'Branch :branch is Closed',
+    'branch_is_closed' => ':branch is Closed at this time',
     'go_branches' => 'Select Another Branch',
 ];
