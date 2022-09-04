@@ -90,11 +90,11 @@ class OrdersController extends Controller
 
         if ($request->status == 'paid' && $request->message == "Succeeded!$testMessage" && session('checkOut_details')) {
 
-            $payment = \Moyasar\Facades\Payment::fetch($request->id);
+            // $payment = \Moyasar\Facades\Payment::fetch($request->id);
 
-            // dd($payment->status, $payment->amount, $paymentId->total_paid);
+            // abort_if($payment->status !== 'paid' || $payment->amount !== (int)$paymentId->total_paid, 404);
 
-            abort_if($payment->status !== 'paid' || $payment->amount !== (int)$paymentId->total_paid, 404);
+            $payment = $paymentId;
 
             if (session()->has('checkOut_details')) {
                 $request->merge([

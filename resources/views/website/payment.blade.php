@@ -195,7 +195,6 @@
                 language: "{{ app()->getLocale() }}",
                 on_completed: function(payment) {
                     return new Promise(function(resolve, reject) {
-
                         // This is just an example, provide anything you want here
                         $.ajax({
                             type: 'POST',
