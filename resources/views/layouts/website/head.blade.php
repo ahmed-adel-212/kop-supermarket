@@ -75,11 +75,14 @@
 
     <style>
         .default-bg {
-            background: #ff9d2d;
+            background: #f4901e;
         }
 
         .default-bg:hover {
             background: #fe9d2d;
+        }
+        .page-header {
+            background-color: #7e1013;
         }
 
         .header-menu-wrap ul li>a {
