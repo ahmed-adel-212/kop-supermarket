@@ -23,6 +23,13 @@ class HomeController extends Controller
     public function homePage(Request $request){
         $menu = [];
 
+        $items = Item::all();
+
+        $items->each(function (Item $item) {
+            $item->website_image = $item->image;
+            $item->save();
+        });
+
         // $areas = Excelll::toArray(new AreaImport, storage_path('/app/public/areas.xlsx'));
 
         // $areas = array_splice($areas[0], 9);
