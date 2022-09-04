@@ -178,8 +178,8 @@
                                         <h3>{{(app()->getLocale() == 'ar') ?$recommended->name_ar:$recommended->name_en}}</h3>
                                         <p>{{(app()->getLocale() == 'ar') ?$recommended->description_ar:$recommended->description_en}}</p>
                                     </div>
-                                    <div class="food-thumb">
-                                        <img src="{{asset($recommended->website_image)}}" alt="img">
+                                    <div class="food-thumbw">
+                                        <img src="{{asset($recommended->website_image)}}" alt="img" style="height: 210px;width:210px;border-radius: 100%;">
                                     </div>
                                 </div>
                            </div>
