@@ -616,7 +616,7 @@ class OrdersController extends BaseController
                 if ($item->pivot->offer_id == null) {
                     $order_items = [];
                     $noOffer_price = 0;
-                    $order_items = [
+                    $order_items[] = [
                         "order_id" => $item->pivot->order_id,
                         "item_id" => $item->id,
                         'quantity' => $item->pivot->quantity,
@@ -755,6 +755,7 @@ class OrdersController extends BaseController
         $taxes = $requestt->taxes;
         $allItems = array_merge($noOffers, $offers);
         $reorder = compact('location', 'allItems', 'total', 'subtotal', 'taxes', 'delivery_fees');
+        
         // confirm order
         // show popup if offer have changes or price changed
 
