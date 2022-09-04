@@ -248,7 +248,7 @@ button{
 }
 .default-btn{
     display: inline-block;
-    background: #ff9d2d;
+    background: #f4901e;
     color: #fff;
     font-family: 'Cairo', sans-serif;
     font-size: 14px;
@@ -678,10 +678,10 @@ max-height: 600px;
 .food-menu{ position: relative; }
 .product-item {
     background-color: #fff;
-    padding: 20px 20px 20px;
+    padding: 25px 20px 20px;
     position: relative;
-    min-height: 475px;
-    max-height: 475px;
+    min-height: 485px;
+    max-height: 485px;
 }
 .product-item .sale{
     background-color: #f43127;
@@ -693,13 +693,13 @@ max-height: 600px;
     line-height: 1;
     text-transform: uppercase;
     position: absolute;
-    left: 40px;
-    top: 40px;
+    left: 20px;
+    top: 15px;
 }
 .product-thumb {
     position: relative;
-    max-height: 300px;
-    min-height: 300px;
+    max-height: 250px;
+    min-height: 250px;
 
 }
 .product-thumb img{width: 100%;}

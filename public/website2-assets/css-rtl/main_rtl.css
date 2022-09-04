@@ -248,7 +248,7 @@ button{
 }
 .default-btn{
     display: inline-block;
-    background: #ff9d2d;
+    background: #f4901e;
     color: #fff;
     font-family: 'Cairo', sans-serif;
     font-size: 14px;
@@ -671,10 +671,10 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
 .food-menu{ position: relative; }
 .product-item {
     background-color: #fff;
-    padding: 70px 20px 20px;
+    padding: 25px 20px 20px;
     position: relative;
-    min-height: 525px;
-    max-height: 525px;
+    min-height: 485px;
+    max-height: 485px;
 }
 .product-item .sale{
     background-color: #f43127;
@@ -686,8 +686,8 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     line-height: 1;
     text-transform: uppercase;
     position: absolute;
-    right: 40px;
-    top: 40px;
+    right: 20px;
+    top: 15px;
 }
 .product-thumb{
     position: relative;
