@@ -321,8 +321,8 @@ class OrdersController extends BaseController
                 $withouts = collect($withouts)->pluck('id');
             }
             $order->items()->attach($item['item_id'], [
-                'item_extras' =>  is_array($extras) ? implode(',', $extras) : $extras,
-                'item_withouts' =>  is_array($withouts) ? implode(',', $withouts) : $withouts,
+                'item_extras' =>  is_array($extras) ? implode(', ', $extras) : $extras,
+                'item_withouts' =>  is_array($withouts) ? implode(', ', $withouts) : $withouts,
                 'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
                 'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
                 'dough_type_2_ar' => array_key_exists('dough_type_2_ar', $item) ? $item['dough_type_2_ar'] : null,
