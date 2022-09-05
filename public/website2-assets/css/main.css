@@ -680,8 +680,8 @@ max-height: 600px;
     background-color: #fff;
     padding: 25px 20px 20px;
     position: relative;
-    min-height: 485px;
-    max-height: 485px;
+    min-height: 455px;
+    max-height: 455px;
 }
 .product-item .sale{
     background-color: #f43127;
@@ -698,8 +698,9 @@ max-height: 600px;
 }
 .product-thumb {
     position: relative;
-    max-height: 250px;
-    min-height: 250px;
+    max-height: 270px;
+    min-height: 270px;
+    text-align: center;
 
 }
 .product-thumb img{width: 100%;}
