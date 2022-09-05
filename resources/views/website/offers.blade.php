@@ -62,11 +62,11 @@
                        
                         @foreach($offers as $offer)
                             <div class="swiper-slide">
-                                <div class="product-item">
+                                <div class="product-item" style="min-height: 510px !important; max-height: 510px !important;">
                                 @if($offer->offer_type =='discount')
                                    <div class="sale">-{{$offer->discount->discount_value}}%</div>
                                 @endif
-                                    <div class="product-thumb">
+                                    <div class="product-thumb" >
                                         <img src="{{asset($offer->website_image_menu)}}" alt="food">
                                         <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$offer->id)}}" class="order-btn cart">Order Now</a></div>
                                     </div>

@@ -277,7 +277,7 @@
                         <div class="product-item " >
                           
                            <div class="product-thumb">
-                                <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 250px;width:250px;border-radius: 100%;">
+                                <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 270px;width:270px;border-radius: 100%;">
                                 <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
                             </div>
                             <div class="food-info">
