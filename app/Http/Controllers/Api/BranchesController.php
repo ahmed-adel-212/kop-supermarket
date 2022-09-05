@@ -20,13 +20,13 @@ class BranchesController extends BaseController
     {//Get all branches with its city, areas and today working hours
 
         $branches = Branch::with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function($day) {
-            $day->where('day', strtolower(now()->englishDayOfWeek))->first();
+            $day->where('day', strtolower(now()->englishDayOfWeek))->get();
         }])->paginate(10);
 
         $branches = Branch::with(['city', 'area', 'deliveryAreas', 'workingDays'])->get();
 
         foreach($branches as $branch) {
-            $currentDay =  $branch->workingDays()->where('day', strtolower(now()->englishDayOfWeek))->first();
+            $currentDay =  $branch->workingDays()->where('day', strtolower(now()->englishDayOfWeek))->get();
             $branch->working_hours = $currentDay;
         }
 
