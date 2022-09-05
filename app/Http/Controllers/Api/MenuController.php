@@ -38,6 +38,7 @@ class MenuController extends BaseController
                 $address = Address::find($request->id);
                 $request->request->add(['branch_id' => DB::table('branch_delivery_areas')->where('area_id',$address->area_id)->pluck('branch_id')->first()]);
             }}
+
             $categories = Category::with('items')->get();
             $categories->first()->loadMissing('items');
             foreach($categories as $category){
@@ -45,22 +46,22 @@ class MenuController extends BaseController
                     $branches = explode(',', $item->branches);
                     //if(in_array($request->branch_id, $branches))
                     {
-                        $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
+                         $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
         
                         $parent_offer = null;
                         foreach ($offers as $offer) {
                             $parent_offer = OfferDiscount::find($offer->offer_id);
+                            if (isset($parent_offer->offer)) {
         
+                                if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
+                                     $parent_offer = null;
+                                }
+                            }
         
                             if ($parent_offer)  break;
                         }
                         // return $parent_offer;
-                        if (isset($parent_offer->offer)) {
-        
-                            if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
-                                $parent_offer = null;
-                            }
-                        }
+                      
         
                         $item->discountAmount=null;
                         $item->offer_price=null;

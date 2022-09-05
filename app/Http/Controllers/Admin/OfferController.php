@@ -61,7 +61,7 @@ class OfferController extends Controller
             //'title_ar' => 'required|min:3|max:20',
             'title' => 'required',
             'title_ar' => 'required',
-            'service_type' => 'required|in:takeaway,delivery',
+            'service_type' => 'required|in:takeaway,delivery,all',
             'date_from' => 'required|date|before_or_equal:date_to',
             'date_to' => 'required|date',
             'branches' => 'required|array',
@@ -110,50 +110,56 @@ class OfferController extends Controller
 
         }
 
-
-
-        $offer = Offer::create([
-            'title' => $request->title,
-            'title_ar' => $request->title_ar,
-            'service_type' => $request->service_type,
-            'date_from' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_from),
-            'date_to' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_to),
-            'description' => $request->description,
-            'description_ar' => $request->description_ar,
-            'image' => '',
-            'offer_type' => $request->offer_type,
-            'created_by' => $request->user()->id
-        ]);
-        $this->Make_Log('App\Models\Offer','create',$offer->id);
+        $services=($request->service_type=="all")?['takeaway','delivery']:[$request->service_type];
+      
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('offers'), $image_new_name);
-            $offer->image = '/offers/' . $image_new_name;
-            $offer->save();
+            $mobile_image = '/offers/' . $image_new_name;
         } else {
-            $image = '';
+            $mobile_image = '';
         }
-
+        
         if ($request->hasFile('website_image')) {
             $image = $request->website_image;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('offers'), $image_new_name);
-            $offer->website_image = '/offers/' . $image_new_name;
-            $offer->save();
+            $website_image = '/offers/' . $image_new_name;
         } else {
-            $image = '';
+            $website_image = '';
         }
-
         if ($request->hasFile('website_image_menu')) {
             $image = $request->website_image_menu;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('offers'), $image_new_name);
-            $offer->website_image_menu = '/offers/' . $image_new_name;
-            $offer->save();
+            $website_image_menu = '/offers/' . $image_new_name;
         } else {
-            $image = '';
+            $website_image_menu = '';
         }
+        
+    foreach($services as $service)
+    {
+        $offer = Offer::create([
+                'title' => $request->title,
+                'title_ar' => $request->title_ar,
+                'service_type' => $service,
+                'date_from' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_from),
+                'date_to' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_to),
+                'description' => $request->description,
+                'description_ar' => $request->description_ar,
+                'image' => '',
+                'offer_type' => $request->offer_type,
+                'created_by' => $request->user()->id
+            ]);
+            $offer->website_image=$website_image;
+            $offer->website_image_menu=$website_image_menu;
+            $offer->image=$mobile_image;
+            $offer->save();
+
+        $this->Make_Log('App\Models\Offer','create',$offer->id);
+
+ 
 
         if ($request->has('buy_quantity') && $request->buy_quantity != null) {
             $buy_get_offer = OfferBuyGet::create([
@@ -191,7 +197,8 @@ class OfferController extends Controller
             $role->where('name', 'customer');
         })->get();
         $offer->branches()->sync($request->branches);
-
+        
+    }
         foreach ($users as $user) {
             \App\Http\Controllers\NotificationController::pushNotifications($user->id,  "New Offer: " . $request->title, "Offer");
         }

@@ -51,8 +51,8 @@ class BranchesController extends BaseController
     //check if open 
     public function check(Request $request, $id)
     {
-        $branch = Branch::where('id',$id)->with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function($day) {
-            $day->where('day', strtolower(now()->englishDayOfWeek))->first();
+         $branch = Branch::where('id',$id)->with(['city', 'area', 'deliveryAreas'])->with(['workingDays' => function($day) {
+            $day->where('day', strtolower(now()->englishDayOfWeek))->get();
         }])->first();
 
         $open= $branch->open();
@@ -65,7 +65,18 @@ class BranchesController extends BaseController
         ];
         
         for($i=0;$i<count($open);$i++)
-        {    if((strtotime($open[$i]) < time()) and (strtotime($close[$i]) >  time()))
+        {   
+            $date=date("Y-m-d");
+             $o= date('Y-m-d H:i A', strtotime("$date $open[$i]"));
+
+            if(str_contains($close[$i],"AM"))
+            {
+                $date = date("Y-m-d", strtotime("+1 day"));
+                $c= date('Y-m-d H:i A', strtotime("$date $close[$i]"));
+            }
+         
+             $c= date('Y-m-d H:i A', strtotime("$date $close[$i]"));
+            if((strtotime(date("Y-m-d H:i A",strtotime($o))) < strtotime(date('Y-m-d H:i '))) and (strtotime(date("Y-m-d H:i A",strtotime($c))) >  strtotime(date('Y-m-d H:i A'))))
             {
                 $data['available']=true;
                 return $this->sendResponse($data,__('general.branch_ret'));
