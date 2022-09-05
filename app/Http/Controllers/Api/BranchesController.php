@@ -57,16 +57,19 @@ class BranchesController extends BaseController
 
         $open= $branch->open();
         $close= $branch->close();
+
         $data=[
             'open at'=>$open,
             'close at'=>$close,
             'available'=>false
         ];
-
-        if((strtotime($open) < time()) and (strtotime($close) >  time()))
-        {
-            $data['available']=true;
-            return $this->sendResponse($data,__('general.branch_ret'));
+        
+        for($i=0;$i<count($open);$i++)
+        {    if((strtotime($open[$i]) < time()) and (strtotime($close[$i]) >  time()))
+            {
+                $data['available']=true;
+                return $this->sendResponse($data,__('general.branch_ret'));
+            }
         }
         return $this->sendResponse($data, __('general.branch_ret'));
     }
