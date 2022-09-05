@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'All'   => 'الكل',
     'page expired' => 'انتهت صلاحية هذه الصفحة ',
     'please visit login page and login using new password' => 'برجاء التوجه لصفحة تسجيل الدخول لاستخدام كلمة السر الجديدة',
     'home.food' => 'الغذاء هو أي مادة تستهلك<br> لتوفير الدعم الغذائي للكائن الحي.',
@@ -155,6 +156,7 @@ return [
     'responsibilities' => 'المهام والمسؤليات',
     'Description' => 'التفاصيل',
     'Apply Now' => 'طلب',
+    'Order Now' => 'اطلب الان',
     'your application been submitted' => 'تم تقديم الطلب بنجاح !',
     'Something Went Wrong' => 'لقد حدث خطأ ما !!',
     'Contact Message Sent' => 'تم الارسال بنجاح',

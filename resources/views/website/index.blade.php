@@ -238,7 +238,7 @@
                                     <li><i class="fas fa-check"></i>{!!__('home.desc4')!!}</li>
                                 </ul>
                             
-                                <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$main_offer->id)}}" class="default-btn cart">Order Now <span></span></a>
+                                <a  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$main_offer->id)}}" class="default-btn cart">@lang('general.Order Now') <span></span></a>
                             </div>
                         </div>
                     </div>
@@ -278,7 +278,7 @@
                           
                            <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 270px;width:270px;border-radius: 100%;">
-                                <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
+                                <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">@lang('general.Order Now')</a></div>
                             </div>
                             <div class="food-info">
                                <ul class="ratting">
@@ -360,7 +360,7 @@
                             <img src="{{asset($menu['homeitem'][0]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][0]->description_ar:$menu['homeitem'][0]->description_en}}</h2>
-                                <a href="{{url('item/'.$menu['homeitem'][0]->category_id.'/'.$menu['homeitem'][0]->id)}}"@auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                                <a href="{{url('item/'.$menu['homeitem'][0]->category_id.'/'.$menu['homeitem'][0]->id)}}"@auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">@lang('general.Order Now')</a>
                             </div>
                         </div>
                    </div>
@@ -371,7 +371,7 @@
                             <img src="{{asset($menu['homeitem'][1]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][1]->description_ar:$menu['homeitem'][1]->description_en}}</h2>
-                                <a href="{{url('item/'.$menu['homeitem'][1]->category_id.'/'.$menu['homeitem'][1]->id)}}"  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                                <a href="{{url('item/'.$menu['homeitem'][1]->category_id.'/'.$menu['homeitem'][1]->id)}}"  @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">@lang('general.Order Now')</a>
                             </div>
                         </div>
                            </div>
@@ -380,7 +380,7 @@
                             <img src="{{asset($menu['homeitem'][2]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][2]->description_ar:$menu['homeitem'][2]->description_en}}</h2>
-                                <a href="{{url('item/'.$menu['homeitem'][2]->category_id.'/'.$menu['homeitem'][2]->id)}}" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                                <a href="{{url('item/'.$menu['homeitem'][2]->category_id.'/'.$menu['homeitem'][2]->id)}}" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">@lang('general.Order Now')</a>
                             </div>
                         </div>
                            </div>
@@ -389,7 +389,7 @@
                             <img src="{{asset($menu['homeitem'][3]->image)}}" alt="banner">
                             <div class="banner-content">
                                 <h2>{{(app()->getLocale() == 'ar') ?$menu['homeitem'][3]->description_ar:$menu['homeitem'][3]->description_en}}</h2>
-                                <a href="{{url('item/'.$menu['homeitem'][3]->category_id.'/'.$menu['homeitem'][3]->id)}}" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">Order Now</a>
+                                <a href="{{url('item/'.$menu['homeitem'][3]->category_id.'/'.$menu['homeitem'][3]->id)}}" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth class="order-btn cart">@lang('general.Order Now')</a>
                             </div>
                         </div>
                            </div>

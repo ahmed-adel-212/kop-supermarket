@@ -50,7 +50,7 @@
         <section class="food-menu bg-grey padding">
             <div class="container">
                 <ul class="food-menu-filter">
-                    <li class="active" data-filter="*">All</li>
+                    <li class="active" data-filter="*">@lang('general.All')</li>
                     @foreach($menu['categories'] as $index => $category)
                     @if($category->items!=[])
                     <li data-filter=".{{$category->id}}">{{(app()->getLocale() == 'ar')? $category->name_ar : $category->name_en}}</li>
@@ -65,7 +65,7 @@
                            <!-- <div class="sale"></div> -->
                             <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 270px;width:270px;border-radius: 100%;" />
-                                <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">Order Now</a></div>
+                                <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">@lang('general.Order Now')</a></div>
                             </div>
                             <div class="food-info">
                                <ul class="ratting">

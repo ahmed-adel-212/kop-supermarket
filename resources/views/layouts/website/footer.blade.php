@@ -12,7 +12,7 @@
                             </div>
                             <div class="col-6 p-0 m-0">
                                 <span style="max-width: 100%">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" class=" uk-svg" width="" height="" data-svg="{{asset('website-assets/img/icons/tax.svg')}}" style="margin-top: -9px;max-width:100%;enable-background:new 0 0 512 512;max-height: 100px">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" class=" uk-svg"  data-svg="{{asset('website-assets/img/icons/tax.svg')}}" style="margin-top: -9px;max-width:100%;enable-background:new 0 0 512 512;max-height: 100px">
                                         <g>
                                             <path style="fill:#005B47;" d="M97.771,337.633h316.458c6.365,0,12.174,2.286,16.747,5.994V48.859
                                                 c0-9.887-8.034-17.859-17.921-17.859H99.007c-9.887,0-17.921,7.972-17.921,17.859v294.768
