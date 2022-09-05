@@ -137,7 +137,7 @@ class CartController extends Controller
 
         if ($return['success'] == 'success') {
             $carts = $return['data'];
-            $arr_check = $this->get_check();
+             $arr_check = $this->get_check();
 
             if (session()->has('point_claim_value')) {
 
@@ -182,6 +182,7 @@ class CartController extends Controller
     {
         $return = (app(\App\Http\Controllers\Api\CartController::class)->getCart())->getOriginalContent();
         $arr_data = [];
+        $extras_price=0;
         if ($return['success'] == 'success') {
             $carts = $return['data'];
             $final_item_price = 0;
@@ -197,9 +198,10 @@ class CartController extends Controller
                 $final_item_price_without_offer += ($cart->item->price * $quantity);
 
                 if ($cart->ExtrasObjects) {
-                    $extras_price = collect($cart->ExtrasObjects)->sum('price') * $quantity;
+                    foreach($cart->ExtrasObjects as $ExtrasObjects)
+                   { $extras_price += $ExtrasObjects->price * $quantity;
                     $final_item_price += $extras_price;
-                    $final_item_price_without_offer += $extras_price;
+                    $final_item_price_without_offer += $extras_price;}
                 }
             }
 
