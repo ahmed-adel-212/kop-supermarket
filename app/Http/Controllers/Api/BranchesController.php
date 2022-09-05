@@ -65,7 +65,15 @@ class BranchesController extends BaseController
         ];
         
         for($i=0;$i<count($open);$i++)
-        {    if((strtotime($open[$i]) < time()) and (strtotime($close[$i]) >  time()))
+        {   
+            $date=date("Y-m-d");
+            $o= date('Y-m-d H:i:s', strtotime("$date $open[$i]"));
+            if(str_contains($close[$i],"AM"))
+            {
+                 $date = date("Y-m-d", strtotime("+1 day"));
+            }
+            $c= date('Y-m-d H:i:s', strtotime("$date $close[$i]"));
+            if((strtotime(date("Y-m-d H:i",strtotime($o))) < time()) and (strtotime(date("Y-m-d H:i",strtotime($c))) >  time()))
             {
                 $data['available']=true;
                 return $this->sendResponse($data,__('general.branch_ret'));
