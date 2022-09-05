@@ -121,10 +121,8 @@
                     <div class="footer-widget ml-25">
                         <h3>{{__('footer.Opening Hours')}}<span></span></h3>
                         <ul class="opening-hours-list">
-                            <li>@lang('footer.Sat') – @lang('footer.Thur'): 05:00 @lang('footer.AM') – 12:00 @lang('footer.PM')</li>
-                            <li>@lang('footer.Sat') – @lang('footer.Thur'): 04:00 @lang('footer.PM') – 01:00 @lang('footer.AM')</li>
-                            <li>@lang('footer.Fri'): 05:00 @lang('footer.AM') – 10:30 @lang('footer.AM')</li>
-                            <li>@lang('footer.Fri'): 04:00 @lang('footer.PM') – 01:00 @lang('footer.AM')</li>
+                            <li>@lang('footer.Sat') – @lang('footer.Fri'): 05:00 @lang('footer.AM') – 12:00 @lang('footer.PM')</li>
+                            <li>@lang('footer.Sat') – @lang('footer.Fri'): 04:00 @lang('footer.PM') – 01:00 @lang('footer.AM')</li>
                         </ul>
                     </div>
                 </div>

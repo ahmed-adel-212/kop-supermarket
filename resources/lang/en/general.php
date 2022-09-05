@@ -429,4 +429,5 @@ return [
     'twitter' => 'Twitter',
     'insta' => 'Instagram',
     'share' => 'Share',
+    'only' => 'only',
 ];
