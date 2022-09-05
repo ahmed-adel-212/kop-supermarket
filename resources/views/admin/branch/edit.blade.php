@@ -721,6 +721,21 @@
                               </div>
                             </div>
                             @endforeach
+                            @else
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="city">Select City</label>
+                                  <select class="form-control select2-cities-delivery {!! $errors->first('city_id', 'is-invalid') !!}" id="city-select" name="city_id">
+                                    <option>Select Delivery City</option>
+  
+                                  </select>
+                                    @error('city_id')
+                                    <div class="help-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                              </div>
+                            </div>
                             @endif
                           </div>
                         </div>
@@ -835,13 +850,13 @@
       $.get(endpoint, function(res) {
 
         var element = '';
-        var size = res.length;
+        var size = res.data.length;
 
-        for(let i=0; i < res.length; i++) {
+        for(let i=0; i < res.data.length; i++) {
 
-          let name = res[i]['name_'+'{{app()->getLocale()}}'];
+          let name = res.data[i]['name_'+'{{app()->getLocale()}}'];
           let index = i+1;
-          let id = res[i].id;
+          let id = res.data[i].id;
 
           element += `<div class="col-md-4">
           <div class="form-group">

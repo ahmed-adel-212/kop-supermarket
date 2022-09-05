@@ -785,6 +785,7 @@
                     url: app_url + "/api/cities/",
                     dataType: 'json',
                     processResults: function (data) {
+                      console.log('www');
                         console.log(data)
 
                         return {
@@ -877,13 +878,13 @@
       $.get(endpoint, function(res) {;
 
         var element = '';
-        var size = res.length;
+        var size = res.data.length;
 
-        for(let i=0; i < res.length; i++) {
+        for(let i=0; i < res.data.length; i++) {
 
-          let name = res[i]['name_'+'{{app()->getLocale()}}'];
+          let name = res.data[i]['name_'+'{{app()->getLocale()}}'];
           let index = i+1;
-          let id = res[i].id;
+          let id = res.data[i].id;
 
           element += `
           <div class="col-md-4">
