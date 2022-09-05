@@ -107,7 +107,7 @@
                 </div>
               </div>
             </div>
-              <div class="row">
+              {{-- <div class="row">
                   <div class="col-md-12">
                       <div class="form-group">
                           <label for="exampleInputDeliveryFees">Delivery Fees</label>
@@ -115,7 +115,7 @@
                           {!! $errors->first('delivery_fees', '<p class="invalid-feedback">:message</p>') !!}
                       </div>
                   </div>
-              </div>
+              </div> --}}
             <div class="row">
               <div class="col-md-4">
                 <label for="exampleInputServiceType">ServiceType</label>
@@ -804,13 +804,13 @@
         $.get(endpoint, function(res) {;
 
         var element = '';
-        var size = res.length;
+        var size = res.data.length;
 
-        for(let i=0; i < res.length; i++) {
+        for(let i=0; i < res.data.length; i++) {
 
-            let name = res[i]['name_'+'{{app()->getLocale()}}'];
+            let name = res.data[i]['name_'+'{{app()->getLocale()}}'];
             let index = i+1;
-            let id = res[i].id;
+            let id = res.data[i].id;
 
             element += `<option value="${id}">${name}</option>`;
 
