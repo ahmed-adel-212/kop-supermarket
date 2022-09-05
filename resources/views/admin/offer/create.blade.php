@@ -44,6 +44,7 @@
                                     <select class="form-control {!! $errors->first('service_type', 'is-invalid') !!}"
                                         id="exampleInputService" name="service_type">
                                         <option value="">Select Service</option>
+                                        <option value="all">All</option>
                                         <option value="delivery">Delivery</option>
                                         <option value="takeaway">Takeaway</option>
                                     </select>
