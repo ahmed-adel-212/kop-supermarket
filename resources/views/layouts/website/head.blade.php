@@ -108,6 +108,9 @@
             min-height: 135px;
             /* max-height: 180px; */
         }
+        .product-thumb {
+            text-align: center;
+        }
     </style>
 
 
