@@ -344,8 +344,8 @@
                                             <table class="table product-table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Extra</th>
-                                                        <th scope="col">Select</th>
+                                                        <th scope="col">@lang('general.Extra')</th>
+                                                        <th scope="col">@lang('general.Select')</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -387,8 +387,8 @@
                                             <table class="table product-table">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Without</th>
-                                                        <th scope="col">Select</th>
+                                                        <th scope="col">@lang('general.Without')</th>
+                                                        <th scope="col">@lang('general.Select')</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

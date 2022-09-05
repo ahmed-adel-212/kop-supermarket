@@ -158,12 +158,12 @@
                     }
                     else
                     {
-                        alert('{{__('general.you cant choose more than')}}: ' + get_quantity + ' items')
+                        alert('{{__('general.you cant choose more than')}}: ' + buy_quantity + ' {{__('general.items')}}')
                     }
                 }
                 else
                 {
-                    alert('{{__('general.you cant choose more than')}}: ' + buy_quantity + ' items')
+                    alert('{{__('general.you cant choose more than')}}: ' + buy_quantity + ' {{__('general.items')}}')
                 }
             });
 

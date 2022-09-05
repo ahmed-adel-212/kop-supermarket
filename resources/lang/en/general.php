@@ -14,6 +14,7 @@ return [
     
     */
     'All'   => 'All',
+    'Select'   => 'Select',
     'Order Now' => 'Order Now',
     'page expired' => 'Page Expired',
     'please visit login page and login using new password' => 'please visit login page and login using new password',

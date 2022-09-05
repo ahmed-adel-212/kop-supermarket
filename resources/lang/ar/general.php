@@ -13,6 +13,7 @@ return [
     |
     */
     'All'   => 'الكل',
+    'Select'   => 'اختر',
     'page expired' => 'انتهت صلاحية هذه الصفحة ',
     'please visit login page and login using new password' => 'برجاء التوجه لصفحة تسجيل الدخول لاستخدام كلمة السر الجديدة',
     'home.food' => 'الغذاء هو أي مادة تستهلك<br> لتوفير الدعم الغذائي للكائن الحي.',
@@ -102,7 +103,7 @@ return [
     'Buy' => 'اشتري',
     'Get' => 'احصل علي',
     'Confirm Offer' => 'تأكيد الطلب',
-    'you cant choose more than' => 'يمكنك اختيار اكثر من ',
+    'you cant choose more than' => ' لا يمكنك اختيار اكثر من ',
     'Please buy' => 'برجاء اختيار',
     'at least' => 'علي الأقل',
     'Cancel' => 'الغاء',
