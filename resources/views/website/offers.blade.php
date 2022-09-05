@@ -71,15 +71,11 @@
                                         <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('offer.item',$offer->id)}}" class="order-btn cart">Order Now</a></div>
                                     </div>
                                     <div class="food-info">
-                                       <ul class="ratting">
+                                       <ul class="ratting" style="min-height: 70px !important;max-height: 70px !important;">
                                            <li>{{(app()->getLocale() == 'ar') ?$offer->title_ar:$offer->title}}</li>
-                                           <li><i class="las la-star"></i></li>
-                                            <li><i class="las la-star"></i></li>
-                                            <li><i class="las la-star"></i></li>
-                                            <li><i class="las la-star"></i></li>
-                                            <li><i class="las la-star"></i></li>
+                                          
                                        </ul>
-                                        <h3 class="line-clamp5" style="min-height: 32px !important;">{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}
+                                        <h3 class="line-clamp5" style="min-height: 62px !important;max-height: 62px !important;">{{(app()->getLocale() == 'ar') ?$offer->description_ar:$offer->description}}
                                             <br>
                                          
                                         </h3>
