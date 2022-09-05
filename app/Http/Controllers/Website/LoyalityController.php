@@ -69,6 +69,8 @@ class LoyalityController extends Controller
             ];
         }
 
+        $history = (collect($history))->sortBy('order_id');
+
         $cartHasItems = Auth::user()->carts()->count() > 0;
 
         return view('website.loyality', compact('points', 'pointValues', 'history', 'cartHasItems'));
