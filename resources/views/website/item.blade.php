@@ -5,11 +5,12 @@
 @endsection
 
 @section('share_meta')
-    <meta property="og:url" content="{{route('item.page', [$item->category_id, $item->id])}}" />
+    <meta property="og:url" content="{{ route('item.page', [$item->category_id, $item->id]) }}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }} - KOP" />
-    <meta property="og:description" content="{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}" />
-    <meta property="og:image" content="{{asset($item->image)}}" />
+    <meta property="og:description"
+        content="{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}" />
+    <meta property="og:image" content="{{ asset($item->image) }}" />
 @endsection
 
 @section('styles')
@@ -251,9 +252,12 @@
                                                 href="javascript:void(0)">{{ $item->calories }}</a></li>
                                     </ul>
                                     <ul class="social-icon">
-                                        <li>{{__('general.share')}}:</li>
-                                        <li><a target="_blank" href="http://www.facebook.com/share.php?u={{route('item.page', [$item->category_id, $item->id])}}"><i class="lab la-facebook-f"></i></a></li>
-                                        <li><a href="https://twitter.com/intent/tweet?text={{route('item.page', [$item->category_id, $item->id])}}" target="_blank"><i class="lab la-twitter"></i></a></li>
+                                        <li>{{ __('general.share') }}:</li>
+                                        <li><a target="_blank"
+                                                href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"><i
+                                                    class="lab la-facebook-f"></i></a></li>
+                                        <li><a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                target="_blank"><i class="lab la-twitter"></i></a></li>
                                         {{-- <li><a href="#"><i class="lab la-behance"></i></a></li> --}}
                                     </ul>
                                 </div>
@@ -274,12 +278,13 @@
                             <button class="accordion-button collapsed d-flex justify-content-between" type="button"
                                 data-bs-toggle="collapse" x-bind:data-bs-target="'#flush-collapse' + item.uid"
                                 aria-expanded="false" x-bind:aria-controls="'flush-collapse' + item.uid"
-                                x-text="'Sandwich ' + (sinx+1)" x-bind:class="{'collapsed': sinx !== 0}">
+                                x-text="'Sandwich ' + (sinx+1)" x-bind:class="{ 'collapsed': sinx !== 0 }">
                             </button>
 
                         </h2>
-                        <div x-bind:id="'flush-collapse' + item.uid" class="accordion-collapse collapse" x-bind:class="{'show': sinx == 0}"
-                            x-bind:aria-labelledby="'flush-heading' + item.uid" data-bs-parent="#accordionFlushExample">
+                        <div x-bind:id="'flush-collapse' + item.uid" class="accordion-collapse collapse"
+                            x-bind:class="{ 'show': sinx == 0 }" x-bind:aria-labelledby="'flush-heading' + item.uid"
+                            data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="container">
                                     <div class="d-flex justify-content-between">
@@ -351,18 +356,19 @@
                                                 <tbody>
                                                     @foreach ($item['category']['extras'] as $extra)
                                                         <tr>
-                                                            <td><b style="color:black;">
-                                                                    {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}</b>
-                                                                <br>
-                                                                <span>
+                                                            <td class="row">
+                                                                <div class="col-5">
+                                                                    <b style="color:black;">
+                                                                        {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}</b>
+                                                                </div>
+                                                                <span class="col-4">
                                                                     {{ __('home.Calories') }}:
                                                                     {{ $extra['calories'] }}
                                                                 </span>
-                                                                <span>
-                                                                    ({{ round($extra['price'], 2) }}
-                                                                    {{ __('general.SR') }})
+                                                                <span class="col-3">
+                                                                    {{ round($extra['price'], 2) }}
+                                                                    {{ __('general.SR') }}
                                                                 </span>
-
                                                             </td>
                                                             <td> <input type="checkbox" value="{{ $extra['id'] }}"
                                                                     name="extras[]" class="checkExtra" x-data
@@ -394,7 +400,7 @@
                                                 <tbody>
                                                     @foreach ($item['category']['withouts'] as $without)
                                                         <tr>
-                                                            <td><b style="color:black;">
+                                                            {{-- <td><b style="color:black;">
                                                                     {{ app()->getLocale() == 'ar' ? $without['name_ar'] : $without['name_en'] }}</b>
                                                                 <br>
                                                                 <span>
@@ -406,6 +412,20 @@
                                                                     {{ __('general.SR') }})
                                                                 </span>
 
+                                                            </td> --}}
+                                                            <td class="row">
+                                                                <div class="col-8 ">
+                                                                    <b style="color:black;" class="px-1 text-left">
+                                                                        {{ app()->getLocale() == 'ar' ? $without['name_ar'] : $without['name_en'] }}</b>
+                                                                </div>
+                                                                <span class="col-4">
+                                                                    {{ __('home.Calories') }}:
+                                                                    {{ $without['calories'] }}
+                                                                </span>
+                                                                {{-- <span class="col-3">
+                                                                    ({{ round($without['price'], 2) }}
+                                                                    {{ __('general.SR') }})
+                                                                </span> --}}
                                                             </td>
                                                             <td> <input type="checkbox" x-data
                                                                     value="{{ $without['id'] }}" name="without[]"
