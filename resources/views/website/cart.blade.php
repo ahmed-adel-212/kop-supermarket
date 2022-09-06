@@ -116,7 +116,7 @@
                             <div class="col-lg-6">
                                 <div class="cart-item">
                                     <img src="{{ asset($cart->item->image) }}" alt="food">
-                                    <div class="cart-content">
+                                    <div class="cart-content w-100">
                                         <h3><a
                                                 href="{{ url('item/' . $cart->item->category_id . '/' . $cart->item->id) }}">{{ app()->getLocale() == 'ar' ? $cart->item->name_ar : $cart->item->name_en }}</a>
                                         </h3>
@@ -138,13 +138,13 @@
                                             @if (count($cart->extras_objects))
                                                 <p>
                                                     <b class="text-primary">{{ __('general.Extra') }}:</b>
-                                                <ul class="list-group list-group-horizontal">
+                                                <div class="row">
                                                     @foreach ($cart->extras_objects as $extra)
-                                                        <li class="list-group-item px-1">
-                                                            {{ $extra['name_' . app()->getLocale()] }}
-                                                        </li>
+                                                        <div class="col-4 text-center border p-1">
+                                                            {{ $extra['name_' . app()->getLocale()] }}<br>({{$extra->price}} {{__('general.SR')}})
+                                                        </div>
                                                     @endforeach
-                                                </ul>
+                                                </div>
                                                 </p>
                                             @endif
                                             @if (count($cart->withouts_objects))

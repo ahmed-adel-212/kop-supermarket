@@ -926,24 +926,36 @@ class OrdersController extends BaseController
 
     public function getPointsHistory(Request $request)
     {
-        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();
+        // history
+        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->where('points', '!=', null)->get();
         $points_still = PointsTransaction::where('status', 0)->where('user_id', Auth::id())->get();
+        $pending = PointsTransaction::where('status', 2)->where('user_id', Auth::id())->get();
 
-        $res = [];
+        $history = [];
+        
+        foreach ($points_still as $point) {
+            $history[] = (object)[
+                'points' => (int)$point->points,
+                'order_id' => (int)$point->order_id,
+                'created_at' => $point->created_at
+            ];
+        }
         foreach ($completed as $order) {
-            $res[] = (object)[
+            $history[] = (object)[
                 'points' => $order->points * -1,
                 'order_id' => $order->id,
-                'created_at' => $order->updated_at,
+                'created_at' => $order->updated_at
             ];
         }
-        foreach ($points_still as $point) {
-            $res[] = (object)[
-                'points' => $point->points,
-                'order_id' => $point->order_id,
-                'created_at' => $point->created_at,
+        foreach ($pending as $point) {
+            $history[] = (object)[
+                'points' => (int)$point->points * -1,
+                'order_id' => (int)$point->order_id,
+                'created_at' => $point->created_at
             ];
         }
+
+        $res = (collect($history))->sortBy('order_id');
 
         return $this->sendResponse($res, 'user points history');
     }
@@ -963,23 +975,36 @@ class OrdersController extends BaseController
         });
 
         // history
-        $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->get();
-        $points_still = PointsTransaction::where('status', 0)->where('user_id', Auth::id())->get();
-        $history = [];
-        foreach ($completed as $order) {
-            $history[] = (object)[
-                'points' => $order->points * -1,
-                'order_id' => $order->id,
-                'created_at' => $order->updated_at,
-            ];
-        }
-        foreach ($points_still as $point) {
-            $history[] = (object)[
-                'points' => (int)$point->points,
-                'order_id' => (int)$point->order_id,
-                'created_at' => $point->created_at,
-            ];
-        }
+       // history
+       $completed = Order::where('state', 'completed')->where('customer_id', Auth::id())->where('points', '!=', null)->get();
+       $points_still = PointsTransaction::where('status', 0)->where('user_id', Auth::id())->get();
+       $pending = PointsTransaction::where('status', 2)->where('user_id', Auth::id())->get();
+
+       $history = [];
+       
+       foreach ($points_still as $point) {
+           $history[] = (object)[
+               'points' => (int)$point->points,
+               'order_id' => (int)$point->order_id,
+               'created_at' => $point->created_at
+           ];
+       }
+       foreach ($completed as $order) {
+           $history[] = (object)[
+               'points' => $order->points * -1,
+               'order_id' => $order->id,
+               'created_at' => $order->updated_at
+           ];
+       }
+       foreach ($pending as $point) {
+           $history[] = (object)[
+               'points' => (int)$point->points * -1,
+               'order_id' => (int)$point->order_id,
+               'created_at' => $point->created_at
+           ];
+       }
+
+        $history = (collect($history))->sortBy('order_id');
 
         return $this->sendResponse(compact('user_points', 'point_values', 'history'), 'loyality screen');
     }
