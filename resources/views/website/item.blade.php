@@ -85,6 +85,76 @@
         .btn-outline-primary {
             background-color: #eee;
         }
+
+        .effect {
+            width: 100%;
+            /* padding: 50px 0px 70px 0px; */
+            /* background-color: #212121; */
+        }
+
+        .effect .buttons {
+            /* margin-top: 50px; */
+            display: flex;
+            /* justify-content: center; */
+        }
+
+        .effect a:last-child {
+            margin-right: 0px;
+        }
+
+        /*common link styles !!!YOU NEED THEM*/
+        .effect {
+            /*display: flex; !!!uncomment this line !!!*/
+        }
+
+        .effect a {
+            text-decoration: none !important;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-right: 20px;
+            font-size: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .effect a i {
+            position: relative;
+            z-index: 3;
+        }
+
+        .effect a.fb {
+            background-color: #3b5998 !important;
+        }
+
+        .effect a.tw {
+            background-color: #00aced !important;
+        }
+
+        .effect a.insta {
+            background-color: #bc2a8d !important;
+        }
+
+        .effect.aeneas a {
+            transition: transform 0.4s linear 0s, border-top-left-radius 0.1s linear 0s, border-top-right-radius 0.1s linear 0.1s, border-bottom-right-radius 0.1s linear 0.2s, border-bottom-left-radius 0.1s linear 0.3s;
+        }
+
+        .effect.aeneas a i {
+            transition: transform 0.4s linear 0s;
+        }
+
+        .effect.aeneas a:hover {
+            transform: rotate(360deg);
+            border-radius: 50%;
+        }
+
+        .effect.aeneas a:hover i {
+            transform: rotate(-360deg);
+        }
     </style>
 @endsection
 
@@ -251,15 +321,43 @@
                                         <li>{{ __('general.calories') }}:<a
                                                 href="javascript:void(0)">{{ $item->calories }}</a></li>
                                     </ul>
-                                    <ul class="social-icon">
-                                        <li>{{ __('general.share') }}:</li>
-                                        <li><a target="_blank"
-                                                href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"><i
-                                                    class="lab la-facebook-f"></i></a></li>
-                                        <li><a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
-                                                target="_blank"><i class="lab la-twitter"></i></a></li>
-                                        {{-- <li><a href="#"><i class="lab la-behance"></i></a></li> --}}
-                                    </ul>
+                                    <div class="effect aeneas">
+                                        <ul class="social-icon buttons ">
+                                            <li>{{ __('general.share') }}:</li>
+                                            {{-- <li>
+                                                <iframe
+                                                    src="https://www.facebook.com/plugins/share_button.php?href={{ route('item.page', [$item->category_id, $item->id]) }}&layout=button&size=small&width=96&height=20&appId"
+                                                    width="96" height="20" style="border:none;overflow:hidden"
+                                                    scrolling="no" frameborder="0" allowfullscreen="true"
+                                                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                            </li> --}}
+                                            <li>
+                                                <a href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    class="fb mx-1" title="Join us on Facebook">
+                                                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    class="tw mx-1" title="Join us on Twitter">
+                                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            {{-- <li>
+                                                <a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    class="insta mx-1" title="Join us on Instgram">
+                                                    <i class="fab fa-instagram"
+                                                        aria-hidden="true"></i>
+                                                    </a>
+                                            </li> --}}
+                                            {{-- <li><a target="_blank"
+                                                    href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"><i
+                                                        class="lab la-facebook-f"></i></a></li>
+                                            <li><a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    target="_blank"><i class="lab la-twitter"></i></a></li> --}}
+                                            {{-- <li><a href="#"><i class="lab la-behance"></i></a></li> --}}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
