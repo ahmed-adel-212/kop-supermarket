@@ -1208,6 +1208,8 @@ a,a:hover, img, .form-control,  .form-control:hover, button{
     background-size: cover;
     position: relative;
     overflow: hidden;
+    min-height: 550px;
+    max-height: 550px;
 }
 .content-section .bg-shape.grey{
     bottom: auto;

@@ -1207,8 +1207,8 @@ max-height: 600px;
     background-size: cover;
     position: relative;
     overflow: hidden;
-    min-height: 500px;
-    max-height: 500px;
+    min-height: 550px;
+    max-height: 550px;
 
 }
 .content-section .bg-shape.grey{
