@@ -274,11 +274,11 @@
                             <button class="accordion-button collapsed d-flex justify-content-between" type="button"
                                 data-bs-toggle="collapse" x-bind:data-bs-target="'#flush-collapse' + item.uid"
                                 aria-expanded="false" x-bind:aria-controls="'flush-collapse' + item.uid"
-                                x-text="'Sandwich ' + (sinx+1)">
+                                x-text="'Sandwich ' + (sinx+1)" x-bind:class="{'collapsed': sinx !== 0}">
                             </button>
 
                         </h2>
-                        <div x-bind:id="'flush-collapse' + item.uid" class="accordion-collapse collapse"
+                        <div x-bind:id="'flush-collapse' + item.uid" class="accordion-collapse collapse" x-bind:class="{'show': sinx == 0}"
                             x-bind:aria-labelledby="'flush-heading' + item.uid" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="container">
