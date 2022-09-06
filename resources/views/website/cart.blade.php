@@ -173,7 +173,7 @@
                                         data-id="{{ $cart->id }}" data-price="{{ $cart->price }}"
                                         data-prev="{{ $cart->quantity }}" data-price-without-offer="{{$cart->offer_id ? isset($cart->extras_objects) ? $cart->item->price + collect($cart->extras_objects)->sum('price') : $cart->item->price : $cart->price }}"
                                         data-url="{{ route('item.page', [$cart->item->category_id, $cart->item]) }}"
-                                        class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}">
+                                        class="form-control text-bold quantity_ch quantity_change{{ $cart->id }}" id="quantity_change{{ $cart->id }}">
                                         
                                 </div>
                             </div>
@@ -403,7 +403,14 @@
                     e.preventDefault();
                     
                     var id = $(this).attr('data-id');
-
+                    console.log('quantity_change'+id);
+                    if(document.getElementById('quantity_change'+id).disabled){
+                        let text = "Press a button!\nEither OK or Cancel.";
+                            if (confirm(text) != true) {
+                                    return false; 
+                            }
+                            }
+                    else{console.log(document.getElementById('quantity_change'+id).disabled)}
                     $(this).find('i').addClass('fas fa-spinner fa-spin').removeClass('la-times');
 
                     $.ajaxSetup({
