@@ -5,11 +5,12 @@
 @endsection
 
 @section('share_meta')
-    <meta property="og:url" content="{{route('item.page', [$item->category_id, $item->id])}}" />
+    <meta property="og:url" content="{{ route('item.page', [$item->category_id, $item->id]) }}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ app()->getLocale() == 'ar' ? $item['name_ar'] : $item['name_en'] }} - KOP" />
-    <meta property="og:description" content="{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}" />
-    <meta property="og:image" content="{{asset($item->image)}}" />
+    <meta property="og:description"
+        content="{{ app()->getLocale() == 'ar' ? $item['description_ar'] : $item['description_en'] }}" />
+    <meta property="og:image" content="{{ asset($item->image) }}" />
 @endsection
 
 @section('styles')
@@ -83,6 +84,76 @@
 
         .btn-outline-primary {
             background-color: #eee;
+        }
+
+        .effect {
+            width: 100%;
+            /* padding: 50px 0px 70px 0px; */
+            /* background-color: #212121; */
+        }
+
+        .effect .buttons {
+            /* margin-top: 50px; */
+            display: flex;
+            /* justify-content: center; */
+        }
+
+        .effect a:last-child {
+            margin-right: 0px;
+        }
+
+        /*common link styles !!!YOU NEED THEM*/
+        .effect {
+            /*display: flex; !!!uncomment this line !!!*/
+        }
+
+        .effect a {
+            text-decoration: none !important;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-right: 20px;
+            font-size: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .effect a i {
+            position: relative;
+            z-index: 3;
+        }
+
+        .effect a.fb {
+            background-color: #3b5998 !important;
+        }
+
+        .effect a.tw {
+            background-color: #00aced !important;
+        }
+
+        .effect a.insta {
+            background-color: #bc2a8d !important;
+        }
+
+        .effect.aeneas a {
+            transition: transform 0.4s linear 0s, border-top-left-radius 0.1s linear 0s, border-top-right-radius 0.1s linear 0.1s, border-bottom-right-radius 0.1s linear 0.2s, border-bottom-left-radius 0.1s linear 0.3s;
+        }
+
+        .effect.aeneas a i {
+            transition: transform 0.4s linear 0s;
+        }
+
+        .effect.aeneas a:hover {
+            transform: rotate(360deg);
+            border-radius: 50%;
+        }
+
+        .effect.aeneas a:hover i {
+            transform: rotate(-360deg);
         }
     </style>
 @endsection
@@ -250,12 +321,43 @@
                                         <li>{{ __('general.calories') }}:<a
                                                 href="javascript:void(0)">{{ $item->calories }}</a></li>
                                     </ul>
-                                    <ul class="social-icon">
-                                        <li>{{__('general.share')}}:</li>
-                                        <li><a target="_blank" href="http://www.facebook.com/share.php?u={{route('item.page', [$item->category_id, $item->id])}}"><i class="lab la-facebook-f"></i></a></li>
-                                        <li><a href="https://twitter.com/intent/tweet?text={{route('item.page', [$item->category_id, $item->id])}}" target="_blank"><i class="lab la-twitter"></i></a></li>
-                                        {{-- <li><a href="#"><i class="lab la-behance"></i></a></li> --}}
-                                    </ul>
+                                    <div class="effect aeneas">
+                                        <ul class="social-icon buttons ">
+                                            <li>{{ __('general.share') }}:</li>
+                                            {{-- <li>
+                                                <iframe
+                                                    src="https://www.facebook.com/plugins/share_button.php?href={{ route('item.page', [$item->category_id, $item->id]) }}&layout=button&size=small&width=96&height=20&appId"
+                                                    width="96" height="20" style="border:none;overflow:hidden"
+                                                    scrolling="no" frameborder="0" allowfullscreen="true"
+                                                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                            </li> --}}
+                                            <li>
+                                                <a href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    class="fb mx-1" title="Join us on Facebook">
+                                                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    class="tw mx-1" title="Join us on Twitter">
+                                                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
+                                            {{-- <li>
+                                                <a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    class="insta mx-1" title="Join us on Instgram">
+                                                    <i class="fab fa-instagram"
+                                                        aria-hidden="true"></i>
+                                                    </a>
+                                            </li> --}}
+                                            {{-- <li><a target="_blank"
+                                                    href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"><i
+                                                        class="lab la-facebook-f"></i></a></li>
+                                            <li><a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
+                                                    target="_blank"><i class="lab la-twitter"></i></a></li> --}}
+                                            {{-- <li><a href="#"><i class="lab la-behance"></i></a></li> --}}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -274,12 +376,13 @@
                             <button class="accordion-button collapsed d-flex justify-content-between" type="button"
                                 data-bs-toggle="collapse" x-bind:data-bs-target="'#flush-collapse' + item.uid"
                                 aria-expanded="false" x-bind:aria-controls="'flush-collapse' + item.uid"
-                                x-text="'Sandwich ' + (sinx+1)">
+                                x-text="'Sandwich ' + (sinx+1)" x-bind:class="{ 'collapsed': sinx !== 0 }">
                             </button>
 
                         </h2>
                         <div x-bind:id="'flush-collapse' + item.uid" class="accordion-collapse collapse"
-                            x-bind:aria-labelledby="'flush-heading' + item.uid" data-bs-parent="#accordionFlushExample">
+                            x-bind:class="{ 'show': sinx == 0 }" x-bind:aria-labelledby="'flush-heading' + item.uid"
+                            data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="container">
                                     <div class="d-flex justify-content-between">
@@ -351,18 +454,19 @@
                                                 <tbody>
                                                     @foreach ($item['category']['extras'] as $extra)
                                                         <tr>
-                                                            <td><b style="color:black;">
-                                                                    {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}</b>
-                                                                <br>
-                                                                <span>
+                                                            <td class="row">
+                                                                <div class="col-5">
+                                                                    <b style="color:black;">
+                                                                        {{ app()->getLocale() == 'ar' ? $extra['name_ar'] : $extra['name_en'] }}</b>
+                                                                </div>
+                                                                <span class="col-4">
                                                                     {{ __('home.Calories') }}:
                                                                     {{ $extra['calories'] }}
                                                                 </span>
-                                                                <span>
-                                                                    ({{ round($extra['price'], 2) }}
-                                                                    {{ __('general.SR') }})
+                                                                <span class="col-3">
+                                                                    {{ round($extra['price'], 2) }}
+                                                                    {{ __('general.SR') }}
                                                                 </span>
-
                                                             </td>
                                                             <td> <input type="checkbox" value="{{ $extra['id'] }}"
                                                                     name="extras[]" class="checkExtra" x-data
@@ -394,7 +498,7 @@
                                                 <tbody>
                                                     @foreach ($item['category']['withouts'] as $without)
                                                         <tr>
-                                                            <td><b style="color:black;">
+                                                            {{-- <td><b style="color:black;">
                                                                     {{ app()->getLocale() == 'ar' ? $without['name_ar'] : $without['name_en'] }}</b>
                                                                 <br>
                                                                 <span>
@@ -406,6 +510,20 @@
                                                                     {{ __('general.SR') }})
                                                                 </span>
 
+                                                            </td> --}}
+                                                            <td class="row">
+                                                                <div class="col-8 ">
+                                                                    <b style="color:black;" class="px-1 text-left">
+                                                                        {{ app()->getLocale() == 'ar' ? $without['name_ar'] : $without['name_en'] }}</b>
+                                                                </div>
+                                                                <span class="col-4">
+                                                                    {{ __('home.Calories') }}:
+                                                                    {{ $without['calories'] }}
+                                                                </span>
+                                                                {{-- <span class="col-3">
+                                                                    ({{ round($without['price'], 2) }}
+                                                                    {{ __('general.SR') }})
+                                                                </span> --}}
                                                             </td>
                                                             <td> <input type="checkbox" x-data
                                                                     value="{{ $without['id'] }}" name="without[]"

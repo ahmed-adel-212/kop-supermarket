@@ -1,6 +1,6 @@
 @extends('layouts.website.app')
 
-@section('title') Offer @endsection
+@section('title') {{__('general.Offer')}} @endsection
 
 @section('styles')
     <style>
@@ -14,6 +14,11 @@
         }
         .btn-outline-primary{
             border-color: #007bff!important;
+        }
+        .btn-success {
+            color: #fff;
+            background-color: #198754 !important;
+            border-color: #198754 !important;
         }
     </style>
 @endsection

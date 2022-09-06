@@ -298,7 +298,7 @@
                     </div>
                     @endforeach
                 </div>
-                <a href="{{route('menu.page')}}" class="default-btn cart">{{__('footer.Our Menu')}}<span></span></a>
+                <a href="{{route('menu.page')}}" class="default-btn">{{__('footer.Our Menu')}}<span></span></a>
 
             </div>
         </section><!--/.food-menu-->
