@@ -5,7 +5,7 @@
             <div class="primary-header-inner">
                 <div class="header-logo">
                     <a href="{{ route('home.page') }}">
-                        <img class="light" style="max-width: 120px" src="{{ asset('website-assets/img/logokop.bmp') }}"
+                        <img class="light" style="max-width: 120px" src="{{ asset('website-assets/img/logokop_l.png') }}"
                             alt="Logo" />
                     </a>
                 </div><!-- /.header-logo -->

@@ -8,7 +8,7 @@
                     <div class="footer-widget">
                         <div class="row d-flex align-items-center justify-content-between">
                             <div class="col-6 p-0 m-0">
-                                <a class="logo" href="{{route('home.page')}}"><img src="{{asset('website-assets/img/logokop.bmp')}}" alt="img"></a>
+                                <a class="logo" href="{{route('home.page')}}"><img src="{{asset('website-assets/img/logokop.png')}}" alt="img"></a>
                             </div>
                             <div class="col-6 p-0 m-0">
                                 <span style="max-width: 100%">

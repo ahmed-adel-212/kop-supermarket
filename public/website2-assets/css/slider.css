@@ -202,8 +202,9 @@
 .single-slide.right .food-img{
     background-position: center left;
     background-size: 45%;
-    top: 15%;
-    right: 0;
+    top: 2%;
+    /* right: 55%;
+   transform: scaleX(-1); */
 }
 .single-slide.right .food-design{
     background-position: left center;
