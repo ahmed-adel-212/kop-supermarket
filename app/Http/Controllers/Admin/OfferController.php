@@ -68,9 +68,9 @@ class OfferController extends Controller
             'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=550,height=465',
+            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=509,height=459',
+            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
             'offer_type' => 'required',
         ]);
 
@@ -305,7 +305,7 @@ class OfferController extends Controller
             'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=550,height=465',
             'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=509,height=459',
             'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
             'offer_type' => 'required',

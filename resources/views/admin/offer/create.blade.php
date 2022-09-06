@@ -141,7 +141,7 @@
 
                                     <label for="exampleInputFile">Mobile Image </label>
                                     <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                        <b>Note</b> Image Dimensions Must Be: 550 * 465
                                     </div>
                                     <div class="custom-file">
                                         <input type="file"

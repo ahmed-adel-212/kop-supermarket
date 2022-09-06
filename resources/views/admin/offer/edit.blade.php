@@ -1,5 +1,6 @@
 @extends('layouts.admin.app')
 @section('content')
+<body onunload="con();">
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -131,7 +132,7 @@
 
                                     <label for="exampleInputFile">Mobile Image</label>
                                     <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
+                                        <b>Note</b> Image Dimensions Must Be: 550 * 465
                                     </div>
                                     @if($offer->image)
                                     <img src="{{ $offer->image }}" alt="..." class="img-thumbnail">
@@ -391,6 +392,7 @@
         </div>
     </section>
 </div>
+</body>
 @endsection
 @push('js')
 <script>
@@ -458,6 +460,11 @@
 </script>
 
 <script>
+//    $("a").on('click', function(event) {
+//         alert('hi');
+//         e.preventDefault();
+//         return false;
+//    }
     $("#exampleInputCategory3").click(function(e){
     e.preventDefault();
     var category_id = $("#exampleInputCategory3").val();
@@ -487,5 +494,16 @@
       $("#items3").append('<option value="">Choose Item</option>');
     }
   });
+  function con() {
+    alert('hi');
+    var answer = confirm("do you want to check our other products")
+    if (answer){
+
+        alert("bye");
+    }
+    else{
+        window.location = "http://www.example.com";
+    }
+}
 </script>
 @endpush
