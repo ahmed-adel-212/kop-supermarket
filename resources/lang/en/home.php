@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'pick it up really fast, happy to SERVE you at our branches' => 'pick it up fast,<br>happy to serve you',
     'Fresh Ingredients' => 'Fresh Ingredients',
     'desc1' => 'Delicious &amp; Healthy Foods',
     'desc2' => 'Spacific Family And Kids Zone',
