@@ -46,7 +46,7 @@ class AnoucementController extends Controller
             'name_en' => 'required',
             'description_ar' => 'nullable|string',
             'description_en' => 'nullable|string',
-            'image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1100,height=1000',
+            'image' => 'nullable|mimes:jpeg,png,jpg',
         
         ];
         $validator = $request->validate($validator_rules);
@@ -95,7 +95,7 @@ class AnoucementController extends Controller
             'name_en' => 'required',
             'description_ar' => 'required',
             'description_en' => 'required',
-            'image' => 'nullable|mimes:jpeg,png,jpg|dimensions:width=1100,height=1000',
+            'image' => 'nullable|mimes:jpeg,png,jpg',
         ];
         $validator = $request->validate($validator_rules);
 

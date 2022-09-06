@@ -1004,7 +1004,7 @@ class OrdersController extends BaseController
            ];
        }
 
-        $history = (collect($history))->sortBy('order_id');
+        $history = (collect($history))->sortBy('order_id')->values();
 
         return $this->sendResponse(compact('user_points', 'point_values', 'history'), 'loyality screen');
     }

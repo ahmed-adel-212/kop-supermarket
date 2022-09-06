@@ -88,7 +88,11 @@
                 @else
                 <div class="slider-shape" style="background-image: url({{asset('website2-assets/img/slider-shape-01.png')}});" data-animation="fade-in-right" data-delay="0.5s"></div>
                 @endif
+                @if (app()->getLocale() === 'ar')
+                <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});top: 2%;right: 55%;transform: scaleX(-1);}" data-animation="fade-in-{{app()->getLocale() === 'ar' ? 'left' : 'left'}}" data-delay="1s"></div>
+                @else
                 <div class="food-img" style="background-image: url({{asset('website2-assets/img/food-img-01.png')}});" data-animation="fade-in-{{app()->getLocale() === 'ar' ? 'right' : 'left'}}" data-delay="1s"></div>
+                @endif
                 <div class="food-design" style="background-image: url({{asset('website2-assets/img/slider-elements.png')}});{{app()->getLocale() == 'ar' ? 'right: -10%;' : ''}}" data-animation="zoomIn" data-delay="1.3s"></div>
 
                 <div class="slider-content-wrap d-flex align-items-center">
