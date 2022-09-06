@@ -17,16 +17,19 @@ class CartController extends Controller
 {
 
     public function addCart(Request $request)
-    {
+    { 
         if ($request->has('add_items')) {
-            // dd(json_decode($request->add_items), $request->all());
-            $items = json_decode($request->add_items);
+            //  dd(json_decode($request->add_items));
+            $items =(is_array($request->add_items))? $request->add_items : json_decode($request->add_items);
             foreach ($items as $index => $item) {
-                $newRequest = new Request();
+                if(is_string($item)){
+                    $item=json_decode($item,true);
+                }
+                $newRequest = new Request(); 
                 $newRequest->merge(['item_id' => $request->item_id]);
                 $newRequest->merge(['offer_id' => $request->offer_id ? $request->offer_id : null]);
                 $newRequest->merge(['offer_price' => $request->offer_price ? $request->offer_price : null]);
-                $newRequest->merge(['quantity' => $item->quantity]);
+                $newRequest->merge(['quantity' => (isset($item->quantity))?$item->quantity:1]);
 
                 if (isset($item->dough)) {
                     $dough = explode(',', $item->dough);
@@ -52,25 +55,24 @@ class CartController extends Controller
                 // dd([
                 //     'user_id' =>  Auth::user()->id,
                 //     'item_id' =>  $request->item_id,
-                //     'extras' =>  json_encode($item->extras),
-                //     'withouts' =>  json_encode($item->withouts),
+                //     'extras' =>  (isset($item->extras))?json_encode($item->extras):[],
+                //     'withouts' =>  (isset($item->withouts))?json_encode($item->withouts):[],
                 //     'dough_type_ar' =>  $request->dough_type_ar,
                 //     'dough_type_en' =>  $request->dough_type_en,
                 //     'quantity' =>  $request->quantity,
                 //     'offer_id' =>  $request->offer_id,
                 //     'offer_price' =>  $request->offer_price,
                 // ]);
-
                 $cart = Cart::create([
                     'user_id' =>  Auth::user()->id,
                     'item_id' =>  $request->item_id,
-                    'extras' =>  json_encode($item->extras),
-                    'withouts' =>  json_encode($item->withouts),
+                    'extras' =>  (isset($item->extras))?json_encode($item->extras):null,
+                    'withouts' =>  (isset($item->withouts))?json_encode($item->withouts):null,
                     'dough_type_ar' =>  $request->has('dough_type_ar') ? $request->dough_type_ar : null,
                     'dough_type_en' =>  $request->has('dough_type_en') ? $request->dough_type_en : null,
                     'dough_type_2_ar' =>  $request->has('dough_type_2_ar') ? $request->dough_type_2_ar : null,
                     'dough_type_2_en' =>  $request->has('dough_type_2_en') ? $request->dough_type_2_en : null,
-                    'quantity' =>  $item->quantity,
+                    'quantity' =>  (isset($item->quantity))?$item->quantity:"1",
                     'offer_id' =>  $request->offer_id,
                     'offer_price' =>  $request->offer_price,
                 ]);

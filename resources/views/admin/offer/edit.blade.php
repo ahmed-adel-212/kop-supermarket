@@ -195,9 +195,11 @@
                                 <div class="form-group">
                                     <label for="exampleInputOfferType">Offer Type</label>
                                     <select class="form-control" id="exampleInputOfferType" name="offer_type" readonly>
-                                        <option value="">Select Offer Type</option>
-                                        <option value="buy-get" @if($offer->offer_type == 'buy-get') selected @endif >Buy / Get</option>
-                                        <option value="discount" @if($offer->offer_type == 'discount') selected @endif>Discount</option>
+                                    @if($offer->offer_type == 'buy-get')
+                                        <option value="buy-get" selected>Buy / Get</option>
+                                    @else
+                                        <option value="discount"  selected >Discount</option>
+                                        @endif
                                     </select>
                                     @error('offer_type')
                                     <div class="help-block">{{ $message }}</div>

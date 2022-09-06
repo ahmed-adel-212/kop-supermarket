@@ -56,6 +56,7 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
+       
         $validator = Validator::make($request->all(), [
             //'title' => 'required|min:3|max:20',
             //'title_ar' => 'required|min:3|max:20',
@@ -94,7 +95,6 @@ class OfferController extends Controller
         }
 
         if ($request->offer_type == 'buy-get') {
-
             $validator = Validator::make($request->all(), [
                 'buy_quantity' => 'required',
                 'buy_category_id' => 'required',
@@ -106,7 +106,7 @@ class OfferController extends Controller
             ]);
 
             if ($validator->fails())
-                return redirect()->back()->withErrors($validator->errors())->withInput();
+                {return redirect()->back()->withErrors($validator->errors())->withInput();}
 
         }
 
@@ -175,7 +175,7 @@ class OfferController extends Controller
             $buy_get_offer->getItems()->sync($request->get_items);
         }
 
-        if ($request->has('discount_quantity') && $request->discount_quantity != null) {
+        if ($request->offer_type == 'discount' && $request->has('discount_quantity') && $request->discount_quantity != null) {
 
             if (!$request->items) {
                 return redirect()->back();

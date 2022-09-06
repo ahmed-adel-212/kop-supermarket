@@ -270,7 +270,7 @@
                 <div class="row product-items">
                     @foreach($menu['dealItems'] as $dealItem)
                     @if($c==$dealItem->category_id)
-                    <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}"  >
+                    <div onclick="location.href='{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}';" style="cursor: pointer;" class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}"  >
                     @else
                     <div class="col-lg-4 col-md-6 padding-15 isotop-grid {{$dealItem->category_id}}"  style="display:none;">
                     @endif
@@ -278,8 +278,18 @@
                           
                            <div class="product-thumb">
                                 <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 270px;width:270px;border-radius: 100%;">
-                                <div><a @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{url('item/'.$dealItem->category_id.'/'.$dealItem->id)}}" class="order-btn cart">@lang('general.Order Now')</a></div>
-                            </div>
+                                <form id="addToCard" action="{{ route('add.cart') }}" method="POST">
+                                    @csrf
+                                        <input type="hidden" name="offer_id"
+                                            value="">
+                                        <input type="hidden" name="offer_price"
+                                            value="">
+                                        <input type="hidden" name="item_id" value="{{ $dealItem['id'] }}">
+                                        <input type='hidden' name='add_items[]' value="{{$dealItem}}" />
+                                        <input type='hidden' name='quantity' value="1" />
+
+                                        <div><button type="submit" @auth @if(!session()->has('branch_id')) data-toggle="modal" data-target="#service-modal" @endif @endauth href="{{route('add.cart')}}" class="order-btn cart">@lang('general.Order Now')</button></div>
+                                    </form>                            </div>
                             <div class="food-info">
                                <ul class="ratting">
                                    <li>{{$dealItem['name_'.app()->getLocale()]}}</li>
