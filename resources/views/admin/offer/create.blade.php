@@ -425,6 +425,9 @@
 @endsection
 @push('js')
 <script>
+    window.onbeforeunload = function () {
+        return 'Are you sure? Your work will be lost. ';
+    };
     $("#exampleInputCategory1").click(function(e){
     e.preventDefault();
     var category_id = $("#exampleInputCategory1").val();

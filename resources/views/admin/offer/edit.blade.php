@@ -1,6 +1,5 @@
 @extends('layouts.admin.app')
 @section('content')
-<body onunload="con();">
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -392,10 +391,12 @@
         </div>
     </section>
 </div>
-</body>
 @endsection
 @push('js')
 <script>
+     window.onbeforeunload = function () {
+        return 'Are you sure? Your work will be lost. ';
+    };
     $("#exampleInputCategory1").click(function(e){
     e.preventDefault();
     var category_id = $("#exampleInputCategory1").val();
