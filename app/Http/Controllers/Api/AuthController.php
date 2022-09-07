@@ -164,6 +164,13 @@ class AuthController extends BaseController
             'activation_token' => mt_rand(100000, 999999)
         ]);
 
+        if($request->token)
+        {
+            $request->merge([
+                'device_token' =>$request->token
+            ]);
+        }
+
         $user = User::create($request->all());
         $user->attachRole(3); // customer
 
