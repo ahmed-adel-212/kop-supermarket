@@ -405,7 +405,7 @@
                     var id = $(this).attr('data-id');
                     console.log('quantity_change'+id);
                     if(document.getElementById('quantity_change'+id).disabled){
-                        let text = "Press a button!\nEither OK or Cancel.";
+                        let text = "{!! __('general.confirm delete offer')!!} ";
                             if (confirm(text) != true) {
                                     return false; 
                             }

@@ -13,6 +13,7 @@ return [
     |
     
     */
+    'confirm delete offer' => 'Are you sure !\nyou will delete all items related with this offer.',
     'All'   => 'All',
     'Select'   => 'Select',
     'Order Now' => 'Order Now',

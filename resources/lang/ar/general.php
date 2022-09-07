@@ -12,6 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
+    'confirm delete offer'=>'هل متأكد من حذف المنتج !\n سوف يتم حذف العرض كامل .',
     'All'   => 'الكل',
     'Select'   => 'اختر',
     'page expired' => 'انتهت صلاحية هذه الصفحة ',
