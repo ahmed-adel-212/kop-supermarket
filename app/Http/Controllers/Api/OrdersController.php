@@ -628,8 +628,8 @@ class OrdersController extends BaseController
                         "offer_price" => null,
                         "offer_id" => null,
                         "offer_last_updated_at" => null,
-                        "extras" => [Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get()],
-                        "withouts" => [Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get()],
+                        "extras" => Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get(),
+                        "withouts" => Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get(),
                         "item" => $item,
                         "calories" => $item->calories,
                     ];
@@ -659,8 +659,8 @@ class OrdersController extends BaseController
                     'price' => Item::find($item->id)->price + Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price'),
                     "offer_price" => ((Offer::find($item->pivot->offer_id))['offer_type'] == 'discount') ? $this->calcOfferItem($item->pivot->offer_id, $item->id) + Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->sum('price') : $item->pivot->offer_price,
                     "offer_id" => $item->pivot->offer_id,
-                    "extras" => [Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get()],
-                    "withouts" => [Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get()],
+                    "extras" => Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get(),
+                    "withouts" => Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get(),
                     "item" => $item,
                     "type" => (Offer::find($item->pivot->offer_id))['offer_type'],
                 ];
