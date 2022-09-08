@@ -130,9 +130,6 @@
                                 <div class="form-group">
 
                                     <label for="exampleInputFile">Mobile Image</label>
-                                    <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 550 * 465
-                                    </div>
                                     @if($offer->image)
                                     <img src="{{ $offer->image }}" alt="..." class="img-thumbnail">
                                     @endif
@@ -144,6 +141,9 @@
                                         @enderror
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 550 * 465
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -152,9 +152,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Website Home Image</label>
-                                    <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
-                                    </div>
+                                    
                                     @if($offer->website_image)
                                     <img src="{{ asset($offer->website_image) }}" alt="..." class="img-thumbnail">
                                     @endif
@@ -166,6 +164,9 @@
                                         @enderror
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
+                                    <div class="help-block text-info">
+                                        <b>Note</b> Image Dimensions Must Be: 509 * 459
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +175,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Website Menu Image</label>
                                     <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 800 * 418
+                                        <b>Note</b> Image Dimensions Must Be: 300 * 300
                                     </div>
                                     @if($offer->website_image_menu)
                                     <img src="{{ asset($offer->website_image_menu) }}" alt="..." class="img-thumbnail">
