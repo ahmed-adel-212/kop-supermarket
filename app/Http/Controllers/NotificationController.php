@@ -91,8 +91,8 @@ class NotificationController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmNotification));
-            $result = curl_exec($ch);
-            file_put_contents("test.txt", $result);
+            // $result = curl_exec($ch);
+            // file_put_contents("test.txt", $result);
         
             curl_close($ch);
     }
