@@ -11,7 +11,10 @@
         .product-item .ratting {
             min-height: 30px;
             max-height: 30px;
-            font-size: 15px;}
+            font-size: 15px;
+            padding-top: 2%;
+
+        }
 
             .food-info h4 {
             font-size: 16px;
@@ -64,7 +67,7 @@
                             <div class="product-item" >
                             <!-- <div class="sale"></div> -->
                                 <div class="product-thumb">
-                                    <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 270px;width:270px;border-radius: 100%;" />
+                                    <img src="{{asset($dealItem->website_image)}}" alt="food" style="height: 300px;width:300px;border-radius: 100%;" />
                                     <form id="addToCard" action="{{ route('add.cart') }}" method="POST">
                                     @csrf
                                         <input type="hidden" name="offer_id"

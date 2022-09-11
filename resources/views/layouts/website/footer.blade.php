@@ -89,12 +89,15 @@
                         </div>
                         
                         <ul class="footer-social">
-                            <li><a target="_blank" href="https://www.facebook.com/groups/1324000870991750/?ref=share"><i class="fab fa-facebook"></i></a></li>
-                            <li><a target="_blank" href="https://twitter.com/kingdomof_p?s=21&t=8gPTwTI5Ao33PFBlqOYatQ"><i class="fab fa-twitter"></i></a></li>
-                            <li><a target="_blank" href="https://instagram.com/kingdom.of_p?igshid=NmNmNjAwNzg="><i class="fab fa-instagram"></i></a></li>
+                            <li><a style ="background-color: #3B5998 !important;" target="_blank" href="https://www.facebook.com/groups/1324000870991750/?ref=share"><i class="fab fa-facebook"></i></a></li>
+                            <li><a style ="background-color: #1da1f2 !important;" target="_blank" href="https://twitter.com/kingdomof_p?s=21&t=8gPTwTI5Ao33PFBlqOYatQ"><i class="fab fa-twitter"></i></a></li>
+                            <li><a style ="  background: #f09433; 
+background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );" target="_blank" href="https://instagram.com/kingdom.of_p?igshid=NmNmNjAwNzg="><i class="fab fa-instagram"></i></a></li>
                             {{-- <li><a href="#"><i class="fab fa-pinterest"></i></a></li> --}}
                         </ul>
-                        <p class="pb-4">@lang('footer.financial')</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 sm-padding">
@@ -133,7 +136,7 @@
     <div class="footer-bottom">
         <div class="container">
             <div class="copyright-wrap">
-                <p>© <span id="currentYear"></span> 212Solutions All Rights Reserved.</p>
+                <p>© <span ></span>Develop by 212Solutions @2022 All Rights Reserved.</p>
             </div>
         </div>
     </div><!--/.footer-bottom -->

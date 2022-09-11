@@ -327,19 +327,19 @@
                                             {{-- <li>
                                                 <iframe
                                                     src="https://www.facebook.com/plugins/share_button.php?href={{ route('item.page', [$item->category_id, $item->id]) }}&layout=button&size=small&width=96&height=20&appId"
-                                                    width="96" height="20" style="border:none;overflow:hidden"
+                                                    width="96" height="20" style="border:none;overflow:hidden;"
                                                     scrolling="no" frameborder="0" allowfullscreen="true"
                                                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                                             </li> --}}
                                             <li>
                                                 <a href="http://www.facebook.com/share.php?u={{ route('item.page', [$item->category_id, $item->id]) }}"
-                                                    class="fb mx-1" title="Join us on Facebook">
+                                                    class="fb mx-1" title="Join us on Facebook" style="background-color: #3B5998 !important;">
                                                     <i class="fab fa-facebook-f" aria-hidden="true"></i>
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="https://twitter.com/intent/tweet?text={{ route('item.page', [$item->category_id, $item->id]) }}"
-                                                    class="tw mx-1" title="Join us on Twitter">
+                                                    class="tw mx-1" title="Join us on Twitter" style="background-color: #1da1f2 !important;">
                                                     <i class="fab fa-twitter" aria-hidden="true"></i>
                                                 </a>
                                             </li>
