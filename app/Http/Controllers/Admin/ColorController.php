@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Size;
-use App\Filters\SizeFilters;
+use App\Models\Color;
+use App\Filters\ColorFilters;
 use App\Models\Category;
 use App\Traits\LogfileTrait;
 
-class SizeController extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,11 @@ class SizeController extends Controller
 
     use LogfileTrait;
 
-    public function index(Request $request, SizeFilters $filters)
+    public function index(Request $request, ColorFilters $filters)
     {
-        $sizes = Size::filter($filters)->withCount('items')->get();
-        $this->Make_Log('App\Models\Size','view',0);
-        return view('admin.sizes.index', compact('sizes'));
+        $colors = Color::filter($filters)->withCount('items')->get();
+        $this->Make_Log('App\Models\Color','view',0);
+        return view('admin.colors.index', compact('colors'));
     }
 
     /**
@@ -33,7 +33,7 @@ class SizeController extends Controller
      */
     public function create()
     {
-        return view('admin.sizes.create');
+        return view('admin.colors.create');
     }
 
     /**
@@ -46,21 +46,24 @@ class SizeController extends Controller
     {
         $validatedData = $request->validate([
             "name_ar" => 'required|string',
-            "name_en" => 'required|string',       
+            "name_en" => 'required|string',
+            'code' => 'required|string',
         ]);
 
-        $Size = Size::create($validatedData);
-        $this->Make_Log('App\Models\Size','create',$Size->id);
+        $validatedData['code'] = str_replace('#', '', $validatedData['code']);
 
-        if (!$Size)
-            return redirect()->route('admin.size.index')->with([
+        $Color = Color::create($validatedData);
+        $this->Make_Log('App\Models\Color','create',$Color->id);
+
+        if (!$Color)
+            return redirect()->route('admin.color.index')->with([
                 'type' => 'error',
                 'message' => 'There is something wrong!!'
             ]);
 
-        return redirect()->route('admin.size.index')->with([
+        return redirect()->route('admin.color.index')->with([
             'type' => 'success',
-            'message' => 'Size created successfuly'
+            'message' => 'Color created successfuly'
         ]);
     }
 
@@ -70,9 +73,9 @@ class SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Size $size)
+    public function show(Request $request, Color $color)
     {
-        return view('admin.sizes.show', compact('size'));
+        return view('admin.colors.show', compact('color'));
 
     }
 
@@ -82,9 +85,9 @@ class SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Size $size)
+    public function edit(Request $request, Color $color)
     {
-        return view('admin.sizes.edit', compact('size'));
+        return view('admin.colors.edit', compact('color'));
     }
 
     /**
@@ -94,23 +97,26 @@ class SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Size $size)
+    public function update(Request $request, Color $color)
     {
 
         $validatedData = $request->validate([
             "name_ar" => 'required|string',
             "name_en" => 'required|string',
-        ]);       
+            'code' => 'required|string',
+        ]);
 
-        if (!$size->update($validatedData))
-            return redirect()->route('admin.size.index')->with([
+        $validatedData['code'] = str_replace('#', '', $validatedData['code']);
+
+        if (!$color->update($validatedData))
+            return redirect()->route('admin.color.index')->with([
                 'type' => 'error',
                 'message' => 'test'
             ]);
-        $this->Make_Log('App\Models\Size','update',$size->id);
-        return redirect()->route('admin.size.index')->with([
+        $this->Make_Log('App\Models\Color','update',$color->id);
+        return redirect()->route('admin.color.index')->with([
             'type' => 'success',
-            'message' => 'Size Update successfuly'
+            'message' => 'Color Update successfuly'
         ]);
     }
 
@@ -120,14 +126,14 @@ class SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Size $size)
+    public function destroy(Request $request, Color $color)
     {
 
-        $size->delete();
-        $this->Make_Log('App\Models\Size','delete',$size->id);
+        $color->delete();
+        $this->Make_Log('App\Models\Color','delete',$color->id);
         return redirect()->back()->with([
             'type' => 'success',
-            'message' => 'Menu Size deleted successfuly'
+            'message' => 'Menu Color deleted successfuly'
         ]);
 
     }

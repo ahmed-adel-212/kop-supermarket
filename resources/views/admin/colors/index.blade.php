@@ -5,11 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Size </h1>
+                    <h1>Color </h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('admin.size.create')}}">Add New Size</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('admin.color.create')}}">Add New Color</a></li>
                     </ol>
                 </div>
             </div>
@@ -24,22 +24,27 @@
                                 <th>#ID</th>
                                 <th>Name AR</th>
                                 <th>Name EN</th>
+                                <th>Color & code</th>
                                 <th>Items Count</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($sizes as $size)
+                            @foreach ($colors as $color)
                             <tr>
-                                <td>{{ $size->id }}</td>
-                                <td>{{ $size->name_ar }}</td>
-                                <td>{{ $size->name_en }}</td>
-                                <td>{{ $size->items_count }}</td>
-                                {{-- <td><img src="{{ $size->image }}" style="max-width: 75px" ></td> --}}
+                                <td>{{ $color->id }}</td>
+                                <td>{{ $color->name_ar }}</td>
+                                <td>{{ $color->name_en }}</td>
                                 <td>
-                                    <a href="{{ route('admin.size.edit', $size->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
-                                    <a onclick="deleteCategory('{{ 'delete-size-' . $size->id }}')" href="#" class="btn btn-danger btn-circle btn-sm" title="delete"> <i class="fas fa-trash"></i></a>
-                                    <form action="{{ route('admin.size.destroy', $size->id) }}" method="POST" id="{{ 'delete-size-' . $size->id }}">
+                                    <div style="padding: 10px;background-color: #{{ $color->code }}"></div>
+                                    #{{ $color->code }}
+                                </td>
+                                <td>{{ $color->items_count }}</td>
+                                {{-- <td><img src="{{ $color->image }}" style="max-width: 75px" ></td> --}}
+                                <td>
+                                    <a href="{{ route('admin.color.edit', $color->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
+                                    <a onclick="deleteCategory('{{ 'delete-color-' . $color->id }}')" href="#" class="btn btn-danger btn-circle btn-sm" title="delete"> <i class="fas fa-trash"></i></a>
+                                    <form action="{{ route('admin.color.destroy', $color->id) }}" method="POST" id="{{ 'delete-color-' . $color->id }}">
                                         @csrf
                                         @method('DELETE')
                                     </form>
@@ -59,8 +64,8 @@
         function deleteCategory(id) {
             event.preventDefault();
             swal({
-                title: 'Are you sure to delete this size ?',
-                text: 'Once the size has been deleted you cannot retrieve its data',
+                title: 'Are you sure to delete this color ?',
+                text: 'Once the color has been deleted you cannot retrieve its data',
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true,
@@ -68,11 +73,11 @@
             .then((willDelete) => {
                 if (willDelete) {
                     $('#' + id).submit();
-                    swal('Size successfully deleted', {
+                    swal('Color successfully deleted', {
                         icon: 'success',
                     });
                 } else {
-                    swal('Size undeleted');
+                    swal('Color undeleted');
                 }
             });
         }
