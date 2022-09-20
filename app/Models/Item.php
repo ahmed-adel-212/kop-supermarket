@@ -15,18 +15,31 @@ class Item extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['branches','name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
+    protected $fillable = ['branches', 'name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
 
     // protected $hidden = ["branches"];
-    protected $appends = ['is_hidden', 'dough_type', 'dough_type_2', 'favoured', 'price_without_tax', 
-    'offer_price_without_tax'
-];
+    protected $appends = [
+        'is_hidden', 'favoured', 'price_without_tax',
+        'offer_price_without_tax'
+    ];
+
+    protected $with = ['sizes', 'colors'];
 
     protected $casts = ['main' => 'boolean'];
 
     public function category()
     {
         return $this->belongsTo('App\Models\Category');
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'item_size');
+    }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'item_color')->withPivot(['image']);
     }
 
     public function extras()
