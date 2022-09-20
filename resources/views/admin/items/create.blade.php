@@ -80,20 +80,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Item Price</label>
                                     <input type="number" step="any" class="form-control {!! $errors->first('price', 'is-invalid') !!}" placeholder="Enter Item Price" name="price" value="{{ old('price') }}">
                                     {!! $errors->first('price', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Item Calories</label>
                                     <input type="number" class="form-control {!! $errors->first('calories', 'is-invalid') !!}" placeholder="Enter Item Calories" name="calories" value="{{ old('calories') }}">
                                     {!! $errors->first('calories', '<p class="help-block">:message</p>') !!}
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Website Image</label>
@@ -125,7 +125,21 @@
                                     {!! $errors->first('website_image', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
+                        </div> --}}
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputRole">Item Sizes</label>
+                                    <select class="select2" multiple="multiple" data-placeholder="Select a Size" style="width: 100%;" name="sizes[]">
+                                        @foreach ($sizes as $size)
+                                        <option value="{{ $size->id }}">{{ $size->name_ar }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="card-footer">

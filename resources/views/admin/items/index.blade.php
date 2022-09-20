@@ -53,7 +53,7 @@
                                 <th>Name AR</th>
                                 <th>Name EN</th>
                                 <th>Price</th>
-                                <th>Calories</th>
+                                {{-- <th>Calories</th> --}}
                                 <th>Mobile Image</th>
                                 <th>Website Image</th>
                                 <th>Action</th>
@@ -68,7 +68,7 @@
                                     <td>{{ $item->name_ar }}</td>
                                     <td>{{ $item->name_en }}</td>
                                     <td>{{ $item->price }}</td>
-                                    <td>{{ $item->calories }}</td>
+                                    {{-- <td>{{ $item->calories }}</td> --}}
                                     <td><img src="{{ asset($item->image) }}" style="max-width: 75px" /></td>
                                     <td><img src="{{ asset($item->website_image) }}" style="max-width: 75px" /></td>
                                     <td>

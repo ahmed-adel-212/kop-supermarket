@@ -9,6 +9,7 @@ use App\Filters\ItemFilters;
 use App\Models\Category;
 use App\Models\Branch;
 use App\Models\HomeItem;
+use App\Models\Size;
 use Illuminate\Support\Facades\Validator;
 
 use App\Traits\LogfileTrait;
@@ -21,14 +22,14 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-           
+
     use LogfileTrait;
 
     public function index(Request $request, ItemFilters $filters)
     {
         $categories = Category::orderBy('id', 'DESC')->get();
         $items = Item::filter($filters)->orderBy('id', 'DESC')->get();
-        $this->Make_Log('App\Models\Item','view',0);
+        $this->Make_Log('App\Models\Item', 'view', 0);
         return view('admin.items.index', compact('categories', 'items'));
     }
 
@@ -40,7 +41,8 @@ class ItemController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.items.create', compact('categories'));
+        $sizes = Size::all();
+        return view('admin.items.create', compact('categories', 'sizes'));
     }
 
     /**
@@ -57,12 +59,15 @@ class ItemController extends Controller
             "description_ar" => 'nullable|required|string',
             "description_en" => 'nullable|required|string',
             "price" => 'required|numeric',
-            "calories" => 'required|numeric',
+            // "calories" => 'required|numeric',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
+            // 'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg',
             "category_id" => 'required|exists:categories,id',
+            'sizes' => 'required|array'
         ]);
 
+        $sizes = $validatedData['sizes'];
+        unset($validatedData['sizes']);
 
         if ($request->hasFile('image')) {
             $image = $request->image;
@@ -77,12 +82,15 @@ class ItemController extends Controller
             $validatedData['website_image'] = '/items/' . $image_new_name;
         }
         $item = Item::create($validatedData);
-        $this->Make_Log('App\Models\Item','create',$item->id);
-        if (!$item)
+        $this->Make_Log('App\Models\Item', 'create', $item->id);
+        if (!$item) {
             return redirect()->route('admin.item.index')->with([
                 'type' => 'error',
                 'message' => 'test'
             ]);
+        }
+
+        $item->sizes()->sync($sizes);
 
         return redirect()->route('admin.item.index')->with([
             'type' => 'success',
@@ -151,11 +159,13 @@ class ItemController extends Controller
      */
     public function edit(Request $request, Item $item)
     {
+        $item->load('sizes', 'colors');
         $categories = Category::all();
         $userBranches = auth()->user()->branches;
+        $sizes = Size::all();
+        $itemSizes = $item->sizes->pluck('id')->toArray();
 
-        $itemBranches = explode(',', $item->branches);
-        return view('admin.items.edit', compact('item', 'categories', 'userBranches', 'itemBranches'));
+        return view('admin.items.edit', compact('item', 'categories', 'sizes', 'itemSizes'));
     }
 
     /**
@@ -173,11 +183,15 @@ class ItemController extends Controller
             "description_ar" => 'nullable|required|string',
             "description_en" => 'nullable|required|string',
             "price" => 'required|numeric',
-            "calories" => 'required|numeric',
+            // "calories" => 'required|numeric',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
+            // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             "category_id" => 'required|exists:categories,id',
+            'sizes' => 'required|array'
         ]);
+
+        $sizes = $validatedData['sizes'];
+        unset($validatedData['sizes']);
 
 
         if ($request->hasFile('image')) {
@@ -192,33 +206,17 @@ class ItemController extends Controller
             $image->move(public_path('items'), $image_new_name);
             $validatedData['website_image'] = '/items/' . $image_new_name;
         }
-        
-        if (!$item->update($validatedData))
+
+        if (!$item->update($validatedData)) {
             return redirect()->route('admin.item.index')->with([
                 'type' => 'error',
                 'message' => 'test'
             ]);
-
-        $itemBranches = explode(',', $item->branches);
-
-        $userBranches = auth()->user()->branches;
-        $branches = $userBranches->pluck('id')->toArray();
-        // foreach ($itemBranches as $itemBranch) {
-
-        //     if (($key = array_search($itemBranch, $branches)) !== false) {
-        //         unset($branches[$key]);
-        //     }
-        // }
-        $r = (array_diff($itemBranches, $branches));
-        if (!$request->branches == null) {
-            foreach ($request->branches as $branch) {
-                $r[] = $branch;
-            }
         }
-        $item->branches = implode(',', $r);
-        $item->save();
 
-        $this->Make_Log('App\Models\Item','update',$item->id);
+        $item->sizes()->sync($sizes);
+
+        $this->Make_Log('App\Models\Item', 'update', $item->id);
         return redirect()->route('admin.item.index')->with([
             'type' => 'success',
             'message' => 'Item Update successfuly'
@@ -234,7 +232,7 @@ class ItemController extends Controller
     public function destroy(Request $request, Item $item)
     {
         $item->delete();
-        $this->Make_Log('App\Models\Item','delete',$item->id);
+        $this->Make_Log('App\Models\Item', 'delete', $item->id);
         return redirect()->back()->with([
             'type' => 'error', 'message' => 'Item deleted successfuly'
         ]);
@@ -256,16 +254,16 @@ class ItemController extends Controller
     public function dealOfWeekItem(ItemFilters $filters)
     {
         $categories = Category::all();
-        $items = Item::filter($filters)->get(); 
+        $items = Item::filter($filters)->get();
         return view('admin.dealOfWeek.index', compact('categories', 'items'));
     }
 
     public function dealOfWeekStatus($itemId)
     {
         $item = Item::find($itemId);
-        $item->best_seller = ($item->best_seller == 'activate')? 'deactivate':'activate';
+        $item->best_seller = ($item->best_seller == 'activate') ? 'deactivate' : 'activate';
         $item->save();
-         $this->Make_Log('App\Models\Item','dealOfWeekStatus',$itemId);
+        $this->Make_Log('App\Models\Item', 'dealOfWeekStatus', $itemId);
         return response()->json([
             'message' => 'success',
             'data' => $item->best_seller
@@ -290,14 +288,14 @@ class ItemController extends Controller
 
     public function Homeitem(Request $request)
     {
-        $homeitems = HomeItem::all()->load('item','category');
-        return view('admin.homeitem.index',compact('homeitems'));
+        $homeitems = HomeItem::all()->load('item', 'category');
+        return view('admin.homeitem.index', compact('homeitems'));
     }
 
     public function Create_Homeitem(Request $request)
     {
-        $categories=Category::all();
-        return view('admin.homeitem.create',compact('categories'));
+        $categories = Category::all();
+        return view('admin.homeitem.create', compact('categories'));
     }
     public function Store_Homeitem(Request $request)
     {
@@ -317,10 +315,10 @@ class ItemController extends Controller
             $image->move(public_path('items'), $image_new_name);
             $validatedData['image'] = '/items/' . $image_new_name;
         }
-        
+
         $HomeItem = HomeItem::create($validatedData);
-        $this->Make_Log('App\Models\HomeItem','create',$HomeItem->id);
-        
+        $this->Make_Log('App\Models\HomeItem', 'create', $HomeItem->id);
+
         if (!$HomeItem)
             return redirect()->route('admin.homeitem.index')->with([
                 'type' => 'error',
@@ -332,13 +330,13 @@ class ItemController extends Controller
             'message' => 'homeitem Update successfully'
         ]);
     }
-    public function Edit_Homeitem(Request $request ,HomeItem $homeitem)
+    public function Edit_Homeitem(Request $request, HomeItem $homeitem)
     {
         $categories = Category::all();
-        $homeitem->load('item','category');
-        return view('admin.homeitem.edit',compact('categories','homeitem'));
+        $homeitem->load('item', 'category');
+        return view('admin.homeitem.edit', compact('categories', 'homeitem'));
     }
-    public function Update_Homeitem(Request $request ,HomeItem $homeitem)
+    public function Update_Homeitem(Request $request, HomeItem $homeitem)
     {
         $validatedData = $request->validate([
             "description_ar" => 'required|string',
@@ -355,22 +353,21 @@ class ItemController extends Controller
             $image->move(public_path('items'), $image_new_name);
             $validatedData['image'] = '/items/' . $image_new_name;
         }
-        
+
         if (!$homeitem->update($validatedData))
             return redirect()->route('admin.homeitem.index')->with([
                 'type' => 'error',
                 'message' => 'test'
             ]);
 
-  
+
         $homeitem->save();
 
-        $this->Make_Log('App\Models\homeitem','update',$homeitem->id);
+        $this->Make_Log('App\Models\homeitem', 'update', $homeitem->id);
         return redirect()->route('admin.homeitem.index')->with([
             'type' => 'success',
             'message' => 'homeitem Update successfuly'
         ]);
-
     }
 
     public function Destroy_Homeitem(Request $request, HomeItem $homeitem)
@@ -382,10 +379,9 @@ class ItemController extends Controller
             "item_id" => null,
             'image' => null,
         ]);
-        $this->Make_Log('App\Models\HomeItem','delete',$homeitem->id);
+        $this->Make_Log('App\Models\HomeItem', 'delete', $homeitem->id);
         return redirect()->back()->with([
             'type' => 'error', 'message' => 'homeitem deleted successfuly'
         ]);
     }
-   
 }
