@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Filters\ItemFilters;
 use App\Models\Category;
 use App\Models\Branch;
+use App\Models\Color;
 use App\Models\HomeItem;
 use App\Models\Size;
 use Illuminate\Support\Facades\Validator;
@@ -165,7 +166,11 @@ class ItemController extends Controller
         $sizes = Size::all();
         $itemSizes = $item->sizes->pluck('id')->toArray();
 
-        return view('admin.items.edit', compact('item', 'categories', 'sizes', 'itemSizes'));
+        $colors = Color::all();
+        $itemColors = $item->colors->pluck('id')->toArray();
+        $itemColorsAll = $item->colors;
+
+        return view('admin.items.edit', compact('item', 'categories', 'sizes', 'itemSizes', 'colors', 'itemColors', 'itemColorsAll'));
     }
 
     /**
@@ -187,12 +192,18 @@ class ItemController extends Controller
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             "category_id" => 'required|exists:categories,id',
-            'sizes' => 'required|array'
+            'sizes' => 'required|array',
+            'colors' => 'required|array',
+            'color_images' => 'required|array',
+            'color_images.*' => 'mimes:jpeg,png,jpg'
         ]);
 
         $sizes = $validatedData['sizes'];
+        $colors = $validatedData['colors'];
+        $color_images = $validatedData['color_images'];
         unset($validatedData['sizes']);
-
+        unset($validatedData['colors']);
+        unset($validatedData['color_images']);
 
         if ($request->hasFile('image')) {
             $image = $request->image;
@@ -214,7 +225,30 @@ class ItemController extends Controller
             ]);
         }
 
+        $item->loadMissing('colors');
+
         $item->sizes()->sync($sizes);
+
+        // save colors with images
+        $inx = 0;
+        // detach and delete old images first
+        foreach ($item->colors as $col) {
+            if (file_exists(public_path($col->image))) {
+                unlink(public_path($col->image));
+            }
+            $item->colors()->detach($col->id);
+        }
+
+        foreach ($color_images as $img) {
+            $image_new_name = time() . $img->getClientOriginalName();
+            $img->move(public_path('colors'), $image_new_name);
+            $image_new_name = '/colors/' . $image_new_name;
+
+            // saved color
+            $item->colors()->attach($colors[$inx], ['image' => $image_new_name]);
+
+            $inx++;
+        }
 
         $this->Make_Log('App\Models\Item', 'update', $item->id);
         return redirect()->route('admin.item.index')->with([

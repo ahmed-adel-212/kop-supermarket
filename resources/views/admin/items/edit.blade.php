@@ -161,15 +161,64 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="exampleInputRole">Item Sizes</label>
-                                        <select class="select2" multiple="multiple" data-placeholder="Select a Branch" style="width: 100%;" name="sizes[]">
+                                        <select class="select2" multiple="multiple" data-placeholder="Select a Size"
+                                            style="width: 100%;" name="sizes[]">
                                             @foreach ($sizes as $size)
-                                            @if (in_array($size->id, $itemSizes))
-                                            <option value="{{ $size->id }}" selected>{{ $size->name_ar }}</option>
-                                            @else
-                                            <option value="{{ $size->id }}">{{ $size->name_ar }}</option>
-                                            @endif
+                                                @if (in_array($size->id, $itemSizes))
+                                                    <option value="{{ $size->id }}" selected>
+                                                        {{ $size['name_' . app()->getLocale()] }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $size->id }}">
+                                                        {{ $size['name_' . app()->getLocale()] }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="colors">Item Colors</label>
+                                        <select class="select2" id="colors" multiple="multiple"
+                                            data-placeholder="Select a Color" style="width: 100%;" name="colors[]">
+                                            @foreach ($colors as $color)
+                                                @if (in_array($color->id, $itemColors))
+                                                    <option value="{{ $color->id }}" selected>
+                                                        {{ $color['name_' . app()->getLocale()] }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $color->id }}">
+                                                        {{ $color['name_' . app()->getLocale()] }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="images">
+                                        @foreach ($itemColorsAll as $col)
+                                        <div class="row color-image color-name-{{$col->name_en}}" data-color-id="` + color.id + `">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>{{$col['name_' . app()->getLocale()]}} color Image</label>
+                
+                                                    <div class="input-group">
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input"
+                                                                name="color_images[]" value="{{$col->image}}">
+                                                            <label class="custom-file-label">Choose file</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -196,5 +245,44 @@
             //replace the "Choose a file" label
             $(this).next('.custom-file-label').html(fileName);
         })
+
+        $(document).ready(function() {
+            var colors = JSON.parse('{!! json_encode($colors->toArray()) !!}');
+            $(document).on('change', '#colors', function() {
+                var ids = $(this).val();
+                for (var i = 0; i < ids.length; i++) {
+                    var color = colors.find(x => x.id == ids[i]);
+
+                    if ($('.color-name-' + color.name_en).length > 0) {
+                        continue;
+                    }
+
+                    $('#images').append(`
+                        <div class="row color-image color-name-` + color.name_en + `" data-color-id="` + color.id + `">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>` + color['name_{{ app()->getLocale() }}'] + ` color Image</label>
+
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"
+                                                name="color_images[]" value="">
+                                            <label class="custom-file-label">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+
+                // remove elements not existed in list
+                $('.color-image').each(function(inx, el) {
+                    if (ids.indexOf($(el).attr('data-color-id')) < 0) {
+                        $(el).remove();
+                    }
+                });
+            });
+        });
     </script>
 @endpush
