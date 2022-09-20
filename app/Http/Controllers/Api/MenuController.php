@@ -90,7 +90,7 @@ class MenuController extends BaseController
     public function getCategory(Request $request, int $category)
     {
         $category = Category::findOrFail($category);
-        $category->loadMissing('items', 'extras', 'withouts');
+        $category->loadMissing('items');
 
 
         foreach ($category->items as $key => $item) {
@@ -135,10 +135,11 @@ class MenuController extends BaseController
 
     public function getItems(Request $request,$category)
     {
-        $items = Category::find($category)->items()->with('category.extras', 'category.withouts')->get();
+        $category = Category::findOrFail($category);
+        $items = $category->load('items');
 
-        foreach ($items as $key => $item) {
-            $branches = explode(',', $item->branches);
+        foreach ($category->items as $key => $item) {
+            // $branches = explode(',', $item->branches);
             //if(in_array($request->branch_id, $branches))
             {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
@@ -183,7 +184,7 @@ class MenuController extends BaseController
         $items = $category->items()->get();
 
         foreach ($items as $key => $item) {
-            $branches = explode(',',$item->branches);
+            // $branches = explode(',',$item->branches);
             //if(in_array($request->branch_id, $branches))
             {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
