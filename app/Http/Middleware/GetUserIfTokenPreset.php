@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\Middleware\Authenticate;
 use Laravel\Passport\Client as PassportClient;
 
 class GetUserIfTokenPreset
