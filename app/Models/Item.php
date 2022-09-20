@@ -19,7 +19,7 @@ class Item extends Model
 
     // protected $hidden = ["branches"];
     protected $appends = [
-        'is_hidden', 'favoured', 'price_without_tax',
+        'favoured', 'price_without_tax',
         'offer_price_without_tax'
     ];
 
