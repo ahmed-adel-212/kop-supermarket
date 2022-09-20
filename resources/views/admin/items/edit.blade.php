@@ -203,16 +203,16 @@
                                 <div class="col-md-12">
                                     <div id="images">
                                         @foreach ($itemColorsAll as $col)
-                                        <div class="row color-image color-name-{{$col->name_en}}" data-color-id="` + color.id + `">
+                                        <div class="row color-image color-name-{{$col->name_en}}" data-color-id="{{$col->id}}">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>{{$col['name_' . app()->getLocale()]}} color Image</label>
-                
+                                                    <img src="{{asset($col->pivot->image)}}" style="width: 80px;" />
                                                     <div class="input-group">
                                                         <div class="custom-file">
                                                             <input type="file" class="custom-file-input"
-                                                                name="color_images[]" value="{{$col->image}}">
-                                                            <label class="custom-file-label">Choose file</label>
+                                                                name="color_images[{{$col->id}}]" value="{{asset($col->pivot->image)}}" />
+                                                            <label class="custom-file-label">Choose {{$col['name_' . app()->getLocale()]}} image</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -266,8 +266,8 @@
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input"
-                                                name="color_images[]" value="">
-                                            <label class="custom-file-label">Choose file</label>
+                                                name="color_images[`+color.id+`]" value="">
+                                            <label class="custom-file-label">Choose ` + color['name_{{ app()->getLocale() }}'] + ` image</label>
                                         </div>
                                     </div>
                                 </div>

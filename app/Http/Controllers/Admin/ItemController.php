@@ -194,22 +194,28 @@ class ItemController extends Controller
             "category_id" => 'required|exists:categories,id',
             'sizes' => 'required|array',
             'colors' => 'required|array',
-            'color_images' => 'required|array',
+            'color_images' => 'nullable|array',
             'color_images.*' => 'mimes:jpeg,png,jpg'
         ]);
 
         $sizes = $validatedData['sizes'];
         $colors = $validatedData['colors'];
-        $color_images = $validatedData['color_images'];
+        $color_images = isset($validatedData['color_images']) ? $validatedData['color_images'] : [];
+
         unset($validatedData['sizes']);
         unset($validatedData['colors']);
         unset($validatedData['color_images']);
 
         if ($request->hasFile('image')) {
+            $old_image = $item->image;
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('items'), $image_new_name);
             $validatedData['image'] = '/items/' . $image_new_name;
+            
+            if (file_exists(public_path($old_image))) {
+                unlink(public_path($old_image));
+            }
         }
         if ($request->hasFile('website_image')) {
             $image = $request->website_image;
@@ -230,25 +236,40 @@ class ItemController extends Controller
         $item->sizes()->sync($sizes);
 
         // save colors with images
-        $inx = 0;
         // detach and delete old images first
+        $oldColors = $item->colors;
+        // $toBeDeleted = [];
+        // echo "<pre>";
+        // var_dump($oldColors->toArray());
         foreach ($item->colors as $col) {
-            if (file_exists(public_path($col->image))) {
-                unlink(public_path($col->image));
-            }
+            // $toBeDeleted[] = $col->pivot->image;
             $item->colors()->detach($col->id);
         }
 
-        foreach ($color_images as $img) {
-            $image_new_name = time() . $img->getClientOriginalName();
-            $img->move(public_path('colors'), $image_new_name);
-            $image_new_name = '/colors/' . $image_new_name;
+        foreach ($colors as $colId) {
+            if (isset($color_images[$colId])) {
+                $img = $color_images[$colId];
+                $newImageName = time() . $img->getClientOriginalName();
+                $img->move(public_path('colors'), $newImageName);
+                $newImageName = '/colors/' . $newImageName;
+            } else {
+                // var_dump($oldColors->where('id', $colId)->first()->pivot->image);
+                $newImageSrc = $oldColors->where('id', $colId)->first()->pivot->image;
+                $newImageName = $newImageSrc;
+                // if (isset($toBeDeleted[$newImageSrc])) {
+                //     unset($toBeDeleted[$newImageSrc]);
+                // }
+            }
 
             // saved color
-            $item->colors()->attach($colors[$inx], ['image' => $image_new_name]);
-
-            $inx++;
+            $item->colors()->attach($colId, ['image' => $newImageName]);
         }
+
+        // foreach ($toBeDeleted as $imgtoDel) {
+        //     if (file_exists(public_path($imgtoDel))) {
+        //         unlink(public_path($imgtoDel));
+        //     }
+        // }
 
         $this->Make_Log('App\Models\Item', 'update', $item->id);
         return redirect()->route('admin.item.index')->with([
