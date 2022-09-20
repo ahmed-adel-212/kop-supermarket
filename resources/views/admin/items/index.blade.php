@@ -55,7 +55,7 @@
                                 <th>Price</th>
                                 {{-- <th>Calories</th> --}}
                                 <th>Mobile Image</th>
-                                <th>Website Image</th>
+                                {{-- <th>Website Image</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -70,7 +70,7 @@
                                     <td>{{ $item->price }}</td>
                                     {{-- <td>{{ $item->calories }}</td> --}}
                                     <td><img src="{{ asset($item->image) }}" style="max-width: 75px" /></td>
-                                    <td><img src="{{ asset($item->website_image) }}" style="max-width: 75px" /></td>
+                                    {{-- <td><img src="{{ asset($item->website_image) }}" style="max-width: 75px" /></td> --}}
                                     <td>
                                         @if ($item->recommended)
                                         <form action="{{ route('admin.item.unrecommend', $item->id) }}" method="POST">

@@ -43,7 +43,10 @@ class ItemController extends Controller
     {
         $categories = Category::all();
         $sizes = Size::all();
-        return view('admin.items.create', compact('categories', 'sizes'));
+
+        $colors = Color::all();
+
+        return view('admin.items.create', compact('categories', 'sizes', 'colors'));
     }
 
     /**
@@ -64,11 +67,20 @@ class ItemController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg',
             "category_id" => 'required|exists:categories,id',
-            'sizes' => 'required|array'
+            'sizes' => 'required|array',
+            'colors' => 'required|array',
+            'color_images' => 'nullable|array',
+            'color_images.*' => 'mimes:jpeg,png,jpg'
         ]);
 
         $sizes = $validatedData['sizes'];
+        $colors = $validatedData['colors'];
+        $color_images = isset($validatedData['color_images']) ? $validatedData['color_images'] : [];
+
         unset($validatedData['sizes']);
+        unset($validatedData['colors']);
+        unset($validatedData['color_images']);
+
 
         if ($request->hasFile('image')) {
             $image = $request->image;
@@ -92,6 +104,16 @@ class ItemController extends Controller
         }
 
         $item->sizes()->sync($sizes);
+
+        foreach ($colors as $colId) {
+            $img = $color_images[$colId];
+            $newImageName = time() . $img->getClientOriginalName();
+            $img->move(public_path('colors'), $newImageName);
+            $newImageName = '/colors/' . $newImageName;
+
+            // saved color
+            $item->colors()->attach($colId, ['image' => $newImageName]);
+        }
 
         return redirect()->route('admin.item.index')->with([
             'type' => 'success',
@@ -212,7 +234,7 @@ class ItemController extends Controller
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('items'), $image_new_name);
             $validatedData['image'] = '/items/' . $image_new_name;
-            
+
             if (file_exists(public_path($old_image))) {
                 unlink(public_path($old_image));
             }
