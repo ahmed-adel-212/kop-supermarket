@@ -68,9 +68,9 @@ class OfferController extends Controller
             'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=550,height=465',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
+            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             'offer_type' => 'required',
         ]);
 
@@ -305,9 +305,9 @@ class OfferController extends Controller
             'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=550,height=465',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:width=300,height=300',
+            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             'offer_type' => 'required',
         ]);
         // $branches = implode(",", $request->get('branches'));
