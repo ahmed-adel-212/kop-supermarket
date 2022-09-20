@@ -145,14 +145,23 @@ class FrontController extends BaseController
         $banner = Banner::all();
 
         // recommended items
-        $recommended = Item::where('recommended', true)->get();
+        $new_arrival = Item::where('recommended', true)->get();
 
         // categories with items
-        $categories = Category::with('items','extras','withouts')->get();
+        $categories = Category::where('category_id', null)->with('subCategories')->get();
+        foreach ($categories as $cat) {
+            $subCategoriesId = $cat->subCategories->pluck('id');
+            $items = [];
+            foreach ($cat->subCategories as $sub) {
+                $items[] = Item::where('category_id', $sub->id)->latest()->first();
+            }
+            $cat->items_data = $items;
+        }
+
 
         // offers
         $offers = Offer::with('buyGet', 'discount')->where('main', true)->get();
 
-        return $this->sendResponse(compact('banner', 'recommended', 'categories', 'offers'), 'Get all menu items');
+        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers'), 'Get all menu items');
     }
 } 

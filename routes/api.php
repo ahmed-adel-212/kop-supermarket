@@ -154,7 +154,7 @@ Route::middleware('api')->group(function () {
 Route::group(['prefix' => 'menu', 'middleware' => ['authIfTokenFound']], function () {
 
     // categories 
-    Route::get('/categories', 'Api\MenuController@getAllCategories');
+    Route::get('/categories', 'Api\MenuController@getAllCategories2');
     Route::post('/categories/{category}', 'Api\MenuController@getCategory');
 
     // items

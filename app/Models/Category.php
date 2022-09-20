@@ -31,6 +31,16 @@ class Category extends Model
         return $this->hasMany('App\Models\Without');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function subCategories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
     public function getImageAttribute($value)
     {
         if (!empty($value) && file_exists(public_path($value))) {

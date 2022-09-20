@@ -14,7 +14,7 @@ class MenuController extends BaseController
 {
     public function getAllCategories2()
     {
-        $categories = Category::with('items')->get();
+        $categories = Category::where('')->with('subCategories')->get();
         // load first category items
         $categories->first()->loadMissing('items');
         
