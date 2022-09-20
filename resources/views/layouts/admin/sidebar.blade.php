@@ -46,9 +46,9 @@
                             <li class="nav-item has-treeview
                                  {{request()->segment(3) == 'category'||
                                    request()->segment(3)=='item'||
-                                   request()->segment(3)=='without'||
+                                   request()->segment(3)=='color'||
                                    request()->segment(3)=='dough'||
-                                   request()->segment(3)=='extra'
+                                   request()->segment(3)=='size'
 
                                             ? 'menu-open': ''}}
                                 ">
@@ -71,21 +71,15 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('admin.extra.index')}}" class="nav-link"><i
+                                        <a href="{{route('admin.size.index')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>
-                                            <p>Extra</p>
+                                            <p>Sizes</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('admin.without.index')}}" class="nav-link"><i
+                                        <a href="{{route('admin.color.index')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>
-                                            <p>Without</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('admin.dough.index')}}" class="nav-link"><i
-                                                class="fas fa-certificate nav-icon"></i>
-                                            <p>Dough Types</p>
+                                            <p>Colors</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -266,7 +260,7 @@
                                    request()->segment(4)=='order'||
                                    request()->segment(4)=='income'||
                                    request()->segment(4)=='item'||
-                                   request()->segment(4)=='extra'||
+                                   request()->segment(4)=='size'||
                                    request()->segment(4)=='order-customer'||
                                    request()->segment(4)=='order-item'||
                                    request()->segment(4)=='payments'||
@@ -301,12 +295,7 @@
                                                 <p>Items</p>
                                             </a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="{{route('admin.report.extra')}}" class="nav-link"><i
-                                                    class="fas fa-dice-three nav-icon"></i>
-                                                <p>Extra</p>
-                                            </a>
-                                        </li>
+                                        
                                         <li class="nav-item">
                                             <a href="{{route('admin.report.order-status')}}" class="nav-link"><i
                                                     class="fas fa-dice-three nav-icon"></i>

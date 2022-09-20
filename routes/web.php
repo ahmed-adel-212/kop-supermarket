@@ -66,6 +66,8 @@ Route::group([
         Route::resource('banner', 'BannerController')->middleware('role:admin');
         Route::resource('contact', 'ContactController')->middleware('role:admin');
 
+        Route::resource('size', 'SizeController')->middleware('role:admin');
+
         Route::resource('dough', 'DoughTypeController')->middleware('role:admin');
 
         // reports
