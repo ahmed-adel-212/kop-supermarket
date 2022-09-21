@@ -26,7 +26,7 @@ class Item extends Model
 
     protected $with = ['sizes', 'colors'];
 
-    protected $casts = ['main' => 'boolean'];
+    protected $casts = ['main' => 'boolean', 'price' => 'double', 'price_without_tax' => 'double', 'offer_price_without_tax' => 'double'];
 
     public function category()
     {
