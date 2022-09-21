@@ -148,7 +148,7 @@ class FrontController extends BaseController
         $new_arrival = Item::where('recommended', true)->get();
 
         // categories with items
-        $categories = Category::where('category_id', null)->with('subCategories')->get();
+        $categories = Category::where('category_id', null)->where('sub_category_id', null)->with('subCategories')->get();
         foreach ($categories as $cat) {
             $subCategoriesId = $cat->subCategories->pluck('id');
             $items = [];
