@@ -42,9 +42,44 @@
                                     <p>Customers</p>
                                 </a>
                             </li>
-
                             <li class="nav-item has-treeview
                                  {{request()->segment(3) == 'category'||
+                                   request()->segment(3)=='sub_category'||
+                                   request()->segment(3)=='type_category'
+
+                                            ? 'menu-open': ''}}
+                                ">
+                                <a href="#" class="nav-link"
+
+                                ><i class="nav-icon fas fa-bars"></i>
+                                    <p>Categories<i class="fas fa-angle-left right"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.category.index')}}" class="nav-link"><i
+                                                class="fas fa-certificate nav-icon"></i>
+                                            <p>Parent Categories</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.sub_category.index')}}" class="nav-link"><i
+                                                class="fas fa-certificate nav-icon"></i>
+                                            <p>Sub Categories</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.type_category.index')}}" class="nav-link"><i
+                                                class="fas fa-certificate nav-icon"></i>
+                                            <p>Type Categories</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item has-treeview
+                                 {{request()->segment(3) == 'categoryy'||
                                    request()->segment(3)=='item'||
                                    request()->segment(3)=='color'||
                                    request()->segment(3)=='brand'||
@@ -58,12 +93,12 @@
                                     <p>Menu<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{route('admin.category.index')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>
                                             <p>Categories</p>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item">
                                         <a href="{{route('admin.item.index')}}" class="nav-link"><i
                                                 class="fas fa-certificate nav-icon"></i>

@@ -12,7 +12,7 @@ use App\Models\DoughType;
 use App\Traits\LogfileTrait;
 use Illuminate\Support\Facades\Validator;
 
-class CategoryController extends Controller
+class TypeCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,9 +24,9 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::where('category_id', null)->where('sub_category_id', null)->withCount('items', 'subCategories', 'parent')->orderBy('id', 'DESC')->get();
+        $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->withCount('items', 'subCategories', 'parent')->orderBy('id', 'DESC')->get();
         $this->Make_Log('App\Models\Category', 'view', 0);
-        return view('admin.category.index', compact('categories'));
+        return view('admin.type_category.index', compact('categories'));
     }
 
     /**
@@ -38,7 +38,7 @@ class CategoryController extends Controller
     {
         $doughTypes = DoughType::all();
         $categories = Category::all();
-        return view('admin.category.create', compact('doughTypes', 'categories', 'is_parent'));
+        return view('admin.type_category.create', compact('doughTypes', 'categories', 'is_parent'));
     }
 
     /**
@@ -180,7 +180,7 @@ class CategoryController extends Controller
         //     $category->save();
         // }
 
-        return redirect()->route('admin.category.index')->with([
+        return redirect()->route('admin.type_category.index')->with([
             'type' => 'success',
             'message' => 'category insert successfully'
         ]);
@@ -194,7 +194,7 @@ class CategoryController extends Controller
      */
     public function show(Request $request, Category $category)
     {
-        return view('admin.category.show', compact('category'));
+        return view('admin.type_category.show', compact('category'));
     }
 
     /**
@@ -210,7 +210,7 @@ class CategoryController extends Controller
 
         $categories = Category::all();
 
-        return view('admin.category.edit', compact('category', 'categories'));
+        return view('admin.type_category.edit', compact('category', 'categories'));
     }
 
     /**
@@ -331,7 +331,7 @@ class CategoryController extends Controller
         //     }
         // }
 
-        return redirect()->route('admin.category.index')->with([
+        return redirect()->route('admin.type_category.index')->with([
             'type' => 'success',
             'message' => 'category Update successfuly'
         ]);
@@ -347,7 +347,7 @@ class CategoryController extends Controller
     {
         $category->delete();
         $this->Make_Log('App\Models\Category', 'delete', $category->id);
-        return redirect()->route('admin.category.index')->with([
+        return redirect()->route('admin.type_category.index')->with([
             'type' => 'error', 'message' => 'category deleted successfuly'
         ]);
     }

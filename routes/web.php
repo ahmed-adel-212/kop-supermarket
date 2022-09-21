@@ -43,6 +43,8 @@ Route::group([
 
         Route::resource('customer', 'CustomerController')->middleware('role:admin,cashier');
         Route::resource('category', 'CategoryController')->middleware('role:admin,cashier');
+        Route::resource('sub_category', 'SubCategoryController')->middleware('role:admin,cashier');
+        Route::resource('type_category', 'TypeCategoryController')->middleware('role:admin,cashier');
 
         //homeitem
         Route::get('homeitem', 'ItemController@Homeitem')->name('homeitem.index')->middleware('role:admin');
