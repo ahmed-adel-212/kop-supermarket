@@ -24,7 +24,8 @@
               <th>#ID</th>
               <th>Category Name</th>
               <th>Nubmer of Items</th>
-              <th>Nubmer of Extras</th>
+              <th>Parent Category</th>
+              <th>Number of SubCategory</th>
               <th>Image</th>
               <th>Action</th>
             </tr>
@@ -32,11 +33,25 @@
           <tbody>
             @foreach ($categories as $index => $category)
             <tr>
-              <td>{{ $index + 1 }}</td>
-              <td>{{ $category['name_'.app()->getLocale()]}}</td>
-              <td>{{ $category->items->count() }}</td>
-              <td>{{ $category->extras->count() }}</td>
-              <td><img src="{{ $category->image }}"class="mg-fluid img-thumbnail"style="max-width: 75px"></td>
+              <td>
+                {{ $index + 1 }}
+              </td>
+              <td>
+                {{ $category['name_'.app()->getLocale()]}}
+                @if ($category->parent == null)
+                <span class="btn btn-success btn-sm" title="Show">parent</span>
+                @endif
+              </td>
+              <td>{{ $category->items_count }}</td>
+              <td>
+                @if ($category->parent)
+                <a href="{{ route('admin.category.show', $category->parent->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show">
+                  {{$category->parent['name_' . app()->getLocale()]}}
+                </a>
+                @endif
+              </td>
+              <td>{{ $category->sub_categories_count }}</td>
+              <td><img src="{{ asset($category->image) }}"class="mg-fluid img-thumbnail"style="max-width: 75px"></td>
               <td>
                 <a href="{{ route('admin.category.show', $category->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show"><i class="fa fa-globe"></i></a>
 

@@ -23,7 +23,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::with('items')->orderBy('id', 'DESC')->get();
+        $categories = Category::withCount('items', 'subCategories', 'parent')->orderBy('id', 'DESC')->get();
         $this->Make_Log('App\Models\Category','view',0);
         return view('admin.category.index', compact('categories'));
     }
