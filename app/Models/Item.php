@@ -15,7 +15,7 @@ class Item extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['branches', 'name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
+    protected $fillable = ['branches', 'name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image', 'brand_id'];
 
     protected $hidden = ["calories", 'branches', 'website_image'];
 

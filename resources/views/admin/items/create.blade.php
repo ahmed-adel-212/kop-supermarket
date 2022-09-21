@@ -42,7 +42,16 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-
+                                    <div class="form-group">
+                                        <label for="brand-select">Brand</label>
+                                        <select id="brand-select" class="select2" placeholder="Select a Brand"
+                                            style="width: 100%;" name="brand_id">
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->id }}">
+                                                    {{ $brand['name_' . app()->getLocale()] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

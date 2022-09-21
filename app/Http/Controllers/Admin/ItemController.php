@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Filters\ItemFilters;
 use App\Models\Category;
 use App\Models\Branch;
+use App\Models\Brand;
 use App\Models\Color;
 use App\Models\HomeItem;
 use App\Models\Size;
@@ -46,7 +47,9 @@ class ItemController extends Controller
 
         $colors = Color::all();
 
-        return view('admin.items.create', compact('categories', 'sizes', 'colors'));
+        $brands = Brand::all();
+
+        return view('admin.items.create', compact('categories', 'sizes', 'colors', 'brands'));
     }
 
     /**
@@ -70,7 +73,8 @@ class ItemController extends Controller
             'sizes' => 'required|array',
             'colors' => 'required|array',
             'color_images' => 'nullable|array',
-            'color_images.*' => 'mimes:jpeg,png,jpg'
+            'color_images.*' => 'mimes:jpeg,png,jpg',
+            'brand_id' => 'required|exists:brands,id'
         ]);
 
         $sizes = $validatedData['sizes'];
@@ -171,6 +175,7 @@ class ItemController extends Controller
      */
     public function show(Request $request, Item $item)
     {
+        $item->loadMissing(['category', 'brand']);
         return view('admin.items.show', compact('item'));
     }
 
@@ -192,7 +197,9 @@ class ItemController extends Controller
         $itemColors = $item->colors->pluck('id')->toArray();
         $itemColorsAll = $item->colors;
 
-        return view('admin.items.edit', compact('item', 'categories', 'sizes', 'itemSizes', 'colors', 'itemColors', 'itemColorsAll'));
+        $brands = Brand::all();
+
+        return view('admin.items.edit', compact('item', 'categories', 'sizes', 'itemSizes', 'colors', 'itemColors', 'itemColorsAll', 'brands'));
     }
 
     /**
@@ -217,7 +224,8 @@ class ItemController extends Controller
             'sizes' => 'required|array',
             'colors' => 'required|array',
             'color_images' => 'nullable|array',
-            'color_images.*' => 'mimes:jpeg,png,jpg'
+            'color_images.*' => 'mimes:jpeg,png,jpg',
+            'brand_id' => 'required|exists:brands,id'
         ]);
 
         $sizes = $validatedData['sizes'];

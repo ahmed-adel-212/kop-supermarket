@@ -43,20 +43,19 @@
                                         {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputRole">Hide In</label>
-                                    <select class="select2" multiple="multiple" data-placeholder="Select a Branch" style="width: 100%;" name="branches[]">
-                                        @foreach ($sizes as $userBranch)
-                                        @if (in_array($userBranch->id, $itemBranches))
-                                        <option value="{{ $userBranch->id }}" selected>{{ $userBranch->name_ar }}</option>
-                                        @else
-                                        <option value="{{ $userBranch->id }}">{{ $userBranch->name_ar }}</option>
-                                        @endif
-                                        @endforeach
-                                    </select>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="brand-select">Brand</label>
+                                        <select id="brand-select" class="select2" placeholder="Select a Brand"
+                                            style="width: 100%;" name="brand_id">
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->id }}"
+                                                    {{ $brand->id == $item->brand_id ? 'selected' : '' }}>
+                                                    {{ $brand['name_' . app()->getLocale()] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div> --}}
                             </div>
 
                             <div class="row">
@@ -203,21 +202,25 @@
                                 <div class="col-md-12">
                                     <div id="images">
                                         @foreach ($itemColorsAll as $col)
-                                        <div class="row color-image color-name-{{$col->name_en}}" data-color-id="{{$col->id}}">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>{{$col['name_' . app()->getLocale()]}} color Image</label>
-                                                    <img src="{{asset($col->pivot->image)}}" style="width: 80px;" />
-                                                    <div class="input-group">
-                                                        <div class="custom-file">
-                                                            <input type="file" class="custom-file-input"
-                                                                name="color_images[{{$col->id}}]" value="{{asset($col->pivot->image)}}" />
-                                                            <label class="custom-file-label">Choose {{$col['name_' . app()->getLocale()]}} image</label>
+                                            <div class="row color-image color-name-{{ $col->name_en }}"
+                                                data-color-id="{{ $col->id }}">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>{{ $col['name_' . app()->getLocale()] }} color Image</label>
+                                                        <img src="{{ asset($col->pivot->image) }}"
+                                                            style="width: 80px;" />
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input type="file" class="custom-file-input"
+                                                                    name="color_images[{{ $col->id }}]"
+                                                                    value="{{ asset($col->pivot->image) }}" />
+                                                                <label class="custom-file-label">Choose
+                                                                    {{ $col['name_' . app()->getLocale()] }} image</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -266,8 +269,9 @@
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input"
-                                                name="color_images[`+color.id+`]" value="">
-                                            <label class="custom-file-label">Choose ` + color['name_{{ app()->getLocale() }}'] + ` image</label>
+                                                name="color_images[` + color.id + `]" value="">
+                                            <label class="custom-file-label">Choose ` + color[
+                        'name_{{ app()->getLocale() }}'] + ` image</label>
                                         </div>
                                     </div>
                                 </div>

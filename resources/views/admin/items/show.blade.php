@@ -25,14 +25,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Item Arabic Name</label>
+                                <label>Item Category</label>
                                 <select readonly class="form-control" name="category_id">
                                     <option value="">{{ $item->category['name_'.app()->getLocale()] }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
-
+                            <div class="form-group">
+                                <label>Item Brand</label>
+                                <select readonly class="form-control" name="category_id">
+                                    <option value="">{{ $item->brand['name_'.app()->getLocale()] }}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
