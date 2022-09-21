@@ -53,56 +53,55 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputArabicName">Arabic Name</label>
-                                    <input type="text" class="form-control" id="exampleInputArabicName"
-                                        placeholder="Enter Arabic Name" name="name_ar" value="{{ $category->name_ar }}">
-                                    @error('name_ar')
-                                        <div class="help-block">{{ $message }}</div>
-                                    @enderror
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputArabicName">Arabic Name</label>
+                                        <input type="text" class="form-control" id="exampleInputArabicName"
+                                            placeholder="Enter Arabic Name" name="name_ar" value="{{ $category->name_ar }}">
+                                        @error('name_ar')
+                                            <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEnglishName">English Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEnglishName"
+                                            placeholder="Enter English Name" name="name_en"
+                                            value="{{ $category->name_en }}">
+                                        @error('name_en')
+                                            <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEnglishName">English Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEnglishName"
-                                        placeholder="Enter English Name" name="name_en" value="{{ $category->name_en }}">
-                                    @error('name_en')
-                                        <div class="help-block">{{ $message }}</div>
-                                    @enderror
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputArabicDescription">Arabic Description</label>
+                                        <textarea class="form-control" id="exampleInputArabicDescription" placeholder="Enter Arabic Description"
+                                            name="description_ar">{{ $category->description_ar }}</textarea>
+                                        @error('description_ar')
+                                            <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputArabicDescription">Arabic Description</label>
-                                    <textarea class="form-control" id="exampleInputArabicDescription" placeholder="Enter Arabic Description"
-                                        name="description_ar">{{ $category->description_ar }}</textarea>
-                                    @error('description_ar')
-                                        <div class="help-block">{{ $message }}</div>
-                                    @enderror
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEnglishDescription">English Description</label>
+                                        <textarea class="form-control" id="exampleInputEnglishDescription" placeholder="Enter English Description"
+                                            name="description_en">{{ $category->description_en }}</textarea>
+                                        @error('description_en')
+                                            <div class="help-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputEnglishDescription">English Description</label>
-                                    <textarea class="form-control" id="exampleInputEnglishDescription" placeholder="Enter English Description"
-                                        name="description_en">{{ $category->description_en }}</textarea>
-                                    @error('description_en')
-                                        <div class="help-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
 
-                        {{-- <div class="row">
+                            {{-- <div class="row">
                             <div class="col-xs-12">
                                 <div class="pl-3 card-title mb-2">
                                     <b>Dough</b>
@@ -128,7 +127,7 @@
                             </div>
                         </div> --}}
 
-                        {{-- <div class="row">
+                            {{-- <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="dough_type_id">Dough Type</label>
@@ -154,31 +153,125 @@
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Image</label>
-                                    <img src="{{ $category->image }}" class="mg-fluid img-thumbnail"
-                                        style="max-width: 75px"></td>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile"
-                                            name="image">
-                                        @error('image')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">Image</label>
+                                        <img src="{{ $category->image }}" class="mg-fluid img-thumbnail"
+                                            style="max-width: 75px"></td>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="exampleInputFile"
+                                                name="image">
+                                            @error('image')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="details">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputreturn-policy-arabic">Arabic Return Policy</label>
+                                            <textarea class="form-control" id="exampleInputreturn-policy-arabic" placeholder="Enter English Description"
+                                                name="return_policy_ar">{{ $category->return_policy_ar }}</textarea>
+                                            @error('return_policy_ar')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputreturn-policy-english">english Return Policy</label>
+                                            <textarea class="form-control" id="exampleInputreturn-policy-english" placeholder="Enter English Description"
+                                                name="return_policy_en">{{ $category->return_policy_en }}</textarea>
+                                            @error('return_policy_en')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" x-data="{
+                                        shipping: JSON.parse('{{ json_encode($category->shipping_details_ar) }}'),
+                                        addOne: function() {
+                                            this.shipping.push('');
+                                        },
+                                        remove: function(txt) {
+                                            var inx = this.shipping.findIndex(x => x == txt);
+                                            this.shipping.splice(inx, 1);
+                                        },
+                                    }">
+                                        <label for="exampleInputArabicName row" style="width: 100%">
+                                            <div class="col-sm-6" style="display: inline">
+                                                Arabic Shipping Details
+                                            </div>
+                                            <div class="col-sm-5 " style="text-align: right;display: inline">
+                                                <button class="btn btn-success btn-sm"
+                                                    x-on:click.prevent="addOne">+</button>
+                                            </div>
+                                        </label>
+
+                                        <template x-for="sh in shipping" :key="Math.random()">
+                                            <div class="form-group row">
+                                                <input type="text" class="form-control col-md-10"
+                                                    id="exampleInputArabicName"
+                                                    placeholder="Enter Arabic Shipping Details"
+                                                    name="shipping_details_ar[]" x-bind:value="sh.length ? sh : ''" />
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                        x-on:click.prevent="remove(sh)">x</button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="col-md-6" x-data="{
+                                        shipping: JSON.parse('{{ json_encode($category->shipping_details_en) }}'),
+                                        addOne: function() {
+                                            this.shipping.push('');
+                                        },
+                                        remove: function(txt) {
+                                            var inx = this.shipping.findIndex(x => x == txt);
+                                            this.shipping.splice(inx, 1);
+                                        },
+                                    }">
+                                        <label for="exampleInputEnglishName row" style="width: 100%">
+                                            <div class="col-sm-6" style="display: inline">
+                                                English Shipping Details
+                                            </div>
+                                            <div class="col-sm-5 " style="text-align: right;display: inline">
+                                                <button class="btn btn-success btn-sm"
+                                                    x-on:click.prevent="addOne">+</button>
+                                            </div>
+                                        </label>
+
+                                        <template x-for="sh in shipping" :key="Math.random()">
+                                            <div class="form-group row">
+                                                <input type="text" class="form-control col-md-10"
+                                                    id="exampleInputEnglishName"
+                                                    placeholder="Enter English Shipping Details"
+                                                    name="shipping_details_en[]" x-bind:value="sh" />
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                        x-on:click.prevent="remove(sh)">x</button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                         </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary float-right">Submit</button>
-                </div>
-                </form>
             </div>
-    </div>
-    </section>
+        </section>
     </div>
 @endsection
 
@@ -215,18 +308,18 @@
             $('.set-as-parent').change(function(e) {
                 var checked = $(this).is(":checked");
                 if (checked) {
-                    $('.category-select .select2.select2-container').css('display', 'none');
+                    $('.category-select .select2.select2-container, #details').css('display', 'none');
                 } else {
-                    $('.category-select .select2.select2-container').css('display', 'block');
+                    $('.category-select .select2.select2-container, #details').css('display', 'block');
                 }
             });
 
             setTimeout(() => {
                 console.log($('.set-as-parent').is(":checked"));
                 if ($('.set-as-parent').is(":checked")) {
-                    $('.category-select .select2.select2-container').css('display', 'none');
+                    $('.category-select .select2.select2-container, #details').css('display', 'none');
                 } else {
-                    $('.category-select .select2.select2-container').css('display', 'block');
+                    $('.category-select .select2.select2-container, #details').css('display', 'block');
                 }
             }, 250);
         });

@@ -203,16 +203,21 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validator = Validator::make($request->all(), [
-            'name_ar' => 'required|min:3|max:20',
-            'name_en' => 'required|min:3|max:20',
+            'name_ar' => 'required|min:3',
+            'name_en' => 'required|min:3',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'dough_type_id' => 'nullable',
             'dough_type_2_id' => 'nullable',
             'is_parent' => 'nullable',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'shipping_details_ar' => 'nullable|array',
+            'shipping_details_en' => 'nullable|array',
+            'return_policy_ar' => 'nullable|string',
+            'return_policy_en' => 'nullable|string',
         ]);
+
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
 
@@ -237,8 +242,25 @@ class CategoryController extends Controller
 
         $category->updated_by = auth()->id();
 
-        $category->dough_type_id =  $request->has('dough_type_id') ? $request->dough_type_id : null;
-        $category->dough_type_2_id = $request->has('dough_type_2_id') ? $request->dough_type_2_id : null;
+        // $category->dough_type_id =  $request->has('dough_type_id') ? $request->dough_type_id : null;
+        // $category->dough_type_2_id = $request->has('dough_type_2_id') ? $request->dough_type_2_id : null;
+
+        $category->return_policy_ar = $request->return_policy_ar;
+        $category->return_policy_en = $request->return_policy_en;
+
+        $shipping_en = collect($request->shipping_details_en);
+        $shipping_en = ($shipping_en->filter(function($x) {
+            return $x !== null;
+        }))->toArray();
+
+        $shipping_ar = collect($request->shipping_details_ar);
+        $shipping_ar = ($shipping_ar->filter(function($x) {
+            return $x !== null;
+        }))->toArray();
+
+
+        $category->shipping_details_en = $shipping_en;
+        $category->shipping_details_ar = $shipping_ar;
 
         $category->save();
 

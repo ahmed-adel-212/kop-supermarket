@@ -12,7 +12,8 @@ class Category extends Model
     protected $hidden = ["dough_type_id", 'dough_type_2_id'];
 
     protected $casts = [
-        'shipping_details_en' => 'array'
+        'shipping_details_en' => 'array',
+        'shipping_details_ar' => 'array',
     ];
 
     public function items()

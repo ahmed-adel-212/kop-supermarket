@@ -51,3 +51,5 @@
 }
 </style>
 @stack('css')
+
+<script src="{{asset('js/alpine.min.js')}}" defer></script>
