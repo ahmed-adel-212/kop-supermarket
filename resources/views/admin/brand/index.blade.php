@@ -9,7 +9,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{route('admin.brand.create')}}">Add New Category</a></li>
+            <li class="breadcrumb-item"><a href="{{route('admin.brand.create')}}">Add New Brand</a></li>
           </ol>
         </div>
       </div>
