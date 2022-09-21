@@ -23,7 +23,7 @@ class FrontController extends BaseController
     //aboutUS
     public function getAboutUS()
     {
-        $aboutUS = AboutUs::all();
+        $aboutUS = AboutUs::first();
         return $this->sendResponse($aboutUS, __('general.ret', ['key' => __('general.about_ret')]));
     }
 
