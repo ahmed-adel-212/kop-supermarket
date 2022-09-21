@@ -17,7 +17,8 @@ class Item extends Model
 
     protected $fillable = ['branches', 'name_ar', 'name_en', 'price', 'calories', 'category_id', 'description_ar', 'description_en', 'image', 'website_image'];
 
-    // protected $hidden = ["branches"];
+    protected $hidden = ["calories", 'branches', 'website_image'];
+
     protected $appends = [
         'favoured', 'price_without_tax',
         'offer_price_without_tax'
@@ -40,6 +41,11 @@ class Item extends Model
     public function colors()
     {
         return $this->belongsToMany(Color::class, 'item_color')->withPivot(['image']);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 
     public function extras()

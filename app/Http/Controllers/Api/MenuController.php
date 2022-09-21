@@ -229,7 +229,7 @@ class MenuController extends BaseController
 
     public function getItem(Request $request, int $item) {
         $item = Item::findOrFail($item);
-        // $item->load('category.extras', 'category.withouts');
+        $item->load('brand', 'sizes', 'colors');
         // $item->category= Category::with('extras', 'withouts')->where('id',$item->category_id)->get();
         $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
 
