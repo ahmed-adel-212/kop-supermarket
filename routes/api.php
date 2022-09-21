@@ -173,6 +173,7 @@ Route::group(['prefix' => 'menu', 'middleware' => ['authIfTokenFound']], functio
     Route::get('/recommended', 'Api\MenuController@getRecommendedItems');
 
     Route::get('brands', 'Api\BrandController@index');
+    Route::get('brands/{brand}', 'Api\BrandController@show');
 });
 Route::get('/payment/make-order', 'Api\OrdersController@make_order_payment')->name('api.make-order.payment');
 Route::get('/payment/{id}/{amount}/{hash}', 'Api\PaymentController@index')->name('get.paymentMobile');

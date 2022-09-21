@@ -15,4 +15,13 @@ class BrandController extends BaseController
 
         return $this->sendResponse($brands, 'all brands list');
     }
+
+    public function show(Request $request, $brand)
+    {
+        $brand = Brand::findOrFail($brand);
+
+        $brand->loadMissing('items');
+
+        return $this->sendResponse($brand, 'brand with items');
+    }
 }
