@@ -27,6 +27,32 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <div class="form-group category-select">
+                                        <label>Choose Category</label>
+                                        <select class="form-control categories select2" id="categories" name="category_id"
+                                            >
+                                            <option value="" disabled>Select Category</option>
+                                            @foreach ($categories as $cat)
+                                                <option value="{{ $cat->id }}">
+                                                    {{ $cat['name_' . app()->getLocale()] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check" style="display: flex;align-items: center;height: 100%;">
+                                        <input class="form-check-input set-as-parent" type="checkbox" value="1"
+                                            name="is_parent" id="defaultCheck1">
+                                        <label class="form-check-label" for="defaultCheck1">
+                                            Set as Parent Category
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputArabicName">Arabic Name</label>
                                         <input type="text" class="form-control" id="exampleInputArabicName"
@@ -72,7 +98,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-xs-12">
                                     <div class="pl-3 card-title mb-2">
                                         <b>Dough</b>
@@ -96,7 +122,7 @@
                                     @endforeach
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             {{-- <div class="row">
                                 <div class="col-md-12">
@@ -147,29 +173,39 @@
 
 @push('js')
     <script>
-        window.onbeforeunload = function () {
-        return 'Are you sure? Your work will be lost. ';
-    };
-        $('.custom-file-input').on('change', function() {
-            //get the file name
-            var fileName = $(this).val();
-            //replace the "Choose a file" label
-            $(this).next('.custom-file-label').html(fileName);
-        })
+        window.onbeforeunload = function() {
+            return 'Are you sure? Your work will be lost. ';
+        };
+        $(document).ready(function() {
+            $('.custom-file-input').on('change', function() {
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
 
 
-        $('input').change(function(e) {
-            // Warning
-            $(window).on('beforeunload', function() {
-                return "Are you sure you want to navigate away from this page?";
+            $('input').change(function(e) {
+                // Warning
+                $(window).on('beforeunload', function() {
+                    return "Are you sure you want to navigate away from this page?";
+                });
+
+                // Form Submit
+                $(document).on("submit", "form", function(event) {
+                    // disable unload warning
+                    $(window).off('beforeunload');
+                });
             });
 
-            // Form Submit
-            $(document).on("submit", "form", function(event) {
-                // disable unload warning
-                $(window).off('beforeunload');
+            $('.set-as-parent').change(function(e) {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $('.category-select .select2.select2-container').css('display', 'none');
+                } else {
+                    $('.category-select .select2.select2-container').css('display', 'block');
+                }
             });
-
         });
     </script>
 @endpush

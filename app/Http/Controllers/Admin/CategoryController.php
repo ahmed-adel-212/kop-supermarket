@@ -36,7 +36,8 @@ class CategoryController extends Controller
     public function create()
     {
         $doughTypes = DoughType::all();
-        return view('admin.category.create', compact('doughTypes'));
+        $categories = Category::all();
+        return view('admin.category.create', compact('doughTypes', 'categories'));
     }
 
     /**
@@ -46,16 +47,15 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    { 
         $validator = Validator::make($request->all(), [
             'name_ar' => 'required|min:3|max:20',
             'name_en' => 'required|min:3|max:20',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'dough_type_id' => 'nullable',
-            'dough_type_2_id' => 'nullable'
+            'is_parent' => 'nullable',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         if ($validator->fails())
@@ -93,6 +93,7 @@ class CategoryController extends Controller
             'created_by' => auth()->id(),
             'dough_type_id' =>  $request->has('dough_type_id') ? $request->dough_type_id : null,
             'dough_type_2_id' => $request->has('dough_type_2_id') ? $request->dough_type_2_id : null,
+            'category_id' => $request->has('is_parent') && $request->is_parent ? null : $request->category_id,
         ]);
         $this->Make_Log('App\Models\Category','create',$category->id);
         if ($request->hasFile('image')) {
@@ -184,12 +185,12 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $items = $category->items;
-        $extras = $category->extras;
 
-        $doughTypes = DoughType::all();
+        // $doughTypes = DoughType::all();
 
-        return view('admin.category.edit', compact('category', 'items', 'extras', 'doughTypes'));
+        $categories = Category::all();
+
+        return view('admin.category.edit', compact('category', 'categories'));
     }
 
     /**
@@ -208,7 +209,9 @@ class CategoryController extends Controller
             'description_en' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'dough_type_id' => 'nullable',
-            'dough_type_2_id' => 'nullable'
+            'dough_type_2_id' => 'nullable',
+            'is_parent' => 'nullable',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
@@ -229,6 +232,8 @@ class CategoryController extends Controller
         $category->name_en = $request->name_en;
         $category->description_ar = $request->description_ar;
         $category->description_en = $request->description_en;
+
+        $category->category_id = $request->has('is_parent') && $request->is_parent ? null : $request->category_id;
 
         $category->updated_by = auth()->id();
 
