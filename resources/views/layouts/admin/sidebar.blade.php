@@ -47,7 +47,7 @@
                                  {{request()->segment(3) == 'category'||
                                    request()->segment(3)=='item'||
                                    request()->segment(3)=='color'||
-                                   request()->segment(3)=='dough'||
+                                   request()->segment(3)=='brand'||
                                    request()->segment(3)=='size'
 
                                             ? 'menu-open': ''}}
@@ -72,14 +72,20 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{route('admin.size.index')}}" class="nav-link"><i
-                                                class="fas fa-certificate nav-icon"></i>
+                                                class="fab fa-superpowers nav-icon"></i>
                                             <p>Sizes</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{route('admin.color.index')}}" class="nav-link"><i
-                                                class="fas fa-certificate nav-icon"></i>
+                                                class="fas fa-paint-brush nav-icon"></i>
                                             <p>Colors</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{route('admin.brand.index')}}" class="nav-link"><i
+                                                class=" fas fa-trademark nav-icon"></i>
+                                            <p>Brands</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -92,9 +98,9 @@
 
                                             ? 'menu-open': ''}}
                                 ">
-                                <a href="#" class="nav-link"><i class="nav-icon fas fa-bars"></i>
+                                {{-- <a href="#" class="nav-link"><i class="nav-icon fas fa-bars"></i>
                                     <p>Loyalty System<i class="fas fa-angle-left right"></i></p>
-                                </a>
+                                </a> --}}
                                 <ul class="nav nav-treeview">
                                     @if(auth()->user()->hasRole('admin') )
 
@@ -134,7 +140,7 @@
                                     <p>Orders</p>
                                 </a>
                             </li>
-                            @if(auth()->user()->hasRole('admin') )
+                            @if(auth()->user()->hasRole('admin'))
                             <li class="nav-item has-treeview
                                  {{request()->segment(3) == 'aboutUS'||
                                    request()->segment(3) == 'gallery'||
@@ -147,11 +153,11 @@
 
                                             ? 'menu-open': ''}}
                                 ">
-                                <a href="#" class="nav-link"
+                                {{-- <a href="#" class="nav-link"
 
                                 ><i class="nav-icon fas fa-bars"></i>
                                     <p>Website<i class="fas fa-angle-left right"></i></p>
-                                </a>
+                                </a> --}}
                                 <ul class="nav nav-treeview">
                                     
                                 <li class="nav-item">
@@ -249,12 +255,12 @@
                                         <p>Offers</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{route('admin.branch.index')}}" class="nav-link"><i
                                             class="fas fa-code-branch nav-icon"></i>
                                         <p>Branches</p>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item has-treeview
                                  {{request()->segment(4) == 'customer'||
                                    request()->segment(4)=='order'||

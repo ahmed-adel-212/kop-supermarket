@@ -69,6 +69,8 @@ Route::group([
         Route::resource('size', 'SizeController')->middleware('role:admin');
         Route::resource('color', 'ColorController')->middleware('role:admin');
 
+        Route::resource('brand', 'BrandController')->middleware('role:admin');
+
         Route::resource('dough', 'DoughTypeController')->middleware('role:admin');
 
         // reports
