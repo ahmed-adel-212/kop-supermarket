@@ -160,7 +160,99 @@
                                 </div>
                             </div>
 
-                            
+                            <div id="details">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputreturn-policy-arabic">Arabic Return Policy</label>
+                                            <textarea class="form-control" id="exampleInputreturn-policy-arabic" placeholder="Enter English Description"
+                                                name="return_policy_ar"></textarea>
+                                            @error('return_policy_ar')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputreturn-policy-english">english Return Policy</label>
+                                            <textarea class="form-control" id="exampleInputreturn-policy-english" placeholder="Enter English Description"
+                                                name="return_policy_en"></textarea>
+                                            @error('return_policy_en')
+                                                <div class="help-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" x-data="{
+                                        shipping: [],
+                                        addOne: function() {
+                                            this.shipping.push({txt: ''});
+                                        },
+                                        remove: function(txt) {
+                                            var inx = this.shipping.findIndex(x => x.txt == txt);
+                                            this.shipping.splice(inx, 1);
+                                        },
+                                    }">
+                                        <label for="exampleInputArabicName row" style="width: 100%">
+                                            <div class="col-sm-6" style="display: inline">
+                                                Arabic Shipping Details
+                                            </div>
+                                            <div class="col-sm-5 " style="text-align: right;display: inline">
+                                                <button class="btn btn-success btn-sm"
+                                                    x-on:click.prevent="addOne">+</button>
+                                            </div>
+                                        </label>
+
+                                        <template x-for="sh in shipping" :key="Math.random()">
+                                            <div class="form-group row">
+                                                <input type="text" class="form-control col-md-10"
+                                                    id="exampleInputArabicName"
+                                                    placeholder="Enter Arabic Shipping Details"
+                                                    name="shipping_details_ar[]" x-model.trim="sh.txt" />
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                        x-on:click.prevent="remove(sh.txt)">x</button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div class="col-md-6" x-data="{
+                                        shipping: [] ,
+                                        addOne: function() {
+                                            this.shipping.push({txt: ''});
+                                        },
+                                        remove: function(txt) {
+                                            var inx = this.shipping.findIndex(x => x.txt == txt);
+                                            this.shipping.splice(inx, 1);
+                                        },
+                                    }">
+                                        <label for="exampleInputEnglishName row" style="width: 100%">
+                                            <div class="col-sm-6" style="display: inline">
+                                                English Shipping Details
+                                            </div>
+                                            <div class="col-sm-5 " style="text-align: right;display: inline">
+                                                <button class="btn btn-success btn-sm"
+                                                    x-on:click.prevent="addOne">+</button>
+                                            </div>
+                                        </label>
+
+                                        <template x-for="(sh, inx) in shipping" :key="inx">
+                                            <div class="form-group row">
+                                                <input type="text" class="form-control col-md-10"
+                                                    id="exampleInputEnglishName"
+                                                    placeholder="Enter English Shipping Details"
+                                                    name="shipping_details_en[]" x-model.trim="sh.txt" />
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                        x-on:click.prevent="remove(sh.txt)">x</button>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    
+                                </div>
+                            </div>
 
                         </div>
                         <div class="card-footer">

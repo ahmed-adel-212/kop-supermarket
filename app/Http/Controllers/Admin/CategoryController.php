@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use File;
@@ -24,7 +25,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::withCount('items', 'subCategories', 'parent')->orderBy('id', 'DESC')->get();
-        $this->Make_Log('App\Models\Category','view',0);
+        $this->Make_Log('App\Models\Category', 'view', 0);
         return view('admin.category.index', compact('categories'));
     }
 
@@ -47,7 +48,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         $validator = Validator::make($request->all(), [
             'name_ar' => 'required|min:3|max:20',
             'name_en' => 'required|min:3|max:20',
@@ -55,36 +56,51 @@ class CategoryController extends Controller
             'description_en' => 'nullable',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_parent' => 'nullable',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'shipping_details_ar' => 'nullable|array',
+            'shipping_details_en' => 'nullable|array',
+            'return_policy_ar' => 'nullable|string',
+            'return_policy_en' => 'nullable|string',
         ]);
 
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
 
-//        $item_validation_rules = [
-//            'Item.*.name_ar' => 'required|string',
-//            'Item.*.name_en' => 'required|string',
-//            'Item.*.description_ar' => 'required|string',
-//            'Item.*.description_en' => 'required|string',
-//            'Item.*.price' => 'required|numeric',
-//            'Item.*.calories' => 'required|numeric',
-//            'Item.*.image' => 'required|image',
-//        ];
-//        $extra_validation_rules = [
-//            'Extra.*.name_ar' => 'required|string',
-//            'Extra.*.name_en' => 'required|string',
-//            'Extra.*.price' => 'required|numeric',
-//            'Extra.*.calories' => 'required|numeric',
-//            'Extra.*.image' => 'required|image'
-//        ];
-//        if ($request->has('Item'))
-//            $validationRules = array_merge($validationRules, $item_validation_rules);
-//
-//        if ($request->has('Extra'))
-//            $validationRules = array_merge($validationRules, $extra_validation_rules);
-//          $attributes = $request->validate($validationRules);
+        //        $item_validation_rules = [
+        //            'Item.*.name_ar' => 'required|string',
+        //            'Item.*.name_en' => 'required|string',
+        //            'Item.*.description_ar' => 'required|string',
+        //            'Item.*.description_en' => 'required|string',
+        //            'Item.*.price' => 'required|numeric',
+        //            'Item.*.calories' => 'required|numeric',
+        //            'Item.*.image' => 'required|image',
+        //        ];
+        //        $extra_validation_rules = [
+        //            'Extra.*.name_ar' => 'required|string',
+        //            'Extra.*.name_en' => 'required|string',
+        //            'Extra.*.price' => 'required|numeric',
+        //            'Extra.*.calories' => 'required|numeric',
+        //            'Extra.*.image' => 'required|image'
+        //        ];
+        //        if ($request->has('Item'))
+        //            $validationRules = array_merge($validationRules, $item_validation_rules);
+        //
+        //        if ($request->has('Extra'))
+        //            $validationRules = array_merge($validationRules, $extra_validation_rules);
+        //          $attributes = $request->validate($validationRules);
 
-          $category = Category::create([
+
+        $shipping_en = collect($request->shipping_details_en);
+        $shipping_en = ($shipping_en->filter(function ($x) {
+            return $x !== null;
+        }))->toArray();
+        $shipping_ar = collect($request->shipping_details_ar);
+        $shipping_ar = ($shipping_ar->filter(function ($x) {
+            return $x !== null;
+        }))->toArray();
+
+
+        $category = Category::create([
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'description_ar' => $request->description_ar,
@@ -94,8 +110,12 @@ class CategoryController extends Controller
             'dough_type_id' =>  $request->has('dough_type_id') ? $request->dough_type_id : null,
             'dough_type_2_id' => $request->has('dough_type_2_id') ? $request->dough_type_2_id : null,
             'category_id' => $request->has('is_parent') && $request->is_parent ? null : $request->category_id,
+            'return_policy_ar' => $request->return_policy_ar,
+            'return_policy_en' => $request->return_policy_en,
+            'shipping_details_en' => $shipping_en,
+            'shipping_details_ar' => $shipping_ar,
         ]);
-        $this->Make_Log('App\Models\Category','create',$category->id);
+        $this->Make_Log('App\Models\Category', 'create', $category->id);
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
@@ -104,53 +124,53 @@ class CategoryController extends Controller
             $category->save();
         }
 
-//        if ($request->has('Item')) {
-//            $items = $request->get('Item');
-//            foreach ($items as $item) {
-//                $item = Item::create([
-//                    'category_id' => $category->id,
-//                    'name_ar' => $item['name_ar'],
-//                    'name_en' => $item['name_en'],
-//                    'description_ar' => $item['description_ar'],
-//                    'description_en' => $item['description_en'],
-//                    'price' => $item['price'],
-//                    'calories' => $item['calories'],
-//                    'image' => '',
-//                ]);
-//
-//
-//                if ($request->hasFile('image')) {
-//                    $image = $request->image;
-//                    $image_new_name = time() . $image->getClientOriginalName();
-//                    $image->move(public_path('items'), $image_new_name);
-//                    $item->image = '/items/' . $image_new_name;
-//                    $item->save();
-//                }
-//            }
-//        }
+        //        if ($request->has('Item')) {
+        //            $items = $request->get('Item');
+        //            foreach ($items as $item) {
+        //                $item = Item::create([
+        //                    'category_id' => $category->id,
+        //                    'name_ar' => $item['name_ar'],
+        //                    'name_en' => $item['name_en'],
+        //                    'description_ar' => $item['description_ar'],
+        //                    'description_en' => $item['description_en'],
+        //                    'price' => $item['price'],
+        //                    'calories' => $item['calories'],
+        //                    'image' => '',
+        //                ]);
+        //
+        //
+        //                if ($request->hasFile('image')) {
+        //                    $image = $request->image;
+        //                    $image_new_name = time() . $image->getClientOriginalName();
+        //                    $image->move(public_path('items'), $image_new_name);
+        //                    $item->image = '/items/' . $image_new_name;
+        //                    $item->save();
+        //                }
+        //            }
+        //        }
 
-//        if ($request->has('Extra')) {
-//            $extras = $request->get('Extra');
-//            foreach ($extras as $extra) {
-//                $extra = Extra::create([
-//                    'name_ar' => $extra['name_ar'],
-//                    'name_en' => $extra['name_en'],
-//                    'price' => $extra['price'],
-//                    'calories' => $extra['calories'],
-//                    'category_id' => $category->id,
-//                    'image' => '',
-//                ]);
-//
-//
-//                if ($request->hasFile('image')) {
-//                    $image = $request->image;
-//                    $image_new_name = time() . $image->getClientOriginalName();
-//                    $image->move(public_path('extras'), $image_new_name);
-//                    $extra->image = '/extras/' . $image_new_name;
-//                    $extra->save();
-//                }
-//            }
-//        }
+        //        if ($request->has('Extra')) {
+        //            $extras = $request->get('Extra');
+        //            foreach ($extras as $extra) {
+        //                $extra = Extra::create([
+        //                    'name_ar' => $extra['name_ar'],
+        //                    'name_en' => $extra['name_en'],
+        //                    'price' => $extra['price'],
+        //                    'calories' => $extra['calories'],
+        //                    'category_id' => $category->id,
+        //                    'image' => '',
+        //                ]);
+        //
+        //
+        //                if ($request->hasFile('image')) {
+        //                    $image = $request->image;
+        //                    $image_new_name = time() . $image->getClientOriginalName();
+        //                    $image->move(public_path('extras'), $image_new_name);
+        //                    $extra->image = '/extras/' . $image_new_name;
+        //                    $extra->save();
+        //                }
+        //            }
+        //        }
 
         // if ($request->dough_type_id) {
         //     $category->dough_type_id = (int)$request->dough_type_id;
@@ -249,16 +269,13 @@ class CategoryController extends Controller
         $category->return_policy_en = $request->return_policy_en;
 
         $shipping_en = collect($request->shipping_details_en);
-        $shipping_en = ($shipping_en->filter(function($x) {
+        $shipping_en = ($shipping_en->filter(function ($x) {
             return $x !== null;
         }))->toArray();
-
         $shipping_ar = collect($request->shipping_details_ar);
-        $shipping_ar = ($shipping_ar->filter(function($x) {
+        $shipping_ar = ($shipping_ar->filter(function ($x) {
             return $x !== null;
         }))->toArray();
-
-
         $category->shipping_details_en = $shipping_en;
         $category->shipping_details_ar = $shipping_ar;
 
@@ -272,7 +289,7 @@ class CategoryController extends Controller
         //     $category->save();
         // }
 
-        $this->Make_Log('App\Models\Category','update',$category->id);
+        $this->Make_Log('App\Models\Category', 'update', $category->id);
         if ($request->has('Item'))
             $category->items()->updateOrCreate($request->Item);
         // {
@@ -329,7 +346,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        $this->Make_Log('App\Models\Category','delete',$category->id);
+        $this->Make_Log('App\Models\Category', 'delete', $category->id);
         return redirect()->route('admin.category.index')->with([
             'type' => 'error', 'message' => 'category deleted successfuly'
         ]);

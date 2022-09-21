@@ -196,14 +196,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6" x-data="{
-                                        shipping: JSON.parse('{{ json_encode($category->shipping_details_ar) }}'),
+                                        data: JSON.parse('{{ json_encode($category->shipping_details_ar) }}'),
+                                        shipping: [],
                                         addOne: function() {
-                                            this.shipping.push('');
+                                            this.shipping.push({txt: ''});
                                         },
                                         remove: function(txt) {
-                                            var inx = this.shipping.findIndex(x => x == txt);
+                                            var inx = this.shipping.findIndex(x => x.txt == txt);
                                             this.shipping.splice(inx, 1);
                                         },
+                                    }" x-init="() => {
+                                        for (var i = 0; i < data.length; i++) {
+                                            shipping.push({txt: data[i]});
+                                        }
                                     }">
                                         <label for="exampleInputArabicName row" style="width: 100%">
                                             <div class="col-sm-6" style="display: inline">
@@ -220,23 +225,28 @@
                                                 <input type="text" class="form-control col-md-10"
                                                     id="exampleInputArabicName"
                                                     placeholder="Enter Arabic Shipping Details"
-                                                    name="shipping_details_ar[]" x-bind:value="sh.length ? sh : ''" />
+                                                    name="shipping_details_ar[]" x-model="sh.txt" />
                                                 <div class="col-md-2">
                                                     <button type="button" class="btn btn-sm btn-danger"
-                                                        x-on:click.prevent="remove(sh)">x</button>
+                                                        x-on:click.prevent="remove(sh.txt)">x</button>
                                                 </div>
                                             </div>
                                         </template>
                                     </div>
                                     <div class="col-md-6" x-data="{
-                                        shipping: JSON.parse('{{ json_encode($category->shipping_details_en) }}'),
+                                        data: JSON.parse('{{ json_encode($category->shipping_details_en) }}'),
+                                        shipping: [],
                                         addOne: function() {
-                                            this.shipping.push('');
+                                            this.shipping.push({txt: ''});
                                         },
                                         remove: function(txt) {
-                                            var inx = this.shipping.findIndex(x => x == txt);
+                                            var inx = this.shipping.findIndex(x => x.txt == txt);
                                             this.shipping.splice(inx, 1);
                                         },
+                                    }" x-init="() => {
+                                        for (var i = 0; i < data.length; i++) {
+                                            shipping.push({txt: data[i]});
+                                        }
                                     }">
                                         <label for="exampleInputEnglishName row" style="width: 100%">
                                             <div class="col-sm-6" style="display: inline">
@@ -253,10 +263,10 @@
                                                 <input type="text" class="form-control col-md-10"
                                                     id="exampleInputEnglishName"
                                                     placeholder="Enter English Shipping Details"
-                                                    name="shipping_details_en[]" x-bind:value="sh" />
+                                                    name="shipping_details_en[]" x-model="sh.txt" />
                                                 <div class="col-md-2">
                                                     <button type="button" class="btn btn-sm btn-danger"
-                                                        x-on:click.prevent="remove(sh)">x</button>
+                                                        x-on:click.prevent="remove(sh.txt)">x</button>
                                                 </div>
                                             </div>
                                         </template>
