@@ -133,46 +133,49 @@ class MenuController extends BaseController
     public function getItems(Request $request, $category)
     {
         $category = Category::findOrFail($category);
-        $items = $category->load('items');
+        $items = [];
+        $deepSubCategories = Category::where('sub_category_id', $category->id)->with('items')->get();
 
-        foreach ($category->items as $key => $item) {
-            // $branches = explode(',', $item->branches);
-            //if(in_array($request->branch_id, $branches))
-            {
-                $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
-
-                $parent_offer = null;
-                foreach ($offers as $offer) {
-                    $parent_offer = OfferDiscount::find($offer->offer_id);
-
-                    // Just edit
-                    if ($parent_offer)  break;
-                }
-
-                if ($parent_offer && $parent_offer->offer) {
-
-                    if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
-                        $parent_offer = null;
+        foreach ($deepSubCategories as $category) {
+            foreach ($category->items as $key => $item) {
+                // $branches = explode(',', $item->branches);
+                //if(in_array($request->branch_id, $branches))
+                {
+                    $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
+    
+                    $parent_offer = null;
+                    foreach ($offers as $offer) {
+                        $parent_offer = OfferDiscount::find($offer->offer_id);
+    
+                        // Just edit
+                        if ($parent_offer)  break;
                     }
-                }
-
-
-                $item->offer = $parent_offer;
-
-                if ($parent_offer) {
-                    if ($parent_offer->discount_type == 1) {
-                        $disccountValue = $item->price * $parent_offer->discount_value / 100;
-                        $item->offer->offer_price = $item->price - $disccountValue;
-                    } elseif ($parent_offer->discount_type == 2) {
-                        $item->offer->offer_price = $item->price - $parent_offer->discount_value;
+    
+                    if ($parent_offer && $parent_offer->offer) {
+    
+                        if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
+                            $parent_offer = null;
+                        }
                     }
-
-                    unset($item->offer->offer);
+    
+    
+                    $item->offer = $parent_offer;
+    
+                    if ($parent_offer) {
+                        if ($parent_offer->discount_type == 1) {
+                            $disccountValue = $item->price * $parent_offer->discount_value / 100;
+                            $item->offer->offer_price = $item->price - $disccountValue;
+                        } elseif ($parent_offer->discount_type == 2) {
+                            $item->offer->offer_price = $item->price - $parent_offer->discount_value;
+                        }
+    
+                        unset($item->offer->offer);
+                    }
                 }
             }
         }
 
-        return $this->sendResponse($items, __('general.ret', ['key' => __('general.items_ret')]));
+        return $this->sendResponse($deepSubCategories, __('general.ret', ['key' => __('general.items_ret')]));
     }
 
 
