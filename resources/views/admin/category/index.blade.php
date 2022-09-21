@@ -39,7 +39,7 @@
               <td>
                 {{ $category['name_'.app()->getLocale()]}}
                 @if ($category->parent == null)
-                <span class="btn btn-success btn-sm" title="Show">parent</span>
+                <i class="fas fa-check-circle text-success"></i>
                 @endif
               </td>
               <td>{{ $category->items_count }}</td>
