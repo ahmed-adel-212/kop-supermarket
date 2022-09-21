@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['name_ar', 'name_en', 'image', 'description_ar', 'description_en', 'dough_type_id', 'dough_type_2_id'];
+    protected $fillable = ['name_ar', 'name_en', 'image', 'description_ar', 'description_en', 'dough_type_id', 'dough_type_2_id', 'shipping_details_en'];
     protected $hidden = ["dough_type_id", 'dough_type_2_id'];
+
+    protected $casts = [
+        'shipping_details_en' => 'array'
+    ];
 
     public function items()
     {
