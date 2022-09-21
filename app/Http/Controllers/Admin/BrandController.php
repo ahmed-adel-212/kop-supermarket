@@ -44,8 +44,8 @@ class BrandController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name_ar' => 'required|min:3|max:20',
-            'name_en' => 'required|min:3|max:20',
+            'name_ar' => 'required|min:3',
+            'name_en' => 'required|min:3',
             'description_ar' => 'nullable',
             'description_en' => 'nullable',
             'image' => 'required|mimes:jpeg,png,jpg',
@@ -54,20 +54,20 @@ class BrandController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
 
-          $category = Brand::create([
+          $brand = Brand::create([
             'name_ar' => $request->name_ar,
             'name_en' => $request->name_en,
             'description_ar' => $request->description_ar,
             'description_en' => $request->description_en,
             'image' => '',
         ]);
-        $this->Make_Log('App\Models\Category','create',$category->id);
+        $this->Make_Log('App\Models\Brand','create',$brand->id);
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move(public_path('brands'), $image_new_name);
-            $category->image = '/brands/' . $image_new_name;
-            $category->save();
+            $brand->image = '/brands/' . $image_new_name;
+            $brand->save();
         }
 
         return redirect()->route('admin.brand.index')->with([
@@ -118,6 +118,10 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        $this->Make_Log('App\Models\Brand','delete',$brand->id);
+        return redirect()->route('admin.brand.index')->with([
+            'type' => 'error', 'message' => 'brand deleted successfuly'
+        ]);
     }
 }
