@@ -25,10 +25,10 @@
                                 <th>Name</th>
                                 <th>Date From</th>
                                 <th>Date To</th>
-                                <th>Service</th>
-                                <th>Mobile Image</th>
-                                <th>Website Home Image</th>
-                                <th>Website Menu Image</th>
+                                {{-- <th>Service</th> --}}
+                                <th>Image</th>
+                                {{-- <th>Website Home Image</th> --}}
+                                {{-- <th>Website Menu Image</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -39,13 +39,13 @@
                                     <td>{{ $offer->title }}</td>
                                     <td>{{ $offer->date_from }}</td>
                                     <td>{{ $offer->date_to }}</td>
-                                    <td>{{ $offer->service_type }}</td>
+                                    {{-- <td>{{ $offer->service_type }}</td> --}}
                                     <td style="max-width:50px" class="text-center"><img class="img-fluid"
                                             src="{{ asset($offer->image) }}" /></td>
-                                    <td style="max-width:50px" class="text-center"><img class="img-fluid"
+                                    {{-- <td style="max-width:50px" class="text-center"><img class="img-fluid"
                                             src="{{ asset($offer->website_image) }}" /></td>
                                     <td style="max-width:50px" class="text-center"><img class="img-fluid"
-                                            src="{{ asset($offer->website_image_menu) }}" /></td>
+                                            src="{{ asset($offer->website_image_menu) }}" /></td> --}}
                                     <td>
                                         @if ($offer->main)
                                             <form action="{{ route('admin.offer.unmain', $offer->id) }}" method="POST">
