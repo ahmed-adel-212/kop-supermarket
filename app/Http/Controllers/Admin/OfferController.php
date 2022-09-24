@@ -250,6 +250,11 @@ class OfferController extends Controller
             // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'offer_type' => 'required',
+            'discount_quantity' => 'required',
+            'category_id' => 'required',
+            'items' => 'required',
+            'discount_type' => 'required',
+            'discount_value' => 'required'
         ]);
         // $branches = implode(",", $request->get('branches'));
 
@@ -290,59 +295,59 @@ class OfferController extends Controller
             'offer_type' => 'discount',
             'updated_by' => Auth::user()->id
         ]);
-        $offer->branches()->detach();
-        $offer->branches()->syncWithoutDetaching($request->branches);
+        // $offer->branches()->detach();
+        // $offer->branches()->syncWithoutDetaching($request->branches);
         $this->Make_Log('App\Models\Offer', 'updete', $offer->id);
-        if ($request->offer_type == 'discount') {
+        // if ($request->offer_type == 'discount') {
 
-            $validator = Validator::make($request->all(), [
-                'discount_quantity' => 'required',
-                'category_id' => 'required',
-                'items' => 'required',
-                'discount_type' => 'required',
-                'discount_value' => 'required'
-            ]);
+        //     $validator = Validator::make($request->all(), [
+        //         'discount_quantity' => 'required',
+        //         'category_id' => 'required',
+        //         'items' => 'required',
+        //         'discount_type' => 'required',
+        //         'discount_value' => 'required'
+        //     ]);
 
-            if ($validator->fails())
-                return redirect()->back()->withErrors($validator->errors());
-        }
+        //     if ($validator->fails())
+        //         return redirect()->back()->withErrors($validator->errors());
+        // }
 
-        if ($request->offer_type == 'buy-get') {
+        // if ($request->offer_type == 'buy-get') {
 
-            $validator = Validator::make($request->all(), [
-                'buy_quantity' => 'required',
-                'buy_category_id' => 'required',
-                'buy_items' => 'required',
-                'get_quantity' => 'required',
-                'get_category_id' => 'required',
-                'get_items' => 'required',
-                'offer_price' => 'required'
-            ]);
+        //     $validator = Validator::make($request->all(), [
+        //         'buy_quantity' => 'required',
+        //         'buy_category_id' => 'required',
+        //         'buy_items' => 'required',
+        //         'get_quantity' => 'required',
+        //         'get_category_id' => 'required',
+        //         'get_items' => 'required',
+        //         'offer_price' => 'required'
+        //     ]);
 
-            if ($validator->fails())
-                return redirect()->back()->withErrors($validator->errors());
-        }
+        //     if ($validator->fails())
+        //         return redirect()->back()->withErrors($validator->errors());
+        // }
 
-        if ($request->has('buy_quantity') && $request->buy_quantity != null) {
+        // if ($request->has('buy_quantity') && $request->buy_quantity != null) {
 
-            $action_id = $offer->buyGet()->updateOrCreate([
-                'offer_id' => $offer->id,
-                'buy_quantity' => $request->buy_quantity,
-                'buy_category_id' => $request->buy_category_id,
-                'get_quantity' => $request->get_quantity,
-                'get_category_id' => $request->get_category_id,
-                'offer_price' => $request->offer_price,
-            ]);
+        //     $action_id = $offer->buyGet()->updateOrCreate([
+        //         'offer_id' => $offer->id,
+        //         'buy_quantity' => $request->buy_quantity,
+        //         'buy_category_id' => $request->buy_category_id,
+        //         'get_quantity' => $request->get_quantity,
+        //         'get_category_id' => $request->get_category_id,
+        //         'offer_price' => $request->offer_price,
+        //     ]);
 
-            $offer->buyGet->buyItems()->sync($request->buy_items);
-            $offer->buyGet->getItems()->sync($request->get_items);
-            $now = new DateTime();
-            $offer->updated_at = $now;
-            $offer->save();
-            $this->Make_Log('App\Models\OfferBuyGet', 'updete', $action_id);
-        }
+        //     $offer->buyGet->buyItems()->sync($request->buy_items);
+        //     $offer->buyGet->getItems()->sync($request->get_items);
+        //     $now = new DateTime();
+        //     $offer->updated_at = $now;
+        //     $offer->save();
+        //     $this->Make_Log('App\Models\OfferBuyGet', 'updete', $action_id);
+        // }
 
-        if ($request->has('discount_quantity') && $request->discount_quantity != null) {
+        // if ($request->has('discount_quantity') && $request->discount_quantity != null) {
             $offer->discount->offer_id = $offer->id;
             $offer->discount->quantity = $request->discount_quantity;
             $offer->discount->category_id = $request->category_id;
@@ -354,7 +359,7 @@ class OfferController extends Controller
             $offer->updated_at = $now;
             $offer->save();
             $this->Make_Log('App\Models\OfferDiscount', 'updete', $offer->discount->id);
-        }
+        // }
 
         return redirect()->route('admin.offer.index')->with([
             'type' => 'success',
