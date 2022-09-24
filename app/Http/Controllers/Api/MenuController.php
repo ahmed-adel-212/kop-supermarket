@@ -145,7 +145,7 @@ class MenuController extends BaseController
         $items = Item::whereIn('category_id', $deepSubCategories->pluck('id'))->get();
 
         foreach ($deepSubCategories as $category) {
-            $category->items = $items->where('category_id', $category->id)->take(2)->values();
+            $category->items = $items->where('category_id', $category->id)->take(4)->values();
             foreach ($category->items as $key => $item) {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
 
