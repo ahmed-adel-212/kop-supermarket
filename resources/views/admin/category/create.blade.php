@@ -25,7 +25,7 @@
                         id="add-category">
                         @csrf
                         <div class="card-body">
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group category-select">
                                         <label>Choose Category</label>
@@ -50,7 +50,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
 
-                            <div id="details">
+                            {{-- <div id="details">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -252,7 +252,7 @@
                                     </div>
                                     
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
                         <div class="card-footer">

@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Back</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.sub_category.index') }}">Back</a></li>
                         </ol>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Category Details</h3>
                     </div>
-                    <form action="{{ route('admin.category.update', $category->id) }}" method="POST"
+                    <form action="{{ route('admin.sub_category.update', $category->id) }}" method="POST"
                         enctype="multipart/form-data" id="add-category">
                         @csrf
                         @method('PATCH')
@@ -42,7 +42,7 @@
                                         {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-check" style="display: flex;align-items: center;height: 100%;">
                                         <input class="form-check-input set-as-parent" type="checkbox" value="1"
                                             name="is_parent" id="defaultCheck1"
@@ -51,7 +51,7 @@
                                             Set as Parent Category
                                         </label>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -315,23 +315,23 @@
                 });
             });
 
-            $('.set-as-parent').change(function(e) {
-                var checked = $(this).is(":checked");
-                if (checked) {
-                    $('.category-select .select2.select2-container, #details').css('display', 'none');
-                } else {
-                    $('.category-select .select2.select2-container, #details').css('display', 'block');
-                }
-            });
+            // $('.set-as-parent').change(function(e) {
+            //     var checked = $(this).is(":checked");
+            //     if (checked) {
+            //         $('.category-select .select2.select2-container, #details').css('display', 'none');
+            //     } else {
+            //         $('.category-select .select2.select2-container, #details').css('display', 'block');
+            //     }
+            // });
 
-            setTimeout(() => {
-                console.log($('.set-as-parent').is(":checked"));
-                if ($('.set-as-parent').is(":checked")) {
-                    $('.category-select .select2.select2-container, #details').css('display', 'none');
-                } else {
-                    $('.category-select .select2.select2-container, #details').css('display', 'block');
-                }
-            }, 250);
+            // setTimeout(() => {
+            //     console.log($('.set-as-parent').is(":checked"));
+            //     if ($('.set-as-parent').is(":checked")) {
+            //         $('.category-select .select2.select2-container, #details').css('display', 'none');
+            //     } else {
+            //         $('.category-select .select2.select2-container, #details').css('display', 'block');
+            //     }
+            // }, 250);
         });
     </script>
 @endpush

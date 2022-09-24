@@ -36,9 +36,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $doughTypes = DoughType::all();
+        // $doughTypes = DoughType::all();
         $categories = Category::all();
-        return view('admin.category.create', compact('doughTypes', 'categories', 'is_parent'));
+        return view('admin.category.create', compact('categories'));
     }
 
     /**
@@ -109,7 +109,7 @@ class CategoryController extends Controller
             'created_by' => auth()->id(),
             'dough_type_id' =>  $request->has('dough_type_id') ? $request->dough_type_id : null,
             'dough_type_2_id' => $request->has('dough_type_2_id') ? $request->dough_type_2_id : null,
-            'category_id' => $request->has('is_parent') && $request->is_parent ? null : $request->category_id,
+            // 'category_id' => null,
             'return_policy_ar' => $request->return_policy_ar,
             'return_policy_en' => $request->return_policy_en,
             'shipping_details_en' => $shipping_en,
@@ -258,7 +258,7 @@ class CategoryController extends Controller
         $category->description_ar = $request->description_ar;
         $category->description_en = $request->description_en;
 
-        $category->category_id = $request->has('is_parent') && $request->is_parent ? null : $request->category_id;
+        // $category->category_id = $request->has('is_parent') && $request->is_parent ? null : $request->category_id;
 
         $category->updated_by = auth()->id();
 

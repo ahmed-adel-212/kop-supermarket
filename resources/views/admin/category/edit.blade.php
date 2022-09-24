@@ -26,7 +26,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="card-body">
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group category-select">
                                         <label>Choose Category</label>
@@ -52,7 +52,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
 
-                            <div id="details">
+                            {{-- <div id="details">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -273,7 +273,7 @@
                                     </div>
                                     
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right">Submit</button>
@@ -325,7 +325,7 @@
             });
 
             setTimeout(() => {
-                console.log($('.set-as-parent').is(":checked"));
+                // console.log($('.set-as-parent').is(":checked"));
                 if ($('.set-as-parent').is(":checked")) {
                     $('.category-select .select2.select2-container, #details').css('display', 'none');
                 } else {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['name_ar', 'name_en', 'image', 'description_ar', 'description_en', 'dough_type_id', 'dough_type_2_id', 'shipping_details_en', 'category_id', 'level'];
+    protected $fillable = ['name_ar', 'name_en', 'image', 'description_ar', 'description_en', 'dough_type_id', 'dough_type_2_id', 'shipping_details_en', 'category_id', 'sub_category_id'];
     protected $hidden = ["dough_type_id", 'dough_type_2_id'];
 
     protected $casts = [
@@ -53,7 +53,7 @@ class Category extends Model
 
     public function deepSubCategories()
     {
-        $this->hasMany(Category::class, 'sub_category_id','id');
+        return $this->hasMany(Category::class, 'sub_category_id','id');
     }
 
     public function getImageAttribute($value)

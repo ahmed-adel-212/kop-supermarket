@@ -9,7 +9,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{route('admin.category.create')}}">Add New Category</a></li>
+            <li class="breadcrumb-item"><a href="{{route('admin.sub_category.create')}}">Add New Category</a></li>
           </ol>
         </div>
       </div>
@@ -23,15 +23,16 @@
             <tr>
               <th>#ID</th>
               <th>Category Name</th>
-              <th>Nubmer of Items</th>
+              {{-- <th>Nubmer of Items</th> --}}
               <th>Parent Category</th>
-              <th>Number of SubCategory</th>
+              <th>Number of Type Categories</th>
               <th>Image</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($categories as $index => $category)
+            {{-- @dump($category) --}}
             <tr>
               <td>
                 {{ $index + 1 }}
@@ -42,24 +43,24 @@
                 <i class="fas fa-check-circle text-success"></i>
                 @endif
               </td>
-              <td>{{ $category->items_count }}</td>
+              {{-- <td>{{ $category->items_count }}</td> --}}
               <td>
                 @if ($category->parent)
-                <a href="{{ route('admin.category.show', $category->parent->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show">
+                <a href="{{ route('admin.sub_category.show', $category->parent->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show">
                   {{$category->parent['name_' . app()->getLocale()]}}
                 </a>
                 @endif
               </td>
-              <td>{{ $category->sub_categories_count }}</td>
+              <td>{{ $category->deep_sub_categories_count }}</td>
               <td><img src="{{ asset($category->image) }}"class="mg-fluid img-thumbnail"style="max-width: 75px"></td>
               <td>
-                <a href="{{ route('admin.category.show', $category->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show"><i class="fa fa-globe"></i></a>
+                <a href="{{ route('admin.sub_category.show', $category->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show"><i class="fa fa-globe"></i></a>
 
-                <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
+                <a href="{{ route('admin.sub_category.edit', $category->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
                 <a onclick="deleteCategory('{{ 'delete-category-' . $category->id }}')" href="#" class="btn btn-danger btn-circle btn-sm" title="delete"><i class="fas fa-trash"></i> </a>
                 <!-- Form Delete category -->
                 <form
-                    action="{{ route('admin.category.destroy', $category->id) }}"
+                    action="{{ route('admin.sub_category.destroy', $category->id) }}"
                     method="POST"
                     id="{{ 'delete-category-' . $category->id }}">
                     @csrf
