@@ -232,7 +232,7 @@ class MenuController extends BaseController
     }
 
 
-    public function getItem(Request $request, int $item)
+    public function getItem(Request $request, int $category, int $item)
     {
         $item = Item::findOrFail($item);
         $item->load('brand', 'sizes', 'colors');
