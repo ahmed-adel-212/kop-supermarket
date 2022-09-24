@@ -44,9 +44,9 @@ class OfferController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $branches = Branch::get();
-        return view('admin.offer.create', compact('categories', 'branches'));
+        $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->get();
+
+        return view('admin.offer.create', compact('categories'));
     }
 
     /**
@@ -66,24 +66,13 @@ class OfferController extends Controller
             // 'service_type' => 'required|in:takeaway,delivery,all',
             'date_from' => 'required|date|before_or_equal:date_to',
             'date_to' => 'required|date',
-            'branches' => 'required|array',
+            // 'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'offer_type' => 'required',
-        ]);
-
-        if ($validator->fails())
-            return redirect()->back()->withErrors($validator->errors())->withInput();
-
-
-
-
-        // if ($request->offer_type == 'discount') {
-
-        $validator = Validator::make($request->all(), [
             'discount_quantity' => 'required',
             'category_id' => 'required',
             'items' => 'required',
@@ -93,7 +82,6 @@ class OfferController extends Controller
 
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
-        // }
 
         // if ($request->offer_type == 'buy-get') {
         //     $validator = Validator::make($request->all(), [
