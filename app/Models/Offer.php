@@ -13,6 +13,12 @@ class Offer extends Model
 
     protected $dates = ['date_from', 'date_to'];
 
+    protected $hidden = [
+        'website_image',
+        'website_image_menu',
+        'service_type',
+    ];
+
     public function details() {
 
         if ($this->offer_type == 'buy-get') {
