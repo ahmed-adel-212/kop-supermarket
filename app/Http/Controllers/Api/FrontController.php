@@ -154,11 +154,15 @@ class FrontController extends BaseController
             $items = [];
             foreach ($cat->subCategories as $sub) {
                 foreach ($sub->deepSubCategories as $deep) {
-                    $items[] = Item::where('category_id', $deep->id)->latest()->first();
+                    $item = $deep->items()->first();
+                    if ($item !== null) {
+                        $items[] = $item;
+                    }
                 }
             }
             $cat->items_data = $items;
         }
+        // dd($items);
 
 
         // offers
