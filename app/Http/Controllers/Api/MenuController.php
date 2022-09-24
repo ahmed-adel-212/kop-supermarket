@@ -133,19 +133,26 @@ class MenuController extends BaseController
     public function getItems(Request $request, $category)
     {
         $category = Category::findOrFail($category);
+        $isSubCategory = (null == $category->sub_category_id);
+        // dd($isSubCategory, $category->id);
 
-        if (null == $category->sub_category_id) {
+        if ($isSubCategory) {
             // sub category
-            $deepSubCategories = Category::where('sub_category_id', $category->id)->get();
+            $category->loadMissing('deepSubCategories');
+            $deepSubCategories = $category->deepSubCategories;
         } else {
             // deep sub category
+            $category->loadMissing('items');
             $deepSubCategories = collect([$category]);
         }
 
         $items = Item::whereIn('category_id', $deepSubCategories->pluck('id'))->get();
 
         foreach ($deepSubCategories as $category) {
-            $category->items = $items->where('category_id', $category->id)->take(4)->values();
+            if ($isSubCategory) {
+                // sub category
+                $category->items = $items->where('category_id', $category->id)->take(4)->values();
+            }
             foreach ($category->items as $key => $item) {
                 $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
 
