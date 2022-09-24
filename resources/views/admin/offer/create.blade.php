@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="exampleInputService">Service</label>
                                     <select class="form-control {!! $errors->first('service_type', 'is-invalid') !!}"
                                         id="exampleInputService" name="service_type">
@@ -51,7 +51,7 @@
                                     @error('service_type')
                                     <div class="help-block">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -141,7 +141,7 @@
 
                                     <label for="exampleInputFile">Mobile Image </label>
                                     <div class="help-block text-info">
-                                        <b>Note</b> Image Dimensions Must Be: 550 * 465
+                                        {{-- <b>Note</b> Image Dimensions Must Be: 550 * 465 --}}
                                     </div>
                                     <div class="custom-file">
                                         <input type="file"
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputFile">Website Home Page Image</label>
@@ -192,8 +192,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                        </div> --}}
+                        {{-- <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="exampleInputOfferType">Offer Type</label>
@@ -208,11 +208,11 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <hr>
 
-                        <div class="card card-primary" id="buy-get" style="display: none">
+                        {{-- <div class="card card-primary" id="buy-get" style="display: none">
                             <div class="card-header">
                                 <h3 class="card-title">Buy</h3>
                             </div>
@@ -283,7 +283,6 @@
                                         <div class="help-block">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- todo --}}
 
                                 </div>
                                 <div class="col-md-6">
@@ -332,7 +331,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card card-primary" id="discount" style="display: none">
                             <div class="card-header">
                                 <h3 class="card-title">Discount</h3>

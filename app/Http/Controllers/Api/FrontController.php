@@ -153,7 +153,9 @@ class FrontController extends BaseController
             $subCategoriesId = $cat->subCategories->pluck('id');
             $items = [];
             foreach ($cat->subCategories as $sub) {
-                $items[] = Item::where('category_id', $sub->id)->latest()->first();
+                foreach ($sub->deepSubCategories as $deep) {
+                    $items[] = Item::where('category_id', $deep->id)->latest()->first();
+                }
             }
             $cat->items_data = $items;
         }

@@ -19,6 +19,7 @@ use DateTime;
 use Illuminate\Support\Facades\Storage;
 
 use App\Traits\LogfileTrait;
+
 class OfferController extends Controller
 {
     /**
@@ -32,7 +33,7 @@ class OfferController extends Controller
     public function index()
     {
         $offers = Offer::with('buyGet')->with('discount')->orderBy('created_at', 'DESC')->get();
-        $this->Make_Log('App\Models\Offer','view',0);
+        $this->Make_Log('App\Models\Offer', 'view', 0);
         return view('admin.offer.index', compact('offers'));
     }
 
@@ -45,7 +46,7 @@ class OfferController extends Controller
     {
         $categories = Category::all();
         $branches = Branch::get();
-        return view('admin.offer.create', compact('categories','branches'));
+        return view('admin.offer.create', compact('categories', 'branches'));
     }
 
     /**
@@ -56,22 +57,22 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $validator = Validator::make($request->all(), [
             //'title' => 'required|min:3|max:20',
             //'title_ar' => 'required|min:3|max:20',
             'title' => 'required',
             'title_ar' => 'required',
-            'service_type' => 'required|in:takeaway,delivery,all',
+            // 'service_type' => 'required|in:takeaway,delivery,all',
             'date_from' => 'required|date|before_or_equal:date_to',
             'date_to' => 'required|date',
             'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'offer_type' => 'required',
+            // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            // 'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            // 'offer_type' => 'required',
         ]);
 
         if ($validator->fails())
@@ -80,38 +81,38 @@ class OfferController extends Controller
 
 
 
-        if ($request->offer_type == 'discount') {
+        // if ($request->offer_type == 'discount') {
 
-            $validator = Validator::make($request->all(), [
-                'discount_quantity' => 'required',
-                'category_id' => 'required',
-                'items' => 'required',
-                'discount_type' => 'required',
-                'discount_value' => 'required'
-            ]);
+        $validator = Validator::make($request->all(), [
+            'discount_quantity' => 'required',
+            'category_id' => 'required',
+            'items' => 'required',
+            'discount_type' => 'required',
+            'discount_value' => 'required'
+        ]);
 
-            if ($validator->fails())
-                return redirect()->back()->withErrors($validator->errors())->withInput();
-        }
+        if ($validator->fails())
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        // }
 
-        if ($request->offer_type == 'buy-get') {
-            $validator = Validator::make($request->all(), [
-                'buy_quantity' => 'required',
-                'buy_category_id' => 'required',
-                'buy_items' => 'required',
-                'get_quantity' => 'required',
-                'get_category_id' => 'required',
-                'get_items' => 'required',
-                'offer_price' => 'required'
-            ]);
+        // if ($request->offer_type == 'buy-get') {
+        //     $validator = Validator::make($request->all(), [
+        //         'buy_quantity' => 'required',
+        //         'buy_category_id' => 'required',
+        //         'buy_items' => 'required',
+        //         'get_quantity' => 'required',
+        //         'get_category_id' => 'required',
+        //         'get_items' => 'required',
+        //         'offer_price' => 'required'
+        //     ]);
 
-            if ($validator->fails())
-                {return redirect()->back()->withErrors($validator->errors())->withInput();}
+        //     if ($validator->fails())
+        //         {return redirect()->back()->withErrors($validator->errors())->withInput();}
 
-        }
+        // }
 
-        $services=($request->service_type=="all")?['takeaway','delivery']:[$request->service_type];
-      
+        // $services=($request->service_type=="all")?['takeaway','delivery']:[$request->service_type];
+
         if ($request->hasFile('image')) {
             $image = $request->image;
             $image_new_name = time() . $image->getClientOriginalName();
@@ -120,85 +121,89 @@ class OfferController extends Controller
         } else {
             $mobile_image = '';
         }
-        
-        if ($request->hasFile('website_image')) {
-            $image = $request->website_image;
-            $image_new_name = time() . $image->getClientOriginalName();
-            $image->move(public_path('offers'), $image_new_name);
-            $website_image = '/offers/' . $image_new_name;
-        } else {
-            $website_image = '';
-        }
-        if ($request->hasFile('website_image_menu')) {
-            $image = $request->website_image_menu;
-            $image_new_name = time() . $image->getClientOriginalName();
-            $image->move(public_path('offers'), $image_new_name);
-            $website_image_menu = '/offers/' . $image_new_name;
-        } else {
-            $website_image_menu = '';
-        }
-        
-    foreach($services as $service)
-    {
+
+        // if ($request->hasFile('website_image')) {
+        //     $image = $request->website_image;
+        //     $image_new_name = time() . $image->getClientOriginalName();
+        //     $image->move(public_path('offers'), $image_new_name);
+        //     $website_image = '/offers/' . $image_new_name;
+        // } else {
+        //     $website_image = '';
+        // }
+        // if ($request->hasFile('website_image_menu')) {
+        //     $image = $request->website_image_menu;
+        //     $image_new_name = time() . $image->getClientOriginalName();
+        //     $image->move(public_path('offers'), $image_new_name);
+        //     $website_image_menu = '/offers/' . $image_new_name;
+        // } else {
+        //     $website_image_menu = '';
+        // }
+
+        // foreach($services as $service)
+        // {
         $offer = Offer::create([
-                'title' => $request->title,
-                'title_ar' => $request->title_ar,
-                'service_type' => $service,
-                'date_from' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_from),
-                'date_to' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_to),
-                'description' => $request->description,
-                'description_ar' => $request->description_ar,
-                'image' => '',
-                'offer_type' => $request->offer_type,
-                'created_by' => $request->user()->id
-            ]);
-            $offer->website_image=$website_image;
-            $offer->website_image_menu=$website_image_menu;
-            $offer->image=$mobile_image;
-            $offer->save();
+            'title' => $request->title,
+            'title_ar' => $request->title_ar,
+            'service_type' => 'takeaway',
+            'date_from' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_from),
+            'date_to' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_to),
+            'description' => $request->description,
+            'description_ar' => $request->description_ar,
+            'image' => '',
+            'offer_type' => 'discount',
+            'created_by' => $request->user()->id
+        ]);
+        // $offer->website_image = $website_image;
+        // $offer->website_image_menu = $website_image_menu;
+        $offer->image = $mobile_image;
+        $offer->save();
 
-        $this->Make_Log('App\Models\Offer','create',$offer->id);
+        $this->Make_Log('App\Models\Offer', 'create', $offer->id);
 
- 
 
-        if ($request->has('buy_quantity') && $request->buy_quantity != null) {
-            $buy_get_offer = OfferBuyGet::create([
-                'offer_id' => $offer->id,
-                'buy_quantity' => $request->buy_quantity,
-                'buy_category_id' => $request->buy_category_id,
-                'get_quantity' => $request->get_quantity,
-                'get_category_id' => $request->get_category_id,
-                'offer_price' => $request->offer_price,
-            ]);
-            $this->Make_Log('App\Models\OfferBuyGet','create',$buy_get_offer->id);
-            $buy_get_offer->buyItems()->sync($request->buy_items);
-            $buy_get_offer->getItems()->sync($request->get_items);
+
+        // if ($request->has('buy_quantity') && $request->buy_quantity != null) {
+        //     $buy_get_offer = OfferBuyGet::create([
+        //         'offer_id' => $offer->id,
+        //         'buy_quantity' => $request->buy_quantity,
+        //         'buy_category_id' => $request->buy_category_id,
+        //         'get_quantity' => $request->get_quantity,
+        //         'get_category_id' => $request->get_category_id,
+        //         'offer_price' => $request->offer_price,
+        //     ]);
+        //     $this->Make_Log('App\Models\OfferBuyGet','create',$buy_get_offer->id);
+        //     $buy_get_offer->buyItems()->sync($request->buy_items);
+        //     $buy_get_offer->getItems()->sync($request->get_items);
+        // }
+
+        // if ($request->offer_type == 'discount' && $request->has('discount_quantity') && $request->discount_quantity != null) {
+
+        if (!$request->items) {
+            return redirect()->back();
         }
 
-        if ($request->offer_type == 'discount' && $request->has('discount_quantity') && $request->discount_quantity != null) {
+        $discountOffer = OfferDiscount::create([
+            'offer_id' => $offer->id,
+            'quantity' => 1,
+            'category_id' => $request->category_id,
+            'discount_type' => $request->discount_type,
+            'discount_value' => $request->discount_value,
+        ]);
+        $this->Make_Log('App\Models\OfferDiscount', 'create', $discountOffer->id);
+        $discountOffer->items()->sync($request->items);
+        // }
 
-            if (!$request->items) {
-                return redirect()->back();
-            }
 
-            $discountOffer = OfferDiscount::create([
-                'offer_id' => $offer->id,
-                'quantity' => 1,
-                'category_id' => $request->category_id,
-                'discount_type' => $request->discount_type,
-                'discount_value' => $request->discount_value,
-            ]);
-            $this->Make_Log('App\Models\OfferDiscount','create',$discountOffer->id);
-            $discountOffer->items()->sync($request->items);
-        }
 
+        // $offer->branches()->sync($request->branches);
+
+        // }
 
         $users = User::whereHas('roles', function ($role) {
             $role->where('name', 'customer');
         })->get();
-        $offer->branches()->sync($request->branches);
-        
-    }
+
+
         foreach ($users as $user) {
             \App\Http\Controllers\NotificationController::pushNotifications($user->id,  "New Offer: " . $request->title, "Offer");
         }
@@ -282,7 +287,7 @@ class OfferController extends Controller
         // }
         $categories = \App\Models\Category::all();
         $branches = Branch::get();
-        return view('admin.offer.edit', compact('offer', 'categories','branches'));
+        return view('admin.offer.edit', compact('offer', 'categories', 'branches'));
     }
 
     /**
@@ -351,7 +356,7 @@ class OfferController extends Controller
         ]);
         $offer->branches()->detach();
         $offer->branches()->syncWithoutDetaching($request->branches);
-        $this->Make_Log('App\Models\Offer','updete',$offer->id);
+        $this->Make_Log('App\Models\Offer', 'updete', $offer->id);
         if ($request->offer_type == 'discount') {
 
             $validator = Validator::make($request->all(), [
@@ -384,7 +389,7 @@ class OfferController extends Controller
 
         if ($request->has('buy_quantity') && $request->buy_quantity != null) {
 
-            $action_id=$offer->buyGet()->updateOrCreate([
+            $action_id = $offer->buyGet()->updateOrCreate([
                 'offer_id' => $offer->id,
                 'buy_quantity' => $request->buy_quantity,
                 'buy_category_id' => $request->buy_category_id,
@@ -398,7 +403,7 @@ class OfferController extends Controller
             $now = new DateTime();
             $offer->updated_at = $now;
             $offer->save();
-            $this->Make_Log('App\Models\OfferBuyGet','updete',$action_id);
+            $this->Make_Log('App\Models\OfferBuyGet', 'updete', $action_id);
         }
 
         if ($request->has('discount_quantity') && $request->discount_quantity != null) {
@@ -412,7 +417,7 @@ class OfferController extends Controller
             $now = new DateTime();
             $offer->updated_at = $now;
             $offer->save();
-            $this->Make_Log('App\Models\OfferDiscount','updete',$offer->discount->id);
+            $this->Make_Log('App\Models\OfferDiscount', 'updete', $offer->discount->id);
         }
 
         return redirect()->route('admin.offer.index')->with([
@@ -430,7 +435,7 @@ class OfferController extends Controller
     public function destroy(Offer $offer)
     {
         $offer->delete();
-        $this->Make_Log('App\Models\Offer','delete',$offer->id);
+        $this->Make_Log('App\Models\Offer', 'delete', $offer->id);
 
         return redirect()->route('admin.offer.index')->with([
             'type' => 'error',
