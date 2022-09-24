@@ -221,61 +221,9 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
+        $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->get();
 
-        // switch ($offer->offer_type) {
-        //     case 'buy-get':
-        //         $buy_items = $offer->buyGet->buy_items;
-        //         if (strlen($buy_items) > 1) {
-        //             $buy_items = explode(',', $buy_items);
-        //         } else {
-        //             $buy_items = array($buy_items);
-        //         }
-        //         $get_items = $offer->buyGet->get_items;
-        //         if (strlen($get_items) > 1) {
-        //             $get_items = explode(',', $get_items);
-        //         } else {
-        //             $get_items = array($get_items);
-        //         }
-
-        //         $buyItemsIds = explode(',', $offer->buyGet->buy_items);
-        //         $buyItems = Item::whereIn('id', $buyItemsIds)->get();
-        //         // dd($buyItems, $buyItemsIds);
-
-        //         $getItemsIds = explode(',', $offer->buyGet->get_items);
-        //         $getItems = Item::whereIn('id', $getItemsIds)->get();
-        //         // dd($getItems, $getItemsIds);
-
-        //         foreach ($getItems as $item) {
-
-        //             if ($offer->buyGet->offer_price) {
-        //                 $disccountValue = $item->price * $offer->buyGet->offer_price / 100 ;
-        //                 $item->offer_price = $item->price - $disccountValue;
-        //             } else {
-        //                 $item->offer_price = 0;
-        //             }
-        //         }
-
-        //         $items['buy_items'] = $buyItems;
-        //         $items['get_items'] = $getItems;
-
-        //         break;
-
-        //     case 'discount':
-        //         $items = $offer->discount->items;
-        //         if (strlen($items) > 1) {
-        //             $items = explode(',', $items);
-        //         } else {
-        //             $items = array($items);
-        //         }
-        //         $items = \App\Models\Item::whereIn('id', $items)->get();
-        //         break;
-        //     default:
-        //         $items = array();
-        //         break;
-        // }
-        $categories = \App\Models\Category::all();
-        $branches = Branch::get();
-        return view('admin.offer.edit', compact('offer', 'categories', 'branches'));
+        return view('admin.offer.edit', compact('offer', 'categories'));
     }
 
     /**
@@ -292,16 +240,16 @@ class OfferController extends Controller
             //'title_ar' => 'required|min:3|max:20',
             'title' => 'required',
             'title_ar' => 'required',
-            'service_type' => 'required',
+            // 'service_type' => 'required',
             'date_from' => 'required|date',
             'date_to' => 'required|date',
-            'branches' => 'required|array',
+            // 'branches' => 'required|array',
             'description' => 'nullable',
             'description_ar' => 'nullable',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
-            'offer_type' => 'required',
+            // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            // 'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
+            // 'offer_type' => 'required',
         ]);
         // $branches = implode(",", $request->get('branches'));
 
@@ -314,32 +262,32 @@ class OfferController extends Controller
             $offer->save();
         }
 
-        if ($request->hasFile('website_image')) {
-            $image = $request->website_image;
-            $image_new_name = time() . $image->getClientOriginalName();
-            $image->move(public_path('offers'), $image_new_name);
-            $offer->website_image = '/offers/' . $image_new_name;
-            $offer->save();
-        }
-        if ($request->hasFile('website_image_menu')) {
-            $image = $request->website_image_menu;
-            $image_new_name = time() . $image->getClientOriginalName();
-            $image->move(public_path('offers'), $image_new_name);
-            $offer->website_image_menu = '/offers/' . $image_new_name;
-            $offer->save();
-        }
+        // if ($request->hasFile('website_image')) {
+        //     $image = $request->website_image;
+        //     $image_new_name = time() . $image->getClientOriginalName();
+        //     $image->move(public_path('offers'), $image_new_name);
+        //     $offer->website_image = '/offers/' . $image_new_name;
+        //     $offer->save();
+        // }
+        // if ($request->hasFile('website_image_menu')) {
+        //     $image = $request->website_image_menu;
+        //     $image_new_name = time() . $image->getClientOriginalName();
+        //     $image->move(public_path('offers'), $image_new_name);
+        //     $offer->website_image_menu = '/offers/' . $image_new_name;
+        //     $offer->save();
+        // }
 
         $offer->update([
             'title' => $request->title,
             'title_ar' => $request->title_ar,
-            'service_type' => $request->service_type,
+            'service_type' => 'takeaway',
             'date_from' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_from),
             'date_to' =>  Carbon::createFromFormat('Y-m-d\TH:i', $request->date_to),
 
             // 'branches' => $branches,
             'description' => $request->description,
             'description_ar' => $request->description_ar,
-            'offer_type' => $request->offer_type,
+            'offer_type' => 'discount',
             'updated_by' => Auth::user()->id
         ]);
         $offer->branches()->detach();
