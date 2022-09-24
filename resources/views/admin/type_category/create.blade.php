@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Back</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.type_category.index') }}">Back</a></li>
                         </ol>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Category Details</h3>
                     </div>
-                    <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('admin.type_category.store') }}" method="POST" enctype="multipart/form-data"
                         id="add-category">
                         @csrf
                         <div class="card-body">
@@ -29,7 +29,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group category-select">
                                         <label>Choose Category</label>
-                                        <select class="form-control categories select2" id="categories" name="category_id"
+                                        <select class="form-control categories select2" id="categories" name="sub_category_id"
                                             >
                                             <option value="" disabled>Select Category</option>
                                             @foreach ($categories as $cat)
@@ -38,10 +38,10 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
+                                        {!! $errors->first('sub_category_id', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-check" style="display: flex;align-items: center;height: 100%;">
                                         <input class="form-check-input set-as-parent" type="checkbox" value="1"
                                             name="is_parent" id="defaultCheck1">
@@ -49,7 +49,7 @@
                                             Set as Parent Category
                                         </label>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -99,52 +99,6 @@
                             </div>
 
                             {{-- <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="pl-3 card-title mb-2">
-                                        <b>Dough</b>
-                                    </div>
-                                    <div class="card-body">
-                                        @foreach ($doughTypes->groupBy('dough_type_id') as $doughGroup)
-                                        <div class="mb-3">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="dough_type{{$loop->index > 0 ? '_2' : ''}}_id" type="checkbox"
-                                                    value="{{ $doughGroup->first()->dough_type_id }}"
-                                                    id="flexCheckDefault{{ $doughGroup->first()->dough_type_id }}">
-                                                <label class="form-check-label"
-                                                    for="flexCheckDefault{{ $doughGroup->first()->dough_type_id }}">
-                                                    ({{ $doughGroup->first()->name_en }} -
-                                                    {{ $doughGroup->first()->name_ar }},
-                                                    {{ $doughGroup->last()->name_en }} -
-                                                    {{ $doughGroup->last()->name_ar }})
-                                                </label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                    </div>
-                                </div>
-                            </div> --}}
-
-                            {{-- <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="dough_type_id">Dough Type</label>
-                                        <select class="form-control" name="dough_type_id">
-                                            <option value="0" @if (old('dough_type_id') == '0') selected @endif>مشروبات
-                                            </option>
-                                            <option value="1" @if (old('dough_type_id') == '1') selected @endif>غير
-                                                المعجنات
-                                            </option>
-                                            <option value="2" @if (old('dough_type_id') == '2') selected @endif>معجنات
-                                            </option>
-                                        </select>
-                                        @error('dough_type_id')
-                                        <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div> --}}
-
-                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="exampleInputFile">Image</label>
@@ -158,102 +112,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div id="details">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputreturn-policy-arabic">Arabic Return Policy</label>
-                                            <textarea class="form-control" id="exampleInputreturn-policy-arabic" placeholder="Enter English Description"
-                                                name="return_policy_ar"></textarea>
-                                            @error('return_policy_ar')
-                                                <div class="help-block">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputreturn-policy-english">english Return Policy</label>
-                                            <textarea class="form-control" id="exampleInputreturn-policy-english" placeholder="Enter English Description"
-                                                name="return_policy_en"></textarea>
-                                            @error('return_policy_en')
-                                                <div class="help-block">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6" x-data="{
-                                        shipping: [],
-                                        addOne: function() {
-                                            this.shipping.push({txt: ''});
-                                        },
-                                        remove: function(txt) {
-                                            var inx = this.shipping.findIndex(x => x.txt == txt);
-                                            this.shipping.splice(inx, 1);
-                                        },
-                                    }">
-                                        <label for="exampleInputArabicName row" style="width: 100%">
-                                            <div class="col-sm-6" style="display: inline">
-                                                Arabic Shipping Details
-                                            </div>
-                                            <div class="col-sm-5 " style="text-align: right;display: inline">
-                                                <button class="btn btn-success btn-sm"
-                                                    x-on:click.prevent="addOne">+</button>
-                                            </div>
-                                        </label>
-
-                                        <template x-for="sh in shipping" :key="Math.random()">
-                                            <div class="form-group row">
-                                                <input type="text" class="form-control col-md-10"
-                                                    id="exampleInputArabicName"
-                                                    placeholder="Enter Arabic Shipping Details"
-                                                    name="shipping_details_ar[]" x-model.trim="sh.txt" />
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-sm btn-danger"
-                                                        x-on:click.prevent="remove(sh.txt)">x</button>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                    <div class="col-md-6" x-data="{
-                                        shipping: [] ,
-                                        addOne: function() {
-                                            this.shipping.push({txt: ''});
-                                        },
-                                        remove: function(txt) {
-                                            var inx = this.shipping.findIndex(x => x.txt == txt);
-                                            this.shipping.splice(inx, 1);
-                                        },
-                                    }">
-                                        <label for="exampleInputEnglishName row" style="width: 100%">
-                                            <div class="col-sm-6" style="display: inline">
-                                                English Shipping Details
-                                            </div>
-                                            <div class="col-sm-5 " style="text-align: right;display: inline">
-                                                <button class="btn btn-success btn-sm"
-                                                    x-on:click.prevent="addOne">+</button>
-                                            </div>
-                                        </label>
-
-                                        <template x-for="(sh, inx) in shipping" :key="inx">
-                                            <div class="form-group row">
-                                                <input type="text" class="form-control col-md-10"
-                                                    id="exampleInputEnglishName"
-                                                    placeholder="Enter English Shipping Details"
-                                                    name="shipping_details_en[]" x-model.trim="sh.txt" />
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-sm btn-danger"
-                                                        x-on:click.prevent="remove(sh.txt)">x</button>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-
+                          
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary float-right">Submit</button>
