@@ -24,28 +24,26 @@ class TypeCategoryController extends Controller
 
     public function index()
     {
-        $sub_categories = Category::where('category_id', '!=', null)->where('sub_category_id', null)->withCount('items', 'deepSubCategories', 'parent')->orderBy('id', 'DESC')->get();
+        // $sub_categories = Category::where('category_id', '!=', null)->where('sub_category_id', null)->withCount('items', 'deepSubCategories', 'parent')->orderBy('id', 'DESC')->get();
 
-        
-
-        Category::where('category_id', null)->where('sub_category_id', '!=', null)->delete();
+        // Category::where('category_id', null)->where('sub_category_id', '!=', null)->delete();
 
 
-        $faker = \Faker\Factory::create();
+        // $faker = \Faker\Factory::create();
 
-        $sub_categories->each(function (Category $category) use ($sub_categories) {
-            $deep_sub = factory(Category::class, random_int(1, 5))->create([
-                'sub_category_id' => $category->id,
-            ]);
+        // $sub_categories->each(function (Category $category) use ($sub_categories) {
+        //     $deep_sub = factory(Category::class, random_int(1, 5))->create([
+        //         'sub_category_id' => $category->id,
+        //     ]);
 
-        });
+        // });
 
-        $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->withCount('items', 'parentSubCategory')->orderBy('id', 'DESC')->get();
+        // $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->withCount('items', 'parentSubCategory')->orderBy('id', 'DESC')->get();
 
-        Item::all()->each(function (Item $item) use ($categories) {
-            $item->category_id = $categories->random()->id;
-            $item->update();
-        });
+        // Item::all()->each(function (Item $item) use ($categories) {
+        //     $item->category_id = $categories->random()->id;
+        //     $item->update();
+        // });
 
         $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->withCount('items', 'parentSubCategory')->orderBy('id', 'DESC')->get();
         $this->Make_Log('App\Models\Category', 'view', 0);
