@@ -36,9 +36,9 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        $doughTypes = DoughType::all();
-        $categories = Category::all();
-        return view('admin.sub_category.create', compact('doughTypes', 'categories', 'is_parent'));
+        // $doughTypes = DoughType::all();
+        $categories = Category::where('category_id', null)->where('sub_category_id', null)->get();
+        return view('admin.sub_category.create', compact('categories'));
     }
 
     /**
@@ -56,13 +56,13 @@ class SubCategoryController extends Controller
             'description_en' => 'nullable',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'is_parent' => 'nullable',
-            'sub_category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'shipping_details_ar' => 'nullable|array',
             'shipping_details_en' => 'nullable|array',
             'return_policy_ar' => 'nullable|string',
             'return_policy_en' => 'nullable|string',
         ]);
-
+        
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors())->withInput();
 
@@ -75,7 +75,6 @@ class SubCategoryController extends Controller
         $shipping_ar = ($shipping_ar->filter(function ($x) {
             return $x !== null;
         }))->toArray();
-
 
         $sub_category = Category::create([
             'name_ar' => $request->name_ar,
@@ -132,7 +131,7 @@ class SubCategoryController extends Controller
         $category = $sub_category;
 
 
-        $categories = Category::all();
+        $categories = Category::where('category_id', null)->where('sub_category_id', null)->get();
 
         return view('admin.sub_category.edit', compact('category', 'categories'));
     }

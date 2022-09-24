@@ -46,7 +46,7 @@
               {{-- <td>{{ $category->items_count }}</td> --}}
               <td>
                 @if ($category->parent)
-                <a href="{{ route('admin.sub_category.show', $category->parent->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show">
+                <a href="{{ route('admin.category.show', $category->parent->id) }}" class="btn btn-primary btn-circle btn-sm" title="Show">
                   {{$category->parent['name_' . app()->getLocale()]}}
                 </a>
                 @endif

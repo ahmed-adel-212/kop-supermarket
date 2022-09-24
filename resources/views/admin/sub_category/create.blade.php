@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.category.index') }}">Back</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.sub_category.index') }}">Back</a></li>
                         </ol>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Category Details</h3>
                     </div>
-                    <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data"
+                    <form action="{{ route('admin.sub_category.store') }}" method="POST" enctype="multipart/form-data"
                         id="add-category">
                         @csrf
                         <div class="card-body">
@@ -41,7 +41,7 @@
                                         {!! $errors->first('category_id', '<p class="help-block">:message</p>') !!}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-check" style="display: flex;align-items: center;height: 100%;">
                                         <input class="form-check-input set-as-parent" type="checkbox" value="1"
                                             name="is_parent" id="defaultCheck1">
@@ -49,7 +49,7 @@
                                             Set as Parent Category
                                         </label>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-6">

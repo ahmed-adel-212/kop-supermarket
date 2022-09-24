@@ -37,8 +37,8 @@ class CategoryController extends Controller
     public function create()
     {
         // $doughTypes = DoughType::all();
-        $categories = Category::all();
-        return view('admin.category.create', compact('categories'));
+        // $categories = Category::all();
+        return view('admin.category.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoryController extends Controller
             'description_en' => 'nullable',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_parent' => 'nullable',
-            'category_id' => 'nullable|exists:categories,id',
+            // 'category_id' => 'nullable|exists:categories,id',
             'shipping_details_ar' => 'nullable|array',
             'shipping_details_en' => 'nullable|array',
             'return_policy_ar' => 'nullable|string',
