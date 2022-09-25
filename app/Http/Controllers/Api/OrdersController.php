@@ -28,10 +28,10 @@ class OrdersController extends BaseController
     use GeneralTrait;
 
     protected $validationRules = [
-        'customer_id' => 'exists:users,id',
+        // 'customer_id' => 'exists:users,id',
         'address_id' => 'required|exists:addresses,id',
-        'branch_id' => 'exists:branches,id',
-        'service_type' => 'required',
+        // 'branch_id' => 'exists:branches,id',
+        // 'service_type' => 'required',
         'offer_id' => 'exists:offers,id'
     ];
 
@@ -154,187 +154,70 @@ class OrdersController extends BaseController
 
     public function store(Request $request)
     {
-        // get customer information
-        $customer = User::where('id', $request->customer_id)->whereHas('roles', function ($role) {
-            $role->where('name', 'customer');
-        })->first();
-
-        $branch_id = 0;
-
-        if ($request->service_type == 'delivery') {
-
-            // validate user input
-            $validator = Validator::make($request->all(), [
-                'address_id' => 'required|exists:addresses,id',
-                'service_type' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return $this->sendError('Validation Errors!', $validator->errors());
-            }
-            $customerAddress = $customer->addresses->where('id', $request->address_id)->first();
-
-            // get the branch covers customer area and open
-            $area = isset($customerAddress->area) ? $customerAddress->area : null;
-
-            if ($area) {
-                $branch = DB::table('branch_delivery_areas')->where('area_id', $area->id . "")->first();
-
-                if ($branch) {
-                    $branch = Branch::find($branch->branch_id);
-
-                    if ($branch) {
-                        $branch_id = $branch->id;
-                    } else {
-                        return $this->sendError(__('general.branch_no_cover'));
-                    }
-                } else {
-                    return $this->sendError(__('general.branch_no_cover'));
-                }
-            } else {
-                return $this->sendError(__('general.branch_no_cover'));
-            }
-        }
-
-        if ($request->service_type == 'takeaway') {
-
-            // validate user input
-            $validator = Validator::make($request->all(), [
-                'branch_id' => 'exists:branches,id',
-                'service_type' => 'required',
-            ]);
-            if ($validator->fails()) {
-                return $this->sendError('Validation Errors!', $validator->errors());
-            }
-            $branch = Branch::find($request->branch_id);
-
-            if (!$branch) {
-                return $this->sendError('there is no branch by this id');
-            }
-
-            $branch_id = $branch->id;
-        }
-
+        $req = $request->validate([
+            'address_id' => 'required|exists:addresses,id',
+            'subtotal' => 'required',
+            'total' => 'required',
+        ]);
 
         // apply 50% discount if this is first order
-        $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
+        // $request->total = $this->applyDiscountIfFirstOrder($customer, $request->total);
 
         $orderData = [
             "address_id" => $request->address_id,
-            "customer_id" => $request->customer_id, //$request->user()->id,
-            "branch_id" => $branch_id, //$branch->id,
-            "service_type" => $request->service_type,
+            "customer_id" => Auth::id(), //$request->user()->id,
+            // "branch_id" => $branch_id, //$branch->id,
+            // "service_type" => $request->service_type,
             "state" => 'pending',
             "subtotal" => $request->subtotal,
             "taxes" => $request->taxes,
             "delivery_fees" => $request->delivery_fees,
             "total" => $request->total,
-            "points_paid" => $request->points_paid,
-            'points' => $request->points,
+            // "points_paid" => $request->points_paid,
+            // 'points' => $request->points,
             'offer_value' => $request->offer_value,
             'order_from' => 'mobile',
             'description_box' => $request->description,
-            'payment_type' => $request->payment_type
+            'payment_type' => 'online'
 
         ];
 
         $order = Order::create($orderData);
 
-        // try{
-
-        // }catch(\Exception $ex){
-        //     return $this->sendError('Order did not placed');
-        // }
-
-        $cashiers = Branch::find($branch_id);
-        if ($cashiers) {
-            foreach ($cashiers->cashiers2 as $cashier) {
-                \App\Http\Controllers\NotificationController::pushNotifications($cashier->id, "New Order has been placed", "Order", null, null, $request->customer_id);
-            }
-        }
-
-        // $subtotal = 0;
-
-        $items = [];
-        // dd($request->items);
         foreach ($request->items as $item) {
             if (gettype($item) == 'object') {
                 $item = $item->toArray();
             }
-            // if ($item['quantity'] > 1) {
-            for ($i = 0; $i < $item['quantity']; $i++) {
-                $items[] = [
-                    'item_id' => $item['item_id'],
-                    'quantity' => 1,
-                    'offer_price' => isset($item['offer_price']) ? $item['offer_price'] : null,
-                    'price' => $item['price'],
-                    'offerId' => isset($item['offerId']) ? $item['offerId'] : null,
-                    'extras' => isset($item['extras'][$i]) && count($item['extras']) ? $item['extras'][$i] : [],
-                    'withouts' => isset($item['withouts'][$i]) && count($item['withouts']) ? $item['withouts'][$i] : [],
-                    'dough_type_ar' => isset($item['dough_type_ar'][$i]) ? $item['dough_type_ar'][$i] : null,
-                    'dough_type_en' => isset($item['dough_type_en'][$i]) ? $item['dough_type_en'][$i] : null,
-                    'dough_type_2_ar' => isset($item['dough_type_2_ar'][$i]) ? $item['dough_type_2_ar'][$i] : null,
-                    'dough_type_2_en' => isset($item['dough_type_2_en'][$i]) ? $item['dough_type_2_en'][$i] : null,
-                ];
-            }
-            // } else {
-            //     $items[] = $item;
-            // }  
-        }
-
-        foreach ($items as $item) {
-
             $orderItem = Item::where('id', $item['item_id'])->first();
-            $orderItemExtras = null;
-
-
-            if (array_key_exists('extras', $item)) {
-                $orderItemExtras = Extra::whereIn('id', $item['extras'])->get();
-            }
-            $orderItemWithouts = null;
-            if (array_key_exists('withouts', $item)) {
-                $orderItemWithouts = Without::whereIn('id', $item['withouts'])->get();
-            }
 
             $itemOfferPrice = 0;
             $itemPrice = 0;
             // check if there is offer price
             // count sum of extras price and item price
             if (array_key_exists('offer_price', $item)) {
-                $extras = $orderItemExtras ? $orderItemExtras->sum('price') : 0;
-                $itemOfferPrice = $item['offer_price'] + $extras;
+                $itemOfferPrice = $item['offer_price'];
             }
             if (array_key_exists('price', $item)) {
-                $extras = $orderItemExtras ? $orderItemExtras->sum('price') : 0;
-                $itemPrice = $orderItem->price + $extras;
+                $itemPrice = $orderItem->price;
             }
 
             // $subtotal = $subtotal + $itemPrice;
             $offer = Offer::find(isset($item['offerId']) ? $item['offerId'] : 0);
-            $extras = array_key_exists('extras', $item) ? $item['extras'] : null;
 
-            if (is_array($extras) && count($extras) && !is_int($extras[0])) {
-                $extras = collect($extras)->pluck('id');
-            }
-
-            $withouts = array_key_exists('withouts', $item) ? $item['withouts'] : null;
-            if (is_array($withouts) && count($withouts) && !is_int($withouts[0])) {
-                $withouts = collect($withouts)->pluck('id');
-            }
             $order->items()->attach($item['item_id'], [
-                'item_extras' =>  is_array($extras) ? implode(', ', $extras) : $extras,
-                'item_withouts' =>  is_array($withouts) ? implode(', ', $withouts) : $withouts,
-                'dough_type_ar' => array_key_exists('dough_type_ar', $item) ? $item['dough_type_ar'] : null,
-                'dough_type_en' => array_key_exists('dough_type_en', $item) ? $item['dough_type_en'] : null,
-                'dough_type_2_ar' => array_key_exists('dough_type_2_ar', $item) ? $item['dough_type_2_ar'] : null,
-                'dough_type_2_en' => array_key_exists('dough_type_2_en', $item) ? $item['dough_type_2_en'] : null,
+                'size_id' => $item['size_id'],
+                'color_id' => $item['color_id'],
                 'price' => $itemPrice,
                 'pure_price' => $orderItem->price,
                 'offer_price' => array_key_exists('offer_price', $item) ? $itemOfferPrice : null, // TODO: Remove price
                 'offer_id' => optional($offer)->id,
                 'offer_last_updated_at' => optional($offer)->updated_at,
-                'quantity' => array_key_exists('quantity', $item) ? $item['quantity'] : 1,
+                'quantity' => $item['quantity'],
             ]);
         }
+
+        // send notification to user
+        $this->acceptOrder($request, $order);
 
 
         return $this->sendResponse($order,  __('general.Order created successfully!'));
@@ -821,29 +704,29 @@ class OrdersController extends BaseController
         $order->update(['state' => 'completed']);
 
 
-        $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
-        if ($point) {
-            $point->status = 4; // completed
-            $point->save();
-        }
+        // $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
+        // if ($point) {
+        //     $point->status = 4; // completed
+        //     $point->save();
+        // }
 
-        PointsTransaction::create([
-            'points' => round($order->total),
-            'user_id' => $order->customer_id,
-            'order_id' => $order->id,
-            'status' => 0
-        ]);
+        // PointsTransaction::create([
+        //     'points' => round($order->total),
+        //     'user_id' => $order->customer_id,
+        //     'order_id' => $order->id,
+        //     'status' => 0
+        // ]);
 
 
-        if ($order->service_type == 'delivery') {
-            \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order is on the way, الطلب في الطريق إليك", "Order");
-            return $this->sendResponse($order->toArray(), __('general.Order is on the way'));
-        }
+        // if ($order->service_type == 'delivery') {
+        //     \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order is on the way, الطلب في الطريق إليك", "Order");
+        //     return $this->sendResponse($order->toArray(), __('general.Order is on the way'));
+        // }
 
-        if ($order->service_type == 'takeaway') {
-            \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been completed, تم تجهيز الطلب", "Order");
-            return $this->sendResponse($order->toArray(), __('general.Order has been completed'));
-        }
+        // if ($order->service_type == 'takeaway') {
+        \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been completed, تم تجهيز الطلب", "Order");
+        return $this->sendResponse($order->toArray(), __('general.Order has been completed'));
+        // }
     }
 
     public function cancelOrder(Request $request, Order $order)
@@ -856,19 +739,19 @@ class OrdersController extends BaseController
         $order->update(['state' => 'canceled', 'cancellation_reason' => $request->cancellation_reason]);
 
 
-        if ($order->points_paid != 0 && is_int($order->points)) {
-            // PointsTransaction::create([
-            //     'points' => $order->points,
-            //     'user_id' => $order->customer_id,
-            //     'order_id' => $order->id,
-            //     'status' => 4
-            // ]);
-            $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
-            if ($point) {
-                $point->status = 1; // canceled
-                $point->save();
-            }
-        }
+        // if ($order->points_paid != 0 && is_int($order->points)) {
+        //     // PointsTransaction::create([
+        //     //     'points' => $order->points,
+        //     //     'user_id' => $order->customer_id,
+        //     //     'order_id' => $order->id,
+        //     //     'status' => 4
+        //     // ]);
+        //     $point = PointsTransaction::where('order_id', $order->id)->where('user_id', $order->customer_id)->where('points', $order->points)->where('status', 2)->first();
+        //     if ($point) {
+        //         $point->status = 1; // canceled
+        //         $point->save();
+        //     }
+        // }
 
         \App\Http\Controllers\NotificationController::pushNotifications($order->customer_id, "Your Order has been Cancelled, لقد تم إلغاء طلبك", "Order");
         return $this->sendResponse($order->toArray(), __('general.Order has been canceled'));
