@@ -242,8 +242,15 @@ class MenuController extends BaseController
     public function getItem(Request $request, int $category, int $item)
     {
         $item = Item::findOrFail($item);
-        $item->load('brand', 'sizes', 'colors');
-        // $item->category= Category::with('extras', 'withouts')->where('id',$item->category_id)->get();
+        $item->load('brand', 'sizes', 'colors', 'category');
+
+        // load item category parent sub category
+        $subCategory = $item->category->parentSubCategory;
+        $item->shipping_details_ar = $subCategory->shipping_details_ar;
+        $item->shipping_details_en = $subCategory->shipping_details_en;
+        $item->return_policy_ar = $subCategory->return_policy_ar;
+        $item->return_policy_en = $subCategory->return_policy_en;
+
         $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
 
         $parent_offer = null;
@@ -279,6 +286,7 @@ class MenuController extends BaseController
         // return random items to the same sub-category
         $data = [];
         $data['item'] = $item;
+        unset($data['item']['category']);
         $data['similar_items'] = Item::inRandomOrder()->where('category_id', $item->category_id)->limit(4)->get();
 
         return $this->sendResponse($data,  __('general.ret', ['key' => __('general.item_ret')]));
