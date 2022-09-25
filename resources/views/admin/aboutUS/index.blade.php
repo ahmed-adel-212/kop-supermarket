@@ -10,7 +10,7 @@
       {{-- @if($aboutUS->where('type', '!=', 'feat')->count() <= 3) --}}
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{route('admin.aboutUS.create')}}">Add New AboutUS</a></li>
+            {{-- <li class="breadcrumb-item"><a href="{{route('admin.aboutUS.create')}}">Add New AboutUS</a></li> --}}
           </ol>
         </div>
       {{-- @endif --}}
@@ -24,8 +24,8 @@
           <thead>
             <tr>
               <th>Type</th>
-              <th>Title_en</th>
-              <th>Title_ar</th>
+              <th>description en</th>
+              <th>description ar</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -35,11 +35,8 @@
               <td>
                 {{__('general.' . $about->type)}}
               </td>
-              <td><a href="{{ route('admin.aboutUS.show', $about->id) }}">{{ $about->id }}</a>
-                <img src="{{asset($about->image)}}" class="img-thumbnail" style="    height: 200px;" />
-              </td>
-              <td>{{$about->title_en}}</td>
-              <td>{{$about->title_ar}}</td>
+              <td>{{$about->description_en}}</td>
+              <td>{{$about->description_ar}}</td>
               <td>
                   <a href="{{ route('admin.aboutUS.edit', $about->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
                   <a onclick="deleteOffer('{{ 'delete-offer-' . $about->id }}')"
@@ -48,13 +45,13 @@
                       <i class="fas fa-trash"></i>
                   </a>
                   <!-- Form Delete offer -->
-                  <form
+                  {{-- <form
                       action="{{ route('admin.aboutUS.destroy', $about->id) }}"
                       method="POST"
                       id="{{ 'delete-offer-' . $about->id }}">
                       @csrf
                       @method('DELETE')
-                  </form>
+                  </form> --}}
                   <!-- End Delete offer -->
                 </td>
             </tr>

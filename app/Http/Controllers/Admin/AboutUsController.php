@@ -24,7 +24,7 @@ class AboutUsController extends Controller
 
     public function index(Request $request)
     {
-        $aboutUS = AboutUs::get();
+        $aboutUS = AboutUs::all();
         $this->Make_Log('App\Models\AboutUS','view',0);
         return view('admin.aboutUS.index', compact('aboutUS'));
     }

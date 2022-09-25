@@ -433,4 +433,6 @@ return [
     'insta' => 'Instagram',
     'share' => 'Share',
     'only' => 'only',
+    'return' => 'Return Policy',
+    'about' => 'About Store',
 ];

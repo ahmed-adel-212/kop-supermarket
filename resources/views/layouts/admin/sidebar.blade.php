@@ -175,9 +175,16 @@
                                     <p>Orders</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.aboutUS.index')}}" class="nav-link"><i
+                                        class="fas fa-certificate nav-icon"></i>
+                                    <p>About US</p>
+                                </a>
+                            </li>
                             @if(auth()->user()->hasRole('admin'))
                             <li class="nav-item has-treeview
-                                 {{request()->segment(3) == 'aboutUS'||
+                                 {{
+                                //  request()->segment(3) == 'aboutUS'||
                                    request()->segment(3) == 'gallery'||
                                    request()->segment(3) == 'media'||
                                 //    request()->segment(3) == 'deal-of-week'||
