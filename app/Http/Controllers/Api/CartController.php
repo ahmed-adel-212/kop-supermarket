@@ -18,7 +18,7 @@ class CartController extends BaseController
      */
     public function getCart()
     {
-        $carts = Auth::user()->carts()->with('item')->get();
+        $carts = Auth::user()->carts()->with('item', 'size', 'color')->get();
 
         return $this->sendResponse($carts, __('general.cart_ret'));
     }
@@ -29,7 +29,9 @@ class CartController extends BaseController
         $validator = Validator::make($request->all(), [
             'item_id' => ['required', 'exists:items,id'],
             //'extras' => ['required'],
-            'quantity' => ['required', 'numeric']
+            'quantity' => ['required', 'numeric'],
+            'size_id' => 'required|exists:sizes,id',
+            'color_id' => 'required|exists:colors,id',
         ]);
 
         if ($validator->fails()) {
@@ -39,25 +41,12 @@ class CartController extends BaseController
         $cart = Cart::create([
             'user_id' =>  Auth::user()->id,
             'item_id' =>  $request->item_id,
-            'extras' =>  $request->extras,
-            'withouts' =>  $request->withouts,
-            'dough_type_ar' =>  $request->has('dough_type_ar') ? $request->dough_type_ar : null,
-            'dough_type_en' =>  $request->has('dough_type_en') ? $request->dough_type_en : null,
-            'dough_type_2_ar' =>  $request->has('dough_type_2_ar') ? $request->dough_type_2_ar : null,
-            'dough_type_2_en' =>  $request->has('dough_type_2_en') ? $request->dough_type_2_en : null,
+            'size_id' =>  $request->size_id,
+            'color_id' =>  $request->color_id,
             'quantity' =>  $request->quantity,
             'offer_id' =>  $request->offer_id,
             'offer_price' =>  $request->offer_price,
         ]);
-
-        // $cart = new Cart;
-        // $cart->user_id = Auth::user()->id;
-        // $cart->item_id = $request->item_id;
-        // $cart->extras = $request->extras;
-        // $cart->quantity = $request->quantity;
-        // $cart->offer_id = $request->offer_id;
-        // $cart->offer_price = $request->offer_price;
-        // $cart->save();
 
         return $this->sendResponse($cart, __('general.created', ['key' => __('general.cart')]));
     }
@@ -116,8 +105,9 @@ class CartController extends BaseController
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        Auth::user()->carts()->findOrFail($request->cart_id)->update(['quantity' => $request->quantity]);
+        $cart = Auth::user()->carts()->findOrFail($request->cart_id);
+        $cart->update(['quantity' => $request->quantity]);
 
-        return $this->sendResponse(Auth::user()->carts()->with('item')->get(), __('general.updated', ['key' => __('general.cart')]));
+        return $this->sendResponse($cart, __('general.updated', ['key' => __('general.cart')]));
     }
 }

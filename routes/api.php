@@ -62,7 +62,7 @@ Route::middleware('api')->group(function () {
     });
 
 
-    Route::group(['prefix' => 'cart'], function () {
+    Route::group(['prefix' => 'cart', 'middleware' => 'auth:api'], function () {
         Route::get('get-cart', 'Api\CartController@getCart');
         Route::post('add-cart', 'Api\CartController@addCart');
         Route::post('delete-cart', 'Api\CartController@deleteCart');

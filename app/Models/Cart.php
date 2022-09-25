@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Extra;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Without;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cart extends Model
@@ -17,58 +15,34 @@ class Cart extends Model
         'withouts',
         'dough_type_ar',
         'dough_type_en',
-        'dough_type_2_ar',
-        'dough_type_2_en',
+        'size_id',
+        'color_id',
         'quantity',
         'offer_id',
         'offer_price'
     ];
 
     public $appends = [
-        'extras_objects',
-        'withouts_objects',
         'price',
+    ];
+
+    protected $hidden = [
+        'extras',
+        'withouts',
+        'dough_type_ar',
+        'dough_type_en',
+    ];
+
+    protected $casts = [
+        'size_id' => 'int',
+        'color_id' => 'int',
+        'quantity' => 'int',
+        'item_id' => 'int',
     ];
 
     public function item()
     {
         return $this->belongsTo('App\Models\Item');
-    }
-
-    public function getExtrasObjectsAttribute()
-    {
-        if (in_array('extras', $this->attributes) && is_array($this->attributes['extras'])) {
-            return $this->attributes['extras'];
-        }
-
-        $objects = [];
-        //return $objects= json_decode($this->attributes['extras']);
-        if (isset($this->attributes['extras']) && $this->attributes['extras'] != 'null' && is_string($this->attributes['extras'])) {
-            foreach (json_decode($this->attributes['extras']) as $extra) {
-                $extra = Extra::find($extra);
-                if ($extra) $objects[] = $extra;
-            }
-        }
-
-        return $objects;
-    }
-
-    public function getWithoutsObjectsAttribute()
-    {
-        if (in_array('withouts', $this->attributes) && is_array($this->attributes['withouts'])) {
-            return $this->attributes['withouts'];
-        }
-
-        $objects = [];
-        //return $objects = json_decode($this->attributes['withouts']);
-        if (isset($this->attributes['withouts']) && $this->attributes['withouts'] != 'null' && is_string($this->attributes['withouts'])) {
-            foreach (json_decode($this->attributes['withouts']) as $without) {
-                $without = Without::find($without);
-                if ($without) $objects[] = $without;
-            }
-        }
-
-        return $objects;
     }
 
     public function getPriceAttribute()
@@ -83,5 +57,15 @@ class Cart extends Model
         }
 
         return $itemPrice;
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
     }
 }
