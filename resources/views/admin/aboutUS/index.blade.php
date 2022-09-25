@@ -39,11 +39,11 @@
               <td>{{$about->description_ar}}</td>
               <td>
                   <a href="{{ route('admin.aboutUS.edit', $about->id) }}" class="btn btn-primary btn-circle btn-sm" title="edit"><i class="fa fa-edit"></i></a>
-                  <a onclick="deleteOffer('{{ 'delete-offer-' . $about->id }}')"
+                  {{-- <a onclick="deleteOffer('{{ 'delete-offer-' . $about->id }}')"
                      href="#" class="btn btn-danger btn-circle btn-sm"
                      title="delete">
                       <i class="fas fa-trash"></i>
-                  </a>
+                  </a> --}}
                   <!-- Form Delete offer -->
                   {{-- <form
                       action="{{ route('admin.aboutUS.destroy', $about->id) }}"
