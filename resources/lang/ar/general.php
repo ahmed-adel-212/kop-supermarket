@@ -454,4 +454,6 @@ return [
 'insta' => 'إنستجرام',
 'share' => 'مشاركة',
 'only' => 'فقط',
+'return' => 'Return Policy',
+'about' => 'About Store',
 ];
