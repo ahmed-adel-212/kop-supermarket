@@ -182,10 +182,13 @@ Route::post('payment/save', 'Api\PaymentController@store_payment')->middleware('
 Route::post('/payment/check/{hash}', 'Api\PaymentController@check')->middleware('auth:api')->name('check.paymentMobile');
 
 // helper endpoints
+Route::get('/governments', "Api\HelperController@getGovernments");
+Route::get('/governments/{government}/cities', "Api\HelperController@getCitiesByGovernments");
 Route::get('/cities', "Api\HelperController@getCities");
 Route::get('/cities/{city}/areas', "Api\HelperController@getAreas");
 Route::get('/v1/cities/search', 'Api\HelperController@search')
     ->name('api.cities.search');
+Route::get('/governments/all_data', "Api\HelperController@getGovernmentsWithAllCities");
 // Front routes
 Route::group(['prefix' => 'website'], function () {
 
