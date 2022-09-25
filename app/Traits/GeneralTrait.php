@@ -278,22 +278,23 @@ trait GeneralTrait
         $accountSid = 'AC20069c0fcbdb65528f5d91dca09be66f';
         $authToken  = 'a534aac7849ff9a8ccea2c4a7f6d499b';
 
+        return;
+
         try {
-        $client = new Client($accountSid, $authToken);
+            $client = new Client($accountSid, $authToken);
 
-        // Use the client to do fun stuff like send text messages!
-        $client->messages->create(
-            // the number you'd like to send the message to
-            '+' . $phoneNumber,
-            array(
-                // A Twilio phone number you purchased at twilio.com/console
-                'from' => '+12183180915',
-                // the body of the text message you'd like to send
-                'body' => $message
-            )
-        );
-    } catch (Exception $e) {
-
-    }
+            // Use the client to do fun stuff like send text messages!
+            $client->messages->create(
+                // the number you'd like to send the message to
+                '+' . $phoneNumber,
+                array(
+                    // A Twilio phone number you purchased at twilio.com/console
+                    'from' => '+12183180915',
+                    // the body of the text message you'd like to send
+                    'body' => $message
+                )
+            );
+        } catch (Exception $e) {
+        }
     }
 }
