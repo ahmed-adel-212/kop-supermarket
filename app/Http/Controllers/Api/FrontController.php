@@ -16,6 +16,7 @@ use App\Models\HealthInfo;
 use App\Models\Item;
 use App\Models\News;
 use App\Models\Offer;
+use App\Models\OfferDiscount;
 use Illuminate\Support\Facades\Validator;
 
 class FrontController extends BaseController
@@ -166,8 +167,41 @@ class FrontController extends BaseController
 
 
         // offers
-        $offers = Offer::with('buyGet', 'discount')->where('main', true)->get();
+        $items = [];
+        // $offers = Offer::with('discount')->where('main', true)->get();
+        // foreach ($offers as $offer) {
+        //     if (!$offer->discount) continue;
+
+        //     foreach ($offer->discount->items as $item) {
+        //         // calculate offer price
+        //         if ($offer->discount->discount_type == 1) {
+        //             // percentage discount offer
+        //             $item->offer_price = ((float)$item->price - ((float)$item->price * (float)$offer->discount->discount_value / 100));
+        //         } else {
+        //             // amount discount offer
+        //             $item->offer_price = ((float)$item->price - (float)$offer->discount->discount_value);
+        //         }
+        //         $items[] = $item;
+        //     }
+        // }
+
+        $offers = DB::table('items')
+            ->join('offer_discount_items', 'items.id', '=', 'offer_discount_items.item_id')
+            ->join('offers', 'offers.id', '=', 'offer_discount_items.offer_id')
+            ->join('offers_discount', 'offers_discount.offer_id', '=', 'offer_discount_items.offer_id')
+            ->select('items.*', 'offers_discount.*')
+            ->get();
+
+        foreach ($items as $item) {
+            if ($item->discount_type == 1) {
+                // percentage discount offer
+                $item->offer_price = ((float)$item->price - ((float)$item->price * (float)$item->discount_value / 100));
+            } else {
+                // amount discount offer
+                $item->offer_price = ((float)$item->price - (float)$item->discount_value);
+            }
+        }
 
         return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers'), 'Get all menu items');
     }
-} 
+}
