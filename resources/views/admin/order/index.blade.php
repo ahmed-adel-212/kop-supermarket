@@ -48,9 +48,9 @@
                         <tr>
                             <th>Order #</th>
                             <th>Customer Name</th>
-                            <th>Branch Name</th>
-                            <th>Order From</th>
-                            <th>Type</th>
+                            {{-- <th>Branch Name</th> --}}
+                            {{-- <th>Order From</th> --}}
+                            {{-- <th>Type</th> --}}
                             <th>Total</th>
                             <th>State</th>
                             <th>Date</th>
@@ -62,12 +62,33 @@
                             <tr>
                                 <td><a href="{{route('admin.order.show', $order->id)}}">{{ $order->id }}</a></td>
                                 <td>{{ $order->customer->name }}</td>
-                                <td>{{ $order->branch->name_en }}</td>
-                                <td>{{ $order->order_from }}</td>
-                                <td>{{ $order->service_type }}</td>
+                                {{-- <td>{{ $order->branch->name_en }}</td> --}}
+                                {{-- <td>{{ $order->order_from }}</td> --}}
+                                {{-- <td>{{ $order->service_type }}</td> --}}
                                 <td>{{ $order->total }}</td>
-                                <td>{{ $order->state }}</td>
-                                <!--<td>{{ $order->cancellation_reason? $order->cancellation_reason : "-" }}</td>-->
+                                <td>
+                                    @if ($order->state === 'completed')
+                                        {{$order->state}}
+                                    @else
+                                    <form action="{{route('admin.order.update', $order->id)}}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="row">
+                                            <div class="form-group col-sm-10">
+                                                <select name="state" class="form-control">
+                                                    <option value="in-progress" selected>in-progress</option>
+                                                    <option value="completed">completed</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <button class="btn btn-success btn-sm" type="submit">
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    @endif
+                                </td>
                                 <td>{{ $order->created_at }}</td>
                             </tr>
                         @endforeach

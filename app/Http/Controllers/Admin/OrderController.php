@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Order;
 use App\Filters\OrderFilters;
+use App\Http\Controllers\Api\OrdersController;
 use App\Models\OrderItem;
 use Auth;
 use Illuminate\Http\Request;
@@ -45,5 +46,18 @@ class OrderController extends Controller
         $orderDetails = OrderItem::where('order_id', $order_id)->get();
         $this->Make_Log('App\Models\Order','view details',$order_id);
         return view('admin.order.details' , compact('orderDetails'));
+    }
+
+    public function update(Request $request, Order $order)
+    {
+        $req = $request->validate([
+            'state' => 'required|in:in-progress,completed',
+        ]);
+
+        if ($request->state === 'completed') {
+            (app(OrdersController::class)->completeOrder($request, $order))->getOriginalContent();
+        }
+
+        return redirect()->route('admin.order.index');
     }
 }
