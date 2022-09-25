@@ -150,6 +150,7 @@ class FrontController extends BaseController
 
         // categories with items
         $categories = Category::where('category_id', null)->where('sub_category_id', null)->with('subCategories')->get();
+        
         foreach ($categories as $cat) {
             $subCategoriesId = $cat->subCategories->pluck('id');
             $items = [];
@@ -181,6 +182,10 @@ class FrontController extends BaseController
             }
         }
 
-        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers'), 'Get all menu items');
+        $return_policy = AboutUs::where('type', 'return')->first();
+        $about_store = AboutUs::where('type', 'about')->first();
+
+
+        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers', 'return_policy', 'about_store'), 'Get all menu items');
     }
 }
