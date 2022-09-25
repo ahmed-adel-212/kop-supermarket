@@ -29,13 +29,10 @@ class OrderController extends Controller
         $user = Auth::user();
         if($user->hasRole('admin'))
         {
-            $orders = Order::when(request()->order_from, function ($q) {
-                return $q->where('order_from', request()->order_from);
-            })->orderBy('id', 'DESC')->get();
+            $orders = Order::filter($filters)->orderBy('id', 'DESC')->get();
         }
         else{
-            $branches = $user->branches->pluck('id')->toArray();
-             $orders = Order::whereIn('branch_id', $branches)->filter($filters)->orderBy('id', 'DESC')->get();
+             $orders = Order::filter($filters)->orderBy('id', 'DESC')->get();
         }
         $this->Make_Log('App\Models\Order','view',0);
         return view('admin.order.index' , compact('orders'));

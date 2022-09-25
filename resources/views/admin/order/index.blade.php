@@ -16,7 +16,7 @@
 
                 <div class="card-body">
 
-                    <form action="{{ route('admin.order.index') }}">
+                    {{-- <form action="{{ route('admin.order.index') }}">
 
                         @csrf
                         @method('post')
@@ -40,7 +40,7 @@
 
                         </div><!-- end of row -->
 
-                    </form>
+                    </form> --}}
 
 
                     <table class="table table-bordered table-striped dataTable" id="order_table">
