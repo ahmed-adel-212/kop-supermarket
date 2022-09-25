@@ -163,27 +163,6 @@ class FrontController extends BaseController
             }
             $cat->items_data = $items;
         }
-        // dd($items);
-
-
-        // offers
-        $items = [];
-        // $offers = Offer::with('discount')->where('main', true)->get();
-        // foreach ($offers as $offer) {
-        //     if (!$offer->discount) continue;
-
-        //     foreach ($offer->discount->items as $item) {
-        //         // calculate offer price
-        //         if ($offer->discount->discount_type == 1) {
-        //             // percentage discount offer
-        //             $item->offer_price = ((float)$item->price - ((float)$item->price * (float)$offer->discount->discount_value / 100));
-        //         } else {
-        //             // amount discount offer
-        //             $item->offer_price = ((float)$item->price - (float)$offer->discount->discount_value);
-        //         }
-        //         $items[] = $item;
-        //     }
-        // }
 
         $offers = DB::table('items')
             ->join('offer_discount_items', 'items.id', '=', 'offer_discount_items.item_id')
