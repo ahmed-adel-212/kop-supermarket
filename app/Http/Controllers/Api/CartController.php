@@ -53,6 +53,18 @@ class CartController extends BaseController
             return response()->json(['error' => $validator->errors()], 401);
         }
 
+        // check if item was added before with the same size and color
+        $cart = Cart::where('item_id', $request->item_id)->where('size_id', $request->size_id)->where('user_id', Auth::id())->where('color_id', $request->color_id)->first();
+
+        if ($cart) {
+            $cart->quantity += 1;
+            $cart->update();
+
+            $cart->refresh();
+
+            return $this->sendResponse($cart, __('general.created', ['key' => __('general.cart')]));
+        }
+
         $cart = Cart::create([
             'user_id' =>  Auth::user()->id,
             'item_id' =>  $request->item_id,
