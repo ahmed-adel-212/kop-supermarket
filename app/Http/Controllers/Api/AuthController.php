@@ -161,7 +161,8 @@ class AuthController extends BaseController
             'password' => bcrypt($request->password),
             'first_phone' => $request->phone,
             'age' => $request->age,
-            'activation_token' => mt_rand(100000, 999999)
+            'activation_token' => mt_rand(100000, 999999),
+            'email_verified_at' => now(),
         ]);
 
         if($request->token)
@@ -173,6 +174,9 @@ class AuthController extends BaseController
 
         $user = User::create($request->all());
         $user->attachRole(3); // customer
+
+        $user->token = $user->createToken('AppName')->accessToken;
+        $user->save();
 
         // Auth::login($user);
 
@@ -192,7 +196,7 @@ class AuthController extends BaseController
             'user_created' => true,
             'user' => $user->fresh(),
             // 'data' => $user,
-            'token' => null,
+            'token' => $user->token,
             'message_sent' => true,
             "message" => __('general.created', ['key' => __('auth.user_account')]),
         ], 200);
