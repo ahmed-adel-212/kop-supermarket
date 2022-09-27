@@ -151,7 +151,9 @@ class AuthController extends BaseController
 
             return response()->json([
                 "success" => false,
-                "message" => __('auth.last_name_not_included'),
+                "error" => [
+                    'name' => [__('auth.last_name_not_included')],
+                ],
             ], 400);
         }
 
