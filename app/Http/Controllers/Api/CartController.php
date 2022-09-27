@@ -20,7 +20,22 @@ class CartController extends BaseController
     {
         $carts = Auth::user()->carts()->with('item', 'size', 'color')->get();
 
-        return $this->sendResponse($carts, __('general.cart_ret'));
+        $totalPrice = 0;
+        $subTotal = 0;
+        $cart_data = [];
+        foreach ($carts as $cart) {
+            $subTotal += (int)$cart->quantity * (float)$cart->item->price;
+            $totalPrice += (int)$cart->quantity * (float)($cart->offer_id ? $cart->offer_price : $cart->price);
+            $cart_data['items'][] = $cart;
+        }
+
+        $cart_data['sub_total'] = $subTotal;
+        $cart_data['total_price'] = $totalPrice;
+        $cart_data['offer_price'] = $subTotal - $totalPrice;
+
+        $cart_data = collect($cart_data)->toArray();
+
+        return $this->sendResponse($cart_data, __('general.cart_ret'));
     }
 
     public function addCart(Request $request)
