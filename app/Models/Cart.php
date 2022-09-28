@@ -61,11 +61,21 @@ class Cart extends Model
 
     public function size()
     {
-        return $this->belongsTo(Size::class);
+        return $this->belongsTo(Size::class)->withDefault(function($size) {
+            $size->id = 0;
+            $size->name_ar =  "";
+            $size->name_en =  "";
+            // $size->code =  "";
+        });
     }
 
     public function color()
     {
-        return $this->belongsTo(Color::class);
+        return $this->belongsTo(Color::class)->withDefault(function($color) {
+            $color->id = 0;
+            $color->name_ar =  "";
+            $color->name_en =  "";
+            $color->code =  "";
+        });
     }
 }

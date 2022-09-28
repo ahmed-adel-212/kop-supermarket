@@ -45,17 +45,33 @@ class CartController extends BaseController
             'item_id' => ['required', 'exists:items,id'],
             //'extras' => ['required'],
             'quantity' => ['required', 'numeric'],
-            'size_id' => 'required|exists:sizes,id',
-            'color_id' => 'required|exists:colors,id',
+            'size_id' => 'required|numeric',
+            'color_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 401);
         }
 
-        // check if item was added before with the same size and color
-        $cart = Cart::where('item_id', $request->item_id)->where('size_id', $request->size_id)->where('user_id', Auth::id())->where('color_id', $request->color_id)->first();
+        $size_id = (int)$request->size_id;
+        $color_id = (int)$request->color_id;
 
+        // check if item was added before with the same size and color
+        $cart = Cart::where('item_id', $request->item_id)->where('user_id', Auth::id());
+
+        // check if size id was added
+        if ($size_id) {
+            $cart->where('size_id', $size_id);
+        }
+
+        // check if color id was added
+        if ($color_id) {
+            $cart->where('color_id', $color_id);
+        }
+
+        // dd($size_id, $color_id);
+
+        $cart = $cart->first();
         if ($cart) {
             $cart->quantity += 1;
             $cart->update();
