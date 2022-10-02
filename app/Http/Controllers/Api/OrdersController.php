@@ -10,6 +10,7 @@ use App\Filters\OrderFilters;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Api\BaseController;
 use App\Models\Branch;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Item;
 use App\Models\User;
@@ -218,6 +219,9 @@ class OrdersController extends BaseController
 
         // send notification to user
         $this->acceptOrder($request, $order);
+
+        // clear cart items
+        Cart::where('user_id', Auth::id())->delete();
 
 
         return $this->sendResponse($order,  __('general.Order created successfully!'));
