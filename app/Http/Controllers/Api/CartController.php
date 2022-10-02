@@ -153,4 +153,11 @@ class CartController extends BaseController
 
         return $this->sendResponse($cart, __('general.updated', ['key' => __('general.cart')]));
     }
+
+    public function clearAll(Request $request)
+    {
+        Cart::where('user_id', Auth::id())->delete();
+
+        return $this->sendResponse(['done' => true], __('general.deleted', ['key' => __('general.cart')]));
+    }
 }

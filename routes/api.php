@@ -67,6 +67,7 @@ Route::middleware('api')->group(function () {
         Route::post('add-cart', 'Api\CartController@addCart');
         Route::post('delete-cart', 'Api\CartController@deleteCart');
         Route::post('update-quantity', 'Api\CartController@updateQuantity');
+        Route::delete('clear-cart', 'Api\CartController@clearAll');
     });
 
     Route::group(['prefix' => 'banners'], function () {
