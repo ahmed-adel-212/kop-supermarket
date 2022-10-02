@@ -10,6 +10,7 @@ use DB;
 use App\Models\AboutUs;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Gallery;
 use App\Models\Media;
 use App\Models\HealthInfo;
@@ -17,6 +18,7 @@ use App\Models\Item;
 use App\Models\News;
 use App\Models\Offer;
 use App\Models\OfferDiscount;
+use App\Models\Size;
 use Illuminate\Support\Facades\Validator;
 
 class FrontController extends BaseController
@@ -185,7 +187,10 @@ class FrontController extends BaseController
         $return_policy = AboutUs::where('type', 'return')->first();
         $about_store = AboutUs::where('type', 'about')->first();
 
+        $sizes = Size::all();
+        $colors = Color::all();
 
-        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers', 'return_policy', 'about_store'), 'Get all menu items');
+
+        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers', 'return_policy', 'about_store', 'sizes', 'colors'), 'Get all menu items');
     }
 }
