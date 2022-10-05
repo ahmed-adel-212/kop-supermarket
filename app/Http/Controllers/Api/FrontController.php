@@ -192,7 +192,12 @@ class FrontController extends BaseController
         $sizes = Size::all();
         $colors = Color::all();
 
-        $cart_count = Auth::check() ? Auth::user()->carts()->count() : 0;
+        $cart_count = 0;
+        if (Auth::check()) {
+            foreach (Auth::user()->carts as $cart) {
+                $cart_count += $cart->quantity;
+            }
+        }
 
 
         return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers', 'return_policy', 'about_store', 'sizes', 'colors', 'cart_count'), 'Get all menu items');
