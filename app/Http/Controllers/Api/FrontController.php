@@ -19,6 +19,7 @@ use App\Models\News;
 use App\Models\Offer;
 use App\Models\OfferDiscount;
 use App\Models\Size;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FrontController extends BaseController
@@ -190,7 +191,9 @@ class FrontController extends BaseController
         $sizes = Size::all();
         $colors = Color::all();
 
+        $cart_count = Auth::check() ? Auth::user()->carts()->count() : 0;
 
-        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers', 'return_policy', 'about_store', 'sizes', 'colors'), 'Get all menu items');
+
+        return $this->sendResponse(compact('banner', 'new_arrival', 'categories', 'offers', 'return_policy', 'about_store', 'sizes', 'colors', 'cart_count'), 'Get all menu items');
     }
 }
