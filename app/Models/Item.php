@@ -207,9 +207,11 @@ class Item extends Model
         $offer = OfferDiscount::find(optional(DB::table('offer_discount_items')->where('item_id', $this->id)->first())->offer_id);
         if (!$offer) return null;
 
-        return $offer;
-        
-        if ( \Carbon\Carbon::now() < $offer->offer->date_from || \Carbon\Carbon::now() > $offer->offer->date_to) {
+        $today = \Carbon\Carbon::now();
+        $dateFrom = $offer->offer->date_from;
+        $dateTo = $offer->offer->date_to;
+
+        if ($today->gt($dateFrom) && $today->lt($dateTo)) {
             unset($offer->offer);
             return $offer;
         }
