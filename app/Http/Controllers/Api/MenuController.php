@@ -242,7 +242,9 @@ class MenuController extends BaseController
     public function getItem(Request $request, int $category, int $item)
     {
         $item = Item::findOrFail($item);
-        $item->load('brand', 'sizes', 'colors');
+        $item->load('brand', 'sizes', 'colors', 'category');
+
+        dd($item);
 
         // load item category parent sub category
         $subCategory = $item->category->parentSubCategory;
