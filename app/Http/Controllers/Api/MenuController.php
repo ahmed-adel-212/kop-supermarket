@@ -244,8 +244,6 @@ class MenuController extends BaseController
         $item = Item::findOrFail($item);
         $item->load('brand', 'sizes', 'colors', 'category');
 
-        dd($item);
-
         // load item category parent sub category
         $subCategory = $item->category->parentSubCategory;
         $item->shipping_details_ar = $subCategory->shipping_details_ar;
