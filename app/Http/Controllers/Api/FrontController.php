@@ -176,6 +176,7 @@ class FrontController extends BaseController
             ->get();
 
         foreach ($offers as $item) {
+            $item->has_offer = true;
             if ($item->discount_type == 1) {
                 // percentage discount offer
                 $item->offer_price = ((float)$item->price - ((float)$item->price * (float)$item->discount_value / 100));

@@ -21,12 +21,12 @@ class Item extends Model
 
     protected $appends = [
         'favoured', 'price_without_tax',
-        'offer_price_without_tax'
+        'offer_price_without_tax', 'offer_price', 'has_offer', 'offer'
     ];
 
     protected $with = ['sizes', 'colors'];
 
-    protected $casts = ['main' => 'boolean', 'price' => 'double', 'price_without_tax' => 'double', 'offer_price_without_tax' => 'double'];
+    protected $casts = ['main' => 'boolean', 'price' => 'double', 'price_without_tax' => 'double', 'offer_price_without_tax' => 'double', 'offer_price_2' => 'float'];
 
     public function category()
     {
@@ -132,10 +132,10 @@ class Item extends Model
 
     public function getOfferPriceWithoutTaxAttribute()
     {
-        if (!$this->offer || !optional($this->offer)->offer_price) {
+        if (!$this->offer || !$this->offer_price) {
             return null;
         }
-        return round($this->offer->offer_price / 1.15);
+        return round($this->offer_price / 1.15);
     }
 
     public function isVisibleForAuthUser()
@@ -200,5 +200,45 @@ class Item extends Model
     public function isFavouredBy(User $user): bool
     {
         return $this->favourites()->where('user_id', $user->id)->exists();
+    }
+
+    public function getOfferAttribute()
+    {
+        $offer = OfferDiscount::find(optional(DB::table('offer_discount_items')->where('item_id', $this->id)->first())->offer_id);
+        if (!$offer) return null;
+        
+        if ( \Carbon\Carbon::now() < $offer->offer->date_from || \Carbon\Carbon::now() > $offer->offer->date_to) {
+            unset($offer->offer);
+            return $offer;
+        }
+
+        return null;
+    }
+
+    public function getHasOfferAttribute()
+    {
+        if (!$this->offer) return false;
+
+        return true;
+    }
+
+    public function getOfferPriceAttribute()
+    {
+        if (!$this->has_offer) {
+            return null;
+        }
+
+        $offerPrice = 0;
+
+        if ($this->offer->discount_type == 1) {
+
+            $disccountValue = $this->price * $this->offer->discount_value / 100;
+            $this->offer->offer_price = $this->price - $disccountValue;
+            $offerPrice = $this->price - $disccountValue;
+        } elseif ($this->offer->discount_type == 2) {
+            $this->offer->offer_price = $this->price - $this->offer->discount_value;
+            $offerPrice = $this->price - $this->offer->discount_value;
+        }
+        return $offerPrice;
     }
 }

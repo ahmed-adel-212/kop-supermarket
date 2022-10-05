@@ -251,37 +251,37 @@ class MenuController extends BaseController
         $item->return_policy_ar = $subCategory->return_policy_ar;
         $item->return_policy_en = $subCategory->return_policy_en;
 
-        $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
+        // $offers = DB::table('offer_discount_items')->where('item_id', $item->id)->get();
 
-        $parent_offer = null;
-        foreach ($offers as $offer) {
-            $parent_offer = OfferDiscount::find($offer->offer_id);
+        // $parent_offer = null;
+        // foreach ($offers as $offer) {
+        //     $parent_offer = OfferDiscount::find($offer->offer_id);
 
-            // Just edit
-            //  if ($parent_offer)  break;
+        //     // Just edit
+        //     //  if ($parent_offer)  break;
 
-            if ($parent_offer) {
-                if (isset($parent_offer->offer->date_from)) {
-                    if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
-                        $parent_offer = null;
-                    }
-                } else {
-                    break;
-                }
-            }
+        //     if ($parent_offer) {
+        //         if (isset($parent_offer->offer->date_from)) {
+        //             if (\Carbon\Carbon::now() < $parent_offer->offer->date_from || \Carbon\Carbon::now() > $parent_offer->offer->date_to) {
+        //                 $parent_offer = null;
+        //             }
+        //         } else {
+        //             break;
+        //         }
+        //     }
 
-            $item->offer = $parent_offer;
+        //     $item->offer = $parent_offer;
 
-            if ($parent_offer) {
-                if ($parent_offer->discount_type == 1) {
+        //     if ($parent_offer) {
+        //         if ($parent_offer->discount_type == 1) {
 
-                    $disccountValue = $item->price * $parent_offer->discount_value / 100;
-                    $item->offer->offer_price = $item->price - $disccountValue;
-                } elseif ($parent_offer->discount_type == 2) {
-                    $item->offer->offer_price = $item->price - $parent_offer->discount_value;
-                }
-            }
-        }
+        //             $disccountValue = $item->price * $parent_offer->discount_value / 100;
+        //             $item->offer->offer_price = $item->price - $disccountValue;
+        //         } elseif ($parent_offer->discount_type == 2) {
+        //             $item->offer->offer_price = $item->price - $parent_offer->discount_value;
+        //         }
+        //     }
+        // }
 
         // return random items to the same sub-category
         $data = [];
