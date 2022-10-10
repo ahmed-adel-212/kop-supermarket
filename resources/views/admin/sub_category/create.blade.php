@@ -183,24 +183,32 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6" x-data="{
-                                        shipping: [],
-                                        addOne: function() {
-                                            this.shipping.push({txt: ''});
-                                        },
-                                        remove: function(txt) {
-                                            var inx = this.shipping.findIndex(x => x.txt == txt);
-                                            this.shipping.splice(inx, 1);
-                                        },
-                                    }">
+                                <div class="row" x-data="{
+                                    shipping: [],
+                                    shipping_en: [] ,
+                                    addOne: function() {
+                                        this.shipping.push({txt: ''});
+                                    },
+                                    remove: function(txt) {
+                                        var inx = this.shipping.findIndex(x => x.txt == txt);
+                                        this.shipping.splice(inx, 1);
+                                    },
+                                    addOneEn: function() {
+                                        this.shipping_en.push({txt: ''});
+                                    },
+                                    removeEn: function(txt) {
+                                        var inx = this.shipping_en.findIndex(x => x.txt == txt);
+                                        this.shipping_en.splice(inx, 1);
+                                    },
+                                }">
+                                    <div class="col-md-6">
                                         <label for="exampleInputArabicName row" style="width: 100%">
                                             <div class="col-sm-6" style="display: inline">
                                                 Arabic Shipping Details
                                             </div>
                                             <div class="col-sm-5 " style="text-align: right;display: inline">
                                                 <button class="btn btn-success btn-sm"
-                                                    x-on:click.prevent="addOne">+</button>
+                                                    x-on:click.prevent="addOne();addOneEn()">+</button>
                                             </div>
                                         </label>
 
@@ -217,23 +225,10 @@
                                             </div>
                                         </template>
                                     </div>
-                                    <div class="col-md-6" x-data="{
-                                        shipping: [] ,
-                                        addOne: function() {
-                                            this.shipping.push({txt: ''});
-                                        },
-                                        remove: function(txt) {
-                                            var inx = this.shipping.findIndex(x => x.txt == txt);
-                                            this.shipping.splice(inx, 1);
-                                        },
-                                    }">
+                                    <div class="col-md-6">
                                         <label for="exampleInputEnglishName row" style="width: 100%">
                                             <div class="col-sm-6" style="display: inline">
                                                 English Shipping Details
-                                            </div>
-                                            <div class="col-sm-5 " style="text-align: right;display: inline">
-                                                <button class="btn btn-success btn-sm"
-                                                    x-on:click.prevent="addOne">+</button>
                                             </div>
                                         </label>
 
@@ -245,7 +240,7 @@
                                                     name="shipping_details_en[]" x-model.trim="sh.txt" />
                                                 <div class="col-md-2">
                                                     <button type="button" class="btn btn-sm btn-danger"
-                                                        x-on:click.prevent="remove(sh.txt)">x</button>
+                                                        x-on:click.prevent="removeEn(sh.txt)">x</button>
                                                 </div>
                                             </div>
                                         </template>
