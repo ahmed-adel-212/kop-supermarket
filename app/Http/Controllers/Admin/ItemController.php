@@ -70,12 +70,20 @@ class ItemController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'website_image' => 'required|mimes:jpeg,png,jpg,gif,svg',
             "category_id" => 'required|exists:categories,id',
-            'sizes' => 'required|array',
-            'colors' => 'required|array',
+            'sizes' => 'nullable|array',
+            'colors' => 'nullable|array',
             'color_images' => 'nullable|array',
             'color_images.*' => 'mimes:jpeg,png,jpg',
             'brand_id' => 'required|exists:brands,id'
         ]);
+
+        if (!isset($validatedData['sizes'])) {
+            $validatedData['sizes'] = [];
+        }
+        if (!isset($validatedData['colors'])) {
+            $validatedData['colors'] = [];
+        }
+
 
         $sizes = $validatedData['sizes'];
         $colors = $validatedData['colors'];
@@ -221,12 +229,19 @@ class ItemController extends Controller
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'website_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             "category_id" => 'required|exists:categories,id',
-            'sizes' => 'required|array',
-            'colors' => 'required|array',
+            'sizes' => 'nullable|array',
+            'colors' => 'nullable|array',
             'color_images' => 'nullable|array',
             'color_images.*' => 'mimes:jpeg,png,jpg',
             'brand_id' => 'required|exists:brands,id'
         ]);
+
+        if (!isset($validatedData['sizes'])) {
+            $validatedData['sizes'] = [];
+        }
+        if (!isset($validatedData['colors'])) {
+            $validatedData['colors'] = [];
+        }
 
         $sizes = $validatedData['sizes'];
         $colors = $validatedData['colors'];
