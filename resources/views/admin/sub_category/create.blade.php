@@ -232,7 +232,7 @@
                                             </div>
                                         </label>
 
-                                        <template x-for="(sh, inx) in shipping" :key="inx">
+                                        <template x-for="(sh, inx) in shipping_en" :key="inx">
                                             <div class="form-group row">
                                                 <input type="text" class="form-control col-md-10"
                                                     id="exampleInputEnglishName"
