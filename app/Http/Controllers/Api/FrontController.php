@@ -172,7 +172,7 @@ class FrontController extends BaseController
             ->join('offer_discount_items', 'items.id', '=', 'offer_discount_items.item_id')
             ->join('offers', 'offers.id', '=', 'offer_discount_items.offer_id')
             ->join('offers_discount', 'offers_discount.offer_id', '=', 'offer_discount_items.offer_id')
-            ->select('items.*', 'offers_discount.*')
+            ->select('offers_discount.*', 'items.*')
             ->get();
 
         foreach ($offers as $item) {
