@@ -140,7 +140,7 @@
                                             @enderror
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
-                                      
+
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +286,7 @@
                                                 placeholder="Enter Quauntity" name="discount_quantity" value="1">
                                             {{-- </div>
                                     </div> --}}
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="exampleInputCategory">Category</label>
                                                     <select class="form-control category-select"
@@ -300,7 +300,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -309,9 +309,14 @@
                                                     <select id="items1" class="select2" multiple="multiple"
                                                         data-placeholder="Select a Item" style="width: 100%;"
                                                         name="items[]">
-                                                        @foreach ($offer->discount->category->items as $item)
+                                                        @foreach ($offer->discount->items as $item)
                                                             <option value="{{ $item->id }}"
                                                                 @if ($offer->discount->items->contains($item)) selected @endif>
+                                                                {{ $item['name_' . app()->getLocale()] }}
+                                                            </option>
+                                                        @endforeach
+                                                        @foreach ($categories as $item)
+                                                            <option value="{{ $item->id }}">
                                                                 {{ $item['name_' . app()->getLocale()] }}
                                                             </option>
                                                         @endforeach

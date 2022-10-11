@@ -91,7 +91,7 @@
 
 
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -326,7 +326,7 @@
                                             @enderror
                                         </div>
                                     </div> --}}
-                                        <div class="col-md-12">
+                                        {{-- <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="exampleInputCategory">Category</label>
                                                 <select class="form-control category-select {!! $errors->first('category_id', 'is-invalid') !!}"
@@ -341,17 +341,19 @@
                                                     <div class="help-block">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Items</label>
-                                                <select id="items1"
-                                                    class="select2 item_select {!! $errors->first('items', 'is-invalid') !!}"
+                                                <select id="items1" class="select2 item_select {!! $errors->first('items', 'is-invalid') !!}"
                                                     multiple="multiple" data-placeholder="Select a Item"
                                                     style="width: 100%;" name="items[]">
-
+                                                    @foreach ($categories as $item)
+                                                        <option value="{{ $item->id }}">
+                                                            {{ $item['name_' . app()->getLocale()] }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
