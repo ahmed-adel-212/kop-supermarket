@@ -179,7 +179,7 @@ class OfferController extends Controller
         ]);
         $this->Make_Log('App\Models\OfferDiscount', 'create', $discountOffer->id);
         // dd($discountOffer);
-        dd($discountOffer, $request->items, $discountOffer->items()->sync($request->items));
+        // dd($discountOffer, $request->items, $discountOffer->items()->sync($request->items));
         $discountOffer->items()->sync($request->items);
         // }
 

@@ -306,7 +306,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Items</label>
-                                                    @dump($offer->discount->items)
+                                                    
                                                     <select id="items1" class="select2" multiple="multiple"
                                                         data-placeholder="Select a Item" style="width: 100%;"
                                                         name="items[]">
