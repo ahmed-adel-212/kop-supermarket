@@ -350,9 +350,11 @@
                                                 <select id="items1" class="select2 item_select {!! $errors->first('items', 'is-invalid') !!}"
                                                     multiple="multiple" data-placeholder="Select a Item"
                                                     style="width: 100%;" name="items[]">
-                                                    @foreach ($categories as $item)
+                                                    @foreach ($categories as $cat)
+                                                    @foreach ($cat->items as $item)
                                                         <option value="{{ $item->id }}">
                                                             {{ $item['name_' . app()->getLocale()] }}</option>
+                                                    @endforeach
                                                     @endforeach
                                                 </select>
                                             </div>

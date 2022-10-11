@@ -44,7 +44,7 @@ class OfferController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->get();
+        $categories = Category::with('items')->where('category_id', null)->where('sub_category_id', '!=', null)->get();
 
         return view('admin.offer.create', compact('categories'));
     }
@@ -179,8 +179,14 @@ class OfferController extends Controller
         ]);
         $this->Make_Log('App\Models\OfferDiscount', 'create', $discountOffer->id);
         // dd($discountOffer);
-        // dd($discountOffer, $request->items, $discountOffer->items()->sync($request->items));
+        // dd($request->items);
+        // \DB::enableQueryLog();
         $discountOffer->items()->sync($request->items);
+
+        
+
+        // dump($discountOffer->items);
+        // dd(\DB::getQueryLog());
         // }
 
 
@@ -223,7 +229,9 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
-        $categories = Category::where('category_id', null)->where('sub_category_id', '!=', null)->get();
+        $categories = Category::with('items')->where('category_id', null)->where('sub_category_id', '!=', null)->get();
+
+        // dd($offer->discount->items);
 
         return view('admin.offer.edit', compact('offer', 'categories'));
     }

@@ -306,21 +306,20 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Items</label>
-                                                    
                                                     <select id="items1" class="select2" multiple="multiple"
                                                         data-placeholder="Select a Item" style="width: 100%;"
                                                         name="items[]">
-                                                        asdasd asd asd asd
                                                         @foreach ($offer->discount->items as $item)
                                                             <option value="{{ $item->id }}"
                                                                 @if ($offer->discount->items->contains($item)) selected @endif>
                                                                 {{ $item['name_' . app()->getLocale()] }}
                                                             </option>
                                                         @endforeach
-                                                        @foreach ($categories as $item)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item['name_' . app()->getLocale()] }}
-                                                            </option>
+                                                        @foreach ($categories as $cat)
+                                                            @foreach ($cat->items as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item['name_' . app()->getLocale()] }}</option>
+                                                            @endforeach
                                                         @endforeach
                                                     </select>
                                                 </div>
