@@ -74,7 +74,7 @@ class OfferController extends Controller
             // 'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'offer_type' => 'required',
             'discount_quantity' => 'required',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'items' => 'required',
             'discount_type' => 'required',
             'discount_value' => 'required'
@@ -173,11 +173,13 @@ class OfferController extends Controller
         $discountOffer = OfferDiscount::create([
             'offer_id' => $offer->id,
             'quantity' => 1,
-            'category_id' => $request->category_id,
+            'category_id' => Category::first()->id,
             'discount_type' => $request->discount_type,
             'discount_value' => $request->discount_value,
         ]);
         $this->Make_Log('App\Models\OfferDiscount', 'create', $discountOffer->id);
+        // dd($discountOffer);
+        dd($discountOffer, $request->items, $discountOffer->items()->sync($request->items));
         $discountOffer->items()->sync($request->items);
         // }
 
@@ -251,7 +253,7 @@ class OfferController extends Controller
             // 'website_image_menu' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
             // 'offer_type' => 'required',
             'discount_quantity' => 'required',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'items' => 'required',
             'discount_type' => 'required',
             'discount_value' => 'required'
@@ -350,7 +352,7 @@ class OfferController extends Controller
         // if ($request->has('discount_quantity') && $request->discount_quantity != null) {
             $offer->discount->offer_id = $offer->id;
             $offer->discount->quantity = $request->discount_quantity;
-            $offer->discount->category_id = $request->category_id;
+            $offer->discount->category_id = Category::first()->id;
             $offer->discount->discount_type = $request->discount_type;
             $offer->discount->discount_value = $request->discount_value;
             $offer->discount->save();
