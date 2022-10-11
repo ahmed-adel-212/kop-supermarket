@@ -168,24 +168,34 @@ class FrontController extends BaseController
             $cat->items_data = $items;
         }
 
-        $offers = DB::table('items')
-            ->join('offer_discount_items', 'items.id', '=', 'offer_discount_items.item_id')
-            ->join('offers', 'offers.id', '=', 'offer_discount_items.offer_id')
-            ->join('offers_discount', 'offers_discount.offer_id', '=', 'offer_discount_items.offer_id')
-            ->select('offers_discount.*', 'items.*')
-            ->get();
+        // $offers = DB::table('items')
+        //     ->join('offer_discount_items', 'items.id', '=', 'offer_discount_items.item_id')
+        //     ->join('offers', 'offers.id', '=', 'offer_discount_items.offer_id')
+        //     ->join('offers_discount', 'offers_discount.offer_id', '=', 'offer_discount_items.offer_id')
+        //     ->select('offers_discount.*', 'items.*')
+        //     ->get();
 
-        foreach ($offers as $item) {
-            $item->has_offer = true;
-            $item->image = url($item->image);
-            if ($item->discount_type == 1) {
-                // percentage discount offer
-                $item->offer_price = ((float)$item->price - ((float)$item->price * (float)$item->discount_value / 100));
-            } else {
-                // amount discount offer
-                $item->offer_price = ((float)$item->price - (float)$item->discount_value);
-            }
+        // foreach ($offers as $item) {
+        //     $item = new Item((array)$item);
+        //     $item->has_offer = true;
+        //     $item->image = url($item->image);
+        //     if ($item->discount_type == 1) {
+        //         // percentage discount offer
+        //         $item->offer_price = ((float)$item->price - ((float)$item->price * (float)$item->discount_value / 100));
+        //     } else {
+        //         // amount discount offer
+        //         $item->offer_price = ((float)$item->price - (float)$item->discount_value);
+        //     }
+        // }
+
+        $offers = [];
+        $parentOffers = Offer::with('discount')->get();
+        foreach ($parentOffers as $offer) {
+            if (!$offer->discount) continue;
+            $items = $offer->discount->items;
+            $offers = array_merge($offers, $items->toArray());
         }
+
 
         $return_policy = AboutUs::where('type', 'return')->first();
         $about_store = AboutUs::where('type', 'about')->first();

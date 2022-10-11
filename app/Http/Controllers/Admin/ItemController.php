@@ -299,7 +299,7 @@ class ItemController extends Controller
                 $newImageName = '/colors/' . $newImageName;
             } else {
                 // var_dump($oldColors->where('id', $colId)->first()->pivot->image);
-                $newImageSrc = $oldColors->where('id', $colId)->first()->pivot->image;
+                $newImageSrc = optional(optional($oldColors->where('id', $colId)->first())->pivot)->image;
                 $newImageName = $newImageSrc;
                 // if (isset($toBeDeleted[$newImageSrc])) {
                 //     unset($toBeDeleted[$newImageSrc]);
@@ -307,7 +307,9 @@ class ItemController extends Controller
             }
 
             // saved color
-            $item->colors()->attach($colId, ['image' => $newImageName]);
+            if ($newImageName) {
+                $item->colors()->attach($colId, ['image' => $newImageName]);                
+            }
         }
 
         // foreach ($toBeDeleted as $imgtoDel) {
