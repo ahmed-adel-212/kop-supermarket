@@ -274,6 +274,7 @@ trait GeneralTrait
 
     public function sendMessage($phoneNumber, string $message): void
     {
+        return;
         // ahmed.adel@212sol
         $accountSid = 'AC20069c0fcbdb65528f5d91dca09be66f';
         $authToken  = 'a534aac7849ff9a8ccea2c4a7f6d499b';

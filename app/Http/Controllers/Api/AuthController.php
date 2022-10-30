@@ -54,7 +54,7 @@ class AuthController extends BaseController
                     $user->save();
                 }
 
-                $user->branches; //??
+                // $user->branches; //??
 
                 $data = [
                     'userData' => $user,
@@ -178,6 +178,8 @@ class AuthController extends BaseController
         $user->attachRole(3); // customer
 
         $user->token = $user->createToken('AppName')->accessToken;
+        $user->active = true;
+        $user->email_verified_at = now();
         $user->save();
 
         // Auth::login($user);
