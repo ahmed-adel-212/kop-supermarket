@@ -74,31 +74,31 @@ class OrdersController extends BaseController
         $orders = auth('api')->user()->orders()->with(['branch', 'items'])->with(['address' => function ($address) {
             $address->with(['city', 'area']);
         }])->orderBy('id', 'DESC')->paginate(10);
-        foreach ($orders as $order) {
-            foreach ($order->items as $item) {
-                $item->extras = Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get();
-                $item->withouts = Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get();
-                // $extras = $item->pivot->item_extras;
-                // $extras = $extras ? explode(", ", $extras) : [];
+        // foreach ($orders as $order) {
+        //     foreach ($order->items as $item) {
+        //         // $item->extras = Extra::whereIn('id', explode(', ', $item->pivot->item_extras))->get();
+        //         // $item->withouts = Without::whereIn('id', explode(', ', $item->pivot->item_withouts))->get();
+        //         // $extras = $item->pivot->item_extras;
+        //         // $extras = $extras ? explode(", ", $extras) : [];
 
-                // $all_extras = [];
-                // foreach ($extras as $extra) {
-                //     $all_extras[] = Extra::find($extra);
-                // }
+        //         // $all_extras = [];
+        //         // foreach ($extras as $extra) {
+        //         //     $all_extras[] = Extra::find($extra);
+        //         // }
 
-                // $item->extras = $all_extras;
+        //         // $item->extras = $all_extras;
 
-                // $withouts = $item->pivot->item_withouts;
-                // $withouts = $withouts ? explode(", ", $withouts) : [];
+        //         // $withouts = $item->pivot->item_withouts;
+        //         // $withouts = $withouts ? explode(", ", $withouts) : [];
 
-                // $all_withouts = [];
-                // foreach ($withouts as $without) {
-                //     $all_withouts[] = Without::find($without);
-                // }
+        //         // $all_withouts = [];
+        //         // foreach ($withouts as $without) {
+        //         //     $all_withouts[] = Without::find($without);
+        //         // }
 
-                // $item->withouts = $all_withouts;
-            }
-        }
+        //         // $item->withouts = $all_withouts;
+        //     }
+        // }
         return $this->sendResponse($orders->toArray(),  __('general.Orders retrieved successfully.'));
     }
 
